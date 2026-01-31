@@ -1,65 +1,89 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>Fleury Radio Group</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fleury Radio Group – Dini Musik, Dini Wälle</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<header>
-  <h1>Fleury Radio Group</h1>
-  <p>Unabhängige Online-Radios unter einem Dach</p>
-</header>
+  <!-- Header -->
+  <header class="site-header">
+    <h1>Fleury Radio Group</h1>
+    <p class="subtitle">Dini Musik. Dini Wälle. Diräkt vo Basel 🎶</p>
+  </header>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="radios.html">Radios</a>
-  <a href="about.html">Über uns</a>
-</nav>
+  <!-- Hero / Vorstellung -->
+  <section class="content">
+    <div class="card">
+      <h2>Willkommen bei der FRG</h2>
+      <p>Die Fleury Radio Group vereint mehrere Radiosender unter einer Dachmarke – jeder mit eigenem Charakter, aber alle mit einer Leidenschaft: Musik, die verbindet. Unsere Sender begleiten dich überall, am Rhein, durch die Stadt oder zuhause.</p>
+      <p>Gegründet 2025 von Sven Fleury aus Riehen, steht die FRG für <strong>Vielfalt, Regionalität und Lebensgefühl</strong>. Wir bringen Menschen zusammen – durch Musik, Emotionen und Inhalte, die Basel widerspiegeln.</p>
+    </div>
+  </section>
 
-<section>
-  <h2>Willkommen</h2>
-  <p>
-    Die Fleury Radio Group vereint verschiedene Radiosender mit eigener Identität,
-    musikalischem Fokus und regionalem Bezug.
-  </p>
-</section>
+  <!-- Senderübersicht -->
+  <section class="content sender-liste">
+    <div class="sender-card">
+      <h3>Radio Rhywälle</h3>
+      <iframe src="LAUTFM-PLAYER-URL1"></iframe>
+    </div>
+    <div class="sender-card">
+      <h3>Winterlord FM</h3>
+      <iframe src="LAUTFM-PLAYER-URL2"></iframe>
+    </div>
+    <div class="sender-card">
+      <h3>RhyRock Radio</h3>
+      <iframe src="LAUTFM-PLAYER-URL3"></iframe>
+    </div>
+  </section>
 
-<footer>
-  <a href="impressum.html">Impressum</a> ·
-  <a href="datenschutz.html">Datenschutz</a> ·
-  <a href="agb.html">AGB</a>
-</footer>
-  
-<div id="cookie-banner" style="display:none;">
-  <p>
-    Diese Webseite verwendet technisch notwendige Cookies.
-    <a href="datenschutz.html">Mehr erfahren</a>
-  </p>
-  <button id="acceptCookies">OK</button>
-</div>
-  
-<script>
-function setCookie(name, value, days) {
-  const date = new Date();
-  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-  document.cookie = name + "=" + value + "; expires=" + date.toUTCString() + "; path=/";
-}
+  <!-- Über uns / Mission -->
+  <section class="content">
+    <div class="card">
+      <h2>Unsere Mission</h2>
+      <p>Wir wollen Radiokanäle schaffen, die jung, frisch und nahbar sind – und gleichzeitig professionell betrieben werden. Unsere Sender erzählen Geschichten, wecken Erinnerungen und vermitteln ein Gefühl von Heimat.</p>
+      <p>Musik mit Herz. Radio mit Seele. Direkt vo Basel. 🎧</p>
+    </div>
+  </section>
 
-function getCookie(name) {
-  return document.cookie.split('; ').find(row => row.startsWith(name + "="));
-}
+  <!-- Kontakt / Community -->
+  <section class="content">
+    <div class="card">
+      <h2>Teil unserer Community</h2>
+      <p>Die FRG lebt vom Engagement ihrer Hörerinnen und Hörer. Werde Teil unserer Radiowelt, schick uns Feedback, oder beteilige dich als Teammitglied. Wir fördern lokale Talente und geben Musik eine Bühne.</p>
+      <p>📧 Kontakt: <a href="mailto:kontakt@frg-radio.ch">kontakt@frg-radio.ch</a></p>
+    </div>
+  </section>
 
-if (!getCookie("cookieConsent")) {
-  document.getElementById("cookie-banner").style.display = "flex";
-}
+  <!-- Cookie Banner -->
+  <div id="cookie-banner">
+    <span>Wir verwenden Cookies, um dein Erlebnis auf unserer Webseite zu verbessern. Durch die Nutzung unserer Seite stimmst du unserer <a href="datenschutz.html">Datenschutzerklärung</a> zu.</span>
+    <button id="cookie-accept">Akzeptieren</button>
+  </div>
 
-document.getElementById("acceptCookies").onclick = function () {
-  setCookie("cookieConsent", "true", 365);
-  document.getElementById("cookie-banner").style.display = "none";
-};
-</script>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>© 2026 Fleury Radio Group – Alle Rechte vorbehalten</p>
+  </footer>
+
+  <!-- Cookie Script -->
+  <script>
+    const cookieBanner = document.getElementById('cookie-banner');
+    const cookieButton = document.getElementById('cookie-accept');
+
+    // Prüfen, ob Cookies schon akzeptiert wurden
+    if(localStorage.getItem('frgCookiesAccepted')) {
+      cookieBanner.style.display = 'none';
+    }
+
+    cookieButton.addEventListener('click', () => {
+      localStorage.setItem('frgCookiesAccepted', 'true');
+      cookieBanner.style.display = 'none';
+    });
+  </script>
 
 </body>
 </html>
+
