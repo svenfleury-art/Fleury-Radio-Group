@@ -71,3 +71,35 @@ footer {
   font-size: 0.9rem;
   opacity: 0.7;
 }
+
+
+#cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #111;
+  color: #fff;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 9999;
+  font-size: 14px;
+}
+
+
+#cookie-banner a {
+  color: #e30613;
+  text-decoration: underline;
+}
+
+
+#cookie-banner button {
+  background: #e30613;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
