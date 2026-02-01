@@ -1,134 +1,212 @@
-/* =====================
-   FRG Webseite CSS
-   Marineblau-Rot Design, Text rot, zentriert, responsive, mobilfreundlich
-===================== */
+/* =========================
+   FRG Webseite – Royal Blue
+   Mobile-first, Responsive
+========================= */
 
-/* Global */
-body {
+/* RESET */
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #001f4d; /* Marineblau Hintergrund */
-  color: #e30613;           /* Text rot */
-  text-align: center;        /* Text zentriert */
+  padding: 0;
+}
+
+/* GLOBAL */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #2563EB; /* Royal-Blau */
+  color: #F9FAFB;            /* Fast Weiß */
+  text-align: center;
   line-height: 1.6;
 }
-a { color: #e30613; text-decoration: none; }
-a:hover { text-decoration: underline; }
 
-/* Header */
-.site-header {
-  background-color: #003366; /* Dunkleres Blau */
-  padding: 20px;
-  text-align: center;
+a {
+  color: #FACC15; /* Gold */
+  text-decoration: none;
 }
-.site-header h1 { font-size: clamp(24px, 3vw, 32px); margin: 0; color: #e30613; } /* Rot */
-.site-header .subtitle { font-size: clamp(14px, 1.5vw, 18px); color: #e30613; margin-top: 5px; } /* Rot */
+a:hover {
+  text-decoration: underline;
+}
 
-/* Content */
+/* HEADER */
+.site-header {
+  background-color: #1E40AF;
+  padding: 24px 16px;
+}
+
+.site-header h1 {
+  font-size: clamp(24px, 4vw, 36px);
+  color: #FACC15;
+}
+
+.site-header .subtitle {
+  font-size: clamp(14px, 2vw, 18px);
+  margin-top: 6px;
+  color: #F9FAFB;
+}
+
+/* CONTENT WRAPPER */
 .content {
-  display: flex;
-  justify-content: center; /* Zentriert die Karten */
-  flex-wrap: wrap;
-  gap: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
-}
-
-.card {
-  flex: 1 1 300px;
-  max-width: 400px;
-  background-color: #003366; /* Dunklere Karte */
-  border: 2px solid #e30613; /* rote Umrandung */
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  text-align: left; /* Text innerhalb Karte links */
-  color: #e30613; /* Rot */
-}
-.card h2 { color: #e30613; }
-.card.highlight { border: 2px solid #e30613; background-color: #004080; }
-
-/* Senderliste */
-.sender-liste {
+  padding: 24px 16px;
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  gap: 20px;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* CARD (für Texte, Radios, Über uns etc.) */
+.card {
+  background-color: #1E40AF;
+  border: 2px solid #FACC15;
+  border-radius: 12px;
   padding: 20px;
-  background-color: #00264d; /* dunkles Blau für Senderliste */
-  border-radius: 10px;
+  width: 100%;
+  max-width: 420px;
+  text-align: left;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
 }
+
+.card h2,
+.card h3 {
+  color: #FACC15;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #F9FAFB;
+  margin-bottom: 10px;
+}
+
+/* RADIOAUSWAHL / SENDERLISTE */
+.sender-liste {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+
 .sender-card {
-  flex: 1 1 200px;
-  max-width: 250px;
-  background-color: #003366;
-  border: 2px solid #e30613;
-  border-radius: 8px;
-  padding: 15px;
+  background-color: #1E40AF;
+  border: 2px solid #FACC15;
+  border-radius: 14px;
+  padding: 16px;
   text-align: center;
-  color: #e30613; /* Rot */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
 }
-.sender-card h3 { color: #e30613; margin-bottom: 10px; }
-.sender-card iframe { width: 100%; max-width: 220px; height: 150px; border-radius: 8px; border: none; display: block; margin: 0 auto; }
 
-/* Footer */
+.sender-card h3 {
+  color: #FACC15;
+  margin-bottom: 12px;
+}
+
+/* LAUT.FM PLAYER */
+.sender-card iframe,
+iframe {
+  width: 100%;
+  max-width: 360px;
+  height: 150px;
+  border: none;
+  border-radius: 10px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* RADIO EINZELSEITEN */
+.radio-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* FOOTER */
 .site-footer {
-  background-color: #003366;
-  color: #e30613; /* Rot */
-  text-align: center;
-  padding: 15px;
+  background-color: #1E40AF;
+  padding: 16px;
+  margin-top: 40px;
+  border-top: 2px solid #FACC15;
 }
 
-/* Cookie Banner */
+.site-footer p {
+  color: #F9FAFB;
+  font-size: 14px;
+}
+
+/* COOKIE BANNER */
 #cookie-banner {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #00264d;
-  color: #e30613; /* Rot */
-  padding: 15px 20px;
+  background-color: #1E40AF;
+  border-top: 2px solid #FACC15;
+  padding: 14px 16px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  gap: 12px;
   z-index: 9999;
   font-size: 14px;
-  flex-wrap: wrap;
-  gap: 10px;
 }
-#cookie-banner a { color: #e30613; }
-#cookie-banner button { background: #e30613; border: none; color: white; padding: 8px 14px; cursor: pointer; border-radius: 4px; }
 
-/* Laut.fm Player */
-iframe {
-  display: block;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 500px;
-  height: 150px;
-  border-radius: 8px;
+#cookie-banner span {
+  color: #F9FAFB;
+}
+
+#cookie-banner a {
+  color: #FACC15;
+}
+
+#cookie-banner button {
+  background-color: #FACC15;
+  color: #1E40AF;
   border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-/* Responsive Media Queries */
-@media (max-width: 992px) {
-  body { font-size: 15px; }
-  .content { max-width: 90%; }
-  .sender-card { max-width: 45%; }
-}
+/* =========================
+   RESPONSIVE
+========================= */
+
+/* TABLET */
 @media (max-width: 768px) {
-  .content { flex-direction: column; align-items: center; padding: 10px; }
-  .card { flex: 1 1 90%; max-width: 90%; }
-  .sender-liste { flex-direction: column; align-items: center; }
-  .sender-card { flex: 1 1 80%; max-width: 80%; margin-bottom: 15px; }
-  #cookie-banner { flex-direction: column; text-align: center; }
+  .content {
+    padding: 16px 12px;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+
+  .sender-liste {
+    grid-template-columns: 1fr;
+  }
 }
+
+/* MOBILE */
 @media (max-width: 480px) {
-  body { font-size: 12px; }
-  .site-header h1 { font-size: 20px; }
-  .site-header .subtitle { font-size: 14px; }
-  #cookie-banner { font-size: 12px; padding: 10px; }
-  #cookie-banner button { padding: 6px 10px; }
+  body {
+    font-size: 14px;
+  }
+
+  .site-header h1 {
+    font-size: 22px;
+  }
+
+  .site-header .subtitle {
+    font-size: 14px;
+  }
+
+  iframe {
+    height: 140px;
+  }
+
+  #cookie-banner {
+    font-size: 12px;
+    text-align: center;
+  }
 }
