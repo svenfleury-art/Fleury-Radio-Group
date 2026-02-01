@@ -1,142 +1,159 @@
 /* ==================================================
-   FRG – Royal Blue / Gold
-   Bigger on Desktop + Bigger on Mobile + Centered
+   FRG – style.css (passt zu deinem HTML)
+   Royal Blue (#2563EB) | White (#F9FAFB) | Gold (#FACC15)
 ================================================== */
 
 /* RESET */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* COLORS */
-:root{
-  --bg: #2563EB;      /* Royal Blue */
-  --panel: #1E40AF;   /* Darker Blue */
-  --text: #F9FAFB;    /* Near White */
-  --accent: #FACC15;  /* Gold */
-}
-
 /* GLOBAL */
 body{
   font-family: Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  background: #2563EB;
+  color: #F9FAFB;
   line-height: 1.65;
   text-align: center;
-  font-size: 18px;           /* Desktop Basis größer */
+  font-size: 18px;              /* Desktop nicht zu klein */
 }
 
-a{ color: var(--accent); text-decoration: none; }
+a{ color: #FACC15; text-decoration: none; }
 a:hover{ text-decoration: underline; }
 
-/* HEADER */
-.site-header{
-  background: var(--panel);
-  padding: 34px 16px;
-  border-bottom: 2px solid var(--accent);
+/* HEADER (dein <header>) */
+header{
+  background: #1E40AF;
+  border-bottom: 2px solid #FACC15;
+  padding: 30px 16px;
 }
 
-.site-header h1{
-  color: var(--accent);
-  font-size: clamp(34px, 4vw, 52px);
-  letter-spacing: 0.2px;
+header h1{
+  color: #FACC15;
+  font-size: clamp(32px, 4vw, 52px);
+  margin-bottom: 10px;
 }
 
-.site-header .subtitle{
-  margin-top: 8px;
-  color: var(--text);
-  font-size: clamp(16px, 2vw, 22px);
+header p{
+  font-size: 18px;
+  opacity: 0.95;
 }
 
-/* LAYOUT WRAPPER */
-.content{
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 36px 16px;
+/* NAV (dein <nav>) */
+nav{
   display: flex;
+  justify-content: center;
+  gap: 14px;
   flex-wrap: wrap;
-  justify-content: center;   /* zentriert */
-  align-items: stretch;
-  gap: 28px;
+  margin: 10px 0 14px 0;
 }
 
-/* CARDS */
-.card{
+nav a{
+  background: rgba(250,204,21,0.14);
+  border: 1px solid #FACC15;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+/* RADIO-AUSWAHL: dein <section class="cards"> */
+.cards{
   width: 100%;
-  max-width: 720px;          /* Desktop größer */
-  background: var(--panel);
-  border: 2px solid var(--accent);
+  max-width: 1200px;
+  margin: 0 auto;               /* zentriert den Container */
+  padding: 30px 16px;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr)); /* Desktop 3 nebeneinander */
+  gap: 24px;
+
+  justify-content: center;       /* zentriert grid */
+  place-content: center;         /* zentriert grid */
+}
+
+/* Cards (deine .card) */
+.card{
+  background: #1E40AF;
+  border: 2px solid #FACC15;
   border-radius: 16px;
-  padding: 26px;
+  padding: 22px;
   text-align: left;
   box-shadow: 0 10px 24px rgba(0,0,0,0.35);
 }
 
-.card h2, .card h3{
-  color: var(--accent);
-  margin-bottom: 12px;
+.card h3{
+  color: #FACC15;
+  font-size: 22px;
+  margin-bottom: 10px;
 }
 
 .card p{
+  color: #F9FAFB;
   margin-bottom: 12px;
-  color: var(--text);
 }
 
-/* TEAM PHOTO */
-.team-photo{
-  width: 220px;
-  max-width: 100%;
-  height: auto;
-  border-radius: 50%;
-  display: block;
-  margin: 18px auto;
-  border: 2px solid var(--accent);
+/* Button-Link in Cards */
+.card a{
+  display: inline-block;
+  margin-top: 6px;
+  background: #FACC15;
+  color: #1E40AF;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: bold;
 }
 
-/* ==================================================
-   RADIOAUSWAHL / SENDERLISTE
-   -> zentriert + responsive grid
-================================================== */
-.sender-liste{
+/* FOOTER (dein <footer>) */
+footer{
+  background: #1E40AF;
+  border-top: 2px solid #FACC15;
+  padding: 18px 16px;
+  margin-top: 20px;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+footer a{
+  font-weight: bold;
+}
+
+/* COOKIE BANNER (dein #cookie-banner) */
+#cookie-banner{
+  position: fixed;
+  bottom: 0; left: 0;
   width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;            /* zentriert */
-  padding: 0 16px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(280px, 1fr)); /* Desktop: 3 Spalten wenn Platz */
-  gap: 28px;
-  justify-content: center;   /* wichtig */
-  place-content: center;     /* wichtig */
+  background: #1E40AF;
+  border-top: 2px solid #FACC15;
+  padding: 16px 14px;
+  display: flex;                /* dein JS setzt flex */
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  z-index: 9999;
+  font-size: 14px;
 }
 
-/* wenn weniger Platz: 2 Spalten */
-@media (max-width: 1100px){
-  .sender-liste{
-    grid-template-columns: repeat(2, minmax(280px, 1fr));
-  }
+#cookie-banner p{
+  margin: 0;
 }
 
-/* Sender Card */
-.sender-card{
-  width: 100%;
-  background: var(--panel);
-  border: 2px solid var(--accent);
-  border-radius: 16px;
-  padding: 18px;
-  text-align: center;
-  box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+#cookie-banner button{
+  background: #FACC15;
+  color: #1E40AF;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.sender-card h3{
-  color: var(--accent);
-  margin-bottom: 14px;
-  font-size: 22px;
-}
-
-/* PLAYER – Desktop sinnvoll groß */
+/* RADIO EINZELSEITEN: PLAYER groß & responsive */
 iframe{
   width: 100%;
   max-width: 100%;
-  height: 220px;            /* Desktop */
+  height: 240px;                 /* Desktop ok */
   border: none;
   border-radius: 14px;
   display: block;
@@ -144,84 +161,44 @@ iframe{
 }
 
 /* ==================================================
-   RADIO EINZELSEITEN (optional body class="radio-page")
+   RESPONSIVE
 ================================================== */
-.radio-page .content{
-  max-width: 900px;
+
+/* 2 Spalten (Tablet/kleiner Desktop) */
+@media (max-width: 1100px){
+  .cards{
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+  }
 }
 
-/* FOOTER */
-.site-footer{
-  margin-top: 40px;
-  background: var(--panel);
-  border-top: 2px solid var(--accent);
-  padding: 18px 16px;
-}
-
-.site-footer p{ color: var(--text); font-size: 15px; }
-
-/* COOKIE */
-#cookie-banner{
-  position: fixed;
-  bottom: 0; left: 0;
-  width: 100%;
-  background: var(--panel);
-  border-top: 2px solid var(--accent);
-  padding: 16px 14px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  z-index: 9999;
-  font-size: 14px;
-}
-
-#cookie-banner span{ color: var(--text); }
-#cookie-banner a{ color: var(--accent); }
-#cookie-banner button{
-  background: var(--accent);
-  color: var(--panel);
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* ==================================================
-   MOBILE – wirklich größer (dein Hauptproblem)
-================================================== */
+/* 1 Spalte + alles größer auf Mobile */
 @media (max-width: 768px){
-  body{ font-size: 18px; }   /* Mobile NICHT kleiner! */
-  .content{ padding: 22px 12px; gap: 18px; }
-  .card{ max-width: 100%; padding: 20px; }
+  body{ font-size: 18px; }        /* nicht kleiner! */
 
-  .sender-liste{
-    grid-template-columns: 1fr;  /* Mobile: 1 Spalte */
+  .cards{
+    grid-template-columns: 1fr;
     max-width: 720px;
+    padding: 20px 12px;
   }
 
-  .sender-card h3{ font-size: 20px; }
+  header{ padding: 24px 12px; }
+  header p{ font-size: 16px; }
 
   iframe{
-    height: 320px;              /* Mobile: deutlich größer */
+    height: 320px;                /* Mobile deutlich größer */
   }
 }
 
+/* kleines Handy */
 @media (max-width: 480px){
-  body{ font-size: 18px; }      /* bewusst groß */
-  .site-header{ padding: 26px 12px; }
-  .site-header h1{ font-size: 30px; }
-  .site-header .subtitle{ font-size: 16px; }
-
   iframe{
-    height: 360px;              /* kleines Handy: noch größer */
+    height: 360px;                /* noch größer */
+  }
+
+  nav a{
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
   }
 }
-
-/* 404 */
-.error-page .site-header{ background: #1E3A8A; }
-.error-page h1{ font-size: clamp(64px, 10vw, 120px); color: var(--accent); }
-.error-page .card{ text-align: center; }
 
