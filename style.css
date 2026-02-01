@@ -271,13 +271,6 @@ iframe {
   .radio-auswahl .sender-card {
     padding: 14px;
   }
-   .team-photo {
-  width: 160px;
-  max-width: 100%;
-  border-radius: 50%;
-  margin: 16px auto;
-  display: block;
-  border: 2px solid #FACC15;
-}
+  
 
 }
