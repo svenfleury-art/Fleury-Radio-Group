@@ -27,6 +27,16 @@ a:hover {
   text-decoration: underline;
 }
 
+.team-photo {
+  width: 160px;
+  max-width: 100%;
+  border-radius: 50%;
+  margin: 16px auto;
+  display: block;
+  border: 2px solid #FACC15;
+}
+
+
 /* HEADER */
 .site-header {
   background-color: #1E40AF;
