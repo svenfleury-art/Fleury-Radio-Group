@@ -1,7 +1,7 @@
-/* =========================
-   FRG Webseite – Royal Blue
-   Mobile-first, Responsive
-========================= */
+/* ==================================================
+   FRG – Fleury Radio Group
+   Royal Blue Design | Mobile First | Clean
+================================================== */
 
 /* RESET */
 * {
@@ -10,15 +10,15 @@
   padding: 0;
 }
 
-/* =====================
+/* ==================================================
    GLOBAL
-===================== */
+================================================== */
 body {
   font-family: Arial, sans-serif;
-  background-color: #2563EB; /* Royal-Blau */
+  background-color: #2563EB; /* Royal Blau */
   color: #F9FAFB;            /* Fast Weiß */
-  text-align: center;
   line-height: 1.6;
+  text-align: center;
 }
 
 a {
@@ -29,56 +29,69 @@ a:hover {
   text-decoration: underline;
 }
 
-/* HEADER */
+/* ==================================================
+   HEADER
+================================================== */
 .site-header {
   background-color: #1E40AF;
   padding: 24px 16px;
 }
+
 .site-header h1 {
-  font-size: clamp(24px, 4vw, 36px);
   color: #FACC15;
-}
-.site-header .subtitle {
-  font-size: clamp(14px, 2vw, 18px);
-  margin-top: 6px;
-  color: #F9FAFB;
+  font-size: clamp(26px, 4vw, 38px);
 }
 
-/* CONTENT WRAPPER */
+.site-header .subtitle {
+  color: #F9FAFB;
+  margin-top: 6px;
+  font-size: clamp(14px, 2vw, 18px);
+}
+
+/* ==================================================
+   CONTENT WRAPPER
+================================================== */
 .content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 20px 12px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
-/* CARD */
+/* ==================================================
+   CARD (Texte, Team, Radios)
+================================================== */
 .card {
+  width: 100%;
+  max-width: 480px;
   background-color: #1E40AF;
   border: 2px solid #FACC15;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 20px;
-  width: 100%;
-  max-width: 420px;
   text-align: left;
   box-shadow: 0 8px 20px rgba(0,0,0,0.35);
 }
-.card h2, .card h3 {
+
+.card h2,
+.card h3 {
   color: #FACC15;
   margin-bottom: 10px;
 }
+
 .card p {
   color: #F9FAFB;
   margin-bottom: 10px;
 }
 
-/* TEAM FOTO */
+/* ==================================================
+   TEAM FOTO
+================================================== */
 .team-photo {
-  max-width: 180px;
-  width: 100%;
+  width: 180px;
+  max-width: 100%;
   height: auto;
   border-radius: 50%;
   display: block;
@@ -86,14 +99,16 @@ a:hover {
   border: 2px solid #FACC15;
 }
 
-/* RADIOAUSWAHL / SENDERLISTE */
+/* ==================================================
+   RADIOAUSWAHL
+================================================== */
 .sender-liste {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column; /* Mobile: untereinander */
+  gap: 16px;
 }
+
 .sender-card {
   background-color: #1E40AF;
   border: 2px solid #FACC15;
@@ -102,35 +117,50 @@ a:hover {
   text-align: center;
   box-shadow: 0 8px 18px rgba(0,0,0,0.35);
 }
+
 .sender-card h3 {
   color: #FACC15;
   margin-bottom: 12px;
 }
 
-/* LAUT.FM PLAYER */
-.sender-card iframe, iframe {
-  width: 100%;
-  max-width: 360px;
-  height: 150px;
+/* ==================================================
+   RADIO PLAYER (WICHTIG!)
+================================================== */
+iframe {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 260px !important;   /* 🔥 groß auf Mobile */
   border: none;
-  border-radius: 10px;
-  margin: 0 auto;
+  border-radius: 12px;
   display: block;
+  margin: 0 auto;
 }
 
-/* FOOTER */
+/* ==================================================
+   RADIO EINZELSEITEN
+================================================== */
+.radio-page .content {
+  max-width: 600px;
+}
+
+/* ==================================================
+   FOOTER
+================================================== */
 .site-footer {
   background-color: #1E40AF;
+  border-top: 2px solid #FACC15;
   padding: 16px;
   margin-top: 40px;
-  border-top: 2px solid #FACC15;
 }
+
 .site-footer p {
   color: #F9FAFB;
   font-size: 14px;
 }
 
-/* COOKIE BANNER */
+/* ==================================================
+   COOKIE BANNER
+================================================== */
 #cookie-banner {
   position: fixed;
   bottom: 0;
@@ -138,71 +168,65 @@ a:hover {
   width: 100%;
   background-color: #1E40AF;
   border-top: 2px solid #FACC15;
-  padding: 14px 16px;
+  padding: 14px 12px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 10px;
   z-index: 9999;
   font-size: 14px;
 }
-#cookie-banner span { color: #F9FAFB; }
-#cookie-banner a { color: #FACC15; }
+
+#cookie-banner span {
+  color: #F9FAFB;
+}
+
+#cookie-banner a {
+  color: #FACC15;
+}
+
 #cookie-banner button {
   background-color: #FACC15;
   color: #1E40AF;
   border: none;
-  padding: 8px 14px;
+  padding: 10px 16px;
   border-radius: 6px;
-  cursor: pointer;
   font-weight: bold;
+  cursor: pointer;
 }
 
-/* RADIO-SEITEN */
-.radio-page {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-.radio-page iframe { width: 100%; max-width: 360px; height: 150px; }
+/* ==================================================
+   DESKTOP ERWEITERUNG
+================================================== */
+@media (min-width: 768px) {
 
-/* RADIOAUSWAHL */
-.radio-auswahl .sender-liste {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-  padding: 16px;
-}
-.radio-auswahl .sender-card { width: 100%; }
+  .content {
+    padding: 32px 16px;
+  }
 
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 768px) {
-  .content { padding: 16px 12px; }
-  .card { max-width: 100%; }
-  .sender-liste { grid-template-columns: 1fr; }
-  .radio-page iframe,
-  .radio-auswahl .sender-card iframe { height: 140px; }
+  .sender-liste {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  iframe {
+    height: 200px !important; /* Desktop etwas kleiner */
+  }
 }
 
-@media (max-width: 480px) {
-  body { font-size: 14px; }
-  .site-header h1 { font-size: 22px; }
-  .site-header .subtitle { font-size: 14px; }
-  .radio-page iframe,
-  .radio-auswahl .sender-card iframe { height: 130px; }
-  #cookie-banner { font-size: 12px; text-align: center; }
-  .radio-auswahl .sender-card { padding: 12px; }
+/* ==================================================
+   404 SEITE
+================================================== */
+.error-page .site-header {
+  background-color: #1E3A8A;
 }
 
-/* =====================
-   404 ERROR PAGE
-===================== */
-.error-page .site-header { background: #1E3A8A; }
-.error-page h1 { font-size: clamp(64px, 10vw, 120px); margin: 0; color: #FACC15; }
-.error-page .card { text-align: center; }
+.error-page h1 {
+  font-size: clamp(64px, 10vw, 120px);
+  color: #FACC15;
+}
+
+.error-page .card {
+  text-align: center;
+}
+
