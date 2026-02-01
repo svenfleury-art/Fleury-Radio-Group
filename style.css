@@ -47,11 +47,12 @@ a:hover {
 }
 
 .team-photo {
-  width: 160px;
-  max-width: 100%;
+  max-width: 180px;
+  width: 100%;
+  height: auto;
   border-radius: 50%;
-  margin: 16px auto;
   display: block;
+  margin: 16px auto;
   border: 2px solid #FACC15;
 }
 
@@ -290,6 +291,55 @@ iframe {
   .radio-auswahl .sender-card {
     padding: 14px;
   }
-  
+  /* RADIO EINZELSEITEN */
+.radio-page .content {
+  display: flex;
+  flex-direction: column; /* untereinander auf Mobile */
+  align-items: center;    /* zentriert */
+  gap: 20px;
+  padding: 16px;
+}
+
+.radio-page .sender-card iframe {
+  width: 100%;
+  max-width: 360px;
+  height: 150px;
+}
+
+/* RADIOAUSWAHL-SEITE */
+.radio-auswahl .sender-liste {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  padding: 16px;
+}
+
+.radio-auswahl .sender-card {
+  width: 100%;
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+  .radio-auswahl .sender-liste {
+    grid-template-columns: 1fr;
+  }
+
+  .radio-auswahl .sender-card iframe,
+  .radio-page iframe {
+    max-width: 100%;
+    height: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .radio-page iframe {
+    height: 130px;
+  }
+
+  .radio-auswahl .sender-card {
+    padding: 12px;
+  }
+}
+
 
 }
