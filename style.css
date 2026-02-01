@@ -1,7 +1,7 @@
 /* ==================================================
    FRG – style.css
-   Royal Blue | White | Gold
-   Sauber, zentriert, Mobile & Desktop groß
+   Royal Blue (#2563EB) | White (#F9FAFB) | Gold (#FACC15)
+   Passt zu deinem HTML: header/nav/.cards/.card/footer
 ================================================== */
 
 /* RESET */
@@ -18,7 +18,7 @@ body {
   color: #F9FAFB;
   line-height: 1.65;
   text-align: center;
-  font-size: 18px; /* Basisgröße */
+  font-size: 18px; /* Basis */
 }
 
 a {
@@ -64,20 +64,30 @@ nav a {
   font-weight: bold;
 }
 
-/* ==================================================
-   RADIOAUSWAHL
-================================================== */
+/* CONTENT (für Seiten die .content verwenden) */
+.content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* RADIOAUSWAHL: <section class="cards"> */
 .cards {
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto;             /* zentriert */
   padding: 32px 16px;
 
   display: grid;
   grid-template-columns: repeat(3, minmax(300px, 1fr));
   gap: 28px;
 
-  justify-content: center;
+  justify-content: center;     /* zentriert das Grid */
   place-content: center;
 }
 
@@ -92,13 +102,17 @@ nav a {
 
   width: 100%;
   max-width: 520px;
-  margin: 0 auto;
+  margin: 0 auto;             /* Karte selbst zentriert */
+}
+
+.card h2,
+.card h3 {
+  color: #FACC15;
+  margin-bottom: 12px;
 }
 
 .card h3 {
-  color: #FACC15;
   font-size: 24px;
-  margin-bottom: 12px;
 }
 
 .card p {
@@ -106,6 +120,7 @@ nav a {
   margin-bottom: 14px;
 }
 
+/* BUTTON-LINK in Cards */
 .card a {
   display: inline-block;
   margin-top: 8px;
@@ -117,22 +132,29 @@ nav a {
   font-size: 18px;
 }
 
-/* ==================================================
-   RADIO PLAYER
-================================================== */
+/* TEAM FOTO (jetzt NICHT mehr zu groß) */
+.team-photo {
+  width: 160px;        /* Desktop Standard */
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+  display: block;
+  margin: 16px auto;
+  border: 2px solid #FACC15;
+}
+
+/* RADIO PLAYER */
 iframe {
   width: 100%;
   max-width: 100%;
-  height: 240px; /* Desktop */
+  height: 240px;       /* Desktop */
   border: none;
   border-radius: 16px;
   display: block;
   margin: 0 auto;
 }
 
-/* ==================================================
-   FOOTER
-================================================== */
+/* FOOTER */
 footer {
   background: #1E40AF;
   border-top: 2px solid #FACC15;
@@ -149,9 +171,7 @@ footer a {
   font-weight: bold;
 }
 
-/* ==================================================
-   COOKIE BANNER
-================================================== */
+/* COOKIE BANNER */
 #cookie-banner {
   position: fixed;
   bottom: 0;
@@ -171,6 +191,10 @@ footer a {
   font-size: 14px;
 }
 
+#cookie-banner p {
+  margin: 0;
+}
+
 #cookie-banner button {
   background: #FACC15;
   color: #1E40AF;
@@ -185,18 +209,18 @@ footer a {
    RESPONSIVE
 ================================================== */
 
-/* Tablet / kleiner Desktop */
+/* Tablet / kleiner Desktop: 2 Spalten */
 @media (max-width: 1100px) {
   .cards {
     grid-template-columns: repeat(2, minmax(300px, 1fr));
   }
 }
 
-/* MOBILE */
+/* Mobile */
 @media (max-width: 768px) {
 
   body {
-    font-size: 19px; /* bewusst groß */
+    font-size: 19px; /* größere Schrift */
   }
 
   header {
@@ -218,7 +242,7 @@ footer a {
   }
 
   .card h3 {
-    font-size: 26px; /* große Sendernamen */
+    font-size: 26px;
   }
 
   .card p {
@@ -231,8 +255,14 @@ footer a {
     padding: 14px 20px;
   }
 
+  /* Player deutlich größer */
   iframe {
-    height: 320px; /* großer Player */
+    height: 320px;
+  }
+
+  /* Team-Bild etwas kleiner */
+  .team-photo {
+    width: 140px;
   }
 }
 
@@ -252,4 +282,10 @@ footer a {
     max-width: 300px;
     text-align: center;
   }
+
+  /* Team-Bild noch kleiner */
+  .team-photo {
+    width: 120px;
+  }
 }
+
