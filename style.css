@@ -11,25 +11,8 @@
 }
 
 /* =====================
-   404 ERROR PAGE
+   GLOBAL
 ===================== */
-
-.error-page .site-header {
-  background: #1E3A8A;
-}
-
-.error-page h1 {
-  font-size: clamp(64px, 10vw, 120px);
-  margin: 0;
-  color: #FACC15; /* Gold */
-}
-
-.error-page .card {
-  text-align: center;
-}
-
-
-/* GLOBAL */
 body {
   font-family: Arial, sans-serif;
   background-color: #2563EB; /* Royal-Blau */
@@ -46,28 +29,15 @@ a:hover {
   text-decoration: underline;
 }
 
-.team-photo {
-  max-width: 180px;
-  width: 100%;
-  height: auto;
-  border-radius: 50%;
-  display: block;
-  margin: 16px auto;
-  border: 2px solid #FACC15;
-}
-
-
 /* HEADER */
 .site-header {
   background-color: #1E40AF;
   padding: 24px 16px;
 }
-
 .site-header h1 {
   font-size: clamp(24px, 4vw, 36px);
   color: #FACC15;
 }
-
 .site-header .subtitle {
   font-size: clamp(14px, 2vw, 18px);
   margin-top: 6px;
@@ -85,7 +55,7 @@ a:hover {
   gap: 24px;
 }
 
-/* CARD (für Texte, Radios, Über uns etc.) */
+/* CARD */
 .card {
   background-color: #1E40AF;
   border: 2px solid #FACC15;
@@ -96,16 +66,24 @@ a:hover {
   text-align: left;
   box-shadow: 0 8px 20px rgba(0,0,0,0.35);
 }
-
-.card h2,
-.card h3 {
+.card h2, .card h3 {
   color: #FACC15;
   margin-bottom: 10px;
 }
-
 .card p {
   color: #F9FAFB;
   margin-bottom: 10px;
+}
+
+/* TEAM FOTO */
+.team-photo {
+  max-width: 180px;
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  display: block;
+  margin: 16px auto;
+  border: 2px solid #FACC15;
 }
 
 /* RADIOAUSWAHL / SENDERLISTE */
@@ -116,7 +94,6 @@ a:hover {
   gap: 24px;
   margin-top: 20px;
 }
-
 .sender-card {
   background-color: #1E40AF;
   border: 2px solid #FACC15;
@@ -125,15 +102,13 @@ a:hover {
   text-align: center;
   box-shadow: 0 8px 18px rgba(0,0,0,0.35);
 }
-
 .sender-card h3 {
   color: #FACC15;
   margin-bottom: 12px;
 }
 
 /* LAUT.FM PLAYER */
-.sender-card iframe,
-iframe {
+.sender-card iframe, iframe {
   width: 100%;
   max-width: 360px;
   height: 150px;
@@ -143,12 +118,6 @@ iframe {
   display: block;
 }
 
-/* RADIO EINZELSEITEN */
-.radio-page {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
 /* FOOTER */
 .site-footer {
   background-color: #1E40AF;
@@ -156,7 +125,6 @@ iframe {
   margin-top: 40px;
   border-top: 2px solid #FACC15;
 }
-
 .site-footer p {
   color: #F9FAFB;
   font-size: 14px;
@@ -179,15 +147,8 @@ iframe {
   z-index: 9999;
   font-size: 14px;
 }
-
-#cookie-banner span {
-  color: #F9FAFB;
-}
-
-#cookie-banner a {
-  color: #FACC15;
-}
-
+#cookie-banner span { color: #F9FAFB; }
+#cookie-banner a { color: #FACC15; }
 #cookie-banner button {
   background-color: #FACC15;
   color: #1E40AF;
@@ -198,149 +159,50 @@ iframe {
   font-weight: bold;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-
-/* TABLET */
-@media (max-width: 768px) {
-  .content {
-    padding: 16px 12px;
-  }
-
-  .card {
-    max-width: 100%;
-  }
-
-  .sender-liste {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* MOBILE */
-@media (max-width: 480px) {
-  body {
-    font-size: 14px;
-  }
-
-  .site-header h1 {
-    font-size: 22px;
-  }
-
-  .site-header .subtitle {
-    font-size: 14px;
-  }
-
-  iframe {
-    height: 140px;
-  }
-
-  #cookie-banner {
-    font-size: 12px;
-    text-align: center;
-  }
-}
-/* =========================
-   RADIO SEITEN – MOBILE FIX
-========================= */
-
-/* RADIO EINZELSEITEN */
-.radio-page .content {
+/* RADIO-SEITEN */
+.radio-page {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
 }
-
-.radio-page iframe {
-  width: 100% !important;
-  max-width: 360px;
-  height: 150px;
-}
+.radio-page iframe { width: 100%; max-width: 360px; height: 150px; }
 
 /* RADIOAUSWAHL */
-.radio-auswahl .sender-liste {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-}
-
-.radio-auswahl .sender-card {
-  width: 100%;
-}
-
-/* MOBILE SPEZIFISCH */
-@media (max-width: 768px) {
-
-  .radio-auswahl .sender-liste {
-    grid-template-columns: 1fr;
-  }
-
-  .radio-auswahl .sender-card iframe,
-  .radio-page iframe {
-    max-width: 100%;
-    height: 140px;
-  }
-   
-}
-
-@media (max-width: 480px) {
-
-  .radio-page iframe {
-    height: 130px;
-  }
-
-  .radio-auswahl .sender-card {
-    padding: 14px;
-  }
-  /* RADIO EINZELSEITEN */
-.radio-page .content {
-  display: flex;
-  flex-direction: column; /* untereinander auf Mobile */
-  align-items: center;    /* zentriert */
-  gap: 20px;
-  padding: 16px;
-}
-
-.radio-page .sender-card iframe {
-  width: 100%;
-  max-width: 360px;
-  height: 150px;
-}
-
-/* RADIOAUSWAHL-SEITE */
 .radio-auswahl .sender-liste {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 20px;
   padding: 16px;
 }
+.radio-auswahl .sender-card { width: 100%; }
 
-.radio-auswahl .sender-card {
-  width: 100%;
-}
-
-/* Mobile Fix */
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 768px) {
-  .radio-auswahl .sender-liste {
-    grid-template-columns: 1fr;
-  }
-
-  .radio-auswahl .sender-card iframe,
-  .radio-page iframe {
-    max-width: 100%;
-    height: 140px;
-  }
+  .content { padding: 16px 12px; }
+  .card { max-width: 100%; }
+  .sender-liste { grid-template-columns: 1fr; }
+  .radio-page iframe,
+  .radio-auswahl .sender-card iframe { height: 140px; }
 }
 
 @media (max-width: 480px) {
-  .radio-page iframe {
-    height: 130px;
-  }
-   }
-
-  .radio-auswahl .sender-card {
-    padding: 12px;
-  }
+  body { font-size: 14px; }
+  .site-header h1 { font-size: 22px; }
+  .site-header .subtitle { font-size: 14px; }
+  .radio-page iframe,
+  .radio-auswahl .sender-card iframe { height: 130px; }
+  #cookie-banner { font-size: 12px; text-align: center; }
+  .radio-auswahl .sender-card { padding: 12px; }
 }
 
-
-}
+/* =====================
+   404 ERROR PAGE
+===================== */
+.error-page .site-header { background: #1E3A8A; }
+.error-page h1 { font-size: clamp(64px, 10vw, 120px); margin: 0; color: #FACC15; }
+.error-page .card { text-align: center; }
