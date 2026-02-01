@@ -201,4 +201,37 @@ iframe{
     text-align: center;
   }
 }
+/* ===== FIX: Radios-Auswahl zentrieren (GANZ UNTEN einfügen) ===== */
+.cards{
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;          /* Container zentriert */
+  padding: 30px 16px !important;
+
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(280px, 1fr)) !important;
+  gap: 24px !important;
+
+  justify-content: center !important;  /* Grid als Ganzes zentrieren */
+  place-content: center !important;
+}
+
+.cards .card{
+  justify-self: center !important;     /* jede Karte in ihrer Spalte zentrieren */
+  width: 100% !important;
+  max-width: 420px !important;
+}
+
+@media (max-width: 1100px){
+  .cards{
+    grid-template-columns: repeat(2, minmax(280px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 768px){
+  .cards{
+    grid-template-columns: 1fr !important;
+    max-width: 720px !important;
+  }
+}
 
