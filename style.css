@@ -317,32 +317,47 @@ iframe {
     font-size: 19px;
   }
 }
-/* Hamburger Button */
+
+
+/* ===============================
+   HAMBURGER MENÜ – DESKTOP + MOBILE
+=============================== */
+
+/* Hamburger Button – IMMER sichtbar */
 .hamburger{
-  display: none;
+  display: inline-block;              /* 🔥 auch auf Desktop */
   background: rgba(250,204,21,0.15);
-  border: 1px solid #FACC15;
+  border: 2px solid #FACC15;
   color: #FACC15;
+  font-size: 26px;
   padding: 10px 14px;
   border-radius: 10px;
-  font-size: 22px;
-  font-weight: bold;
   cursor: pointer;
+  margin-top: 12px;
 }
 
-/* Mobile: Menü verstecken */
-@media (max-width: 768px){
-  .hamburger{ display: inline-block; margin-top: 12px; }
+/* Navigation standardmäßig geschlossen */
+.nav-links{
+  display: none;                      /* 🔥 immer zu */
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+  align-items: center;
+}
 
-  nav.nav-links{
-    display: none;            /* zu */
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 14px;
+/* Navigation offen */
+.nav-links.open{
+  display: flex;
+}
+
+/* Desktop: etwas breiter & ruhiger */
+@media (min-width: 769px){
+  .nav-links{
+    gap: 16px;
   }
 
-  nav.nav-links.open{
-    display: flex;            /* auf */
-    align-items: center;
+  .nav-links a{
+    font-size: 18px;
+    padding: 8px 14px;
   }
 }
