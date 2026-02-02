@@ -117,11 +117,17 @@ document.getElementById("acceptCookies").onclick = function () {
 };
 </script>
 
-  <script>
-  document.getElementById("hamburger").onclick = function () {
-    document.getElementById("menu").classList.toggle("show");
-  };
+ <script>
+  const btn = document.getElementById("hamburgerBtn");
+  const nav = document.getElementById("mainNav");
+
+  if (btn && nav) {
+    btn.addEventListener("click", () => {
+      nav.classList.toggle("open");
+    });
+  }
 </script>
+
 
 </body>
 </html>
