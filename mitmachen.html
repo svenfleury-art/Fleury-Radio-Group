@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mitmachen – Fleury Radio Group</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="content.htm" type="image/png">
+</head>
+
+<body>
+
+<header>
+  <h1>Werde Teil der FRG</h1>
+
+  <nav id="mainNav">
+    <a href="index.html">Home</a>
+    <a href="radios.html">Radios</a>
+    <a href="about.html">Über uns</a>
+    <a href="frg-inside.html">FRG Inside</a>
+    <a href="mitmachen.html">Mitmachen</a>
+  </nav>
+
+  <p>Mithelfen. Mitgestalten. Musik leben – ehrenamtlich und lokal.</p>
+</header>
+
+<section class="content">
+
+  <section class="card">
+    <h2>Warum mitmachen?</h2>
+    <p>
+      Die Fleury Radio Group lebt von Menschen, die Radio lieben. Wenn du Lust hast,
+      Teil eines unabhängigen Projekts aus der Region Basel zu sein, bist du bei uns richtig.
+    </p>
+    <p>
+      Vorkenntnisse sind keine Pflicht – Motivation, Zuverlässigkeit und Teamgeist zählen.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Was du bei uns machen kannst</h2>
+    <p>Je nach Interesse kannst du dich bei FRG in verschiedenen Bereichen einbringen:</p>
+    <p>
+      🎶 Musik & Playlists<br>
+      🎧 Ideen für Specials / Senderprofil<br>
+      💻 Technik & Webseite<br>
+      📝 Texte, Inhalte & Kreatives<br>
+      📣 Social Media & Community
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>So läuft’s ab</h2>
+    <p>
+      Schreib uns kurz, was dich interessiert und wie viel Zeit du ungefähr hast.
+      Wir melden uns zurück und schauen gemeinsam, was passt.
+    </p>
+    <p>
+      Wichtig: FRG ist ehrenamtlich – aber mit Anspruch. Wir möchten etwas aufbauen,
+      das Bestand hat und Spaß macht.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Kontakt</h2>
+    <p>📧 Schreib uns an:</p>
+    <p><a href="mailto:kontakt@frg-radio.ch">kontakt@frg-radio.ch</a></p>
+  </section>
+
+</section>
+
+<footer>
+  <a href="impressum.html">Impressum</a>
+  <a href="agb.html">AGB</a>
+  <a href="datenschutz.html">Datenschutz</a>
+</footer>
+
+<div id="cookie-banner" style="display:none;">
+  <p>
+    Diese Webseite verwendet technisch notwendige Cookies.
+    <a href="datenschutz.html">Mehr erfahren</a>
+  </p>
+  <button id="acceptCookies">OK</button>
+</div>
+
+<script>
+function setCookie(name, value, days) {
+  const date = new Date();
+  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+  document.cookie = name + "=" + value + "; expires=" + date.toUTCString() + "; path=/";
+}
+function getCookie(name) {
+  return document.cookie.split('; ').find(row => row.startsWith(name + "="));
+}
+if (!getCookie("cookieConsent")) {
+  document.getElementById("cookie-banner").style.display = "flex";
+}
+document.getElementById("acceptCookies").onclick = function () {
+  setCookie("cookieConsent", "true", 365);
+  document.getElementById("cookie-banner").style.display = "none";
+};
+</script>
+
+</body>
+</html>
