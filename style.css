@@ -1,6 +1,10 @@
 /* ==================================================
    FRG – style.css
-   Royal Blue (#2563EB) | White (#F9FAFB) | Gold (#FACC15) | Red (#EF4444)
+   Royal Blue (#2563EB)
+   Dark Blue (#1E40AF)
+   White (#F9FAFB)
+   Gold (#FACC15)
+   Red (#EF4444)
 ================================================== */
 
 /* RESET */
@@ -14,18 +18,18 @@
 body {
   font-family: Arial, sans-serif;
   background: #2563EB;
-  color: #F9FAFB; /* Fließtext bleibt weiß */
+  color: #F9FAFB;
   line-height: 1.65;
   text-align: center;
   font-size: 18px;
 }
 
-/* ÜBERSCHRIFTEN ROT */
+/* ÜBERSCHRIFTEN */
 h1, h2, h3, h4, h5, h6 {
   color: #EF4444;
 }
 
-/* LINKS ROT */
+/* LINKS */
 a {
   color: #EF4444;
   text-decoration: none;
@@ -126,12 +130,12 @@ nav a {
   margin-bottom: 14px;
 }
 
-/* BUTTON-LINK in Cards */
+/* BUTTON-LINK */
 .card a {
   display: inline-block;
   margin-top: 8px;
   background: #FACC15;
-  color: #1E40AF; /* Button-Text bleibt blau für Kontrast */
+  color: #1E40AF;
   padding: 12px 18px;
   border-radius: 12px;
   font-weight: bold;
@@ -161,20 +165,37 @@ iframe {
 }
 
 /* FOOTER */
-footer {
+.site-footer {
   background: #1E40AF;
   border-top: 2px solid #FACC15;
-  padding: 20px 16px;
+  padding: 24px 16px;
   margin-top: 32px;
-
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 16px;
+  text-align: center;
 }
 
-footer a {
+.site-footer .footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.site-footer a {
   font-weight: bold;
+}
+
+.site-footer .footer-claim {
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #FACC15;
+  margin: 6px 0;
+}
+
+.site-footer .footer-copy {
+  font-size: 14px;
+  opacity: 0.9;
 }
 
 /* COOKIE BANNER */
