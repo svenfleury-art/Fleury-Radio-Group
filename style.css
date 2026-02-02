@@ -1,7 +1,6 @@
 /* ==================================================
    FRG – style.css
-   Royal Blue (#2563EB) | White (#F9FAFB) | Gold (#FACC15)
-   Passt zu deinem HTML: header/nav/.cards/.card/footer
+   Royal Blue (#2563EB) | White (#F9FAFB) | Gold (#FACC15) | Red (#EF4444)
 ================================================== */
 
 /* RESET */
@@ -15,17 +14,25 @@
 body {
   font-family: Arial, sans-serif;
   background: #2563EB;
-  color: #F9FAFB;
+  color: #F9FAFB; /* Fließtext bleibt weiß */
   line-height: 1.65;
   text-align: center;
-  font-size: 18px; /* Basis */
+  font-size: 18px;
 }
 
+/* ÜBERSCHRIFTEN ROT */
+h1, h2, h3, h4, h5, h6 {
+  color: #EF4444;
+}
+
+/* LINKS ROT */
 a {
-  color: #FACC15;
+  color: #EF4444;
   text-decoration: none;
 }
+
 a:hover {
+  color: #FCA5A5;
   text-decoration: underline;
 }
 
@@ -37,7 +44,6 @@ header {
 }
 
 header h1 {
-  color: #FACC15;
   font-size: clamp(32px, 4vw, 52px);
   margin-bottom: 10px;
 }
@@ -64,7 +70,7 @@ nav a {
   font-weight: bold;
 }
 
-/* CONTENT (für Seiten die .content verwenden) */
+/* CONTENT */
 .content {
   width: 100%;
   max-width: 1100px;
@@ -76,18 +82,18 @@ nav a {
   gap: 24px;
 }
 
-/* RADIOAUSWAHL: <section class="cards"> */
+/* CARDS */
 .cards {
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;             /* zentriert */
+  margin: 0 auto;
   padding: 32px 16px;
 
   display: grid;
   grid-template-columns: repeat(3, minmax(300px, 1fr));
   gap: 28px;
 
-  justify-content: center;     /* zentriert das Grid */
+  justify-content: center;
   place-content: center;
 }
 
@@ -102,12 +108,12 @@ nav a {
 
   width: 100%;
   max-width: 520px;
-  margin: 0 auto;             /* Karte selbst zentriert */
+  margin: 0 auto;
 }
 
 .card h2,
 .card h3 {
-  color: #FACC15;
+  color: #EF4444;
   margin-bottom: 12px;
 }
 
@@ -125,16 +131,16 @@ nav a {
   display: inline-block;
   margin-top: 8px;
   background: #FACC15;
-  color: #1E40AF;
+  color: #1E40AF; /* Button-Text bleibt blau für Kontrast */
   padding: 12px 18px;
   border-radius: 12px;
   font-weight: bold;
   font-size: 18px;
 }
 
-/* TEAM FOTO (jetzt NICHT mehr zu groß) */
+/* TEAM FOTO */
 .team-photo {
-  width: 160px;        /* Desktop Standard */
+  width: 160px;
   max-width: 100%;
   height: auto;
   border-radius: 50%;
@@ -147,7 +153,7 @@ nav a {
 iframe {
   width: 100%;
   max-width: 100%;
-  height: 240px;       /* Desktop */
+  height: 240px;
   border: none;
   border-radius: 16px;
   display: block;
@@ -189,7 +195,7 @@ footer a {
 
   z-index: 9999;
   font-size: 18px;
-   line-height: 1.6;
+  line-height: 1.6;
 }
 
 #cookie-banner p {
@@ -210,18 +216,16 @@ footer a {
    RESPONSIVE
 ================================================== */
 
-/* Tablet / kleiner Desktop: 2 Spalten */
 @media (max-width: 1100px) {
   .cards {
     grid-template-columns: repeat(2, minmax(300px, 1fr));
   }
 }
 
-/* Mobile */
 @media (max-width: 768px) {
 
   body {
-    font-size: 19px; /* größere Schrift */
+    font-size: 19px;
   }
 
   header {
@@ -256,18 +260,15 @@ footer a {
     padding: 14px 20px;
   }
 
-  /* Player deutlich größer */
   iframe {
     height: 320px;
   }
 
-  /* Team-Bild etwas kleiner */
   .team-photo {
     width: 140px;
   }
 }
 
-/* kleines Handy */
 @media (max-width: 480px) {
 
   body {
@@ -284,7 +285,6 @@ footer a {
     text-align: center;
   }
 
-  /* Team-Bild noch kleiner */
   .team-photo {
     width: 120px;
   }
@@ -296,4 +296,3 @@ footer a {
     font-size: 19px;
   }
 }
-  
