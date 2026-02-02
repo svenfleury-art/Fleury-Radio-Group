@@ -317,3 +317,32 @@ iframe {
     font-size: 19px;
   }
 }
+/* Hamburger Button */
+.hamburger{
+  display: none;
+  background: rgba(250,204,21,0.15);
+  border: 1px solid #FACC15;
+  color: #FACC15;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Mobile: Menü verstecken */
+@media (max-width: 768px){
+  .hamburger{ display: inline-block; margin-top: 12px; }
+
+  nav.nav-links{
+    display: none;            /* zu */
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  nav.nav-links.open{
+    display: flex;            /* auf */
+    align-items: center;
+  }
+}
