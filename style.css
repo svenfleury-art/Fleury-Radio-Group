@@ -325,7 +325,7 @@ iframe {
 
 /* Hamburger Button – IMMER sichtbar */
 .hamburger{
-  display: inline-block;              /* 🔥 auch auf Desktop */
+  display: inline-block;              
   background: rgba(250,204,21,0.15);
   border: 2px solid #FACC15;
   color: #FACC15;
@@ -338,7 +338,7 @@ iframe {
 
 /* Navigation standardmäßig geschlossen */
 .nav-links{
-  display: none;                      /* 🔥 immer zu */
+  display: none;                     
   flex-direction: column;
   gap: 12px;
   margin-top: 16px;
