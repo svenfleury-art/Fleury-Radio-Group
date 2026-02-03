@@ -1,6 +1,5 @@
 /* ==================================================
-   FRG – style.css
-   Farben:
+   FRG – style.css (NEU, aufgeräumt)
    Royal Blue #2563EB
    Dark Blue  #1E40AF
    White      #F9FAFB
@@ -9,15 +8,14 @@
 ================================================== */
 
 /* =====================
-   RESET & GLOBAL
+   RESET
 ===================== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
+/* =====================
+   GLOBAL
+===================== */
+body{
   font-family: Arial, sans-serif;
   background: #2563EB;
   color: #F9FAFB;
@@ -26,184 +24,259 @@ body {
   font-size: 18px;
 }
 
-/* =====================
-   TYPOGRAFIE & LINKS
-===================== */
-h1, h2, h3, h4, h5, h6 {
-  color: #EF4444;
-}
+/* Überschriften */
+h1,h2,h3,h4,h5,h6{ color:#EF4444; }
 
-a {
-  color: #EF4444;
-  text-decoration: none;
-}
+/* Links */
+a{ color:#EF4444; text-decoration:none; }
+a:hover{ color:#FCA5A5; text-decoration:underline; }
 
-a:hover {
-  color: #FCA5A5;
-  text-decoration: underline;
+/* Listen (AGB/Datenschutz) */
+ul{
+  margin: 10px 0 0 20px;
 }
+li{ margin: 6px 0; }
 
 /* =====================
-   HEADER & NAVIGATION
+   HEADER / NAV (Slot-Header)
 ===================== */
-header {
-  background: #1E40AF;
-  border-bottom: 2px solid #FACC15;
-  padding: 32px 16px;
+header, .site-header{
+  background:#1E40AF;
+  border-bottom:2px solid #FACC15;
+  padding: 28px 16px;
+  position: relative;
+  z-index: 1200; /* IMMER über Overlay */
 }
 
-header h1 {
-  font-size: clamp(32px, 4vw, 52px);
-  margin-bottom: 10px;
+header h1, .site-header h1{
+  font-size: clamp(30px, 4vw, 52px);
+  margin-bottom: 8px;
 }
 
-header p {
+header p, .site-header p,
+.site-header .subtitle{
   font-size: 18px;
   opacity: 0.95;
 }
 
-/* Hamburger Button – immer sichtbar */
-.hamburger {
-  display: inline-block;
+/* Hamburger Button (immer sichtbar) */
+.hamburger{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
   background: rgba(250,204,21,0.15);
-  border: 2px solid #FACC15;
-  color: #FACC15;
+  border:2px solid #FACC15;
+  color:#FACC15;
+
   font-size: 26px;
   padding: 10px 14px;
   border-radius: 10px;
-  cursor: pointer;
+  cursor:pointer;
   margin-top: 12px;
+
+  position: relative;
+  z-index: 1201; /* über Overlay */
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-/* Navigation – standardmäßig versteckt (Desktop & Mobile) */
-.nav-links {
-  display: none;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 16px;
-  align-items: center;
+.hamburger.active{
+  background: rgba(239,68,68,0.20);
+  transform: rotate(90deg);
 }
 
-.nav-links a {
+/* NAV: Slide-down Menü (immer per Klick) */
+.nav-links{
+  /* für Animation: IMMER flex, aber “zu” über max-height */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: 12px;
+
+  width: 100%;
+  max-width: 640px;
+  margin: 14px auto 0;
+
+  max-height: 0;
+  overflow:hidden;
+
+  opacity: 0;
+  transform: translateY(-10px);
+
+  transition: max-height 0.35s ease, opacity 0.25s ease, transform 0.25s ease;
+
+  position: relative;
+  z-index: 1201; /* über Overlay */
+}
+
+.nav-links.open{
+  max-height: 520px; /* genug Platz für alle Links */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-links a{
+  width: 100%;
+  text-align:center;
+
   background: rgba(250,204,21,0.15);
   border: 1px solid #FACC15;
-  padding: 10px 14px;
+  padding: 12px 16px;
   border-radius: 10px;
   font-weight: bold;
-}
-
-/* Navigation offen */
-.nav-links.open {
-  display: flex;
+  font-size: 18px;
 }
 
 /* =====================
-   CONTENT & CARDS
+   OVERLAY (Abdunkeln)
 ===================== */
-.content {
+#menu-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(2px);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+
+  z-index: 1000; /* unter Header/Nav, über Inhalt */
+}
+
+#menu-overlay.active{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* =====================
+   LAYOUT: CONTENT / CARDS
+===================== */
+.content{
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
   padding: 28px 16px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
   gap: 24px;
 }
 
-.cards {
+/* Grid-Section (z.B. Radios-Auswahl, Home-Karten) */
+.cards{
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 32px 16px;
 
-  display: grid;
-  grid-template-columns: repeat(3, minmax(300px, 1fr));
+  display:grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
   gap: 28px;
+
+  justify-items: center; /* Karten in Spalten zentrieren */
 }
 
-.card {
-  background: #1E40AF;
-  border: 2px solid #FACC15;
+.card{
+  background:#1E40AF;
+  border:2px solid #FACC15;
   border-radius: 18px;
   padding: 26px;
-  text-align: left;
+
+  text-align:left;
   box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+
+  width: 100%;
   max-width: 520px;
 }
 
-.card h2,
-.card h3 {
-  color: #EF4444;
+.card h2, .card h3{
+  color:#EF4444;
   margin-bottom: 12px;
 }
 
-.card h3 {
-  font-size: 24px;
-}
+.card h3{ font-size: 24px; }
+.card p{ font-size: 18px; margin-bottom: 14px; }
 
-.card p {
-  font-size: 18px;
-  margin-bottom: 14px;
-}
-
-.card a {
-  display: inline-block;
+.card a{
+  display:inline-block;
   margin-top: 8px;
-  background: #FACC15;
-  color: #1E40AF;
+  background:#FACC15;
+  color:#1E40AF;
   padding: 12px 18px;
   border-radius: 12px;
-  font-weight: bold;
+  font-weight:bold;
   font-size: 18px;
+}
+
+/* Hervorhebung */
+.card.highlight{
+  border-width: 3px;
 }
 
 /* =====================
-   MEDIA & SPEZIAL
+   TEAM FOTO
 ===================== */
-.team-photo {
+.team-photo{
   width: 160px;
+  max-width: 100%;
+  height: auto;
   border-radius: 50%;
-  display: block;
+  display:block;
   margin: 16px auto;
-  border: 2px solid #FACC15;
+  border:2px solid #FACC15;
 }
 
-iframe {
+/* =====================
+   RADIO PLAYER
+===================== */
+/* Standard iframes */
+iframe{
   width: 100%;
-  height: 240px;
-  border: none;
+  border:none;
   border-radius: 16px;
+  display:block;
   margin: 0 auto;
-  display: block;
+}
+
+/* Player groß & kontrolliert */
+.player-wrap{
+  width: 100%;
+  margin: 14px auto 18px;
+}
+
+.player-wrap iframe{
+  height: 320px; /* Desktop */
 }
 
 /* =====================
    FOOTER
 ===================== */
-.site-footer {
-  background: #1E40AF;
-  border-top: 2px solid #FACC15;
+.site-footer{
+  background:#1E40AF;
+  border-top:2px solid #FACC15;
   padding: 24px 16px;
   margin-top: 32px;
+  text-align:center;
 }
 
-.site-footer .footer-links {
-  display: flex;
-  justify-content: center;
+.site-footer .footer-links{
+  display:flex;
+  justify-content:center;
   gap: 16px;
-  flex-wrap: wrap;
+  flex-wrap:wrap;
   margin-bottom: 10px;
 }
 
-.site-footer .footer-claim {
+.site-footer .footer-claim{
   font-size: 14px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #FACC15;
+  color:#FACC15;
+  margin: 6px 0;
 }
 
-.site-footer .footer-copy {
+.site-footer .footer-copy{
   font-size: 14px;
   opacity: 0.9;
 }
@@ -211,173 +284,72 @@ iframe {
 /* =====================
    COOKIE BANNER
 ===================== */
-#cookie-banner {
+#cookie-banner{
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #1E40AF;
-  border-top: 2px solid #FACC15;
-  padding: 24px 20px;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  background:#1E40AF;
+  border-top:2px solid #FACC15;
+
+  padding: 18px 16px;
+  display:none; /* main.js zeigt es */
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
   gap: 12px;
 
-  z-index: 9999;
-  font-size: 18px;
+  z-index: 2000;
+  font-size: 17px;
 }
 
-#cookie-banner button {
-  background: #FACC15;
-  color: #1E40AF;
-  border: none;
-  padding: 14px 28px;
+#cookie-banner button{
+  background:#FACC15;
+  color:#1E40AF;
+  border:none;
+  padding: 12px 18px;
   border-radius: 12px;
-  font-weight: bold;
-  cursor: pointer;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* Damit Cookie Banner nie Content überdeckt */
+body{
+  padding-bottom: 90px;
 }
 
 /* =====================
    RESPONSIVE
 ===================== */
-@media (max-width: 1100px) {
-  .cards {
-    grid-template-columns: repeat(2, minmax(300px, 1fr));
+@media (max-width: 1100px){
+  .cards{
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
   }
 }
 
-@media (max-width: 768px) {
-  body { font-size: 19px; }
+@media (max-width: 768px){
+  body{ font-size: 19px; }
 
-  .cards {
+  .cards{
     grid-template-columns: 1fr;
     max-width: 720px;
     padding: 24px 12px;
   }
 
-  iframe { height: 320px; }
-  .team-photo { width: 140px; }
+  .card{ padding: 22px; }
+  .card h3{ font-size: 26px; }
+  .card p{ font-size: 19px; line-height: 1.7; }
+
+  .player-wrap iframe{ height: 380px; }
+  .team-photo{ width: 140px; }
+
+  #cookie-banner{ font-size: 18px; }
 }
 
-@media (max-width: 480px) {
-  body { font-size: 20px; }
-  iframe { height: 360px; }
-  .team-photo { width: 120px; }
-}
+@media (max-width: 480px){
+  body{ font-size: 20px; }
 
-.hamburger {
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.hamburger.active {
-  background: rgba(239,68,68,0.2);
-  transform: rotate(90deg);
-}
-
-/* ===============================
-   SLIDE-DOWN MENÜ + ZENTRIERUNG
-=============================== */
-
-/* Navigation – Grundzustand (geschlossen) */
-.nav-links {
-  display: flex;                 /* wichtig für Animation */
-  flex-direction: column;
-  align-items: center;
-
-  max-height: 0;                 /* geschlossen */
-  overflow: hidden;
-
-  opacity: 0;
-  transform: translateY(-10px);
-
-  transition:
-    max-height 0.35s ease,
-    opacity 0.25s ease,
-    transform 0.25s ease;
-
-  margin: 16px auto 0;
-  width: 100%;
-  max-width: 520px;              /* 🔥 Breite des Menüs */
-}
-
-/* Navigation offen */
-.nav-links.open {
-  max-height: 500px;             /* genug Platz für Links */
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Menü-Links größer & zentriert */
-.nav-links a {
-  width: 100%;
-  text-align: center;
-  font-size: 18px;
-  padding: 12px 16px;
-}
-
-/* Desktop: Menü etwas breiter */
-@media (min-width: 769px) {
-  .nav-links {
-    max-width: 600px;
-  }
-}
-
-/* ===============================
-   MENU OVERLAY (HINTERGRUND DUNKEL)
-=============================== */
-
-#menu-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  background: rgba(0, 0, 0, 0.55); /* Abdunklung */
-  backdrop-filter: blur(2px);     /* leichtes Glasgefühl (optional) */
-
-  opacity: 0;
-  pointer-events: none;           /* klickt nicht, wenn unsichtbar */
-  transition: opacity 0.25s ease;
-
-  z-index: 900;                   /* unter Menü, über Inhalt */
-}
-
-/* Overlay sichtbar */
-#menu-overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ===============================
-   RADIO PLAYER – GROSS & RESPONSIVE
-=============================== */
-
-.player-wrap {
-  width: 100%;
-  margin: 14px auto 18px;
-}
-
-.player-wrap iframe {
-  width: 100%;
-  height: 320px;         /* Desktop groß */
-  border: none;
-  border-radius: 16px;
-  display: block;
-}
-
-/* Mobile größer */
-@media (max-width: 768px) {
-  .player-wrap iframe {
-    height: 380px;
-  }
-}
-
-@media (max-width: 480px) {
-  .player-wrap iframe {
-    height: 420px;
-  }
+  .player-wrap iframe{ height: 420px; }
+  .team-photo{ width: 120px; }
 }
