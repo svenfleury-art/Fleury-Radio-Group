@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1) Nav + Footer laden
+  // Partials laden
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
-  // 2) Menü aktivieren (☰ -> ✕ + Overlay + Klick außerhalb)
+  // Features aktivieren
   initMenu();
-
-  // 3) Cookie Banner
   initCookies();
 });
 
@@ -29,13 +27,6 @@ function initMenu() {
 
   if (!btn || !nav) return;
 
-  function openMenu() {
-    nav.classList.add("open");
-    btn.classList.add("active");
-    btn.textContent = "✕";
-    if (overlay) overlay.classList.add("active");
-  }
-
   function closeMenu() {
     nav.classList.remove("open");
     btn.classList.remove("active");
@@ -43,16 +34,21 @@ function initMenu() {
     if (overlay) overlay.classList.remove("active");
   }
 
+  function openMenu() {
+    nav.classList.add("open");
+    btn.classList.add("active");
+    btn.textContent = "✕";
+    if (overlay) overlay.classList.add("active");
+  }
+
   btn.addEventListener("click", (e) => {
     e.stopPropagation();
-    const isOpen = nav.classList.contains("open");
-    isOpen ? closeMenu() : openMenu();
+    nav.classList.contains("open") ? closeMenu() : openMenu();
   });
 
-  // Klick auf Overlay schließt
+  // Klick außerhalb / Overlay schließt
   if (overlay) overlay.addEventListener("click", closeMenu);
 
-  // Klick außerhalb (falls Overlay mal nicht da ist)
   document.addEventListener("click", (e) => {
     if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu();
   });
@@ -60,25 +56,16 @@ function initMenu() {
 
 function initCookies() {
   const banner = document.getElementById("cookie-banner");
-  const btn = document.getElementById("acceptCookies");
-  if (!banner || !btn) return;
+  const button = document.getElementById("cookie-accept");
+  if (!banner || !button) return;
 
-  if (!getCookie("cookieConsent")) {
-    banner.style.display = "flex";
+  if (localStorage.getItem("frgCookiesAccepted")) {
+    banner.style.display = "none";
+    return;
   }
 
-  btn.addEventListener("click", () => {
-    setCookie("cookieConsent", "true", 365);
+  button.addEventListener("click", () => {
+    localStorage.setItem("frgCookiesAccepted", "true");
     banner.style.display = "none";
   });
-}
-
-function setCookie(name, value, days) {
-  const date = new Date();
-  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-  document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
-}
-
-function getCookie(name) {
-  return document.cookie.split("; ").find(row => row.startsWith(name + "="));
 }
