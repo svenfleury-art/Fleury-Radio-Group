@@ -1,20 +1,22 @@
 /* ==================================================
    FRG – style.css
-   Royal Blue (#2563EB)
-   Dark Blue (#1E40AF)
-   White (#F9FAFB)
-   Gold (#FACC15)
-   Red (#EF4444)
+   Farben:
+   Royal Blue #2563EB
+   Dark Blue  #1E40AF
+   White      #F9FAFB
+   Gold       #FACC15
+   Red        #EF4444
 ================================================== */
 
-/* RESET */
+/* =====================
+   RESET & GLOBAL
+===================== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* GLOBAL */
 body {
   font-family: Arial, sans-serif;
   background: #2563EB;
@@ -24,12 +26,13 @@ body {
   font-size: 18px;
 }
 
-/* ÜBERSCHRIFTEN */
+/* =====================
+   TYPOGRAFIE & LINKS
+===================== */
 h1, h2, h3, h4, h5, h6 {
   color: #EF4444;
 }
 
-/* LINKS */
 a {
   color: #EF4444;
   text-decoration: none;
@@ -40,7 +43,9 @@ a:hover {
   text-decoration: underline;
 }
 
-/* HEADER */
+/* =====================
+   HEADER & NAVIGATION
+===================== */
 header {
   background: #1E40AF;
   border-bottom: 2px solid #FACC15;
@@ -57,24 +62,44 @@ header p {
   opacity: 0.95;
 }
 
-/* NAV */
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin: 12px 0 16px;
+/* Hamburger Button – immer sichtbar */
+.hamburger {
+  display: inline-block;
+  background: rgba(250,204,21,0.15);
+  border: 2px solid #FACC15;
+  color: #FACC15;
+  font-size: 26px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 12px;
 }
 
-nav a {
-  background: rgba(250, 204, 21, 0.15);
+/* Navigation – standardmäßig versteckt (Desktop & Mobile) */
+.nav-links {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+  align-items: center;
+}
+
+.nav-links a {
+  background: rgba(250,204,21,0.15);
   border: 1px solid #FACC15;
   padding: 10px 14px;
   border-radius: 10px;
   font-weight: bold;
 }
 
-/* CONTENT */
+/* Navigation offen */
+.nav-links.open {
+  display: flex;
+}
+
+/* =====================
+   CONTENT & CARDS
+===================== */
 .content {
   width: 100%;
   max-width: 1100px;
@@ -86,7 +111,6 @@ nav a {
   gap: 24px;
 }
 
-/* CARDS */
 .cards {
   width: 100%;
   max-width: 1200px;
@@ -96,12 +120,8 @@ nav a {
   display: grid;
   grid-template-columns: repeat(3, minmax(300px, 1fr));
   gap: 28px;
-
-  justify-content: center;
-  place-content: center;
 }
 
-/* CARD */
 .card {
   background: #1E40AF;
   border: 2px solid #FACC15;
@@ -109,10 +129,7 @@ nav a {
   padding: 26px;
   text-align: left;
   box-shadow: 0 12px 28px rgba(0,0,0,0.35);
-
-  width: 100%;
   max-width: 520px;
-  margin: 0 auto;
 }
 
 .card h2,
@@ -130,7 +147,6 @@ nav a {
   margin-bottom: 14px;
 }
 
-/* BUTTON-LINK */
 .card a {
   display: inline-block;
   margin-top: 8px;
@@ -142,35 +158,34 @@ nav a {
   font-size: 18px;
 }
 
-/* TEAM FOTO */
+/* =====================
+   MEDIA & SPEZIAL
+===================== */
 .team-photo {
   width: 160px;
-  max-width: 100%;
-  height: auto;
   border-radius: 50%;
   display: block;
   margin: 16px auto;
   border: 2px solid #FACC15;
 }
 
-/* RADIO PLAYER */
 iframe {
   width: 100%;
-  max-width: 100%;
   height: 240px;
   border: none;
   border-radius: 16px;
-  display: block;
   margin: 0 auto;
+  display: block;
 }
 
-/* FOOTER */
+/* =====================
+   FOOTER
+===================== */
 .site-footer {
   background: #1E40AF;
   border-top: 2px solid #FACC15;
   padding: 24px 16px;
   margin-top: 32px;
-  text-align: center;
 }
 
 .site-footer .footer-links {
@@ -181,16 +196,11 @@ iframe {
   margin-bottom: 10px;
 }
 
-.site-footer a {
-  font-weight: bold;
-}
-
 .site-footer .footer-claim {
   font-size: 14px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #FACC15;
-  margin: 6px 0;
 }
 
 .site-footer .footer-copy {
@@ -198,7 +208,9 @@ iframe {
   opacity: 0.9;
 }
 
-/* COOKIE BANNER */
+/* =====================
+   COOKIE BANNER
+===================== */
 #cookie-banner {
   position: fixed;
   bottom: 0;
@@ -216,11 +228,6 @@ iframe {
 
   z-index: 9999;
   font-size: 18px;
-  line-height: 1.6;
-}
-
-#cookie-banner p {
-  margin: 0;
 }
 
 #cookie-banner button {
@@ -233,10 +240,9 @@ iframe {
   cursor: pointer;
 }
 
-/* ==================================================
+/* =====================
    RESPONSIVE
-================================================== */
-
+===================== */
 @media (max-width: 1100px) {
   .cards {
     grid-template-columns: repeat(2, minmax(300px, 1fr));
@@ -244,18 +250,7 @@ iframe {
 }
 
 @media (max-width: 768px) {
-
-  body {
-    font-size: 19px;
-  }
-
-  header {
-    padding: 26px 14px;
-  }
-
-  header p {
-    font-size: 17px;
-  }
+  body { font-size: 19px; }
 
   .cards {
     grid-template-columns: 1fr;
@@ -263,169 +258,12 @@ iframe {
     padding: 24px 12px;
   }
 
-  .card {
-    padding: 22px;
-  }
-
-  .card h3 {
-    font-size: 26px;
-  }
-
-  .card p {
-    font-size: 19px;
-    line-height: 1.7;
-  }
-
-  .card a {
-    font-size: 19px;
-    padding: 14px 20px;
-  }
-
-  iframe {
-    height: 320px;
-  }
-
-  .team-photo {
-    width: 140px;
-  }
+  iframe { height: 320px; }
+  .team-photo { width: 140px; }
 }
 
 @media (max-width: 480px) {
-
-  body {
-    font-size: 20px;
-  }
-
-  iframe {
-    height: 360px;
-  }
-
-  nav a {
-    width: 100%;
-    max-width: 300px;
-    text-align: center;
-  }
-
-  .team-photo {
-    width: 120px;
-  }
-}
-
-@media (max-width: 768px) {
-  #cookie-banner {
-    padding: 28px 16px;
-    font-size: 19px;
-  }
-}
-
-
-/* ===============================
-   HAMBURGER MENÜ – DESKTOP + MOBILE
-=============================== */
-
-/* Hamburger Button – IMMER sichtbar */
-.hamburger{
-  display: inline-block;              
-  background: rgba(250,204,21,0.15);
-  border: 2px solid #FACC15;
-  color: #FACC15;
-  font-size: 26px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 12px;
-}
-
-/* Navigation standardmäßig geschlossen */
-.nav-links{
-  display: none;                     
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 16px;
-  align-items: center;
-}
-
-/* Navigation offen */
-.nav-links.open{
-  display: flex;
-}
-
-/* Desktop: etwas breiter & ruhiger */
-@media (min-width: 769px){
-  .nav-links{
-    gap: 16px;
-  }
-
-  .nav-links a{
-    font-size: 18px;
-    padding: 8px 14px;
-  }
-}
-
-/* ===== HAMBURGER MENÜ – DEFINITIVE VERSION ===== */
-
-/* Button IMMER sichtbar */
-.hamburger {
-  display: inline-block !important;
-  background: rgba(250,204,21,0.15);
-  border: 2px solid #FACC15;
-  color: #FACC15;
-  font-size: 26px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 12px;
-}
-
-/* DESKTOP: Menü sichtbar */
-.nav-links {
-  display: flex !important;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-top: 14px;
-}
-
-/* MOBILE: Menü standardmäßig zu */
-@media (max-width: 768px) {
-  .nav-links {
-    display: none !important;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .nav-links.open {
-    display: flex !important;
-  }
-}
-/* ===============================
-   HAMBURGER MENÜ – NUR PER KLICK
-   Desktop + Mobile gleich
-=============================== */
-
-/* Hamburger Button – immer sichtbar */
-.hamburger {
-  display: inline-block;
-  background: rgba(250,204,21,0.15);
-  border: 2px solid #FACC15;
-  color: #FACC15;
-  font-size: 26px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 12px;
-}
-
-/* Navigation STANDARDMÄSSIG VERSTECKT */
-.nav-links {
-  display: none;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 16px;
-  align-items: center;
-}
-
-/* Navigation OFFEN */
-.nav-links.open {
-  display: flex;
+  body { font-size: 20px; }
+  iframe { height: 360px; }
+  .team-photo { width: 120px; }
 }
