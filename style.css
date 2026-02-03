@@ -351,3 +351,33 @@ iframe {
   opacity: 1;
   pointer-events: auto;
 }
+
+/* ===============================
+   RADIO PLAYER – GROSS & RESPONSIVE
+=============================== */
+
+.player-wrap {
+  width: 100%;
+  margin: 14px auto 18px;
+}
+
+.player-wrap iframe {
+  width: 100%;
+  height: 320px;         /* Desktop groß */
+  border: none;
+  border-radius: 16px;
+  display: block;
+}
+
+/* Mobile größer */
+@media (max-width: 768px) {
+  .player-wrap iframe {
+    height: 380px;
+  }
+}
+
+@media (max-width: 480px) {
+  .player-wrap iframe {
+    height: 420px;
+  }
+}
