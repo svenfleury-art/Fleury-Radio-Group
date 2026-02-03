@@ -361,3 +361,40 @@ iframe {
     padding: 8px 14px;
   }
 }
+
+/* ===== HAMBURGER MENÜ – DEFINITIVE VERSION ===== */
+
+/* Button IMMER sichtbar */
+.hamburger {
+  display: inline-block !important;
+  background: rgba(250,204,21,0.15);
+  border: 2px solid #FACC15;
+  color: #FACC15;
+  font-size: 26px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+/* DESKTOP: Menü sichtbar */
+.nav-links {
+  display: flex !important;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+/* MOBILE: Menü standardmäßig zu */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none !important;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-links.open {
+    display: flex !important;
+  }
+}
