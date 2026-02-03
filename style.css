@@ -324,3 +324,30 @@ iframe {
     max-width: 600px;
   }
 }
+
+/* ===============================
+   MENU OVERLAY (HINTERGRUND DUNKEL)
+=============================== */
+
+#menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.55); /* Abdunklung */
+  backdrop-filter: blur(2px);     /* leichtes Glasgefühl (optional) */
+
+  opacity: 0;
+  pointer-events: none;           /* klickt nicht, wenn unsichtbar */
+  transition: opacity 0.25s ease;
+
+  z-index: 900;                   /* unter Menü, über Inhalt */
+}
+
+/* Overlay sichtbar */
+#menu-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
