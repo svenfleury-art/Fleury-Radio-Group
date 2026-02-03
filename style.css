@@ -398,3 +398,34 @@ iframe {
     display: flex !important;
   }
 }
+/* ===============================
+   HAMBURGER MENÜ – NUR PER KLICK
+   Desktop + Mobile gleich
+=============================== */
+
+/* Hamburger Button – immer sichtbar */
+.hamburger {
+  display: inline-block;
+  background: rgba(250,204,21,0.15);
+  border: 2px solid #FACC15;
+  color: #FACC15;
+  font-size: 26px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+/* Navigation STANDARDMÄSSIG VERSTECKT */
+.nav-links {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+  align-items: center;
+}
+
+/* Navigation OFFEN */
+.nav-links.open {
+  display: flex;
+}
