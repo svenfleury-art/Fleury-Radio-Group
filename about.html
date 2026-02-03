@@ -5,27 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Über uns – Fleury Radio Group</title>
   <link rel="stylesheet" href="style.css">
-   <link rel="icon" href="content.htm" type="image/png">
+  <link rel="icon" href="content.htm" type="image/png">
   <meta name="description" content="Die Fleury Radio Group ist ein unabhängiges Online-Radio-Netzwerk aus Basel. Erfahre mehr über unsere Sender und das Team.">
 </head>
+
 <body>
 
-  <header class="site-header">
-    <h1>Über uns</h1>
-    <p class="subtitle">Fleury Radio Group – Dini Musik, Dini Wälle. Diräkt vom Rhy. 🎶</p>
-    
-  <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen">☰</button>
-
-<nav id="mainNav" class="nav-links">
-  <a href="index.html">Home</a>
-  <a href="radios.html">Radios</a>
-  <a href="about.html">Über uns</a>
-  <a href="frg-inside.html">FRG Inside</a>
-  <a href="mitmachen.html">Mitmachen</a>
-</nav>
-
-
-  </header>
+  <!-- Header/Nav wird automatisch geladen -->
+  <div id="nav-slot"></div>
 
   <main class="content">
 
@@ -97,16 +84,13 @@
         starken Formaten und einem gemeinsamen Ziel:
         Basel und die Region mit guter Musik und echten Emotionen zu begleiten.
       </p>
-      <p>
-        <em>Musik mit Herz. Radio mit Seele. Diräkt vo Baasel. 🎶</em>
-      </p>
+      <p><em>Musik mit Herz. Radio mit Seele. Diräkt vo Baasel. 🎶</em></p>
     </section>
 
     <section class="card">
       <h2>Unser Team</h2>
 
-  <img src="svenfleury.PNG" alt="Sven Fleury bild" class="team-photo">
-
+      <img src="svenfleury.PNG" alt="Sven Fleury" class="team-photo">
 
       <h3>Sven Fleury</h3>
       <p><strong>Gründer & Inhaber der Fleury Radio Group</strong></p>
@@ -133,84 +117,19 @@
         bist du bei uns genau richtig.
       </p>
       <p>
-        👉 Möchtest du Teil des Teams werden?
-        Dann melde dich bei uns:
+        👉 Möchtest du Teil des Teams werden? Dann melde dich bei uns:
         <a href="mailto:bewerbung@frg-radio.ch">bewerbung@frg-radio.ch</a>
       </p>
     </section>
 
   </main>
 
-   <!-- Footer -->
- <footer class="site-footer">
-  <div class="footer-links">
-    <a href="impressum.html">Impressum</a>
-    <a href="agb.html">AGB</a>
-    <a href="datenschutz.html">Datenschutz</a>
-  </div>
+  <!-- Footer/Cookie wird automatisch geladen -->
+  <div id="footer-slot"></div>
 
-  <p class="footer-claim">Seit 2025 on air</p>
-
-  <p class="footer-copy">
-    © 2026 Fleury Radio Group – Alle Rechte vorbehalten
-  </p>
-</footer>
-
-  
-<div id="cookie-banner" style="display:none;">
-  <p>
-    Diese Webseite verwendet technisch notwendige Cookies.
-    <a href="datenschutz.html">Mehr erfahren</a>
-  </p>
-  <button id="acceptCookies">OK</button>
-</div>
-  
-<script>
-function setCookie(name, value, days) {
-  const date = new Date();
-  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-  document.cookie = name + "=" + value + "; expires=" + date.toUTCString() + "; path=/";
-}
-
-function getCookie(name) {
-  return document.cookie.split('; ').find(row => row.startsWith(name + "="));
-}
-
-if (!getCookie("cookieConsent")) {
-  document.getElementById("cookie-banner").style.display = "flex";
-}
-
-document.getElementById("acceptCookies").onclick = function () {
-  setCookie("cookieConsent", "true", 365);
-  document.getElementById("cookie-banner").style.display = "none";
-};
-</script>
-
-  Hamburger
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const btn = document.getElementById("hamburgerBtn");
-  const nav = document.getElementById("mainNav");
-
-  if (!btn || !nav) return;
-
-  btn.addEventListener("click", function (e) {
-    e.stopPropagation();
-    nav.classList.toggle("open");
-    btn.classList.toggle("active");
-    btn.textContent = nav.classList.contains("open") ? "✕" : "☰";
-  });
-
-  document.addEventListener("click", function (e) {
-    if (!nav.contains(e.target) && !btn.contains(e.target)) {
-      nav.classList.remove("open");
-      btn.classList.remove("active");
-      btn.textContent = "☰";
-    }
-  });
-});
-</script>
-
+  <!-- Nur noch 1 Script -->
+  <script src="main.js"></script>
 
 </body>
 </html>
+
