@@ -115,15 +115,21 @@ document.getElementById("acceptCookies").onclick = function () {
 </script>
   
 <script>
+document.addEventListener("DOMContentLoaded", function () {
   const btn = document.getElementById("hamburgerBtn");
   const nav = document.getElementById("mainNav");
 
-  if (btn && nav) {
-    btn.addEventListener("click", () => {
-      nav.classList.toggle("open");
-    });
+  if (!btn || !nav) {
+    console.log("Hamburger-Elemente nicht gefunden");
+    return;
   }
+
+  btn.addEventListener("click", function () {
+    nav.classList.toggle("open");
+  });
+});
 </script>
+
 
 
 </body>
