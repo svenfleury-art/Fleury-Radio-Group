@@ -267,3 +267,13 @@ iframe {
   iframe { height: 360px; }
   .team-photo { width: 120px; }
 }
+
+.hamburger {
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.hamburger.active {
+  background: rgba(239,68,68,0.2);
+  transform: rotate(90deg);
+}
+
