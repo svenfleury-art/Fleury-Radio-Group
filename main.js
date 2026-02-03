@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // Partials laden
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
-  // Features aktivieren
   initMenu();
   initCookies();
 });
@@ -41,12 +39,13 @@ function initMenu() {
     if (overlay) overlay.classList.add("active");
   }
 
+  closeMenu(); // ✅ WICHTIG: Startzustand immer sauber (sonst bleibt’s dunkel)
+
   btn.addEventListener("click", (e) => {
     e.stopPropagation();
     nav.classList.contains("open") ? closeMenu() : openMenu();
   });
 
-  // Klick außerhalb / Overlay schließt
   if (overlay) overlay.addEventListener("click", closeMenu);
 
   document.addEventListener("click", (e) => {
@@ -63,6 +62,8 @@ function initCookies() {
     banner.style.display = "none";
     return;
   }
+
+  banner.style.display = "flex"; // ✅ FEHLTE: sonst sieht man es nie
 
   button.addEventListener("click", () => {
     localStorage.setItem("frgCookiesAccepted", "true");
