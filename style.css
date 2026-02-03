@@ -353,3 +353,12 @@ body{
   .player-wrap iframe{ height: 420px; }
   .team-photo{ width: 120px; }
 }
+
+.logo-link {
+  color: inherit;        /* gleiche Farbe wie h1 */
+  text-decoration: none; /* kein Unterstrich */
+}
+
+.logo-link:hover {
+  opacity: 0.85;         /* dezenter Hover-Effekt */
+}
