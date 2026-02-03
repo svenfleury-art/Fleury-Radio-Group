@@ -5,51 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fleury Radio Group – Dini Musik, Dini Wälle</title>
   <link rel="stylesheet" href="style.css">
- <link rel="icon" href="content.htm" type="image/png">
+  <link rel="icon" href="content.htm" type="image/png">
   <meta name="description" content="Die Fleury Radio Group vereint unabhängige Online-Radios aus Basel. Radio Rhywälle, Winterlord FM & Specials – jetzt live reinhören.">
 </head>
+
 <body>
 
-  <!-- Header -->
-  <header class="site-header">
-    <h1>Fleury Radio Group</h1>
-    <p class="subtitle">Dini Musik. Dini Wälle. Diräkt vo Basel 🎶</p>
-    
-<button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen">☰</button>
+  <!-- Header/Nav wird automatisch geladen -->
+  <div id="nav-slot"></div>
 
-<nav id="mainNav" class="nav-links">
-  <a href="index.html">Home</a>
-  <a href="radios.html">Radios</a>
-  <a href="about.html">Über uns</a>
-  <a href="frg-inside.html">FRG Inside</a>
-  <a href="mitmachen.html">Mitmachen</a>
-</nav>
-
-
-  </header>
-
+  <!-- Seiteninhalt bleibt bei dir -->
   <section class="cards">
-  <div class="card">
-    <h3>Radio Rhywälle</h3>
-    <p>Dini Musik, dini Wälle – direkt vom Rhy.</p>
-    <a href="rhywalle.html">Jetzt hören</a>
-  </div>
+    <div class="card">
+      <h3>Radio Rhywälle</h3>
+      <p>Dini Musik, dini Wälle – direkt vom Rhy.</p>
+      <a href="rhywalle.html">Jetzt hören</a>
+    </div>
 
-  <div class="card">
-    <h3>Winterlord FM</h3>
-    <p>The Sound of Eternal Winter.</p>
-    <a href="winterlord.html">Jetzt hören</a>
-  </div>
+    <div class="card">
+      <h3>Winterlord FM</h3>
+      <p>The Sound of Eternal Winter.</p>
+      <a href="winterlord.html">Jetzt hören</a>
+    </div>
 
-  <div class="card">
-    <h3>FRG Inside</h3>
-    <p>Einblicke hiner die Kullissen der Fleury Radio Group.</p>
-    <a href="frg-inside.html">Mehr entdecken</a>
-  </div>
-</section>
+    <div class="card">
+      <h3>FRG Inside</h3>
+      <p>Einblicke hinter die Kulissen der Fleury Radio Group.</p>
+      <a href="frg-inside.html">Mehr entdecken</a>
+    </div>
+  </section>
 
-
-  <!-- Hero / Vorstellung -->
   <section class="content">
     <div class="card">
       <h2>Willkommen bei der FRG</h2>
@@ -58,7 +43,6 @@
     </div>
   </section>
 
-  <!-- Über uns / Mission -->
   <section class="content">
     <div class="card">
       <h2>Unsere Mission</h2>
@@ -67,7 +51,6 @@
     </div>
   </section>
 
-  <!-- Kontakt / Community -->
   <section class="content">
     <div class="card">
       <h2>Teil unserer Community</h2>
@@ -76,67 +59,11 @@
     </div>
   </section>
 
-  <!-- Cookie Banner -->
-  <div id="cookie-banner">
-    <span>Wir verwenden Cookies, um dein Erlebnis auf unserer Webseite zu verbessern. Durch die Nutzung unserer Seite stimmst du unserer <a href="datenschutz.html">Datenschutzerklärung</a> zu.</span>
-    <button id="cookie-accept">Akzeptieren</button>
-  </div>
+  <!-- Footer + Cookie wird automatisch geladen -->
+  <div id="footer-slot"></div>
 
-  <!-- Footer -->
-<footer class="site-footer">
-  <div class="footer-links">
-    <a href="impressum.html">Impressum</a>
-    <a href="agb.html">AGB</a>
-    <a href="datenschutz.html">Datenschutz</a>
-  </div>
-
-  <p class="footer-claim">Seit 2025 on air</p>
-
-  <p class="footer-copy">
-    © 2026 Fleury Radio Group – Alle Rechte vorbehalten
-  </p>
-</footer>
-
-  <!-- Cookie Script -->
-  <script>
-    const cookieBanner = document.getElementById('cookie-banner');
-    const cookieButton = document.getElementById('cookie-accept');
-
-    // Prüfen, ob Cookies schon akzeptiert wurden
-    if(localStorage.getItem('frgCookiesAccepted')) {
-      cookieBanner.style.display = 'none';
-    }
-
-    cookieButton.addEventListener('click', () => {
-      localStorage.setItem('frgCookiesAccepted', 'true');
-      cookieBanner.style.display = 'none';
-    });
-  </script>
-  
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const btn = document.getElementById("hamburgerBtn");
-  const nav = document.getElementById("mainNav");
-
-  if (!btn || !nav) return;
-
-  btn.addEventListener("click", function (e) {
-    e.stopPropagation();
-    nav.classList.toggle("open");
-    btn.classList.toggle("active");
-    btn.textContent = nav.classList.contains("open") ? "✕" : "☰";
-  });
-
-  document.addEventListener("click", function (e) {
-    if (!nav.contains(e.target) && !btn.contains(e.target)) {
-      nav.classList.remove("open");
-      btn.classList.remove("active");
-      btn.textContent = "☰";
-    }
-  });
-});
-</script>
-
+  <!-- Nur noch 1 Script für alles -->
+  <script src="main.js"></script>
 
 </body>
 </html>
