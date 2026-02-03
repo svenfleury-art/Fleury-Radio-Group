@@ -10,135 +10,72 @@
 
 <body>
 
-<header>
-  <h1>FRG Inside</h1>
+  <!-- Header / Navigation wird automatisch geladen -->
+  <div id="nav-slot"></div>
 
-<button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen">☰</button>
+  <main class="content">
 
-<nav id="mainNav" class="nav-links">
-  <a href="index.html">Home</a>
-  <a href="radios.html">Radios</a>
-  <a href="about.html">Über uns</a>
-  <a href="frg-inside.html">FRG Inside</a>
-  <a href="mitmachen.html">Mitmachen</a>
-</nav>
+    <section class="card">
+      <h2>FRG Inside</h2>
+      <p>
+        Mehr als nur Radio – ein Blick hinter die Fleury Radio Group.
+      </p>
+    </section>
 
+    <section class="card">
+      <h2>Was ist die FRG?</h2>
+      <p>
+        Die Fleury Radio Group (FRG) ist eine unabhängige Radiodachmarke aus der Region Basel.
+        Unter unserem Namen vereinen sich mehrere Online-Sender – jeder mit eigenem Charakter,
+        aber alle mit derselben Idee: Musik, die verbindet.
+      </p>
+      <p>
+        FRG ist kein anonymer Massenbetrieb, sondern ein Projekt mit persönlicher Handschrift –
+        lokal, sympathisch und konsequent auf Qualität ausgerichtet.
+      </p>
+    </section>
 
-  <p>Mehr als nur Radio – ein Blick hinter die Fleury Radio Group.</p>
-</header>
+    <section class="card">
+      <h2>Warum mehrere Sender?</h2>
+      <p>
+        Musik ist vielfältig. Darum haben wir uns bewusst für mehrere spezialisierte Sender entschieden,
+        statt alles in einen Kanal zu pressen. So hat jede Welle ein klares Profil –
+        und du findest schneller genau den Sound, der zu deiner Stimmung passt.
+      </p>
+      <p>
+        Ob Pop, Rap, Oldies, Rock oder epischer Metal:
+        Jeder Sender ist Teil der FRG – und doch eigenständig.
+      </p>
+    </section>
 
-<section class="content">
+    <section class="card">
+      <h2>Ehrenamtlich & unabhängig</h2>
+      <p>
+        Die FRG ist ein nicht-kommerzielles Projekt.
+        Alles entsteht aus Leidenschaft – ehrenamtlich und unabhängig.
+      </p>
+      <p>
+        Der technische Stream-Betrieb läuft über <strong>laut.fm</strong>,
+        damit wir uns voll auf Inhalte, Konzept und Community konzentrieren können.
+      </p>
+    </section>
 
-  <section class="card">
-    <h2>Was ist die FRG?</h2>
-    <p>
-      Die Fleury Radio Group (FRG) ist eine unabhängige Radiodachmarke aus der Region Basel.
-      Unter unserem Namen vereinen sich mehrere Online-Sender – jeder mit eigenem Charakter,
-      aber alle mit derselben Idee: Musik, die verbindet.
-    </p>
-    <p>
-      FRG ist kein anonymer Massenbetrieb, sondern ein Projekt mit persönlicher Handschrift –
-      lokal, sympathisch und konsequent auf Qualität ausgerichtet.
-    </p>
-  </section>
+    <section class="card">
+      <h2>Regional verwurzelt</h2>
+      <p>
+        Basel und der Rhein sind mehr als ein Standort – sie sind Teil unserer Identität.
+        Unsere Sender tragen dieses Gefühl nach außen: direkt, lebendig und nahbar.
+      </p>
+      <p><strong>Dini Musik. Dini Wälle. Diräkt vom Rhy.</strong></p>
+    </section>
 
-  <section class="card">
-    <h2>Warum mehrere Sender?</h2>
-    <p>
-      Musik ist vielfältig. Darum haben wir uns bewusst für mehrere spezialisierte Sender entschieden,
-      statt alles in einen Kanal zu pressen. So hat jede Welle ein klares Profil – und du findest schneller
-      genau den Sound, der zu deiner Stimmung passt.
-    </p>
-    <p>
-      Ob Pop/Rap/Oldies, Rock oder epischer Metal: Jeder Sender ist Teil der FRG – und doch eigenständig.
-    </p>
-  </section>
+  </main>
 
-  <section class="card">
-    <h2>Ehrenamtlich & unabhängig</h2>
-    <p>
-      Die FRG ist ein nicht-kommerzielles Projekt. Alles entsteht aus Leidenschaft – ehrenamtlich und unabhängig.
-      Der technische Stream-Betrieb läuft über laut.fm, damit wir uns auf Inhalte, Konzept und Community konzentrieren können.
-    </p>
-  </section>
+  <!-- Footer + Cookie werden automatisch geladen -->
+  <div id="footer-slot"></div>
 
-  <section class="card">
-    <h2>Regional verwurzelt</h2>
-    <p>
-      Basel und der Rhein sind mehr als ein Standort – sie sind Teil unserer Identität.
-      Unsere Sender tragen dieses Gefühl nach außen: direkt, lebendig und nahbar.
-    </p>
-    <p><strong>Dini Musik. Dini Wälle. Diräkt vom Rhy.</strong></p>
-  </section>
-
-</section>
-
- <!-- Footer -->
- <footer class="site-footer">
-  <div class="footer-links">
-    <a href="impressum.html">Impressum</a>
-    <a href="agb.html">AGB</a>
-    <a href="datenschutz.html">Datenschutz</a>
-  </div>
-
-  <p class="footer-claim">Seit 2025 on air</p>
-
-  <p class="footer-copy">
-    © 2026 Fleury Radio Group – Alle Rechte vorbehalten
-  </p>
-</footer>
-
-<div id="cookie-banner" style="display:none;">
-  <p>
-    Diese Webseite verwendet technisch notwendige Cookies.
-    <a href="datenschutz.html">Mehr erfahren</a>
-  </p>
-  <button id="acceptCookies">OK</button>
-</div>
-
-<script>
-function setCookie(name, value, days) {
-  const date = new Date();
-  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-  document.cookie = name + "=" + value + "; expires=" + date.toUTCString() + "; path=/";
-}
-function getCookie(name) {
-  return document.cookie.split('; ').find(row => row.startsWith(name + "="));
-}
-if (!getCookie("cookieConsent")) {
-  document.getElementById("cookie-banner").style.display = "flex";
-}
-document.getElementById("acceptCookies").onclick = function () {
-  setCookie("cookieConsent", "true", 365);
-  document.getElementById("cookie-banner").style.display = "none";
-};
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const btn = document.getElementById("hamburgerBtn");
-  const nav = document.getElementById("mainNav");
-
-  if (!btn || !nav) return;
-
-  btn.addEventListener("click", function (e) {
-    e.stopPropagation();
-    nav.classList.toggle("open");
-    btn.classList.toggle("active");
-    btn.textContent = nav.classList.contains("open") ? "✕" : "☰";
-  });
-
-  document.addEventListener("click", function (e) {
-    if (!nav.contains(e.target) && !btn.contains(e.target)) {
-      nav.classList.remove("open");
-      btn.classList.remove("active");
-      btn.textContent = "☰";
-    }
-  });
-});
-</script>
-
-
+  <!-- Zentrales Script -->
+  <script src="main.js"></script>
 
 </body>
 </html>
