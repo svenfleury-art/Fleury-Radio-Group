@@ -1,97 +1,142 @@
 /* ==================================================
-   FRG – style.css (NEU, aufgeräumt)
-   Royal Blue #2563EB
-   Dark Blue  #1E40AF
-   White      #F9FAFB
-   Gold       #FACC15
-   Red        #EF4444
+   FRG – style.css (PRO LOOK)
+   Royal #2563EB | Dark #0B1B4A | Surface #102A6B
+   White #F9FAFB | Gold #FACC15 | Red Accent #EF4444
 ================================================== */
 
-/* =====================
-   RESET
-===================== */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+:root{
+  --bg1:#2563EB;
+  --bg2:#1D4ED8;
+  --dark:#0B1B4A;
+  --surface:#102A6B;
+  --text:#F9FAFB;
+  --muted:rgba(249,250,251,.78);
+  --gold:#FACC15;
+  --red:#EF4444;
 
-/* =====================
-   GLOBAL
-===================== */
+  --radius:18px;
+  --shadow: 0 14px 35px rgba(0,0,0,.28);
+  --shadow2: 0 10px 24px rgba(0,0,0,.22);
+  --border: 1px solid rgba(250,204,21,.55);
+}
+
+/* RESET */
+*{ box-sizing:border-box; margin:0; padding:0; }
+img{ max-width:100%; height:auto; display:block; }
+a{ color: var(--gold); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+
+/* GLOBAL */
 body{
-  font-family: Arial, sans-serif;
-  background: #2563EB;
-  color: #F9FAFB;
-  line-height: 1.65;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  line-height: 1.7;
   text-align: center;
   font-size: 18px;
+
+  /* moderner Hintergrund */
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(250,204,21,.12), transparent 60%),
+    radial-gradient(900px 500px at 80% 10%, rgba(239,68,68,.10), transparent 62%),
+    linear-gradient(160deg, var(--bg1), var(--bg2));
+  min-height: 100vh;
+
+  /* Platz für Cookie */
+  padding-bottom: 92px;
 }
 
-/* Überschriften */
-h1,h2,h3,h4,h5,h6{ color:#EF4444; }
+/* TYPO */
+h1,h2,h3{ letter-spacing:-0.02em; }
+h1{ font-size: clamp(30px, 4vw, 50px); }
+h2{ font-size: clamp(22px, 2.5vw, 30px); }
+h3{ font-size: 22px; }
+p{ color: var(--muted); }
 
-/* Links */
-a{ color:#EF4444; text-decoration:none; }
-a:hover{ color:#FCA5A5; text-decoration:underline; }
+/* CONTAINERS */
+.content{
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 26px 16px;
 
-/* Listen (AGB/Datenschutz) */
-ul{
-  margin: 10px 0 0 20px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap: 18px;
 }
-li{ margin: 6px 0; }
 
-/* =====================
-   HEADER / NAV (Slot-Header)
-===================== */
+.cards{
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 26px 16px;
+
+  display:grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 18px;
+  justify-items: center;
+}
+
+/* HEADER */
 header, .site-header{
-  background:#1E40AF;
-  border-bottom:2px solid #FACC15;
-  padding: 28px 16px;
-  position: relative;
-  z-index: 1200; /* IMMER über Overlay */
+  background: rgba(11,27,74,.55);
+  border-bottom: 1px solid rgba(250,204,21,.45);
+  backdrop-filter: blur(10px);
+  padding: 22px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 1200;
 }
 
-header h1, .site-header h1{
-  font-size: clamp(30px, 4vw, 52px);
-  margin-bottom: 8px;
+.site-header h1,
+header h1{
+  color: var(--text);
+  margin-bottom: 4px;
 }
 
-header p, .site-header p,
-.site-header .subtitle{
-  font-size: 18px;
-  opacity: 0.95;
+/* “Logo-Link” */
+.logo-link{
+  color: var(--text);
+  text-decoration: none;
+}
+.logo-link:hover{ opacity:.9; text-decoration:none; }
+
+/* Subtitle */
+.subtitle, header p{
+  color: rgba(249,250,251,.82);
+  font-size: 16px;
 }
 
-/* Hamburger Button (immer sichtbar) */
+/* HAMBURGER */
 .hamburger{
   display:inline-flex;
   align-items:center;
   justify-content:center;
+  width: 48px;
+  height: 44px;
 
-  background: rgba(250,204,21,0.15);
-  border:2px solid #FACC15;
-  color:#FACC15;
-
-  font-size: 26px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor:pointer;
   margin-top: 12px;
+  border-radius: 12px;
+  cursor:pointer;
+
+  background: rgba(250,204,21,.12);
+  border: 1px solid rgba(250,204,21,.55);
+  color: var(--gold);
+  font-size: 22px;
 
   position: relative;
-  z-index: 1201; /* über Overlay */
-  transition: background 0.2s ease, transform 0.2s ease;
+  z-index: 1201;
+  transition: transform .15s ease, background .15s ease;
 }
+.hamburger:hover{ transform: translateY(-1px); background: rgba(250,204,21,.16); }
+.hamburger.active{ background: rgba(239,68,68,.18); border-color: rgba(239,68,68,.55); }
 
-.hamburger.active{
-  background: rgba(239,68,68,0.20);
-  transform: rotate(90deg);
-}
-
-/* NAV: Slide-down Menü (immer per Klick) */
+/* NAV (Slide down) */
 .nav-links{
-  /* für Animation: IMMER flex, aber “zu” über max-height */
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap: 12px;
+  gap: 10px;
 
   width: 100%;
   max-width: 640px;
@@ -103,262 +148,185 @@ header p, .site-header p,
   opacity: 0;
   transform: translateY(-10px);
 
-  transition: max-height 0.35s ease, opacity 0.25s ease, transform 0.25s ease;
-
+  transition: max-height .35s ease, opacity .25s ease, transform .25s ease;
   position: relative;
-  z-index: 1201; /* über Overlay */
+  z-index: 1201;
 }
-
 .nav-links.open{
-  max-height: 520px; /* genug Platz für alle Links */
+  max-height: 520px;
   opacity: 1;
   transform: translateY(0);
 }
-
 .nav-links a{
   width: 100%;
   text-align:center;
+  padding: 12px 14px;
+  border-radius: 12px;
 
-  background: rgba(250,204,21,0.15);
-  border: 1px solid #FACC15;
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 18px;
+  background: rgba(16,42,107,.85);
+  border: 1px solid rgba(250,204,21,.35);
+  color: rgba(249,250,251,.92);
+  font-weight: 700;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,.18);
+}
+.nav-links a:hover{
+  border-color: rgba(250,204,21,.7);
+  background: rgba(16,42,107,.95);
 }
 
-/* =====================
-   OVERLAY (Abdunkeln)
-===================== */
+/* OVERLAY */
 #menu-overlay{
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
-  backdrop-filter: blur(2px);
-
+  background: rgba(0,0,0,.55);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s ease;
-
-  z-index: 1000; /* unter Header/Nav, über Inhalt */
+  transition: opacity .25s ease;
+  z-index: 1000;
 }
-
 #menu-overlay.active{
   opacity: 1;
   pointer-events: auto;
 }
 
-/* =====================
-   LAYOUT: CONTENT / CARDS
-===================== */
-.content{
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 28px 16px;
-
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap: 24px;
-}
-
-/* Grid-Section (z.B. Radios-Auswahl, Home-Karten) */
-.cards{
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 32px 16px;
-
-  display:grid;
-  grid-template-columns: repeat(3, minmax(280px, 1fr));
-  gap: 28px;
-
-  justify-items: center; /* Karten in Spalten zentrieren */
-}
-
+/* CARDS */
 .card{
-  background:#1E40AF;
-  border:2px solid #FACC15;
-  border-radius: 18px;
-  padding: 26px;
-
-  text-align:left;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
-
   width: 100%;
   max-width: 520px;
+  padding: 22px;
+  border-radius: var(--radius);
+  background: rgba(16,42,107,.78);
+  border: 1px solid rgba(250,204,21,.35);
+  box-shadow: var(--shadow2);
+  text-align: left;
 }
 
 .card h2, .card h3{
-  color:#EF4444;
-  margin-bottom: 12px;
+  color: var(--text);
+  margin-bottom: 10px;
 }
 
-.card h3{ font-size: 24px; }
-.card p{ font-size: 18px; margin-bottom: 14px; }
+.card h2::after{
+  content:"";
+  display:block;
+  width: 52px;
+  height: 3px;
+  margin-top: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--gold), rgba(250,204,21,.2));
+}
 
+/* BUTTONS */
 .card a{
-  display:inline-block;
-  margin-top: 8px;
-  background:#FACC15;
-  color:#1E40AF;
-  padding: 12px 18px;
-  border-radius: 12px;
-  font-weight:bold;
-  font-size: 18px;
-}
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
 
-/* Hervorhebung */
-.card.highlight{
-  border-width: 3px;
-}
+  margin-top: 10px;
+  padding: 12px 16px;
+  border-radius: 14px;
 
-/* =====================
-   TEAM FOTO
-===================== */
+  background: linear-gradient(180deg, rgba(250,204,21,1), rgba(250,204,21,.85));
+  color: #0B1B4A;
+  font-weight: 900;
+  box-shadow: var(--shadow2);
+}
+.card a:hover{ transform: translateY(-1px); text-decoration:none; }
+
+/* TEAM PHOTO */
 .team-photo{
-  width: 160px;
-  max-width: 100%;
-  height: auto;
-  border-radius: 50%;
-  display:block;
-  margin: 16px auto;
-  border:2px solid #FACC15;
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 999px;
+  border: 2px solid rgba(250,204,21,.75);
+  box-shadow: var(--shadow2);
+  margin: 14px auto;
 }
 
-/* =====================
-   RADIO PLAYER
-===================== */
-/* Standard iframes */
-iframe{
-  width: 100%;
-  border:none;
-  border-radius: 16px;
-  display:block;
-  margin: 0 auto;
-}
-
-/* Player groß & kontrolliert */
-.player-wrap{
-  width: 100%;
-  margin: 14px auto 18px;
-}
-
+/* RADIO PLAYER */
+.player-wrap{ width:100%; margin: 14px auto 18px; }
 .player-wrap iframe{
-  height: 320px; /* Desktop */
+  width:100%;
+  height: 320px;
+  border: none;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  background: rgba(0,0,0,.15);
 }
 
-/* =====================
-   FOOTER
-===================== */
+/* FOOTER */
 .site-footer{
-  background:#1E40AF;
-  border-top:2px solid #FACC15;
-  padding: 24px 16px;
-  margin-top: 32px;
-  text-align:center;
+  background: rgba(11,27,74,.55);
+  border-top: 1px solid rgba(250,204,21,.35);
+  backdrop-filter: blur(10px);
+  padding: 22px 16px;
+  margin-top: 26px;
 }
 
 .site-footer .footer-links{
   display:flex;
   justify-content:center;
-  gap: 16px;
   flex-wrap:wrap;
+  gap: 14px;
   margin-bottom: 10px;
 }
 
 .site-footer .footer-claim{
-  font-size: 14px;
-  letter-spacing: 0.08em;
+  color: rgba(250,204,21,.95);
+  font-size: 13px;
+  letter-spacing: .10em;
   text-transform: uppercase;
-  color:#FACC15;
   margin: 6px 0;
 }
+.site-footer .footer-copy{ font-size: 13px; color: rgba(249,250,251,.72); }
 
-.site-footer .footer-copy{
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-/* =====================
-   COOKIE BANNER
-===================== */
+/* COOKIE */
 #cookie-banner{
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
 
-  background:#1E40AF;
-  border-top:2px solid #FACC15;
+  background: rgba(11,27,74,.72);
+  border-top: 1px solid rgba(250,204,21,.45);
+  backdrop-filter: blur(10px);
 
-  padding: 18px 16px;
-  display:none; /* main.js zeigt es */
+  padding: 14px 14px;
+  display:none;
   justify-content:center;
   align-items:center;
   flex-wrap:wrap;
   gap: 12px;
 
   z-index: 2000;
-  font-size: 17px;
 }
+#cookie-banner span, #cookie-banner p{ color: rgba(249,250,251,.82); }
+#cookie-banner a{ color: var(--gold); }
 
 #cookie-banner button{
-  background:#FACC15;
-  color:#1E40AF;
-  border:none;
-  padding: 12px 18px;
-  border-radius: 12px;
-  font-weight:bold;
-  cursor:pointer;
+  background: linear-gradient(180deg, rgba(250,204,21,1), rgba(250,204,21,.85));
+  color: #0B1B4A;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: var(--shadow2);
 }
 
-/* Damit Cookie Banner nie Content überdeckt */
-body{
-  padding-bottom: 90px;
-}
-
-/* =====================
-   RESPONSIVE
-===================== */
+/* RESPONSIVE */
 @media (max-width: 1100px){
-  .cards{
-    grid-template-columns: repeat(2, minmax(280px, 1fr));
-  }
+  .cards{ grid-template-columns: repeat(2, minmax(280px, 1fr)); }
 }
-
 @media (max-width: 768px){
   body{ font-size: 19px; }
-
-  .cards{
-    grid-template-columns: 1fr;
-    max-width: 720px;
-    padding: 24px 12px;
-  }
-
-  .card{ padding: 22px; }
-  .card h3{ font-size: 26px; }
-  .card p{ font-size: 19px; line-height: 1.7; }
-
+  .cards{ grid-template-columns: 1fr; max-width: 720px; }
   .player-wrap iframe{ height: 380px; }
-  .team-photo{ width: 140px; }
-
-  #cookie-banner{ font-size: 18px; }
 }
-
 @media (max-width: 480px){
   body{ font-size: 20px; }
-
   .player-wrap iframe{ height: 420px; }
-  .team-photo{ width: 120px; }
-}
-
-.logo-link {
-  color: inherit;        /* gleiche Farbe wie h1 */
-  text-decoration: none; /* kein Unterstrich */
-}
-
-.logo-link:hover {
-  opacity: 0.85;         /* dezenter Hover-Effekt */
 }
