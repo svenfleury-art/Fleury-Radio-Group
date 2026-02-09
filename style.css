@@ -148,7 +148,7 @@ header h1{
   opacity: 0;
   transform: translateY(-10px);
 
-  transition: max-height .35s ease, opacity .25s ease, transform .25s ease;
+  transition: max-height .6s ease, opacity .45s ease, transform .45s ease;
   position: relative;
   z-index: 1201;
 }
