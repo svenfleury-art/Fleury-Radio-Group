@@ -96,11 +96,7 @@ header,.site-header{
 }
 
 /* ===============================
-   NAV – iOS STYLE (LANGSAM & SMOOTH)
-=============================== */
-
-/* ===============================
-   NAV – iOS OVERSHOOT / MINI BOUNCE
+   NAV – iOS STYLE (NO KEYFRAMES)
 =============================== */
 
 .nav-links{
@@ -118,36 +114,23 @@ header,.site-header{
 
   opacity:0;
 
-  /* Start leicht über Position */
-  transform: translateY(-18px);
+  /* Start etwas weiter oben */
+  transform: translateY(-20px);
 
-  /* iOS-like easing */
+  /* 🍎 iOS-Easing (sanft + Overshoot integriert) */
   transition:
-    max-height 0.9s cubic-bezier(.22,1,.36,1),
-    opacity 0.65s ease,
-    transform 0.9s cubic-bezier(.22,1,.36,1);
+    max-height 0.9s cubic-bezier(.22,1.15,.36,1),
+    opacity 0.5s ease,
+    transform 0.9s cubic-bezier(.22,1.15,.36,1);
 
   z-index:1201;
 }
 
-/* OPEN – Mini Overshoot */
+/* OPEN – sanfter Overshoot, kein Nach-Bounce */
 .nav-links.open{
   max-height:560px;
   opacity:1;
-
-  /* 🔥 Overshoot */
-  transform: translateY(4px);
-}
-
-/* Wenn offen, nachfedern (Bounce Stop) */
-.nav-links.open{
-  animation: iosBounce 0.45s cubic-bezier(.4,0,.2,1) 0.75s forwards;
-}
-
-/* 🎧 iOS Micro Bounce */
-@keyframes iosBounce{
-  0%   { transform: translateY(4px); }
-  100% { transform: translateY(0); }
+  transform: translateY(0);
 }
 
 
