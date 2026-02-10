@@ -99,6 +99,10 @@ header,.site-header{
    NAV – iOS STYLE (NO KEYFRAMES)
 =============================== */
 
+/* ===============================
+   NAV – iOS STYLE (ASYMMETRISCH)
+=============================== */
+
 .nav-links{
   display:flex;
   flex-direction:column;
@@ -113,18 +117,30 @@ header,.site-header{
   overflow:hidden;
 
   opacity:0;
-
-  /* Start etwas weiter oben */
   transform: translateY(-20px);
 
-  /* 🍎 iOS-Easing (sanft + Overshoot integriert) */
+  /* ⬇️ CLOSE = langsamer */
   transition:
-    max-height 0.9s cubic-bezier(.22,1.15,.36,1),
-    opacity 0.5s ease,
-    transform 0.9s cubic-bezier(.22,1.15,.36,1);
+    max-height 0.75s ease,
+    opacity 0.45s ease,
+    transform 0.75s ease;
 
   z-index:1201;
 }
+
+/* ⬆️ OPEN = langsamer + Overshoot */
+.nav-links.open{
+  max-height:560px;
+  opacity:1;
+  transform: translateY(0);
+
+  /* 🍎 iOS Overshoot */
+  transition:
+    max-height 1.05s cubic-bezier(.22,1.15,.36,1),
+    opacity 0.55s ease,
+    transform 1.05s cubic-bezier(.22,1.15,.36,1);
+}
+
 
 /* OPEN – sanfter Overshoot, kein Nach-Bounce */
 .nav-links.open{
