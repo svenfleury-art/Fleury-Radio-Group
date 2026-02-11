@@ -301,40 +301,38 @@ header,.site-header{
 
 .player-wrap iframe {
   width: 100%;
-  height: 420px;
+  height: 480px;   /* höher, damit oben genug Platz ist */
   border: none;
   border-radius: 28px;
-  display: block;
 }
 
 /* Neues sauberes Overlay-Logo */
 .player-logo {
   position: absolute;
-  top: 10px;                /* näher an oberen Rand */
+  top: 0px;                 /* ganz oben */
   left: 50%;
   transform: translateX(-50%);
-  width: 300px;             /* deutlich größer */
-  max-width: 80%;           /* bleibt responsive */
+  width: 420px;             /* deutlich größer */
+  max-width: 95%;           /* responsive Sicherheit */
   z-index: 10;
   pointer-events: none;
 
-  background: none;         /* KEIN weißer Hintergrund */
-  padding: 0;               /* KEIN Innenabstand */
+  background: none;
+  padding: 0;
   border-radius: 0;
-  box-shadow: 0 20px 45px rgba(0,0,0,0.45); /* nur leichter Schatten */
+  box-shadow: 0 25px 60px rgba(0,0,0,0.55);
 }
 
 
 /* Mobile */
 @media (max-width: 600px) {
   .player-logo {
-    width: 200px;
+    width: 260px;
   }
-}
-
 
   .player-wrap iframe {
-    height: 360px;
+    height: 400px;
   }
 }
+
 
