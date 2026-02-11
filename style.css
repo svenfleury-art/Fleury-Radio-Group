@@ -310,26 +310,28 @@ header,.site-header{
 /* Neues sauberes Overlay-Logo */
 .player-logo {
   position: absolute;
-  top: 18px;                 /* weiter nach oben */
+  top: 10px;                /* näher an oberen Rand */
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;              /* größer */
+  width: 300px;             /* deutlich größer */
+  max-width: 80%;           /* bleibt responsive */
   z-index: 10;
   pointer-events: none;
 
-  /* edler Look */
-  background: rgba(255,255,255,0.92);
-  padding: 18px 30px;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+  background: none;         /* KEIN weißer Hintergrund */
+  padding: 0;               /* KEIN Innenabstand */
+  border-radius: 0;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.45); /* nur leichter Schatten */
 }
+
 
 /* Mobile */
 @media (max-width: 600px) {
   .player-logo {
-    width: 150px;
-    padding: 12px 18px;
+    width: 200px;
   }
+}
+
 
   .player-wrap iframe {
     height: 360px;
