@@ -287,3 +287,8 @@ header,.site-header{
   body{ font-size:20px; }
   .player-wrap iframe{ height:420px; }
 }
+
+.card.highlight h3 {
+  margin-top: 30px;
+}
+
