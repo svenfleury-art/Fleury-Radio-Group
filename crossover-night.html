@@ -1,41 +1,170 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FRG Crosovernight – Fleury Radio Group</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="content.htm" type="image/png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FRG Crossover Night – Fleury Radio Group</title>
+  <meta name="description" content="FRG Crossover Night am 01.03. von 19:00–22:00. Drei Sender, drei Stunden: Radio Rhywälle, RhyRock Radio, Winterlord FM." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="content.htm" type="image/png" />
 </head>
 
+<body>
   <!-- Header/Nav wird automatisch geladen -->
   <div id="nav-slot"></div>
 
-
   <main>
-    <section class="card">
-      <div class="container">
-        <h1>FRG Crossover Night</h1>
-        <p><strong>01.03. · 19:00–22:00</strong></p>
+    <!-- HERO -->
+    <section class="hero card">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="pill">Special</span>
+          <h1>FRG Crossover Night</h1>
+          <p class="lead">
+            <strong>01.03.</strong> · <strong>19:00–22:00</strong><br />
+            Drei Sender. Drei Stunden. Ein FRG-Event – mit einer musikalischen Reise von Pop über Rock bis Epic Metal.
+          </p>
 
-        <div class="schedule">
-          <div class="slot">
-            <h3>19–20 Uhr – Radio Rhywälle</h3>
-            <p>Pop öffnet sich Richtung Rock.</p>
-          </div>
-
-          <div class="slot">
-            <h3>20–21 Uhr – RhyRock Radio</h3>
-            <p>Rock wird intensiver und härter.</p>
-          </div>
-
-          <div class="slot">
-            <h3>21–22 Uhr – Winterlord FM</h3>
-            <p>Epic Metal als Höhepunkt.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#hoeren">Zum Sender wechseln</a>
+            <a class="btn ghost" href="#ablauf">So läuft’s ab</a>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- WAS IST DAS -->
+    <section class="card" id="ablauf">
+      <div class="container">
+        <h2>Was ist die FRG Crossover Night?</h2>
+        <p>
+          Die <strong>FRG Crossover Night</strong> ist ein Special-Abend der <strong>Fleury Radio Group</strong>.
+          Von <strong>19:00 bis 22:00</strong> gibt es drei Stunden Event-Programm mit einem klaren Spannungsbogen:
+          <strong>Pop → Rock → Epic Metal</strong>.
+        </p>
+        <p class="muted">
+          Tipp: Wenn du den ganzen Crossover erleben willst, wechsel zur vollen Stunde zum nächsten Sender.
+        </p>
+      </div>
+    </section>
+
+    <!-- STUNDENPLAN -->
+    <section class="card">
+      <div class="container">
+        <h2>Stundenplan</h2>
+
+        <div class="schedule">
+          <div class="slot">
+            <h3>19:00–20:00 – Radio Rhywälle</h3>
+            <p>Pop, Rap & Oldies – die Special-Stunde startet zugänglich und wird gegen Ende gitarriger.</p>
+            <ul class="bullets">
+              <li>Vibe: urban & upbeat</li>
+              <li>Brücke: Pop-Rock / Gitarren-Hits</li>
+            </ul>
+          </div>
+
+          <div class="slot">
+            <h3>20:00–21:00 – RhyRock Radio</h3>
+            <p>Rock & Alternative – mehr Druck, mehr Energie. Gegen Ende näher am Metal.</p>
+            <ul class="bullets">
+              <li>Vibe: guitars & energy</li>
+              <li>Brücke: härtere Riffs / Stadion-Hymnen</li>
+            </ul>
+          </div>
+
+          <div class="slot">
+            <h3>21:00–22:00 – Winterlord FM</h3>
+            <p>Power & Epic Metal – hymnischer Höhepunkt und großes Finale.</p>
+            <ul class="bullets">
+              <li>Vibe: episch & heroisch</li>
+              <li>Finale: große Refrains / „Victory“-Mood</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="note">
+          <strong>Merke:</strong> Jede Stunde hat ihren eigenen Charakter – zusammen ist es eine musikalische Reise.
+        </div>
+      </div>
+    </section>
+
+    <!-- LINKS ZU DEN SENDERN (KEIN DIREKTER STREAM) -->
+    <section class="card" id="hoeren">
+      <div class="container">
+        <h2>Zum Sender wechseln</h2>
+        <p>Wähle deinen Sender und erlebe die Crossover Night direkt auf der jeweiligen Senderseite.</p>
+
+        <div class="listen-grid">
+          <div class="listen-card">
+            <h3>Radio Rhywälle</h3>
+            <p class="muted">Pop / Rap / Oldies</p>
+            <!-- TODO: Link anpassen -->
+            <a class="btn primary" href="radio-rhywalle.html">Zur Senderseite</a>
+          </div>
+
+          <div class="listen-card">
+            <h3>RhyRock Radio</h3>
+            <p class="muted">Rock / Alternative</p>
+            <!-- TODO: Link anpassen -->
+            <a class="btn primary" href="rhyrock-radio.html">Zur Senderseite</a>
+          </div>
+
+          <div class="listen-card">
+            <h3>Winterlord FM</h3>
+            <p class="muted">Power / Epic Metal</p>
+            <!-- TODO: Link anpassen -->
+            <a class="btn primary" href="winterlord-fm.html">Zur Senderseite</a>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:14px;">
+          <strong>Tipp:</strong> Wechsle um <strong>20:00</strong> und <strong>21:00</strong> den Sender, um den kompletten Crossover zu erleben.
+        </div>
+      </div>
+    </section>
+
+    <!-- TEILEN -->
+    <section class="card">
+      <div class="container">
+        <h2>Teilen</h2>
+        <p>Hilf uns, die Nacht größer zu machen: Teile den Stundenplan in deiner Story oder per WhatsApp.</p>
+        <div class="share-row">
+          <span class="tag">#FRGCrossover</span>
+          <span class="tag">#FleuryRadioGroup</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="card">
+      <div class="container">
+        <h2>FAQ</h2>
+        <div class="faq">
+          <details>
+            <summary>Muss ich den Sender wechseln?</summary>
+            <p>
+              Nein. Du kannst auf deinem Lieblingssender bleiben.
+              Für den kompletten Crossover empfehlen wir, zur vollen Stunde zum nächsten Sender zu wechseln.
+            </p>
+          </details>
+
+          <details>
+            <summary>Wo finde ich die Sender?</summary>
+            <p>
+              Über die Buttons „Zur Senderseite“ oben – dort findest du die Streams, Infos und das jeweilige Branding.
+            </p>
+          </details>
+
+          <details>
+            <summary>Gibt es eine nächste Ausgabe?</summary>
+            <p>
+              Wenn die Crossover Night gut ankommt, planen wir weitere Ausgaben im Jahr.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Footer/Cookie wird automatisch geladen -->
@@ -43,6 +172,5 @@
 
   <!-- Nur noch 1 Script -->
   <script src="main.js"></script>
-
 </body>
 </html>
