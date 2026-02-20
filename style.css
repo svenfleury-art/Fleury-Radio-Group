@@ -335,4 +335,110 @@ header,.site-header{
   }
 }
 
+/* ================================
+   FRG Countdown Styling
+================================ */
 
+.countdown {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(11,42,106,0.95), rgba(11,42,106,0.85));
+  border: 1px solid rgba(212,175,55,0.35);
+  color: #ffffff;
+  text-align: center;
+}
+
+.countdown-title {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #D4AF37;
+  margin-bottom: 14px;
+}
+
+/* GRID LAYOUT – 4 nebeneinander */
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+/* Einzelne Zeit-Box */
+.cd-box {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(212,175,55,0.35);
+  border-radius: 16px;
+  padding: 16px 10px;
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover Effekt (Desktop) */
+.cd-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+/* Große Zahlen */
+.cd-box span {
+  display: block;
+  font-size: 32px;
+  font-weight: 900;
+  color: #D4AF37;
+  line-height: 1;
+}
+
+/* Einheit (Tage, Stunden...) */
+.cd-box small {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+
+/* Status-Text unter Countdown */
+.countdown-status {
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .countdown-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cd-box span {
+    font-size: 26px;
+  }
+}
+
+/* Sehr kleine Geräte */
+@media (max-width: 420px) {
+  .countdown-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .cd-box {
+    padding: 12px 8px;
+  }
+
+  .cd-box span {
+    font-size: 22px;
+  }
+
+  .cd-box small {
+    font-size: 11px;
+  }
+}
