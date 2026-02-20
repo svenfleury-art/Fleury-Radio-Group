@@ -719,67 +719,6 @@ header,.site-header{
   .flip-card{ height: 72px; }
 }
 
-/* =====================================
-   Sender-Kacheln nebeneinander
-===================================== */
-
-.listen-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.listen-card {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(212,175,55,0.25);
-  border-radius: 18px;
-  padding: 20px;
-  text-align: center;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.listen-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.25);
-}
-
-.listen-card h3 {
-  margin-bottom: 8px;
-}
-
-.listen-card .muted {
-  margin-bottom: 18px;
-  opacity: 0.8;
-}
-
-/* Buttons zentriert */
-.listen-card .btn {
-  align-self: center;
-}
-
-/* =============================
-   Responsive
-============================= */
-
-/* Tablet */
-@media (max-width: 900px) {
-  .listen-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-  .listen-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* === CARD SECTIONS sauber zentrieren === */
 .card{
