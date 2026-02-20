@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FRG Crossover Night</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <?php include 'nav.html'; ?>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h1>FRG Crossover Night</h1>
+        <p><strong>01.03. · 19:00–22:00</strong></p>
+
+        <div class="schedule">
+          <div class="slot">
+            <h3>19–20 Uhr – Radio Rhywälle</h3>
+            <p>Pop öffnet sich Richtung Rock.</p>
+          </div>
+
+          <div class="slot">
+            <h3>20–21 Uhr – RhyRock Radio</h3>
+            <p>Rock wird intensiver und härter.</p>
+          </div>
+
+          <div class="slot">
+            <h3>21–22 Uhr – Winterlord FM</h3>
+            <p>Epic Metal als Höhepunkt.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <?php include 'footer.html'; ?>
+
+  <script src="nav.js"></script>
+</body>
+</html>
