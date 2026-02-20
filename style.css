@@ -581,3 +581,140 @@ header,.site-header{
     font-size: 16px;
   }
 }
+
+/* ================================
+   FRG Flip Countdown
+================================ */
+
+.countdown{
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(11,42,106,0.95), rgba(11,42,106,0.85));
+  border: 1px solid rgba(212,175,55,0.35);
+  color: #fff;
+  text-align: center;
+}
+
+.countdown-title{
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #D4AF37;
+  margin-bottom: 14px;
+}
+
+.flip-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.flip-unit{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.flip-label{
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+
+/* Card */
+.flip-card{
+  width: 100%;
+  max-width: 140px;
+  height: 84px;
+  position: relative;
+  perspective: 900px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(212,175,55,0.35);
+  overflow: hidden;
+}
+
+/* Faces */
+.flip-face{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+}
+
+.flip-front{
+  transform: rotateX(0deg);
+}
+
+.flip-back{
+  transform: rotateX(180deg);
+}
+
+/* Number */
+.flip-number{
+  font-weight: 900;
+  font-size: 34px;
+  line-height: 1;
+  color: #D4AF37;
+}
+
+/* subtle split line like classic flip clocks */
+.flip-card::before{
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 50%;
+  height: 1px;
+  background: rgba(255,255,255,0.10);
+  z-index: 3;
+}
+
+/* Flip animation trigger */
+.flip-card.is-flipping{
+  animation: none;
+}
+
+.flip-card.is-flipping .flip-front{
+  animation: flipFront 600ms ease-in-out forwards;
+}
+
+.flip-card.is-flipping .flip-back{
+  animation: flipBack 600ms ease-in-out forwards;
+}
+
+@keyframes flipFront{
+  0%   { transform: rotateX(0deg); }
+  100% { transform: rotateX(-180deg); }
+}
+
+@keyframes flipBack{
+  0%   { transform: rotateX(180deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+.countdown-status{
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px){
+  .flip-grid{ grid-template-columns: repeat(2, 1fr); }
+  .flip-number{ font-size: 30px; }
+  .flip-card{ height: 78px; }
+}
+
+@media (max-width: 420px){
+  .flip-grid{ grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .flip-number{ font-size: 26px; }
+  .flip-card{ height: 72px; }
+}
