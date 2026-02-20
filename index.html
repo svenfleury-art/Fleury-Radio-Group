@@ -31,16 +31,49 @@
             <div class="slot" role="listitem"><span class="time">21–22 </span><span class="label">: Winterlord FM</span></div>
           </div>
 
-          <div class="countdown" aria-live="polite">
-            <div class="countdown-title">Countdown bis Start:</div>
-            <div class="countdown-grid">
-              <div class="cd-box"><span id="cdDays">—</span><small> Tage</small></div>
-              <div class="cd-box"><span id="cdHours">—</span><small> Stunden</small></div>
-              <div class="cd-box"><span id="cdMinutes">—</span><small> Minuten</small></div>
-              <div class="cd-box"><span id="cdSeconds">—</span><small> Sekunden</small></div>
-            </div>
-            <div id="cdStatus" class="countdown-status"></div>
-          </div>
+       <div class="countdown" aria-live="polite">
+  <div class="countdown-title">Countdown bis Start:</div>
+
+  <div class="flip-grid">
+    <!-- DAYS -->
+    <div class="flip-unit" data-unit="days">
+      <div class="flip-card" id="flipDays">
+        <div class="flip-face flip-front"><span class="flip-number">—</span></div>
+        <div class="flip-face flip-back"><span class="flip-number">—</span></div>
+      </div>
+      <div class="flip-label">Tage</div>
+    </div>
+
+    <!-- HOURS -->
+    <div class="flip-unit" data-unit="hours">
+      <div class="flip-card" id="flipHours">
+        <div class="flip-face flip-front"><span class="flip-number">—</span></div>
+        <div class="flip-face flip-back"><span class="flip-number">—</span></div>
+      </div>
+      <div class="flip-label">Stunden</div>
+    </div>
+
+    <!-- MINUTES -->
+    <div class="flip-unit" data-unit="minutes">
+      <div class="flip-card" id="flipMinutes">
+        <div class="flip-face flip-front"><span class="flip-number">—</span></div>
+        <div class="flip-face flip-back"><span class="flip-number">—</span></div>
+      </div>
+      <div class="flip-label">Minuten</div>
+    </div>
+
+    <!-- SECONDS -->
+    <div class="flip-unit" data-unit="seconds">
+      <div class="flip-card" id="flipSeconds">
+        <div class="flip-face flip-front"><span class="flip-number">—</span></div>
+        <div class="flip-face flip-back"><span class="flip-number">—</span></div>
+      </div>
+      <div class="flip-label">Sekunden</div>
+    </div>
+  </div>
+
+  <div id="cdStatus" class="countdown-status"></div>
+</div>
 
           <div class="hero-actions">
             <a class="btn primary" href="crossover-night.html">Alle Infos</a>
