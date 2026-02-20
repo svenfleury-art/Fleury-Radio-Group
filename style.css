@@ -780,3 +780,21 @@ header,.site-header{
     grid-template-columns: 1fr;
   }
 }
+
+/* === CARD SECTIONS sauber zentrieren === */
+.card{
+  width: min(1100px, calc(100% - 32px)); /* max Breite + Rand links/rechts */
+  margin: 24px auto;                    /* zentriert die ganze Karte */
+  padding: 26px;                        /* Innenabstand */
+  border-radius: 22px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(212,175,55,0.25);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.20);
+}
+
+/* Wenn du in der card nochmal .container hast: NICHT nochmal begrenzen */
+.card .container{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
