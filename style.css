@@ -408,54 +408,20 @@ header,.site-header{
   color: #ffffff;
 }
 
-/* ================================
-   RESPONSIVE
-================================ */
-
-/* Tablet */
-@media (max-width: 768px) {
-  .countdown-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .cd-box span {
-    font-size: 26px;
-  }
-}
-
-/* Sehr kleine Geräte */
-@media (max-width: 420px) {
-  .countdown-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .cd-box {
-    padding: 12px 8px;
-  }
-
-  .cd-box span {
-    font-size: 22px;
-  }
-
-  .cd-box small {
-    font-size: 11px;
-  }
-}
-
 /* =====================================
-   FRG EVENT HERO
+   FRG EVENT HERO – ZENTRIERT
 ===================================== */
 
 .hero {
-  padding: 80px 0 70px;
+  padding: 90px 0 80px;
   background: linear-gradient(
       135deg,
       rgba(11, 42, 106, 0.95),
       rgba(11, 42, 106, 0.85)
     ),
-    radial-gradient(circle at top right, rgba(212,175,55,0.15), transparent 60%);
+    radial-gradient(circle at top center, rgba(212,175,55,0.18), transparent 60%);
   color: #ffffff;
+  text-align: center;
   position: relative;
   overflow: hidden;
 }
@@ -463,34 +429,44 @@ header,.site-header{
 .hero-inner {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 28px;
-  max-width: 850px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero-copy h1 {
-  font-size: clamp(32px, 4vw, 48px);
+  font-size: clamp(34px, 4vw, 50px);
   font-weight: 900;
-  margin: 10px 0 16px;
+  margin: 12px 0 18px;
   letter-spacing: -0.5px;
 }
 
 .hero .lead {
   font-size: 18px;
-  line-height: 1.5;
-  margin-bottom: 24px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  max-width: 600px;
   opacity: 0.95;
 }
 
 /* =====================================
-   PILL (Special Label)
+   PILL
 ===================================== */
 
 .pill {
   display: inline-block;
-  background: rgba(212, 175, 55, 0.15);
+  background: rgba(212, 175, 55, 0.18);
   border: 1px solid rgba(212, 175, 55, 0.5);
   color: #D4AF37;
-  padding: 6px 14px;
+  padding: 6px 16px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 700;
@@ -505,52 +481,53 @@ header,.site-header{
 .schedule-mini {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 28px;
+  gap: 18px;
+  margin-bottom: 32px;
+  width: 100%;
+  max-width: 750px;
 }
 
 .slot {
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(212,175,55,0.3);
-  border-radius: 16px;
-  padding: 16px 14px;
-  text-align: center;
+  border-radius: 18px;
+  padding: 18px 14px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .slot:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
 }
 
 .slot .time {
   display: block;
   font-weight: 900;
-  font-size: 18px;
+  font-size: 20px;
   color: #D4AF37;
   margin-bottom: 6px;
 }
 
 .slot .label {
-  display: block;
   font-size: 14px;
   font-weight: 600;
   color: rgba(255,255,255,0.95);
 }
 
 /* =====================================
-   HERO BUTTONS
+   BUTTONS
 ===================================== */
 
 .hero-actions {
   display: flex;
+  justify-content: center;
+  gap: 16px;
   flex-wrap: wrap;
-  gap: 14px;
 }
 
 .btn {
   display: inline-block;
-  padding: 14px 20px;
+  padding: 14px 22px;
   border-radius: 14px;
   font-weight: 800;
   text-decoration: none;
@@ -563,18 +540,18 @@ header,.site-header{
 }
 
 .btn.primary:hover {
-  filter: brightness(1.05);
   transform: translateY(-2px);
+  filter: brightness(1.05);
 }
 
 .btn.ghost {
-  background: transparent;
   border: 1px solid rgba(255,255,255,0.4);
   color: #ffffff;
+  background: transparent;
 }
 
 .btn.ghost:hover {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.12);
 }
 
 /* =====================================
@@ -588,12 +565,12 @@ header,.site-header{
 }
 
 @media (max-width: 600px) {
-  .hero {
-    padding: 60px 0;
-  }
-
   .schedule-mini {
     grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding: 70px 0;
   }
 
   .hero-copy h1 {
