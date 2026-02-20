@@ -442,3 +442,165 @@ header,.site-header{
     font-size: 11px;
   }
 }
+
+/* =====================================
+   FRG EVENT HERO
+===================================== */
+
+.hero {
+  padding: 80px 0 70px;
+  background: linear-gradient(
+      135deg,
+      rgba(11, 42, 106, 0.95),
+      rgba(11, 42, 106, 0.85)
+    ),
+    radial-gradient(circle at top right, rgba(212,175,55,0.15), transparent 60%);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 850px;
+}
+
+.hero-copy h1 {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 900;
+  margin: 10px 0 16px;
+  letter-spacing: -0.5px;
+}
+
+.hero .lead {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  opacity: 0.95;
+}
+
+/* =====================================
+   PILL (Special Label)
+===================================== */
+
+.pill {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: #D4AF37;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* =====================================
+   MINI SCHEDULE
+===================================== */
+
+.schedule-mini {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.slot {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 16px;
+  padding: 16px 14px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.slot:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+.slot .time {
+  display: block;
+  font-weight: 900;
+  font-size: 18px;
+  color: #D4AF37;
+  margin-bottom: 6px;
+}
+
+.slot .label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.95);
+}
+
+/* =====================================
+   HERO BUTTONS
+===================================== */
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn.primary {
+  background: #D4AF37;
+  color: #0B2A6A;
+}
+
+.btn.primary:hover {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #ffffff;
+}
+
+.btn.ghost:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 900px) {
+  .schedule-mini {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 60px 0;
+  }
+
+  .schedule-mini {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-copy h1 {
+    font-size: 30px;
+  }
+
+  .hero .lead {
+    font-size: 16px;
+  }
+}
