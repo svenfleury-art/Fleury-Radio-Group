@@ -192,75 +192,96 @@ function getNextEvent() {
 
 
 
+/* -------------------------
+COUNTDOWN INIT
+------------------------- */
 
+let currentEvent = null;
 
-function updateFlip(id, newValue){
+function initCountdown(){
 
-const el = document.getElementById(id);
-const front = el.querySelector(".front");
-const back = el.querySelector(".back");
+  currentEvent = getNextEvent();
 
-if(front.textContent == newValue) return;
+  if(!currentEvent) return;
 
-back.textContent = newValue;
+  const titleEl = document.getElementById("nextEventTitle");
+  const dateEl = document.getElementById("nextEventDate");
 
-el.classList.add("animate");
+  if(titleEl) titleEl.textContent = currentEvent.title;
 
-setTimeout(()=>{
-front.textContent = newValue;
-el.classList.remove("animate");
-},600);
+  if(dateEl){
+    dateEl.textContent =
+      currentEvent.dateObj.toLocaleDateString("de-CH", {
+        weekday:"long",
+        day:"numeric",
+        month:"long",
+        year:"numeric",
+        hour:"2-digit",
+        minute:"2-digit"
+      });
+  }
 
+  updateCountdown();
+  setInterval(updateCountdown,1000);
 }
+
+
+
+/* -------------------------
+COUNTDOWN UPDATE
+------------------------- */
 
 function updateCountdown(){
 
-const target = new Date("2026-05-16T20:00:00");
+  if(!currentEvent) return;
 
-const now = new Date();
-const diff = target - now;
+  const now = new Date();
+  const diff = currentEvent.dateObj - now;
 
-if(diff <= 0) return;
+  if(diff <= 0) return;
 
-const days = Math.floor(diff / (1000*60*60*24));
-const hours = Math.floor((diff / (1000*60*60)) % 24);
-const minutes = Math.floor((diff / (1000*60)) % 60);
-const seconds = Math.floor((diff / 1000) % 60);
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff / (1000*60*60)) % 24);
+  const minutes = Math.floor((diff / (1000*60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
 
-updateFlip("cdDays", days);
-updateFlip("cdHours", hours);
-updateFlip("cdMinutes", minutes);
-updateFlip("cdSeconds", seconds);
+  updateFlip("cdDays", days);
+  updateFlip("cdHours", hours);
+  updateFlip("cdMinutes", minutes);
+  updateFlip("cdSeconds", seconds);
 
 }
 
-setInterval(updateCountdown,1000);
-updateCountdown();
 
 
+/* -------------------------
+FLIP ANIMATION
+------------------------- */
 
 function updateFlip(id, value){
 
-const el = document.getElementById(id);
-const top = el.querySelector(".top");
-const bottom = el.querySelector(".bottom");
-const flipTop = el.querySelector(".flip-top");
-const flipBottom = el.querySelector(".flip-bottom");
+  const el = document.getElementById(id);
+  if(!el) return;
 
-const current = top.textContent;
-const newVal = String(value).padStart(2,"0");
+  const top = el.querySelector(".top");
+  const bottom = el.querySelector(".bottom");
+  const flipTop = el.querySelector(".flip-top");
+  const flipBottom = el.querySelector(".flip-bottom");
 
-if(current === newVal) return;
+  const current = top.textContent;
+  const newVal = String(value).padStart(2,"0");
 
-flipTop.textContent = current;
-flipBottom.textContent = newVal;
+  if(current === newVal) return;
 
-el.classList.add("animate");
+  flipTop.textContent = current;
+  flipBottom.textContent = newVal;
 
-setTimeout(()=>{
-top.textContent = newVal;
-bottom.textContent = newVal;
-el.classList.remove("animate");
-},1000);
+  el.classList.add("animate");
+
+  setTimeout(()=>{
+    top.textContent = newVal;
+    bottom.textContent = newVal;
+    el.classList.remove("animate");
+  },600);
 
 }
