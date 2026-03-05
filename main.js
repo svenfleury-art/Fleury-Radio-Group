@@ -181,33 +181,31 @@ function initCountdown(){
   currentEvent = getNextEvent();
   if(!currentEvent) return;
 
+  // Titel und Datum anzeigen
   const titleEl = document.getElementById("nextEventTitle");
   const dateEl = document.getElementById("nextEventDate");
-
   if(titleEl) titleEl.textContent = currentEvent.title;
-
   if(dateEl){
     dateEl.textContent = currentEvent.dateObj.toLocaleDateString("de-CH", {
-      weekday:"long",
-      day:"numeric",
-      month:"long",
-      year:"numeric",
-      hour:"2-digit",
-      minute:"2-digit"
+      weekday:"long", day:"numeric", month:"long", year:"numeric",
+      hour:"2-digit", minute:"2-digit"
     });
   }
 
-  updateCountdown();
+  // Direkt Zahlen ohne Animation setzen
+  updateCountdown(true);
+
+  // Jede Sekunde aktualisieren
   setInterval(() => {
     currentEvent = getNextEvent();
-    updateCountdown();
+    updateCountdown(false);
   }, 1000);
 }
 
 /* -------------------------
-COUNTDOWN UPDATE (ohne IDs)
+COUNTDOWN UPDATE
 ------------------------- */
-function updateCountdown(){
+function updateCountdown(instant = false){
   if(!currentEvent) return;
 
   const now = new Date();
@@ -219,30 +217,28 @@ function updateCountdown(){
   const minutes = Math.floor((diff / (1000*60)) % 60);
   const seconds = Math.floor((diff / 1000) % 60);
 
-  // Nimm die cd-boxen in der Reihenfolge
-  const boxes = document.querySelectorAll(".countdown-live .cd-box");
-  const values = [days, hours, minutes, seconds];
-
-  boxes.forEach((box, i) => updateFlipBox(box, values[i]));
+  updateFlip("cdDays", days, instant);
+  updateFlip("cdHours", hours, instant);
+  updateFlip("cdMinutes", minutes, instant);
+  updateFlip("cdSeconds", seconds, instant);
 }
 
 /* -------------------------
-FLIP ANIMATION FÜR BOX (fix)
+FLIP ANIMATION
 ------------------------- */
-function updateFlip(id, value, instant = false) {
+function updateFlip(id, value, instant = false){
   const el = document.getElementById(id);
-  if (!el) return;
+  if(!el) return;
 
   const top = el.querySelector(".top");
   const bottom = el.querySelector(".bottom");
   const flipTop = el.querySelector(".flip-top");
   const flipBottom = el.querySelector(".flip-bottom");
 
-  const newVal = String(value).padStart(2, "0");
+  const newVal = String(value).padStart(2,"0");
   const current = top.textContent || newVal;
 
-  if (instant) {
-    // Direkt setzen ohne Animation
+  if(instant){
     top.textContent = newVal;
     bottom.textContent = newVal;
     flipTop.style.display = "none";
@@ -251,9 +247,8 @@ function updateFlip(id, value, instant = false) {
     return;
   }
 
-  if (current === newVal) return;
+  if(current === newVal) return;
 
-  // Nur während Animation sichtbar
   flipTop.textContent = current;
   flipBottom.textContent = newVal;
   flipTop.style.display = "flex";
@@ -261,13 +256,13 @@ function updateFlip(id, value, instant = false) {
 
   el.classList.add("animate");
 
-  setTimeout(() => {
+  setTimeout(()=>{
     top.textContent = newVal;
     bottom.textContent = newVal;
     flipTop.style.display = "none";
     flipBottom.style.display = "none";
     el.classList.remove("animate");
-  }, 600);
+  },600);
 }
 
 /* -------------------------
