@@ -229,34 +229,45 @@ function updateCountdown(){
 /* -------------------------
 FLIP ANIMATION FÜR BOX (fix)
 ------------------------- */
-function updateFlipBox(box, value){
-  if(!box) return;
+function updateFlip(id, value) {
+  const el = document.getElementById(id);
+  if (!el) return;
 
-  const top = box.querySelector(".top");
-  const bottom = box.querySelector(".bottom");
-  const flipTop = box.querySelector(".flip-top");
-  const flipBottom = box.querySelector(".flip-bottom");
+  const top = el.querySelector(".top");
+  const bottom = el.querySelector(".bottom");
+  const flipTop = el.querySelector(".flip-top");
+  const flipBottom = el.querySelector(".flip-bottom");
 
-  const newVal = String(value).padStart(2,"0");
+  const newVal = String(value).padStart(2, "0");
+  const current = top.textContent;
 
-  // Initialisierung, falls noch leer
-  if(!top.textContent) top.textContent = newVal;
-  if(!bottom.textContent) bottom.textContent = newVal;
+  // Wenn noch nicht initialisiert, setzen
+  if (!top.textContent) top.textContent = newVal;
+  if (!bottom.textContent) bottom.textContent = newVal;
 
-  // Wenn sich nix geändert hat, nichts animieren
-  if(top.textContent === newVal && bottom.textContent === newVal) return;
+  // Keine Änderung → keine Animation
+  if (current === newVal) return;
 
-  if(flipTop) flipTop.textContent = top.textContent;
-  if(flipBottom) flipBottom.textContent = newVal;
+  // Flip vorbereiten
+  flipTop.textContent = current;
+  flipBottom.textContent = newVal;
 
-  box.classList.add("animate");
+  // Nur während Animation sichtbar machen
+  flipTop.style.visibility = "visible";
+  flipBottom.style.visibility = "visible";
 
-  // Nach Animation den Status aktualisieren
-  setTimeout(()=>{
+  el.classList.add("animate");
+
+  // Nach Animation Status übernehmen
+  setTimeout(() => {
     top.textContent = newVal;
     bottom.textContent = newVal;
-    box.classList.remove("animate");
-  },600);
+
+    flipTop.style.visibility = "hidden";
+    flipBottom.style.visibility = "hidden";
+
+    el.classList.remove("animate");
+  }, 600);
 }
 
 /* -------------------------
