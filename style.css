@@ -975,3 +975,7 @@ margin-top:10px;
 font-size:14px;
 color:#aaa;
 }
+
+.flip-top, .flip-bottom {
+  visibility: hidden; /* standardmäßig unsichtbar */
+}
