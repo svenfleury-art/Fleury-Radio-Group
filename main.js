@@ -229,7 +229,7 @@ function updateCountdown(){
 /* -------------------------
 FLIP ANIMATION FÜR BOX (fix)
 ------------------------- */
-function updateFlip(id, value) {
+function updateFlip(id, value, instant = false) {
   const el = document.getElementById(id);
   if (!el) return;
 
@@ -239,33 +239,33 @@ function updateFlip(id, value) {
   const flipBottom = el.querySelector(".flip-bottom");
 
   const newVal = String(value).padStart(2, "0");
-  const current = top.textContent;
+  const current = top.textContent || newVal;
 
-  // Wenn noch nicht initialisiert, setzen
-  if (!top.textContent) top.textContent = newVal;
-  if (!bottom.textContent) bottom.textContent = newVal;
+  if (instant) {
+    // Direkt setzen ohne Animation
+    top.textContent = newVal;
+    bottom.textContent = newVal;
+    flipTop.style.display = "none";
+    flipBottom.style.display = "none";
+    el.classList.remove("animate");
+    return;
+  }
 
-  // Keine Änderung → keine Animation
   if (current === newVal) return;
 
-  // Flip vorbereiten
+  // Nur während Animation sichtbar
   flipTop.textContent = current;
   flipBottom.textContent = newVal;
-
-  // Nur während Animation sichtbar machen
-  flipTop.style.visibility = "visible";
-  flipBottom.style.visibility = "visible";
+  flipTop.style.display = "flex";
+  flipBottom.style.display = "flex";
 
   el.classList.add("animate");
 
-  // Nach Animation Status übernehmen
   setTimeout(() => {
     top.textContent = newVal;
     bottom.textContent = newVal;
-
-    flipTop.style.visibility = "hidden";
-    flipBottom.style.visibility = "hidden";
-
+    flipTop.style.display = "none";
+    flipBottom.style.display = "none";
     el.classList.remove("animate");
   }, 600);
 }
