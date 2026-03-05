@@ -183,3 +183,132 @@ document.addEventListener("DOMContentLoaded", () => {
   tick();
   setInterval(tick, 1000);
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+
+const buttons = document.querySelectorAll(".filter-btn");
+const events = document.querySelectorAll(".event-card");
+
+buttons.forEach(button => {
+
+button.addEventListener("click", () => {
+
+const filter = button.dataset.filter;
+
+buttons.forEach(b => b.classList.remove("active"));
+button.classList.add("active");
+
+events.forEach(event => {
+
+if (filter === "all") {
+event.style.display = "block";
+} 
+else if (event.classList.contains(filter)) {
+event.style.display = "block";
+} 
+else {
+event.style.display = "none";
+}
+
+});
+
+});
+
+});
+
+});
+const frgEvents = [
+
+{
+title: "FRG Crossover Night",
+date: "2026-04-25"
+},
+
+{
+title: "FRG Simulcast",
+date: "2026-05-30"
+},
+
+{
+title: "FRG Crossover Night",
+date: "2026-06-27"
+},
+
+{
+title: "FRG Schweiz Special",
+date: "2026-08-01"
+},
+
+{
+title: "FRG Crossover Night",
+date: "2026-09-26"
+},
+
+{
+title: "FRG Halloween Special",
+date: "2026-10-31"
+},
+
+{
+title: "FRG Crossover Night",
+date: "2026-11-28"
+},
+
+{
+title: "FRG Weihnachts Special",
+date: "2026-12-19"
+},
+
+{
+title: "FRG Neujahres Special",
+date: "2026-12-31"
+}
+
+];
+const frgEvents = [
+{title:"FRG Crossover Night", date:"2026-04-25"},
+{title:"FRG Simulcast", date:"2026-05-30"},
+{title:"FRG Crossover Night", date:"2026-06-27"},
+{title:"FRG Schweiz Special", date:"2026-08-01"},
+{title:"FRG Crossover Night", date:"2026-09-26"},
+{title:"FRG Halloween Special", date:"2026-10-31"},
+{title:"FRG Crossover Night", date:"2026-11-28"},
+{title:"FRG Weihnachts Special", date:"2026-12-19"},
+{title:"FRG Neujahres Special", date:"2026-12-31"}
+];
+
+function getNextEvent(){
+const now = new Date();
+
+return frgEvents
+.map(e => ({...e, dateObj:new Date(e.date)}))
+.filter(e => e.dateObj > now)
+.sort((a,b)=>a.dateObj-b.dateObj)[0];
+}
+
+function updateCountdown(){
+
+const event = getNextEvent();
+if(!event) return;
+
+document.getElementById("nextEventTitle").textContent = event.title;
+document.getElementById("nextEventDate").textContent =
+event.dateObj.toLocaleDateString("de-CH");
+
+const now = new Date();
+const diff = event.dateObj - now;
+
+const days = Math.floor(diff / (1000*60*60*24));
+const hours = Math.floor((diff/(1000*60*60))%24);
+const minutes = Math.floor((diff/(1000*60))%60);
+const seconds = Math.floor((diff/1000)%60);
+
+document.getElementById("cdDays").textContent = days;
+document.getElementById("cdHours").textContent = hours;
+document.getElementById("cdMinutes").textContent = minutes;
+document.getElementById("cdSeconds").textContent = seconds;
+
+}
+
+updateCountdown();
+setInterval(updateCountdown,1000);
