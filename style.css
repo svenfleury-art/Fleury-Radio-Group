@@ -979,3 +979,37 @@ color:#aaa;
 .flip-top, .flip-bottom {
   visibility: hidden; /* standardmäßig unsichtbar */
 }
+
+/* Countdown Grid */
+.countdown-live {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap; /* Zeilen umbrechen, wenn zu breit */
+}
+
+/* Flip Box */
+.cd-box {
+  flex: 1 1 70px;      /* flexibel, min 70px */
+  max-width: 90px;      /* nicht zu groß */
+  text-align: center;
+  margin: 4px;
+}
+
+/* Flip (Zahlen) */
+.flip {
+  width: 100%;
+  height: 100px;
+  font-size: clamp(24px, 6vw, 42px); /* dynamische Größe */
+}
+
+@media (max-width: 480px) {
+  .flip {
+    height: 80px;
+    font-size: clamp(20px, 8vw, 32px);
+  }
+  .cd-box {
+    flex: 1 1 60px;
+    max-width: 70px;
+  }
+}
