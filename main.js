@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
-
-
 /* -------------------------
 PARTIAL LOADER
 ------------------------- */
@@ -36,8 +34,6 @@ async function loadPartial(slotId, url) {
   }
 
 }
-
-
 
 /* -------------------------
 MENU SYSTEM
@@ -82,8 +78,6 @@ function initMenu() {
 
 }
 
-
-
 /* -------------------------
 COOKIE BANNER
 ------------------------- */
@@ -108,8 +102,6 @@ function initCookies() {
   });
 
 }
-
-
 
 /* -------------------------
 EVENT FILTER
@@ -153,44 +145,36 @@ function initFilter() {
 
 }
 
-
-
 /* -------------------------
 FRG EVENTS
 ------------------------- */
 
 const frgEvents = [
 
-{ title:"FRG Crossover Night", date:"2026-04-25T19:00:00" },
-{ title:"FRG Simulcast", date:"2026-05-30T19:00:00" },
-{ title:"FRG Crossover Night", date:"2026-06-27T19:00:00" },
-{ title:"FRG Schweiz Special", date:"2026-08-01T19:00:00" },
-{ title:"FRG Crossover Night", date:"2026-09-26T19:00:00" },
-{ title:"FRG Halloween Special", date:"2026-10-31T19:00:00" },
-{ title:"FRG Crossover Night", date:"2026-11-28T19:00:00" },
-{ title:"FRG Weihnachts Special", date:"2026-12-19T19:00:00" },
-{ title:"FRG Neujahres Special", date:"2026-12-31T13:00:00" }
+  { title:"FRG Crossover Night", date:"2026-04-25T19:00:00" },
+  { title:"FRG Simulcast", date:"2026-05-30T19:00:00" },
+  { title:"FRG Crossover Night", date:"2026-06-27T19:00:00" },
+  { title:"FRG Schweiz Special", date:"2026-08-01T19:00:00" },
+  { title:"FRG Crossover Night", date:"2026-09-26T19:00:00" },
+  { title:"FRG Halloween Special", date:"2026-10-31T19:00:00" },
+  { title:"FRG Crossover Night", date:"2026-11-28T19:00:00" },
+  { title:"FRG Weihnachts Special", date:"2026-12-19T19:00:00" },
+  { title:"FRG Neujahres Special", date:"2026-12-31T13:00:00" }
 
 ];
-
-
 
 /* -------------------------
 NEXT EVENT
 ------------------------- */
 
 function getNextEvent() {
-
   const now = new Date();
 
   return frgEvents
     .map(e => ({ ...e, dateObj: new Date(e.date) }))
     .filter(e => e.dateObj > now)
     .sort((a,b) => a.dateObj - b.dateObj)[0];
-
 }
-
-
 
 /* -------------------------
 COUNTDOWN INIT
@@ -222,10 +206,12 @@ function initCountdown(){
   }
 
   updateCountdown();
-  setInterval(updateCountdown,1000);
+  setInterval(() => {
+    currentEvent = getNextEvent(); // immer aktuelles Event prüfen
+    updateCountdown();
+  }, 1000);
+
 }
-
-
 
 /* -------------------------
 COUNTDOWN UPDATE
@@ -236,9 +222,9 @@ function updateCountdown(){
   if(!currentEvent) return;
 
   const now = new Date();
-  const diff = currentEvent.dateObj - now;
+  let diff = currentEvent.dateObj - now;
 
-  if(diff <= 0) return;
+  if(diff < 0) diff = 0;
 
   const days = Math.floor(diff / (1000*60*60*24));
   const hours = Math.floor((diff / (1000*60*60)) % 24);
@@ -251,8 +237,6 @@ function updateCountdown(){
   updateFlip("cdSeconds", seconds);
 
 }
-
-
 
 /* -------------------------
 FLIP ANIMATION
