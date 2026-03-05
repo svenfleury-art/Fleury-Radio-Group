@@ -192,93 +192,45 @@ function getNextEvent() {
 
 
 
-/* -------------------------
-COUNTDOWN
-------------------------- */
 
-function initCountdown() {
 
-  const title = document.getElementById("nextEventTitle");
-  const date  = document.getElementById("nextEventDate");
+function updateFlip(id, newValue){
 
-  const daysEl = document.getElementById("cdDays");
-  const hoursEl = document.getElementById("cdHours");
-  const minutesEl = document.getElementById("cdMinutes");
-  const secondsEl = document.getElementById("cdSeconds");
+const el = document.getElementById(id);
+const front = el.querySelector(".front");
+const back = el.querySelector(".back");
 
-  if (!daysEl) return;
+if(front.textContent == newValue) return;
 
-  function updateCountdown() {
+back.textContent = newValue;
 
-    const event = getNextEvent();
+el.classList.add("animate");
 
-    if (!event) return;
-
-    if (title) title.textContent = event.title;
-
-    if (date) {
-      date.textContent =
-        event.dateObj.toLocaleDateString("de-CH", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric"
-        });
-    }
-
-    const now = new Date();
-    const diff = event.dateObj - now;
-
-    if (diff <= 0) return;
-
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff/(1000*60*60)) % 24);
-    const minutes = Math.floor((diff/(1000*60)) % 60);
-    const seconds = Math.floor((diff/1000) % 60);
-
-    daysEl.textContent = days;
-    hoursEl.textContent = hours.toString().padStart(2,"0");
-    minutesEl.textContent = minutes.toString().padStart(2,"0");
-    secondsEl.textContent = seconds.toString().padStart(2,"0");
-
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown,1000);
+setTimeout(()=>{
+front.textContent = newValue;
+el.classList.remove("animate");
+},600);
 
 }
-
-const eventDate = new Date("2026-04-25T20:00:00").getTime();
 
 function updateCountdown(){
 
-const now = new Date().getTime();
-const distance = eventDate - now;
+const target = new Date("2026-05-16T20:00:00");
 
-const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-const seconds = Math.floor((distance % (1000*60)) / 1000);
+const now = new Date();
+const diff = target - now;
 
-flipNumber("cdDays", days);
-flipNumber("cdHours", hours);
-flipNumber("cdMinutes", minutes);
-flipNumber("cdSeconds", seconds);
+if(diff <= 0) return;
 
-}
+const days = Math.floor(diff / (1000*60*60*24));
+const hours = Math.floor((diff / (1000*60*60)) % 24);
+const minutes = Math.floor((diff / (1000*60)) % 60);
+const seconds = Math.floor((diff / 1000) % 60);
 
-function flipNumber(id, newValue){
-
-const el = document.getElementById(id);
-
-if(el.textContent != newValue){
-
-el.classList.remove("animate");
-void el.offsetWidth;
-el.classList.add("animate");
-
-el.textContent = newValue;
-
-}
+updateFlip("cdDays", days);
+updateFlip("cdHours", hours);
+updateFlip("cdMinutes", minutes);
+updateFlip("cdSeconds", seconds);
 
 }
 
