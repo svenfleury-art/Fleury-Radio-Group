@@ -72,10 +72,53 @@
 
   <!-- EVENT-KALENDER -->
 
+ <section class="next-event card">
+  <div class="container center">
+
+    <span class="pill">Nächstes Special</span>
+
+    <h2 id="nextEventTitle">FRG Event</h2>
+
+    <p id="nextEventDate" class="muted"></p>
+
+    <div class="countdown-live">
+
+      <div class="cd-box">
+        <span id="cdDays">0</span>
+        <small>Tage</small>
+      </div>
+
+      <div class="cd-box">
+        <span id="cdHours">0</span>
+        <small>Stunden</small>
+      </div>
+
+      <div class="cd-box">
+        <span id="cdMinutes">0</span>
+        <small>Minuten</small>
+      </div>
+
+      <div class="cd-box">
+        <span id="cdSeconds">0</span>
+        <small>Sekunden</small>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
   <section class="frg-events">
     <div class="container">
       <h2 class="section-title">Event-Kalender 2026</h2>
       <p class="section-subtitle">April – Dezember</p>
+
+      <div class="event-filter">
+  <button class="filter-btn active" data-filter="all">Alle</button>
+  <button class="filter-btn" data-filter="crossover">Crossover</button>
+  <button class="filter-btn" data-filter="simulcast">Simulcast</button>
+  <button class="filter-btn" data-filter="special">Specials</button>
+</div>
 
       <div class="event-grid">
 
