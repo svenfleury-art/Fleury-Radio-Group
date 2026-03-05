@@ -246,3 +246,41 @@ function initCountdown() {
   setInterval(updateCountdown,1000);
 
 }
+
+const eventDate = new Date("2026-04-25T20:00:00").getTime();
+
+function updateCountdown(){
+
+const now = new Date().getTime();
+const distance = eventDate - now;
+
+const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+flipNumber("cdDays", days);
+flipNumber("cdHours", hours);
+flipNumber("cdMinutes", minutes);
+flipNumber("cdSeconds", seconds);
+
+}
+
+function flipNumber(id, newValue){
+
+const el = document.getElementById(id);
+
+if(el.textContent != newValue){
+
+el.classList.remove("animate");
+void el.offsetWidth;
+el.classList.add("animate");
+
+el.textContent = newValue;
+
+}
+
+}
+
+setInterval(updateCountdown,1000);
+updateCountdown();
