@@ -854,6 +854,7 @@ height:70px;
 perspective:600px;
 font-size:28px;
 font-weight:bold;
+transform-style: preserve-3d;
 }
 
 .flip span{
