@@ -145,12 +145,11 @@ function initFilter() {
 
 }
 
+
 /* -------------------------
 FRG EVENTS
 ------------------------- */
-
 const frgEvents = [
-
   { title:"FRG Crossover Night", date:"2026-04-25T19:00:00" },
   { title:"FRG Simulcast", date:"2026-05-30T19:00:00" },
   { title:"FRG Crossover Night", date:"2026-06-27T19:00:00" },
@@ -160,16 +159,13 @@ const frgEvents = [
   { title:"FRG Crossover Night", date:"2026-11-28T19:00:00" },
   { title:"FRG Weihnachts Special", date:"2026-12-19T19:00:00" },
   { title:"FRG Neujahres Special", date:"2026-12-31T13:00:00" }
-
 ];
 
 /* -------------------------
 NEXT EVENT
 ------------------------- */
-
 function getNextEvent() {
   const now = new Date();
-
   return frgEvents
     .map(e => ({ ...e, dateObj: new Date(e.date) }))
     .filter(e => e.dateObj > now)
@@ -179,13 +175,10 @@ function getNextEvent() {
 /* -------------------------
 COUNTDOWN INIT
 ------------------------- */
-
 let currentEvent = null;
 
 function initCountdown(){
-
   currentEvent = getNextEvent();
-
   if(!currentEvent) return;
 
   const titleEl = document.getElementById("nextEventTitle");
@@ -194,36 +187,31 @@ function initCountdown(){
   if(titleEl) titleEl.textContent = currentEvent.title;
 
   if(dateEl){
-    dateEl.textContent =
-      currentEvent.dateObj.toLocaleDateString("de-CH", {
-        weekday:"long",
-        day:"numeric",
-        month:"long",
-        year:"numeric",
-        hour:"2-digit",
-        minute:"2-digit"
-      });
+    dateEl.textContent = currentEvent.dateObj.toLocaleDateString("de-CH", {
+      weekday:"long",
+      day:"numeric",
+      month:"long",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
+    });
   }
 
   updateCountdown();
   setInterval(() => {
-    currentEvent = getNextEvent(); // immer aktuelles Event prüfen
+    currentEvent = getNextEvent();
     updateCountdown();
   }, 1000);
-
 }
 
 /* -------------------------
-COUNTDOWN UPDATE
+COUNTDOWN UPDATE (ohne IDs)
 ------------------------- */
-
 function updateCountdown(){
-
   if(!currentEvent) return;
 
   const now = new Date();
   let diff = currentEvent.dateObj - now;
-
   if(diff < 0) diff = 0;
 
   const days = Math.floor(diff / (1000*60*60*24));
@@ -231,41 +219,42 @@ function updateCountdown(){
   const minutes = Math.floor((diff / (1000*60)) % 60);
   const seconds = Math.floor((diff / 1000) % 60);
 
-  updateFlip("cdDays", days);
-  updateFlip("cdHours", hours);
-  updateFlip("cdMinutes", minutes);
-  updateFlip("cdSeconds", seconds);
+  // Nimm die cd-boxen in der Reihenfolge
+  const boxes = document.querySelectorAll(".countdown-live .cd-box");
+  const values = [days, hours, minutes, seconds];
 
+  boxes.forEach((box, i) => updateFlipBox(box, values[i]));
 }
 
 /* -------------------------
-FLIP ANIMATION
+FLIP ANIMATION FÜR BOX
 ------------------------- */
+function updateFlipBox(box, value){
+  if(!box) return;
 
-function updateFlip(id, value){
-
-  const el = document.getElementById(id);
-  if(!el) return;
-
-  const top = el.querySelector(".top");
-  const bottom = el.querySelector(".bottom");
-  const flipTop = el.querySelector(".flip-top");
-  const flipBottom = el.querySelector(".flip-bottom");
+  const top = box.querySelector(".top");
+  const bottom = box.querySelector(".bottom");
+  const flipTop = box.querySelector(".flip-top");
+  const flipBottom = box.querySelector(".flip-bottom");
 
   const current = top.textContent;
   const newVal = String(value).padStart(2,"0");
 
   if(current === newVal) return;
 
-  flipTop.textContent = current;
-  flipBottom.textContent = newVal;
+  if(flipTop) flipTop.textContent = current;
+  if(flipBottom) flipBottom.textContent = newVal;
 
-  el.classList.add("animate");
+  box.classList.add("animate");
 
   setTimeout(()=>{
-    top.textContent = newVal;
-    bottom.textContent = newVal;
-    el.classList.remove("animate");
+    if(top) top.textContent = newVal;
+    if(bottom) bottom.textContent = newVal;
+    box.classList.remove("animate");
   },600);
-
 }
+
+/* -------------------------
+AUTOSTART
+------------------------- */
+document.addEventListener("DOMContentLoaded", initCountdown);
