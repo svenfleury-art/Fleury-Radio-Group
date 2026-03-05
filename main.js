@@ -227,7 +227,7 @@ function updateCountdown(){
 }
 
 /* -------------------------
-FLIP ANIMATION FÜR BOX
+FLIP ANIMATION FÜR BOX (fix)
 ------------------------- */
 function updateFlipBox(box, value){
   if(!box) return;
@@ -237,19 +237,24 @@ function updateFlipBox(box, value){
   const flipTop = box.querySelector(".flip-top");
   const flipBottom = box.querySelector(".flip-bottom");
 
-  const current = top.textContent;
   const newVal = String(value).padStart(2,"0");
 
-  if(current === newVal) return;
+  // Initialisierung, falls noch leer
+  if(!top.textContent) top.textContent = newVal;
+  if(!bottom.textContent) bottom.textContent = newVal;
 
-  if(flipTop) flipTop.textContent = current;
+  // Wenn sich nix geändert hat, nichts animieren
+  if(top.textContent === newVal && bottom.textContent === newVal) return;
+
+  if(flipTop) flipTop.textContent = top.textContent;
   if(flipBottom) flipBottom.textContent = newVal;
 
   box.classList.add("animate");
 
+  // Nach Animation den Status aktualisieren
   setTimeout(()=>{
-    if(top) top.textContent = newVal;
-    if(bottom) bottom.textContent = newVal;
+    top.textContent = newVal;
+    bottom.textContent = newVal;
     box.classList.remove("animate");
   },600);
 }
