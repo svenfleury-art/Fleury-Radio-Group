@@ -236,3 +236,31 @@ updateFlip("cdSeconds", seconds);
 
 setInterval(updateCountdown,1000);
 updateCountdown();
+
+
+
+function updateFlip(id, value){
+
+const el = document.getElementById(id);
+const top = el.querySelector(".top");
+const bottom = el.querySelector(".bottom");
+const flipTop = el.querySelector(".flip-top");
+const flipBottom = el.querySelector(".flip-bottom");
+
+const current = top.textContent;
+const newVal = String(value).padStart(2,"0");
+
+if(current === newVal) return;
+
+flipTop.textContent = current;
+flipBottom.textContent = newVal;
+
+el.classList.add("animate");
+
+setTimeout(()=>{
+top.textContent = newVal;
+bottom.textContent = newVal;
+el.classList.remove("animate");
+},1000);
+
+}
