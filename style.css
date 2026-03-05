@@ -810,6 +810,10 @@ header,.site-header{
   border-left: 4px solid #f59e0b;
 }
 
+.hinweis {
+  border-left: 4px solid #ef4444;;
+}
+
 .event-filter{
 display:flex;
 gap:10px;
