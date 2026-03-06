@@ -928,19 +928,18 @@ color:#aaa;
   z-index: 2000;
 }
 
-/* ================= Header ================= */
 .site-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  background-color: #002366; /* Royal Blue */
+  background-color: #002366;
   color: white;
   position: relative;
   z-index: 1000;
 }
 
-/* Links: Logo */
+/* Logo links */
 .header-left {
   flex: 1;
 }
@@ -949,13 +948,13 @@ color:#aaa;
   max-width: 100%;
 }
 
-/* Mitte: Titel */
+/* Text zentriert */
 .header-center {
   flex: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: center; /* horizontal */
+  justify-content: center; /* vertikal */
   text-align: center;
 }
 .header-center h1 {
@@ -969,14 +968,14 @@ color:#aaa;
   color: #FACC15;
 }
 
-/* Rechts: Hamburger */
+/* Hamburger rechts, immer sichtbar */
 .header-right {
   flex: 1;
   display: flex;
   justify-content: flex-end;
 }
 .hamburger {
-  display: none;
+  display: block; /* jetzt immer sichtbar */
   font-size: 2.5rem;
   background: none;
   border: none;
@@ -1019,7 +1018,7 @@ color:#aaa;
   pointer-events: auto;
 }
 
-/* ================= Mobile ================= */
+/* Mobile: Navigation klappt zusammen */
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -1035,8 +1034,5 @@ color:#aaa;
   }
   .nav-links.open {
     display: flex;
-  }
-  .hamburger {
-    display: block;
   }
 }
