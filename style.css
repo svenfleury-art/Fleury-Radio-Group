@@ -923,16 +923,28 @@ color:#aaa;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  background-color: #002366; /* Royal Blue */
+  background-color: #002366;
   color: white;
   position: relative;
+  z-index: 2000;
 }
 
-.header-left { flex: 1; }
-.logo-img { height: 100px; max-width: 100%; }
+/* LINKS: LOGO */
+.header-left {
+  flex: 1;
+}
+.logo-img {
+  height: 100px;
+  max-width: 100%;
+}
 
+/* MITTE: TEXT */
 .header-center {
   flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 .header-center h1 {
@@ -948,22 +960,31 @@ color:#aaa;
   color: #FACC15;
 }
 
-.header-right { flex: 1; text-align: right; }
+/* RECHTS: HAMBURGER */
+.header-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 2001;
+}
+
+/* HAMBURGER BUTTON */
 .hamburger {
-  display: none;
+  display: none; /* Desktop versteckt */
   font-size: 2.5rem;
   background: none;
   border: none;
   color: white;
   cursor: pointer;
+  z-index: 2002;
 }
 
-/* NAVIGATION */
+/* NAVIGATION DESKTOP */
 .nav-links {
   display: flex;
   justify-content: center;
   gap: 2rem;
-  margin-top: 0.8rem;
 }
 .nav-links a {
   color: white;
@@ -978,7 +999,7 @@ color:#aaa;
   background: rgba(250,204,21,0.2);
 }
 
-/* OVERLAY */
+/* OVERLAY FÜR MOBILE MENU */
 #menu-overlay {
   position: fixed;
   inset: 0;
@@ -986,11 +1007,14 @@ color:#aaa;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  z-index: 1000;
+  z-index: 1500;
 }
-#menu-overlay.active { opacity: 1; pointer-events: auto; }
+#menu-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
 
-/* RESPONSIVE: MOBILE */
+/* ================== MOBILE ================== */
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -1002,12 +1026,19 @@ color:#aaa;
     left: 0;
     padding: 1rem 0;
     gap: 1rem;
-    z-index: 1100;
+    z-index: 2000;
   }
-  .nav-links.open { display: flex; }
+  .nav-links.open {
+    display: flex;
+  }
+  .hamburger {
+    display: block; /* Jetzt sichtbar auf Mobile */
+  }
 
-  .hamburger { display: block; }
-
-  .header-center h1 { font-size: 2rem; }
-  .header-center p { font-size: 1rem; }
+  .header-center h1 {
+    font-size: 2rem;
+  }
+  .header-center p {
+    font-size: 1rem;
+  }
 }
