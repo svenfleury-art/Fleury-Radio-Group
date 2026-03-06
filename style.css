@@ -928,11 +928,28 @@ color:#aaa;
   z-index: 2000;
 }
 
-/* Links: Logo */
-.header-left { flex: 1; }
-.logo-img { height: 100px; max-width: 100%; }
+/* ================= Header ================= */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #002366; /* Royal Blue */
+  color: white;
+  position: relative;
+  z-index: 1000;
+}
 
-/* Mitte: Text */
+/* Links: Logo */
+.header-left {
+  flex: 1;
+}
+.logo-img {
+  height: 100px;
+  max-width: 100%;
+}
+
+/* Mitte: Titel */
 .header-center {
   flex: 2;
   display: flex;
@@ -941,32 +958,85 @@ color:#aaa;
   justify-content: center;
   text-align: center;
 }
-.header-center h1 { margin: 0; font-size: 2.5rem; font-weight: 900; line-height: 1.1; }
-.header-center p { margin-top: 0.3rem; font-size: 1.1rem; color: #FACC15; }
+.header-center h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+.header-center p {
+  margin-top: 0.3rem;
+  font-size: 1.1rem;
+  color: #FACC15;
+}
 
 /* Rechts: Hamburger */
-.header-right { flex: 1; display: flex; justify-content: flex-end; }
-.hamburger { display: none; font-size: 2.5rem; background: none; border: none; color: white; cursor: pointer; z-index: 2002; }
+.header-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+.hamburger {
+  display: none;
+  font-size: 2.5rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 1002;
+}
 
-/* Desktop Nav */
+/* Desktop Navigation */
 .nav-links {
   display: flex;
   justify-content: center;
   gap: 2rem;
   margin-top: 0.5rem;
 }
-.nav-links a { color: white; text-decoration: none; font-weight: 700; font-size: 1.1rem; padding: 8px 16px; border-radius: 12px; }
-.nav-links a:hover { background: rgba(250,204,21,0.2); }
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 8px 16px;
+  border-radius: 12px;
+}
+.nav-links a:hover {
+  background: rgba(250,204,21,0.2);
+}
 
 /* Overlay */
-#menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 1500; }
-#menu-overlay.active { opacity: 1; pointer-events: auto; }
+#menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 1000;
+}
+#menu-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
 
-/* MOBILE */
+/* ================= Mobile ================= */
 @media (max-width: 768px) {
-  .nav-links { display: none; flex-direction: column; background-color: #002366; width: 100%; position: absolute; top: 100%; left: 0; padding: 1rem 0; gap: 1rem; z-index: 2000; }
-  .nav-links.open { display: flex; }
-  .hamburger { display: block; }
-  .header-center h1 { font-size: 2rem; }
-  .header-center p { font-size: 1rem; }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: #002366;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 1rem 0;
+    gap: 1rem;
+    z-index: 1001;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .hamburger {
+    display: block;
+  }
 }
