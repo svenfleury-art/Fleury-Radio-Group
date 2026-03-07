@@ -920,12 +920,12 @@ color:#aaa;
 .logo-area{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:150px;
 }
 
 /* Desktop Logo (grösser) */
 .logo-img img{
-  height:70px;
+  height:115px;
 }
 
 /* Mobile */
