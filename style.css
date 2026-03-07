@@ -358,11 +358,16 @@ header,.site-header{
   margin-bottom: 14px;
 }
 
-/* GRID LAYOUT – 4 nebeneinander */
-.countdown-grid {
+.countdown-live {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
+}
+
+@media (max-width: 600px) {
+  .countdown-live {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Einzelne Zeit-Box */
