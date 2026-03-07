@@ -196,6 +196,10 @@ function getNextEvent() {
 COUNTDOWN
 ------------------------- */
 
+/* -------------------------
+COUNTDOWN
+------------------------- */
+
 function initCountdown() {
 
   const title = document.getElementById("nextEventTitle");
@@ -208,10 +212,24 @@ function initCountdown() {
 
   if (!daysEl) return;
 
+  function flipUpdate(el, value){
+
+    if(el.textContent !== value){
+
+      el.classList.add("is-flipping");
+
+      setTimeout(()=>{
+        el.textContent = value;
+        el.classList.remove("is-flipping");
+      },300);
+
+    }
+
+  }
+
   function updateCountdown() {
 
     const event = getNextEvent();
-
     if (!event) return;
 
     if (title) title.textContent = event.title;
@@ -235,10 +253,10 @@ function initCountdown() {
     const minutes = Math.floor((diff/(1000*60)) % 60);
     const seconds = Math.floor((diff/1000) % 60);
 
-    daysEl.textContent = days;
-    hoursEl.textContent = hours.toString().padStart(2,"0");
-    minutesEl.textContent = minutes.toString().padStart(2,"0");
-    secondsEl.textContent = seconds.toString().padStart(2,"0");
+    flipUpdate(daysEl, days.toString());
+    flipUpdate(hoursEl, hours.toString().padStart(2,"0"));
+    flipUpdate(minutesEl, minutes.toString().padStart(2,"0"));
+    flipUpdate(secondsEl, seconds.toString().padStart(2,"0"));
 
   }
 
