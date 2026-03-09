@@ -965,48 +965,68 @@ color:#aaa;
   position: relative;
 }
 
-.flip-card-front,
-.flip-card-back {
-  position: absolute;
+/* feste obere und untere Hälfte */
+.flip-card .top,
+.flip-card .bottom {
   width: 100%;
-  height: 50%; /* oben / unten */
+  height: 50%;
   overflow: hidden;
-  font-size: 50px;
-  font-weight: bold;
-  line-height: 80px;
-  color: #fff;
   background: #222;
+  color: #fff;
+  line-height: 40px;
+  font-size: 50px;
+  text-align: center;
   border-radius: 6px;
-  backface-visibility: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   box-shadow: inset 0 -3px 5px rgba(0,0,0,0.3);
 }
 
-.flip-card-front {
+.flip-card .bottom {
+  border-top: 1px solid #000;
+}
+
+/* animierte Flip-Hälften */
+.flip-card .flip-top,
+.flip-card .flip-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  line-height: 40px;
+  font-size: 50px;
+  text-align: center;
+  background: #222;
+  color: #fff;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  z-index: 2;
+}
+
+.flip-card .flip-top {
+  top: 0;
   transform-origin: bottom;
 }
 
-.flip-card-back {
+.flip-card .flip-bottom {
+  bottom: 0;
   transform-origin: top;
   transform: rotateX(180deg);
 }
 
-.flip-card.is-flipping .flip-card-front {
-  animation: flipFront 0.5s forwards;
+/* Flip Animation */
+.flip-card.is-flipping .flip-top {
+  animation: flipTop 0.5s forwards;
 }
 
-.flip-card.is-flipping .flip-card-back {
-  animation: flipBack 0.5s forwards;
+.flip-card.is-flipping .flip-bottom {
+  animation: flipBottom 0.5s forwards;
 }
 
-@keyframes flipFront {
+@keyframes flipTop {
   0% { transform: rotateX(0deg); }
   100% { transform: rotateX(-180deg); }
 }
 
-@keyframes flipBack {
+@keyframes flipBottom {
   0% { transform: rotateX(180deg); }
   100% { transform: rotateX(0deg); }
 }
