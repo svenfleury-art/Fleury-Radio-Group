@@ -194,7 +194,7 @@ function getNextEvent() {
 
 
 /* -------------------------
-   FRG COUNTDOWN – nur 1x flippen pro Wertänderung
+   FRG COUNTDOWN – 1x flip pro Änderung
 ------------------------- */
 
 function initCountdown() {
@@ -208,7 +208,7 @@ function initCountdown() {
 
   if (!daysEl) return;
 
-  // Zwischenspeicher für letzte Werte
+  // Letzte Werte speichern
   let lastValues = {
     days: null,
     hours: null,
@@ -217,14 +217,14 @@ function initCountdown() {
   };
 
   function flipUpdate(el, value, key){
-    // Nur flippen, wenn der Wert anders ist als zuvor
+    // Nur flippen, wenn sich der Wert von lastValues unterscheidet
     if(lastValues[key] !== value){
       el.classList.add("is-flipping");
-      setTimeout(()=>{
+      setTimeout(() => {
         el.textContent = value;
         el.classList.remove("is-flipping");
       }, 300);
-      lastValues[key] = value; // aktualisiere den letzten Wert
+      lastValues[key] = value; // Wert speichern, direkt nach Flip-Trigger
     }
   }
 
@@ -245,15 +245,15 @@ function initCountdown() {
     const diff = event.dateObj - now;
     if (diff <= 0) return;
 
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff/(1000*60*60)) % 24);
-    const minutes = Math.floor((diff/(1000*60)) % 60);
-    const seconds = Math.floor((diff/1000) % 60);
+    const days = Math.floor(diff / (1000*60*60*24)).toString();
+    const hours = String(Math.floor((diff/(1000*60*60)) % 24)).padStart(2,"0");
+    const minutes = String(Math.floor((diff/(1000*60)) % 60)).padStart(2,"0");
+    const seconds = String(Math.floor((diff/1000) % 60)).padStart(2,"0");
 
-    flipUpdate(daysEl, days.toString(), "days");
-    flipUpdate(hoursEl, String(hours).padStart(2,"0"), "hours");
-    flipUpdate(minutesEl, String(minutes).padStart(2,"0"), "minutes");
-    flipUpdate(secondsEl, String(seconds).padStart(2,"0"), "seconds");
+    flipUpdate(daysEl, days, "days");
+    flipUpdate(hoursEl, hours, "hours");
+    flipUpdate(minutesEl, minutes, "minutes");
+    flipUpdate(secondsEl, seconds, "seconds");
   }
 
   updateCountdown();
