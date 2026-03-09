@@ -225,40 +225,31 @@ function initCountdown() {
   }
 
   function updateCountdown() {
+  const event = getNextEvent();
+  if (!event) return;
 
-    const event = getNextEvent();
-    if (!event) return;
+  if (title) title.textContent = event.title;
 
-    if (title) title.textContent = event.title;
-
-    if (date) {
-      date.textContent =
-        event.dateObj.toLocaleDateString("de-CH", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric"
-        });
-    }
-
-    const now = new Date();
-    const diff = event.dateObj - now;
-
-    if (diff <= 0) return;
-
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff/(1000*60*60)) % 24);
-    const minutes = Math.floor((diff/(1000*60)) % 60);
-    const seconds = Math.floor((diff/1000) % 60);
-
-    flipUpdate(daysEl, days.toString());
-    flipUpdate(hoursEl, hours.toString().padStart(2,"0"));
-    flipUpdate(minutesEl, minutes.toString().padStart(2,"0"));
-    flipUpdate(secondsEl, seconds.toString().padStart(2,"0"));
-
+  if (date) {
+    date.textContent = event.dateObj.toLocaleDateString("de-CH", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
+    });
   }
 
-  updateCountdown();
-  setInterval(updateCountdown,1000);
+  const now = new Date();
+  const diff = event.dateObj - now;
 
+  if (diff <= 0) return;
+
+  const days = Math.floor(diff / (1000*60*60*24)).toString();
+  const hours = Math.floor((diff/(1000*60*60)) % 24).toString().padStart(2,"0");
+  const minutes = Math.floor((diff/(1000*60)) % 60).toString().padStart(2,"0");
+  const seconds = Math.floor((diff/1000) % 60).toString().padStart(2,"0");
+
+  flipUpdate(daysEl, days);
+  flipUpdate(hoursEl, hours);
+  flipUpdate(minutesEl, minutes);
+  flipUpdate(secondsEl, seconds);
 }
-
