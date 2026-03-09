@@ -211,23 +211,24 @@ function initCountdown() {
   // letzte Werte speichern
   const lastValues = { days: null, hours: null, minutes: null };
 
-  // Flip nur bei Änderung
   function flipUpdate(el, value, key) {
     if (lastValues[key] !== value) {
-      // Klasse hinzufügen, Animation starten
-      el.classList.add("is-flipping");
+      const front = el.querySelector(".flip-card-front");
+      const back  = el.querySelector(".flip-card-back");
 
-      // Timeout = Dauer der Flip-Animation
+      back.textContent = value;
+      el.querySelector(".flip-card").classList.add("is-flipping");
+
       setTimeout(() => {
-        el.textContent = value;      // Text aktualisieren
-        el.classList.remove("is-flipping"); // Klasse entfernen
-        lastValues[key] = value;     // Wert merken
-      }, 500); // Flipdauer an CSS anpassen
+        front.textContent = value;
+        el.querySelector(".flip-card").classList.remove("is-flipping");
+        lastValues[key] = value;
+      }, 500); // Dauer entspricht CSS-Animation
     }
   }
 
   function updateCountdown() {
-    const event = getNextEvent();
+    const event = getNextEvent(); // Muss ein Event-Objekt mit dateObj und title liefern
     if (!event) return;
 
     if (title) title.textContent = event.title;
@@ -240,7 +241,7 @@ function initCountdown() {
     }
 
     const now = new Date();
-    const diff = event.dateObj - now;
+    let diff = event.dateObj - now;
     if (diff <= 0) return;
 
     const days = Math.floor(diff / (1000*60*60*24)).toString();
@@ -248,13 +249,15 @@ function initCountdown() {
     const minutes = String(Math.floor((diff/(1000*60)) % 60)).padStart(2,"0");
     const seconds = String(Math.floor((diff/1000) % 60)).padStart(2,"0");
 
-    // Flip nur wenn sich Wert ändert
     flipUpdate(daysEl, days, "days");
     flipUpdate(hoursEl, hours, "hours");
     flipUpdate(minutesEl, minutes, "minutes");
 
-    // Sekunden normal runterzählen
-    secondsEl.textContent = seconds;
+    // Sekunden immer einfach runterzählen, kein Flip
+    const secFront = secondsEl.querySelector(".flip-card-front");
+    const secBack  = secondsEl.querySelector(".flip-card-back");
+    secFront.textContent = seconds;
+    secBack.textContent = seconds;
   }
 
   updateCountdown();
