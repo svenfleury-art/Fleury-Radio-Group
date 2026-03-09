@@ -194,7 +194,7 @@ function getNextEvent() {
 
 
 /* -------------------------
-   FRG COUNTDOWN – echte Flip-Clock
+   FRG COUNTDOWN – Flip-Clock korrekt
 ------------------------- */
 
 function initCountdown() {
@@ -211,15 +211,18 @@ function initCountdown() {
   // letzte Werte speichern
   const lastValues = { days: null, hours: null, minutes: null };
 
-  // Flip nur bei Änderung (Tage, Stunden, Minuten)
+  // Flip nur bei Änderung
   function flipUpdate(el, value, key) {
     if (lastValues[key] !== value) {
+      // Klasse hinzufügen, Animation starten
       el.classList.add("is-flipping");
+
+      // Timeout = Dauer der Flip-Animation
       setTimeout(() => {
-        el.textContent = value;
-        el.classList.remove("is-flipping");
-        lastValues[key] = value;
-      }, 300);
+        el.textContent = value;      // Text aktualisieren
+        el.classList.remove("is-flipping"); // Klasse entfernen
+        lastValues[key] = value;     // Wert merken
+      }, 500); // Flipdauer an CSS anpassen
     }
   }
 
@@ -227,7 +230,6 @@ function initCountdown() {
     const event = getNextEvent();
     if (!event) return;
 
-    // Titel und Datum
     if (title) title.textContent = event.title;
     if (date) {
       date.textContent = event.dateObj.toLocaleDateString("de-CH", {
@@ -238,7 +240,7 @@ function initCountdown() {
     }
 
     const now = new Date();
-    let diff = event.dateObj - now;
+    const diff = event.dateObj - now;
     if (diff <= 0) return;
 
     const days = Math.floor(diff / (1000*60*60*24)).toString();
@@ -246,15 +248,15 @@ function initCountdown() {
     const minutes = String(Math.floor((diff/(1000*60)) % 60)).padStart(2,"0");
     const seconds = String(Math.floor((diff/1000) % 60)).padStart(2,"0");
 
+    // Flip nur wenn sich Wert ändert
     flipUpdate(daysEl, days, "days");
     flipUpdate(hoursEl, hours, "hours");
     flipUpdate(minutesEl, minutes, "minutes");
 
-    // Sekunden immer nur Text aktualisieren, kein Flip
+    // Sekunden normal runterzählen
     secondsEl.textContent = seconds;
   }
 
-  // Start: Countdown initialisieren
   updateCountdown();
   setInterval(updateCountdown, 1000);
 }
