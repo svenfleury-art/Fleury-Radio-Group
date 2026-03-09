@@ -194,11 +194,10 @@ function getNextEvent() {
 
 
 /* -------------------------
-   FRG COUNTDOWN
+   FRG COUNTDOWN – nur 1x flippen pro Wertänderung
 ------------------------- */
 
 function initCountdown() {
-
   const title = document.getElementById("nextEventTitle");
   const date  = document.getElementById("nextEventDate");
 
@@ -209,22 +208,30 @@ function initCountdown() {
 
   if (!daysEl) return;
 
-  // Funktion für das Flippen nur bei Änderung
-  function flipUpdate(el, value){
-    if(el.textContent !== value){
+  // Zwischenspeicher für letzte Werte
+  let lastValues = {
+    days: null,
+    hours: null,
+    minutes: null,
+    seconds: null
+  };
+
+  function flipUpdate(el, value, key){
+    // Nur flippen, wenn der Wert anders ist als zuvor
+    if(lastValues[key] !== value){
       el.classList.add("is-flipping");
       setTimeout(()=>{
         el.textContent = value;
         el.classList.remove("is-flipping");
-      },300);
+      }, 300);
+      lastValues[key] = value; // aktualisiere den letzten Wert
     }
   }
 
   function updateCountdown() {
-    const event = getNextEvent(); // muss ein Event-Objekt mit event.title und event.dateObj zurückgeben
+    const event = getNextEvent();
     if (!event) return;
 
-    // Event-Titel und Datum
     if (title) title.textContent = event.title;
     if (date) {
       date.textContent = event.dateObj.toLocaleDateString("de-CH", {
@@ -238,17 +245,15 @@ function initCountdown() {
     const diff = event.dateObj - now;
     if (diff <= 0) return;
 
-    // Berechnung der Zeiteinheiten
     const days = Math.floor(diff / (1000*60*60*24));
     const hours = Math.floor((diff/(1000*60*60)) % 24);
     const minutes = Math.floor((diff/(1000*60)) % 60);
     const seconds = Math.floor((diff/1000) % 60);
 
-    // Flip nur wenn sich die Werte ändern, immer als Strings mit führenden Nullen
-    flipUpdate(daysEl, days.toString());
-    flipUpdate(hoursEl, String(hours).padStart(2,"0"));
-    flipUpdate(minutesEl, String(minutes).padStart(2,"0"));
-    flipUpdate(secondsEl, String(seconds).padStart(2,"0"));
+    flipUpdate(daysEl, days.toString(), "days");
+    flipUpdate(hoursEl, String(hours).padStart(2,"0"), "hours");
+    flipUpdate(minutesEl, String(minutes).padStart(2,"0"), "minutes");
+    flipUpdate(secondsEl, String(seconds).padStart(2,"0"), "seconds");
   }
 
   updateCountdown();
