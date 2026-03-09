@@ -194,7 +194,7 @@ function getNextEvent() {
 
 
 /* -------------------------
-COUNTDOWN
+   FRG COUNTDOWN
 ------------------------- */
 
 function initCountdown() {
@@ -209,55 +209,48 @@ function initCountdown() {
 
   if (!daysEl) return;
 
+  // Funktion für das Flippen nur bei Änderung
   function flipUpdate(el, value){
-
     if(el.textContent !== value){
-
       el.classList.add("is-flipping");
-
       setTimeout(()=>{
         el.textContent = value;
         el.classList.remove("is-flipping");
       },300);
-
     }
-
   }
 
   function updateCountdown() {
-
-    const event = getNextEvent();
+    const event = getNextEvent(); // muss ein Event-Objekt mit event.title und event.dateObj zurückgeben
     if (!event) return;
 
+    // Event-Titel und Datum
     if (title) title.textContent = event.title;
-
     if (date) {
-      date.textContent =
-        event.dateObj.toLocaleDateString("de-CH", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric"
-        });
+      date.textContent = event.dateObj.toLocaleDateString("de-CH", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      });
     }
 
     const now = new Date();
     const diff = event.dateObj - now;
-
     if (diff <= 0) return;
 
+    // Berechnung der Zeiteinheiten
     const days = Math.floor(diff / (1000*60*60*24));
     const hours = Math.floor((diff/(1000*60*60)) % 24);
     const minutes = Math.floor((diff/(1000*60)) % 60);
     const seconds = Math.floor((diff/1000) % 60);
 
+    // Flip nur wenn sich die Werte ändern, immer als Strings mit führenden Nullen
     flipUpdate(daysEl, days.toString());
-    flipUpdate(hoursEl, hours.toString().padStart(2,"0"));
-    flipUpdate(minutesEl, minutes.toString().padStart(2,"0"));
-    flipUpdate(secondsEl, seconds.toString().padStart(2,"0"));
-
+    flipUpdate(hoursEl, String(hours).padStart(2,"0"));
+    flipUpdate(minutesEl, String(minutes).padStart(2,"0"));
+    flipUpdate(secondsEl, String(seconds).padStart(2,"0"));
   }
 
   updateCountdown();
-  setInterval(updateCountdown,1000);
-
+  setInterval(updateCountdown, 1000);
 }
