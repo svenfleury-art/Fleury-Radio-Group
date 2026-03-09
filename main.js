@@ -193,10 +193,6 @@ function getNextEvent() {
 
 
 
-/* -------------------------
-   FRG COUNTDOWN – Flip-Clock korrekt
-------------------------- */
-
 function initCountdown() {
   const title = document.getElementById("nextEventTitle");
   const date  = document.getElementById("nextEventDate");
@@ -208,8 +204,8 @@ function initCountdown() {
 
   if (!daysEl) return;
 
-  // letzte Werte speichern
-  const lastValues = { days: null, hours: null, minutes: null };
+  // letzte Werte speichern, auch Sekunden
+  const lastValues = { days: null, hours: null, minutes: null, seconds: null };
 
   function flipUpdate(el, value, key) {
     if (lastValues[key] !== value) {
@@ -223,12 +219,12 @@ function initCountdown() {
         front.textContent = value;
         el.querySelector(".flip-card").classList.remove("is-flipping");
         lastValues[key] = value;
-      }, 500); // Dauer entspricht CSS-Animation
+      }, 500); // Dauer der Flip-Animation
     }
   }
 
   function updateCountdown() {
-    const event = getNextEvent(); // Muss ein Event-Objekt mit dateObj und title liefern
+    const event = getNextEvent(); // Muss ein Event-Objekt mit title und dateObj liefern
     if (!event) return;
 
     if (title) title.textContent = event.title;
@@ -241,7 +237,7 @@ function initCountdown() {
     }
 
     const now = new Date();
-    let diff = event.dateObj - now;
+    const diff = event.dateObj - now;
     if (diff <= 0) return;
 
     const days = Math.floor(diff / (1000*60*60*24)).toString();
@@ -252,12 +248,7 @@ function initCountdown() {
     flipUpdate(daysEl, days, "days");
     flipUpdate(hoursEl, hours, "hours");
     flipUpdate(minutesEl, minutes, "minutes");
-
-    // Sekunden immer einfach runterzählen, kein Flip
-    const secFront = secondsEl.querySelector(".flip-card-front");
-    const secBack  = secondsEl.querySelector(".flip-card-back");
-    secFront.textContent = seconds;
-    secBack.textContent = seconds;
+    flipUpdate(secondsEl, seconds, "seconds"); // jetzt auch Sekunden flippen
   }
 
   updateCountdown();
