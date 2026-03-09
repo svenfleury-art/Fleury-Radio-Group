@@ -204,24 +204,21 @@ function initCountdown() {
 
   if (!daysEl) return;
 
-  // letzte Werte speichern
   const lastValues = { days: null, hours: null, minutes: null, seconds: null };
 
   function flipUpdate(el, value, key) {
     if (lastValues[key] !== value) {
-      const top = el.querySelector(".top");
-      const bottom = el.querySelector(".bottom");
+      const front = el.querySelector(".front");
       const flipTop = el.querySelector(".flip-top");
       const flipBottom = el.querySelector(".flip-bottom");
 
-      flipTop.textContent = top.textContent;  // alte Zahl oben
-      flipBottom.textContent = value;         // neue Zahl unten
+      flipTop.textContent = front.textContent; // alte Zahl
+      flipBottom.textContent = value;          // neue Zahl
 
       el.querySelector(".flip-card").classList.add("is-flipping");
 
       setTimeout(() => {
-        top.textContent = value;
-        bottom.textContent = value;
+        front.textContent = value;
         el.querySelector(".flip-card").classList.remove("is-flipping");
         lastValues[key] = value;
       }, 500);
@@ -229,7 +226,7 @@ function initCountdown() {
   }
 
   function updateCountdown() {
-    const event = getNextEvent(); // Objekt mit title und dateObj
+    const event = getNextEvent(); // muss {title, dateObj} liefern
     if (!event) return;
 
     if (title) title.textContent = event.title;
@@ -253,7 +250,7 @@ function initCountdown() {
     flipUpdate(daysEl, days, "days");
     flipUpdate(hoursEl, hours, "hours");
     flipUpdate(minutesEl, minutes, "minutes");
-    flipUpdate(secondsEl, seconds, "seconds"); // Sekunden flippen
+    flipUpdate(secondsEl, seconds, "seconds");
   }
 
   updateCountdown();
