@@ -194,7 +194,7 @@ function getNextEvent() {
 
 
 /* -------------------------
-   FRG COUNTDOWN – Flip nur 1x pro Änderung, kein mehrfaches Flippen
+   FRG COUNTDOWN – echte Flip-Clock
 ------------------------- */
 
 function initCountdown() {
@@ -208,19 +208,17 @@ function initCountdown() {
 
   if (!daysEl) return;
 
-  // Speicher für letzte Werte und Flip-Lock
-  const lastValues = { days: null, hours: null, minutes: null, seconds: null };
-  const flipLock = { days: false, hours: false, minutes: false, seconds: false };
+  // letzte Werte speichern
+  const lastValues = { days: null, hours: null, minutes: null };
 
+  // Flip nur bei Änderung (Tage, Stunden, Minuten)
   function flipUpdate(el, value, key) {
-    if (lastValues[key] !== value && !flipLock[key]) {
-      flipLock[key] = true;              // Flip starten, sperren
+    if (lastValues[key] !== value) {
       el.classList.add("is-flipping");
       setTimeout(() => {
         el.textContent = value;
         el.classList.remove("is-flipping");
-        lastValues[key] = value;         // Wert aktualisieren
-        flipLock[key] = false;           // Flip fertig, entsperren
+        lastValues[key] = value;
       }, 300);
     }
   }
@@ -229,6 +227,7 @@ function initCountdown() {
     const event = getNextEvent();
     if (!event) return;
 
+    // Titel und Datum
     if (title) title.textContent = event.title;
     if (date) {
       date.textContent = event.dateObj.toLocaleDateString("de-CH", {
@@ -239,7 +238,7 @@ function initCountdown() {
     }
 
     const now = new Date();
-    const diff = event.dateObj - now;
+    let diff = event.dateObj - now;
     if (diff <= 0) return;
 
     const days = Math.floor(diff / (1000*60*60*24)).toString();
@@ -250,9 +249,12 @@ function initCountdown() {
     flipUpdate(daysEl, days, "days");
     flipUpdate(hoursEl, hours, "hours");
     flipUpdate(minutesEl, minutes, "minutes");
-    flipUpdate(secondsEl, seconds, "seconds");
+
+    // Sekunden immer nur Text aktualisieren, kein Flip
+    secondsEl.textContent = seconds;
   }
 
+  // Start: Countdown initialisieren
   updateCountdown();
   setInterval(updateCountdown, 1000);
 }
