@@ -204,27 +204,32 @@ function initCountdown() {
 
   if (!daysEl) return;
 
-  // letzte Werte speichern, auch Sekunden
+  // letzte Werte speichern
   const lastValues = { days: null, hours: null, minutes: null, seconds: null };
 
   function flipUpdate(el, value, key) {
     if (lastValues[key] !== value) {
-      const front = el.querySelector(".flip-card-front");
-      const back  = el.querySelector(".flip-card-back");
+      const top = el.querySelector(".top");
+      const bottom = el.querySelector(".bottom");
+      const flipTop = el.querySelector(".flip-top");
+      const flipBottom = el.querySelector(".flip-bottom");
 
-      back.textContent = value;
+      flipTop.textContent = top.textContent;  // alte Zahl oben
+      flipBottom.textContent = value;         // neue Zahl unten
+
       el.querySelector(".flip-card").classList.add("is-flipping");
 
       setTimeout(() => {
-        front.textContent = value;
+        top.textContent = value;
+        bottom.textContent = value;
         el.querySelector(".flip-card").classList.remove("is-flipping");
         lastValues[key] = value;
-      }, 500); // Dauer der Flip-Animation
+      }, 500);
     }
   }
 
   function updateCountdown() {
-    const event = getNextEvent(); // Muss ein Event-Objekt mit title und dateObj liefern
+    const event = getNextEvent(); // Objekt mit title und dateObj
     if (!event) return;
 
     if (title) title.textContent = event.title;
@@ -248,7 +253,7 @@ function initCountdown() {
     flipUpdate(daysEl, days, "days");
     flipUpdate(hoursEl, hours, "hours");
     flipUpdate(minutesEl, minutes, "minutes");
-    flipUpdate(secondsEl, seconds, "seconds"); // jetzt auch Sekunden flippen
+    flipUpdate(secondsEl, seconds, "seconds"); // Sekunden flippen
   }
 
   updateCountdown();
