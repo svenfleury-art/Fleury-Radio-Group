@@ -194,7 +194,7 @@ function getNextEvent() {
 
 
 /* -------------------------
-   FRG COUNTDOWN – 1x flip pro Änderung
+   FRG COUNTDOWN – 1x flip pro Änderung für Tage/Std/Min, Sekunden flüssig
 ------------------------- */
 
 function initCountdown() {
@@ -208,23 +208,22 @@ function initCountdown() {
 
   if (!daysEl) return;
 
-  // Letzte Werte speichern
+  // Zwischenspeicher nur für Tage/Stunden/Minuten
   let lastValues = {
     days: null,
     hours: null,
-    minutes: null,
-    seconds: null
+    minutes: null
   };
 
-  function flipUpdate(el, value, key){
-    // Nur flippen, wenn sich der Wert von lastValues unterscheidet
-    if(lastValues[key] !== value){
+  function flipUpdate(el, value, key) {
+    // key kann null sein → Flip immer (für Sekunden)
+    if (key === null || lastValues[key] !== value) {
       el.classList.add("is-flipping");
       setTimeout(() => {
         el.textContent = value;
         el.classList.remove("is-flipping");
       }, 300);
-      lastValues[key] = value; // Wert speichern, direkt nach Flip-Trigger
+      if (key) lastValues[key] = value;
     }
   }
 
@@ -253,7 +252,7 @@ function initCountdown() {
     flipUpdate(daysEl, days, "days");
     flipUpdate(hoursEl, hours, "hours");
     flipUpdate(minutesEl, minutes, "minutes");
-    flipUpdate(secondsEl, seconds, "seconds");
+    flipUpdate(secondsEl, seconds, null); // Sekunden fließen immer
   }
 
   updateCountdown();
