@@ -21,29 +21,42 @@
 
   <div class="countdown-title">NÄCHSTES SPECIAL</div>
 
-  <div class="flip-grid">
-
-    <div class="flip-unit">
-      <div class="flip-card" id="cdDays">00</div>
-      <div class="flip-label">TAGE</div>
-    </div>
-
-    <div class="flip-unit">
-      <div class="flip-card" id="cdHours">00</div>
-      <div class="flip-label">STUNDEN</div>
-    </div>
-
-    <div class="flip-unit">
-      <div class="flip-card" id="cdMinutes">00</div>
-      <div class="flip-label">MINUTEN</div>
-    </div>
-
-    <div class="flip-unit">
-      <div class="flip-card" id="cdSeconds">00</div>
-      <div class="flip-label">SEKUNDEN</div>
-    </div>
-
+ <div id="countdown">
+  <div class="event-info">
+    <h2 id="nextEventTitle"></h2>
+    <p id="nextEventDate"></p>
   </div>
+  <div class="flip-clock">
+    <div class="flip-unit" id="cdDays">
+      <div class="flip-card">
+        <div class="flip-card-front">00</div>
+        <div class="flip-card-back">00</div>
+      </div>
+      <span class="label">Tage</span>
+    </div>
+    <div class="flip-unit" id="cdHours">
+      <div class="flip-card">
+        <div class="flip-card-front">00</div>
+        <div class="flip-card-back">00</div>
+      </div>
+      <span class="label">Stunden</span>
+    </div>
+    <div class="flip-unit" id="cdMinutes">
+      <div class="flip-card">
+        <div class="flip-card-front">00</div>
+        <div class="flip-card-back">00</div>
+      </div>
+      <span class="label">Minuten</span>
+    </div>
+    <div class="flip-unit" id="cdSeconds">
+      <div class="flip-card">
+        <div class="flip-card-front">00</div>
+        <div class="flip-card-back">00</div>
+      </div>
+      <span class="label">Sekunden</span>
+    </div>
+  </div>
+</div>
 
 </section>
 
