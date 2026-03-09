@@ -969,28 +969,46 @@ color:#aaa;
 .flip-card-back {
   position: absolute;
   width: 100%;
-  height: 100%;
-  line-height: 80px;
+  height: 50%; /* oben / unten */
+  overflow: hidden;
   font-size: 50px;
   font-weight: bold;
-  background: #222;
+  line-height: 80px;
   color: #fff;
+  background: #222;
   border-radius: 6px;
   backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 -3px 5px rgba(0,0,0,0.3);
+}
+
+.flip-card-front {
+  transform-origin: bottom;
 }
 
 .flip-card-back {
+  transform-origin: top;
   transform: rotateX(180deg);
 }
 
 .flip-card.is-flipping .flip-card-front {
-  transform: rotateX(-180deg);
-  transition: transform 0.5s;
+  animation: flipFront 0.5s forwards;
 }
 
 .flip-card.is-flipping .flip-card-back {
-  transform: rotateX(0deg);
-  transition: transform 0.5s;
+  animation: flipBack 0.5s forwards;
+}
+
+@keyframes flipFront {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-180deg); }
+}
+
+@keyframes flipBack {
+  0% { transform: rotateX(180deg); }
+  100% { transform: rotateX(0deg); }
 }
 
 .label {
