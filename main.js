@@ -264,3 +264,56 @@ function initCountdown() {
   setInterval(updateCountdown,1000);
 
 }
+
+function initCountdown(){
+
+  const eventDate = new Date("2026-05-01T18:00:00");
+
+  const daysEl = document.getElementById("cdDays");
+  const hoursEl = document.getElementById("cdHours");
+  const minutesEl = document.getElementById("cdMinutes");
+  const secondsEl = document.getElementById("cdSeconds");
+
+  function flip(el,value){
+
+    if(el.textContent != value){
+
+      el.classList.add("is-flipping");
+
+      setTimeout(()=>{
+        el.textContent = value;
+      },300);
+
+      setTimeout(()=>{
+        el.classList.remove("is-flipping");
+      },600);
+
+    }
+
+  }
+
+  function update(){
+
+    const now = new Date();
+    const diff = eventDate - now;
+
+    if(diff <= 0) return;
+
+    const days = Math.floor(diff/(1000*60*60*24));
+    const hours = Math.floor((diff/(1000*60*60))%24);
+    const minutes = Math.floor((diff/(1000*60))%60);
+    const seconds = Math.floor((diff/1000)%60);
+
+    flip(daysEl,days);
+    flip(hoursEl,hours.toString().padStart(2,"0"));
+    flip(minutesEl,minutes.toString().padStart(2,"0"));
+    flip(secondsEl,seconds.toString().padStart(2,"0"));
+
+  }
+
+  update();
+  setInterval(update,1000);
+
+}
+
+initCountdown();
