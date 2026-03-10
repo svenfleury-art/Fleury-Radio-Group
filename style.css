@@ -948,9 +948,9 @@ color:#aaa;
 
 }
 
-/* =========================
-   COUNTDOWN CONTAINER
-========================= */
+/* =======================
+   CONTAINER
+======================= */
 
 #countdown-container{
   display:flex;
@@ -971,70 +971,54 @@ color:#aaa;
   margin-bottom:18px;
 }
 
-.event-info h2{
-  font-size:32px;
-  margin-bottom:6px;
-}
-
-.event-info p{
-  color:#cfcfcf;
-  font-size:18px;
-}
-
-/* =========================
+/* =======================
    CLOCK LAYOUT
-========================= */
+======================= */
 
 .flip-clock{
   display:flex;
   gap:12px;
-  justify-content:center;
 }
 
 .flip-unit{
   text-align:center;
 }
 
-/* =========================
+/* =======================
    FLIP CARD
-========================= */
+======================= */
 
 .flip-card{
   width:65px;
   height:85px;
-
   position:relative;
   perspective:1000px;
   overflow:hidden;
 }
 
-/* Vorderseite (Hauptzahl) */
+/* Hauptzahl */
 
 .flip-card .front{
   width:100%;
   height:100%;
-
   background:linear-gradient(#222,#111);
   border-radius:10px;
-
-  color:white;
-  font-size:48px;
-  font-weight:bold;
 
   display:flex;
   justify-content:center;
   align-items:center;
 
+  font-size:48px;
+  font-weight:bold;
+
   box-shadow:
   inset 0 -2px 6px rgba(0,0,0,0.5),
   0 4px 10px rgba(0,0,0,0.6);
-
-  z-index:3;
 }
 
-/* =========================
+/* =======================
    FLIP HÄLFTEN
-========================= */
+======================= */
 
 .flip-card .flip-top,
 .flip-card .flip-bottom{
@@ -1047,34 +1031,45 @@ color:#aaa;
 
   background:linear-gradient(#222,#111);
 
-  color:white;
-  font-size:48px;
-  font-weight:bold;
-
   display:flex;
   justify-content:center;
   align-items:center;
 
+  font-size:48px;
+  font-weight:bold;
+
   backface-visibility:hidden;
 
-  z-index:2;
+  opacity:0;
 }
+
+/* obere Hälfte */
 
 .flip-card .flip-top{
   top:0;
   transform-origin:bottom;
 }
 
+/* untere Hälfte */
+
 .flip-card .flip-bottom{
   bottom:0;
   transform-origin:top;
   transform:rotateX(180deg);
-  opacity:0.65;
 }
 
-/* =========================
-   FLIP ANIMATION
-========================= */
+/* =======================
+   ANIMATION
+======================= */
+
+.flip-card.is-flipping .front{
+  visibility:hidden;
+}
+
+.flip-card.is-flipping .flip-top,
+.flip-card.is-flipping .flip-bottom{
+  opacity:1;
+}
 
 .flip-card.is-flipping .flip-top{
   animation:flipTop 0.5s forwards;
@@ -1094,16 +1089,13 @@ color:#aaa;
   100%{ transform:rotateX(0deg); }
 }
 
-/* =========================
+/* =======================
    LABELS
-========================= */
+======================= */
 
 .label{
   display:block;
   margin-top:8px;
-
   font-size:14px;
-  color:#bdbdbd;
-
-  letter-spacing:1px;
+  color:#bbb;
 }
