@@ -225,34 +225,43 @@ function initCountdown() {
     }
   }
 
-  function updateCountdown() {
-    const event = getNextEvent(); // muss {title, dateObj} liefern
-    if (!event) return;
+ const container = document.getElementById("countdown-container");
 
-    if (title) title.textContent = event.title;
-    if (date) {
-      date.textContent = event.dateObj.toLocaleDateString("de-CH", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric"
-      });
+function updateCountdown(){
+
+  const event = getNextEvent();
+  if(!event) return;
+
+  const now = new Date();
+  const diff = event.dateObj - now;
+
+  const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
+  /* nur auf Home-Seite verstecken */
+
+  if(document.body.classList.contains("home")){
+    
+    if(diff > sevenDays){
+      container.style.display = "none";
+      return;
     }
 
-    const now = new Date();
-    const diff = event.dateObj - now;
-    if (diff <= 0) return;
-
-    const days = Math.floor(diff / (1000*60*60*24)).toString();
-    const hours = String(Math.floor((diff/(1000*60*60)) % 24)).padStart(2,"0");
-    const minutes = String(Math.floor((diff/(1000*60)) % 60)).padStart(2,"0");
-    const seconds = String(Math.floor((diff/1000) % 60)).padStart(2,"0");
-
-    flipUpdate(daysEl, days, "days");
-    flipUpdate(hoursEl, hours, "hours");
-    flipUpdate(minutesEl, minutes, "minutes");
-    flipUpdate(secondsEl, seconds, "seconds");
   }
 
+  container.style.display = "flex";
+
+  /* Countdown berechnen */
+
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff/(1000*60*60)) % 24);
+  const minutes = Math.floor((diff/(1000*60)) % 60);
+  const seconds = Math.floor((diff/1000) % 60);
+
+  flipUpdate(daysEl, days, "days");
+  flipUpdate(hoursEl, hours, "hours");
+  flipUpdate(minutesEl, minutes, "minutes");
+  flipUpdate(secondsEl, seconds, "seconds");
+}
   updateCountdown();
   setInterval(updateCountdown, 1000);
 }
