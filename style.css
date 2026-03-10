@@ -948,125 +948,162 @@ color:#aaa;
 
 }
 
-/* Gesamten Countdown zentrieren */
-#countdown-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh; /* gesamte Höhe */
-  background: #f5f5f5;
-  font-family: monospace;
+/* =========================
+   COUNTDOWN CONTAINER
+========================= */
+
+#countdown-container{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+
+  min-height:60vh;
+  padding:40px 20px;
+
+  background:#1b1b1b;
+  font-family:"Courier New", monospace;
+  color:white;
 }
 
-#countdown .event-info {
-  text-align: center;
-  margin-bottom: 20px;
+.event-info{
+  text-align:center;
+  margin-bottom:18px;
 }
 
-/* Gesamten Countdown zentrieren */
-#countdown-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
-  background: #1b1b1b; /* dunkel */
-  font-family: 'Courier New', monospace;
-  color: #fff;
+.event-info h2{
+  font-size:32px;
+  margin-bottom:6px;
 }
 
-#countdown .event-info {
-  text-align: center;
-  margin-bottom: 20px;
+.event-info p{
+  color:#cfcfcf;
+  font-size:18px;
 }
 
-.flip-clock {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
+/* =========================
+   CLOCK LAYOUT
+========================= */
+
+.flip-clock{
+  display:flex;
+  gap:12px;
+  justify-content:center;
 }
 
-.flip-unit {
-  text-align: center;
+.flip-unit{
+  text-align:center;
 }
 
-.flip-card {
-  width: 70px;
-  height: 90px;
-  position: relative;
-  perspective: 1000px;
+/* =========================
+   FLIP CARD
+========================= */
+
+.flip-card{
+  width:65px;
+  height:85px;
+
+  position:relative;
+  perspective:1000px;
+  overflow:hidden;
 }
 
-/* Vorderseite komplett sichtbar */
-.flip-card .front {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(#222, #111);
-  color: #fff;
-  font-size: 50px;
-  font-weight: bold;
-  line-height: 90px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-  position: relative;
-  z-index: 1;
+/* Vorderseite (Hauptzahl) */
+
+.flip-card .front{
+  width:100%;
+  height:100%;
+
+  background:linear-gradient(#222,#111);
+  border-radius:10px;
+
+  color:white;
+  font-size:48px;
+  font-weight:bold;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  box-shadow:
+  inset 0 -2px 6px rgba(0,0,0,0.5),
+  0 4px 10px rgba(0,0,0,0.6);
+
+  z-index:3;
 }
 
-/* Flip Animation Hälften */
+/* =========================
+   FLIP HÄLFTEN
+========================= */
+
 .flip-card .flip-top,
-.flip-card .flip-bottom {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  line-height: 45px;
-  font-size: 50px;
-  font-weight: bold;
-  text-align: center;
-  color: #fff;
-  background: linear-gradient(#222, #111);
-  backface-visibility: hidden;
-  border-radius: 8px;
-  z-index: 2;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+.flip-card .flip-bottom{
+
+  position:absolute;
+  left:0;
+
+  width:100%;
+  height:50%;
+
+  background:linear-gradient(#222,#111);
+
+  color:white;
+  font-size:48px;
+  font-weight:bold;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  backface-visibility:hidden;
+
+  z-index:2;
 }
 
-.flip-card .flip-top {
-  top: 0;
-  transform-origin: bottom;
+.flip-card .flip-top{
+  top:0;
+  transform-origin:bottom;
 }
 
-.flip-card .flip-bottom {
-  bottom: 0;
-  transform-origin: top;
-  transform: rotateX(180deg);
+.flip-card .flip-bottom{
+  bottom:0;
+  transform-origin:top;
+  transform:rotateX(180deg);
+  opacity:0.65;
 }
 
-/* Flip Animation */
-.flip-card.is-flipping .flip-top {
-  animation: flipTop 0.5s forwards;
+/* =========================
+   FLIP ANIMATION
+========================= */
+
+.flip-card.is-flipping .flip-top{
+  animation:flipTop 0.5s forwards;
 }
 
-.flip-card.is-flipping .flip-bottom {
-  animation: flipBottom 0.5s forwards;
+.flip-card.is-flipping .flip-bottom{
+  animation:flipBottom 0.5s forwards;
 }
 
-@keyframes flipTop {
-  0% { transform: rotateX(0deg); }
-  100% { transform: rotateX(-180deg); }
+@keyframes flipTop{
+  0%{ transform:rotateX(0deg); }
+  100%{ transform:rotateX(-180deg); }
 }
 
-@keyframes flipBottom {
-  0% { transform: rotateX(180deg); }
-  100% { transform: rotateX(0deg); }
+@keyframes flipBottom{
+  0%{ transform:rotateX(180deg); }
+  100%{ transform:rotateX(0deg); }
 }
 
-.label {
-  display: block;
-  margin-top: 5px;
-  font-size: 14px;
-  color: #ccc;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+/* =========================
+   LABELS
+========================= */
+
+.label{
+  display:block;
+  margin-top:8px;
+
+  font-size:14px;
+  color:#bdbdbd;
+
+  letter-spacing:1px;
 }
