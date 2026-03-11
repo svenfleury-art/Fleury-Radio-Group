@@ -1099,3 +1099,18 @@ color:#aaa;
   font-size:14px;
   color:#bbb;
 }
+
+/* =========================
+   MOBILE – RADIO LOGOS AUSBLENDEN
+========================= */
+
+@media (max-width: 768px){
+
+  .radio-logo,
+  .station-logo,
+  .sender-logo,
+  .card img{
+    display: none !important;
+  }
+
+}
