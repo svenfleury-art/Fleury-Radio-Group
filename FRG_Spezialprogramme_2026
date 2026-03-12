@@ -668,7 +668,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:20301028T120000-65@frg.ch
 DTSTAMP:20260303T150000Z
-DTSTART;TZID=Europe/Zurich:20301028T120000
+DTSTART;TZID=Europe/Zurich:20301028T000000
 DTEND;TZID=Europe/Zurich:20301103T235900
 SUMMARY:FRG 5 Jahre Jubiläumswoche
 DESCRIPTION:Eine ganze Woche Specials: Crossover, Simulcast, Höreraktionen, Rückblicke, exklusive Shows
