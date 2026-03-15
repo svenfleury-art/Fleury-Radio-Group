@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadPartial("footer-slot", "partials/footer.html");
 
   initMenu();
+  initDropdown();
   initCookies();
   initFilter();
   initCountdown();
@@ -15,23 +16,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 PARTIAL LOADER
 ------------------------- */
 
-async function loadPartial(slotId, url) {
+async function loadPartial(slotId, url){
 
   const slot = document.getElementById(slotId);
-  if (!slot) return;
+  if(!slot) return;
 
-  try {
+  try{
 
     const res = await fetch(url);
 
-    if (!res.ok) {
+    if(!res.ok){
       console.error("Partial konnte nicht geladen werden:", url);
       return;
     }
 
     slot.innerHTML = await res.text();
 
-  } catch (err) {
+  }catch(err){
     console.error("Fetch Fehler:", err);
   }
 
@@ -42,60 +43,76 @@ async function loadPartial(slotId, url) {
 MENU SYSTEM
 ------------------------- */
 
-function initMenu() {
+function initMenu(){
 
   const btn = document.getElementById("hamburgerBtn");
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
 
-  if (!btn || !nav) return;
+  if(!btn || !nav) return;
 
-  function closeMenu() {
+  function closeMenu(){
     nav.classList.remove("open");
     btn.classList.remove("active");
     btn.textContent = "☰";
-    if (overlay) overlay.classList.remove("active");
+    if(overlay) overlay.classList.remove("active");
   }
 
-  function openMenu() {
+  function openMenu(){
     nav.classList.add("open");
     btn.classList.add("active");
     btn.textContent = "✕";
-    if (overlay) overlay.classList.add("active");
+    if(overlay) overlay.classList.add("active");
   }
 
   closeMenu();
 
-  btn.addEventListener("click", (e) => {
+  btn.addEventListener("click", (e)=>{
     e.stopPropagation();
     nav.classList.contains("open") ? closeMenu() : openMenu();
   });
 
-  if (overlay) overlay.addEventListener("click", closeMenu);
+  if(overlay) overlay.addEventListener("click", closeMenu);
 
-  document.addEventListener("click", (e) => {
-    if (!nav.contains(e.target) && !btn.contains(e.target)) {
+  document.addEventListener("click", (e)=>{
+    if(!nav.contains(e.target) && !btn.contains(e.target)){
       closeMenu();
     }
   });
 
-  /* -------------------------
-  DROPDOWN NAVIGATION
-  ------------------------- */
+}
 
-  const dropdownBtns = document.querySelectorAll(".dropdown-toggle");
+
+/* -------------------------
+RADIO DROPDOWN
+------------------------- */
+
+function initDropdown(){
+
+  const nav = document.getElementById("mainNav");
+  if(!nav) return;
+
+  const dropdownBtns = nav.querySelectorAll(".dropdown-toggle");
 
   dropdownBtns.forEach(btn => {
 
-    btn.addEventListener("click", (e) => {
+    btn.addEventListener("click", (e)=>{
 
+      e.preventDefault();
       e.stopPropagation();
 
       const dropdown = btn.closest(".nav-dropdown");
+      if(!dropdown) return;
 
-      if (dropdown) {
-        dropdown.classList.toggle("open");
-      }
+      /* andere Dropdowns schliessen */
+
+      nav.querySelectorAll(".nav-dropdown").forEach(d=>{
+        if(d !== dropdown) d.classList.remove("open");
+      });
+
+      /* aktuelles öffnen */
+
+      dropdown.classList.toggle("open");
 
     });
 
@@ -108,22 +125,22 @@ function initMenu() {
 COOKIE BANNER
 ------------------------- */
 
-function initCookies() {
+function initCookies(){
 
   const banner = document.getElementById("cookie-banner");
   const button = document.getElementById("cookie-accept");
 
-  if (!banner || !button) return;
+  if(!banner || !button) return;
 
-  if (localStorage.getItem("frgCookiesAccepted")) {
+  if(localStorage.getItem("frgCookiesAccepted")){
     banner.style.display = "none";
     return;
   }
 
   banner.style.display = "flex";
 
-  button.addEventListener("click", () => {
-    localStorage.setItem("frgCookiesAccepted", "true");
+  button.addEventListener("click", ()=>{
+    localStorage.setItem("frgCookiesAccepted","true");
     banner.style.display = "none";
   });
 
@@ -134,33 +151,33 @@ function initCookies() {
 EVENT FILTER
 ------------------------- */
 
-function initFilter() {
+function initFilter(){
 
   const buttons = document.querySelectorAll(".filter-btn");
   const events = document.querySelectorAll(".event-card");
 
-  if (!buttons.length) return;
+  if(!buttons.length) return;
 
-  buttons.forEach(button => {
+  buttons.forEach(button=>{
 
-    button.addEventListener("click", () => {
+    button.addEventListener("click", ()=>{
 
       const filter = button.dataset.filter;
 
-      buttons.forEach(b => b.classList.remove("active"));
+      buttons.forEach(b=>b.classList.remove("active"));
       button.classList.add("active");
 
-      events.forEach(event => {
+      events.forEach(event=>{
 
-        if (filter === "all") {
+        if(filter === "all"){
           event.style.display = "block";
         }
 
-        else if (event.classList.contains(filter)) {
+        else if(event.classList.contains(filter)){
           event.style.display = "block";
         }
 
-        else {
+        else{
           event.style.display = "none";
         }
 
@@ -197,14 +214,14 @@ const frgEvents = [
 NEXT EVENT
 ------------------------- */
 
-function getNextEvent() {
+function getNextEvent(){
 
   const now = new Date();
 
   return frgEvents
-    .map(e => ({ ...e, dateObj: new Date(e.date) }))
-    .filter(e => e.dateObj > now)
-    .sort((a,b) => a.dateObj - b.dateObj)[0];
+  .map(e => ({ ...e, dateObj:new Date(e.date) }))
+  .filter(e => e.dateObj > now)
+  .sort((a,b)=>a.dateObj - b.dateObj)[0];
 
 }
 
@@ -213,46 +230,15 @@ function getNextEvent() {
 COUNTDOWN
 ------------------------- */
 
-function initCountdown() {
-
-  const title = document.getElementById("nextEventTitle");
-  const date  = document.getElementById("nextEventDate");
+function initCountdown(){
 
   const daysEl = document.getElementById("cdDays");
   const hoursEl = document.getElementById("cdHours");
   const minutesEl = document.getElementById("cdMinutes");
   const secondsEl = document.getElementById("cdSeconds");
-
   const container = document.getElementById("countdown-container");
 
-  if (!daysEl) return;
-
-  const lastValues = { days:null, hours:null, minutes:null, seconds:null };
-
-  function flipUpdate(el, value, key) {
-
-    if (lastValues[key] !== value) {
-
-      const front = el.querySelector(".front");
-      const flipTop = el.querySelector(".flip-top");
-      const flipBottom = el.querySelector(".flip-bottom");
-
-      flipTop.textContent = front.textContent;
-      flipBottom.textContent = value;
-
-      el.querySelector(".flip-card").classList.add("is-flipping");
-
-      setTimeout(() => {
-
-        front.textContent = value;
-        el.querySelector(".flip-card").classList.remove("is-flipping");
-        lastValues[key] = value;
-
-      }, 500);
-
-    }
-
-  }
+  if(!daysEl) return;
 
   function updateCountdown(){
 
@@ -262,32 +248,19 @@ function initCountdown() {
     const now = new Date();
     const diff = event.dateObj - now;
 
-    const sevenDays = 7 * 24 * 60 * 60 * 1000;
+    const days = Math.floor(diff/(1000*60*60*24));
+    const hours = Math.floor((diff/(1000*60*60))%24);
+    const minutes = Math.floor((diff/(1000*60))%60);
+    const seconds = Math.floor((diff/1000)%60);
 
-    if(document.body.classList.contains("home")){
-
-      if(diff > sevenDays){
-        container.style.display = "none";
-        return;
-      }
-
-    }
-
-    container.style.display = "flex";
-
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff/(1000*60*60)) % 24);
-    const minutes = Math.floor((diff/(1000*60)) % 60);
-    const seconds = Math.floor((diff/1000) % 60);
-
-    flipUpdate(daysEl, days, "days");
-    flipUpdate(hoursEl, hours, "hours");
-    flipUpdate(minutesEl, minutes, "minutes");
-    flipUpdate(secondsEl, seconds, "seconds");
+    daysEl.textContent = days;
+    hoursEl.textContent = hours;
+    minutesEl.textContent = minutes;
+    secondsEl.textContent = seconds;
 
   }
 
   updateCountdown();
-  setInterval(updateCountdown, 1000);
+  setInterval(updateCountdown,1000);
 
 }
