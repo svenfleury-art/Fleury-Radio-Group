@@ -79,37 +79,30 @@ function initMenu() {
     }
   });
 
+  /* -------------------------
+  DROPDOWN NAVIGATION
+  ------------------------- */
 
- /* -------------------------
-DROPDOWN NAVIGATION
-------------------------- */
+  const dropdownBtns = document.querySelectorAll(".dropdown-toggle");
 
-const dropdownBtns = nav.querySelectorAll(".dropdown-toggle");
+  dropdownBtns.forEach(btn => {
 
-dropdownBtns.forEach(btn => {
+    btn.addEventListener("click", (e) => {
 
-  btn.addEventListener("click", (e) => {
+      e.stopPropagation();
 
-    e.preventDefault();
-    e.stopPropagation();
+      const dropdown = btn.closest(".nav-dropdown");
 
-    const dropdown = btn.closest(".nav-dropdown");
+      if (dropdown) {
+        dropdown.classList.toggle("open");
+      }
 
-    if (!dropdown) return;
-
-    /* andere Dropdowns schliessen */
-
-    nav.querySelectorAll(".nav-dropdown").forEach(d => {
-      if (d !== dropdown) d.classList.remove("open");
     });
-
-    /* aktuelles öffnen */
-
-    dropdown.classList.toggle("open");
 
   });
 
-});
+}
+
 
 /* -------------------------
 COOKIE BANNER
