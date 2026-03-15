@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 
-
 /* -------------------------
 PARTIAL LOADER
 ------------------------- */
@@ -22,6 +21,7 @@ async function loadPartial(slotId, url) {
   if (!slot) return;
 
   try {
+
     const res = await fetch(url);
 
     if (!res.ok) {
@@ -36,7 +36,6 @@ async function loadPartial(slotId, url) {
   }
 
 }
-
 
 
 /* -------------------------
@@ -80,8 +79,29 @@ function initMenu() {
     }
   });
 
-}
+  /* -------------------------
+  DROPDOWN NAVIGATION
+  ------------------------- */
 
+  const dropdownBtns = document.querySelectorAll(".dropdown-toggle");
+
+  dropdownBtns.forEach(btn => {
+
+    btn.addEventListener("click", (e) => {
+
+      e.stopPropagation();
+
+      const dropdown = btn.closest(".nav-dropdown");
+
+      if (dropdown) {
+        dropdown.classList.toggle("open");
+      }
+
+    });
+
+  });
+
+}
 
 
 /* -------------------------
@@ -108,7 +128,6 @@ function initCookies() {
   });
 
 }
-
 
 
 /* -------------------------
@@ -154,7 +173,6 @@ function initFilter() {
 }
 
 
-
 /* -------------------------
 FRG EVENTS
 ------------------------- */
@@ -175,7 +193,6 @@ const frgEvents = [
 ];
 
 
-
 /* -------------------------
 NEXT EVENT
 ------------------------- */
@@ -192,9 +209,12 @@ function getNextEvent() {
 }
 
 
-
+/* -------------------------
+COUNTDOWN
+------------------------- */
 
 function initCountdown() {
+
   const title = document.getElementById("nextEventTitle");
   const date  = document.getElementById("nextEventDate");
 
@@ -203,87 +223,71 @@ function initCountdown() {
   const minutesEl = document.getElementById("cdMinutes");
   const secondsEl = document.getElementById("cdSeconds");
 
+  const container = document.getElementById("countdown-container");
+
   if (!daysEl) return;
 
-  const lastValues = { days: null, hours: null, minutes: null, seconds: null };
+  const lastValues = { days:null, hours:null, minutes:null, seconds:null };
 
   function flipUpdate(el, value, key) {
+
     if (lastValues[key] !== value) {
+
       const front = el.querySelector(".front");
       const flipTop = el.querySelector(".flip-top");
       const flipBottom = el.querySelector(".flip-bottom");
 
-      flipTop.textContent = front.textContent; // alte Zahl
-      flipBottom.textContent = value;          // neue Zahl
+      flipTop.textContent = front.textContent;
+      flipBottom.textContent = value;
 
       el.querySelector(".flip-card").classList.add("is-flipping");
 
       setTimeout(() => {
+
         front.textContent = value;
         el.querySelector(".flip-card").classList.remove("is-flipping");
         lastValues[key] = value;
+
       }, 500);
-    }
-  }
 
- const container = document.getElementById("countdown-container");
-
-function updateCountdown(){
-
-  const event = getNextEvent();
-  if(!event) return;
-
-  const now = new Date();
-  const diff = event.dateObj - now;
-
-  const sevenDays = 7 * 24 * 60 * 60 * 1000;
-
-  /* nur auf Home-Seite verstecken */
-
-  if(document.body.classList.contains("home")){
-    
-    if(diff > sevenDays){
-      container.style.display = "none";
-      return;
     }
 
   }
 
-  container.style.display = "flex";
+  function updateCountdown(){
 
-  /* Countdown berechnen */
+    const event = getNextEvent();
+    if(!event) return;
 
-  const days = Math.floor(diff / (1000*60*60*24));
-  const hours = Math.floor((diff/(1000*60*60)) % 24);
-  const minutes = Math.floor((diff/(1000*60)) % 60);
-  const seconds = Math.floor((diff/1000) % 60);
+    const now = new Date();
+    const diff = event.dateObj - now;
 
-  flipUpdate(daysEl, days, "days");
-  flipUpdate(hoursEl, hours, "hours");
-  flipUpdate(minutesEl, minutes, "minutes");
-  flipUpdate(secondsEl, seconds, "seconds");
-}
+    const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
+    if(document.body.classList.contains("home")){
+
+      if(diff > sevenDays){
+        container.style.display = "none";
+        return;
+      }
+
+    }
+
+    container.style.display = "flex";
+
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff/(1000*60*60)) % 24);
+    const minutes = Math.floor((diff/(1000*60)) % 60);
+    const seconds = Math.floor((diff/1000) % 60);
+
+    flipUpdate(daysEl, days, "days");
+    flipUpdate(hoursEl, hours, "hours");
+    flipUpdate(minutesEl, minutes, "minutes");
+    flipUpdate(secondsEl, seconds, "seconds");
+
+  }
+
   updateCountdown();
   setInterval(updateCountdown, 1000);
+
 }
-
-document.querySelectorAll(".dropdown-toggle").forEach(btn => {
-  btn.addEventListener("click", function() {
-    this.closest(".nav-dropdown").classList.toggle("open");
-  });
-});
-
-
-document.querySelectorAll(".dropdown-toggle").forEach(btn => {
-
-  btn.addEventListener("click", function(e){
-
-    e.stopPropagation();
-
-    const dropdown = this.closest(".nav-dropdown");
-
-    dropdown.classList.toggle("open");
-
-  });
-
-});
