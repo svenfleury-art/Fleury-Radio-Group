@@ -1137,11 +1137,6 @@ color:#aaa;
   cursor:pointer;
 }
 
-.nav-button a{
-  color:white;
-  text-decoration:none;
-}
-
 .arrow{
   transition:transform 0.3s ease;
 }
@@ -1160,6 +1155,24 @@ color:#aaa;
   text-align:center;
   color:white;
   text-decoration:none;
+  font-size:18px;
+  transition: background 0.2s;
+}
+
+.dropdown-menu a:hover{
+  background:#374ea3;
+}
+
+/* Spezieller Stil für Radio Übersicht */
+.dropdown-menu a.radio-overview{
+  background:#FACC15;   /* goldener Hintergrund */
+  color:#0B1B4A;        /* dunkle Schrift */
+  font-weight:bold;
+  font-size:20px;
+  border-radius:16px;
+}
+.dropdown-menu a.radio-overview:hover{
+  background:#e6b800;   /* dunkleres Gold beim Hover */
 }
 
 .nav-dropdown.open .dropdown-menu{
@@ -1167,5 +1180,5 @@ color:#aaa;
 }
 
 .nav-dropdown.open .arrow{
-  transform: rotate(180deg);
+  transform:rotate(180deg);
 }
