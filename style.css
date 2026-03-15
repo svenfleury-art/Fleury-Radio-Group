@@ -1158,3 +1158,64 @@ color:#aaa;
 .nav-dropdown.open .dropdown-menu {
   display: flex;
 }
+
+.nav-item{
+  width:100%;
+}
+
+.nav-link-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+
+.nav-main-link{
+  text-decoration:none;
+  color:white;
+  font-size:1.1rem;
+}
+
+.dropdown-toggle{
+  background:none;
+  border:none;
+  color:white;
+  cursor:pointer;
+  font-size:16px;
+  transition:transform 0.3s ease;
+}
+
+.arrow{
+  display:inline-block;
+  transition:transform 0.3s ease;
+}
+
+/* Dropdown Menü */
+
+.dropdown-menu{
+  display:none;
+  flex-direction:column;
+  margin-top:10px;
+  gap:10px;
+}
+
+.dropdown-menu a{
+  background:#1f3b82;
+  padding:12px;
+  border-radius:12px;
+  text-align:center;
+  text-decoration:none;
+  color:white;
+}
+
+/* geöffnet */
+
+.nav-dropdown.open .dropdown-menu{
+  display:flex;
+}
+
+/* Pfeil Animation */
+
+.nav-dropdown.open .arrow{
+  transform:rotate(180deg);
+}
