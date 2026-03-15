@@ -1,8 +1,12 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
+  // -------------------------
+  // Partials laden
+  // -------------------------
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
+  // Initialisierungen
   initMenu();
   initCookies();
   initFilter();
@@ -10,38 +14,30 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
-
 /* -------------------------
 PARTIAL LOADER
 ------------------------- */
-
 async function loadPartial(slotId, url) {
 
   const slot = document.getElementById(slotId);
   if (!slot) return;
 
   try {
-
     const res = await fetch(url);
-
     if (!res.ok) {
       console.error("Partial konnte nicht geladen werden:", url);
       return;
     }
-
     slot.innerHTML = await res.text();
-
   } catch (err) {
     console.error("Fetch Fehler:", err);
   }
 
 }
 
-
 /* -------------------------
-MENU SYSTEM
+MENU SYSTEM & DROPDOWNS
 ------------------------- */
-
 function initMenu() {
 
   const btn = document.getElementById("hamburgerBtn");
@@ -50,6 +46,7 @@ function initMenu() {
 
   if (!btn || !nav) return;
 
+  // Menü schließen
   function closeMenu() {
     nav.classList.remove("open");
     btn.classList.remove("active");
@@ -57,6 +54,7 @@ function initMenu() {
     if (overlay) overlay.classList.remove("active");
   }
 
+  // Menü öffnen
   function openMenu() {
     nav.classList.add("open");
     btn.classList.add("active");
@@ -66,55 +64,49 @@ function initMenu() {
 
   closeMenu();
 
+  // Hamburger Klick
   btn.addEventListener("click", (e) => {
     e.stopPropagation();
     nav.classList.contains("open") ? closeMenu() : openMenu();
   });
 
+  // Overlay Klick
   if (overlay) overlay.addEventListener("click", closeMenu);
 
+  // Klick außerhalb schließt das Menü
   document.addEventListener("click", (e) => {
     if (!nav.contains(e.target) && !btn.contains(e.target)) {
       closeMenu();
     }
   });
 
- /* -------------------------
-DROPDOWN NAVIGATION
-------------------------- */
-
-const dropdownBtns = nav.querySelectorAll(".dropdown-toggle");
-
-dropdownBtns.forEach(btn => {
-
-  btn.addEventListener("click", (e) => {
+  // -------------------------
+  // Dropdown Navigation (Event Delegation)
+  // -------------------------
+  nav.addEventListener("click", (e) => {
+    const toggleBtn = e.target.closest(".dropdown-toggle");
+    if (!toggleBtn) return;
 
     e.preventDefault();
     e.stopPropagation();
 
-    const dropdown = btn.closest(".nav-dropdown");
-
+    const dropdown = toggleBtn.closest(".nav-dropdown");
     if (!dropdown) return;
 
-    /* andere Dropdowns schliessen */
-
+    // andere Dropdowns schließen
     nav.querySelectorAll(".nav-dropdown").forEach(d => {
       if (d !== dropdown) d.classList.remove("open");
     });
 
-    /* aktuelles öffnen */
-
+    // aktuelles öffnen/schließen
     dropdown.classList.toggle("open");
-
   });
 
-});
-
+}
 
 /* -------------------------
 COOKIE BANNER
 ------------------------- */
-
 function initCookies() {
 
   const banner = document.getElementById("cookie-banner");
@@ -136,11 +128,9 @@ function initCookies() {
 
 }
 
-
 /* -------------------------
 EVENT FILTER
 ------------------------- */
-
 function initFilter() {
 
   const buttons = document.querySelectorAll(".filter-btn");
@@ -158,19 +148,11 @@ function initFilter() {
       button.classList.add("active");
 
       events.forEach(event => {
-
-        if (filter === "all") {
+        if (filter === "all" || event.classList.contains(filter)) {
           event.style.display = "block";
-        }
-
-        else if (event.classList.contains(filter)) {
-          event.style.display = "block";
-        }
-
-        else {
+        } else {
           event.style.display = "none";
         }
-
       });
 
     });
@@ -179,31 +161,25 @@ function initFilter() {
 
 }
 
-
 /* -------------------------
 FRG EVENTS
 ------------------------- */
-
 const frgEvents = [
-
-{ title:"FRG Crossover Night", date:"2026-04-25T20:00:00" },
-{ title:"FRG Simulcast", date:"2026-05-30T19:00:00" },
-{ title:"FRG Crossover Night", date:"2026-06-27T19:00:00" },
-{ title:"FRG Schweiz Special", date:"2026-08-01T12:00:00" },
-{ title:"FRG Crossover Night", date:"2026-09-26T19:00:00" },
-{ title:"1 Jahr Fleury Radio Group", date:"2026-10-28T12:00:00" },
-{ title:"FRG Halloween Special", date:"2026-10-31T12:00:00" },
-{ title:"FRG Crossover Night", date:"2026-11-28T20:00:00" },
-{ title:"FRG Weihnachts Special", date:"2026-12-19T00:00:00" },
-{ title:"FRG Neujahres Special", date:"2026-12-31T13:00:00" }
-
+  { title:"FRG Crossover Night", date:"2026-04-25T20:00:00" },
+  { title:"FRG Simulcast", date:"2026-05-30T19:00:00" },
+  { title:"FRG Crossover Night", date:"2026-06-27T19:00:00" },
+  { title:"FRG Schweiz Special", date:"2026-08-01T12:00:00" },
+  { title:"FRG Crossover Night", date:"2026-09-26T19:00:00" },
+  { title:"1 Jahr Fleury Radio Group", date:"2026-10-28T12:00:00" },
+  { title:"FRG Halloween Special", date:"2026-10-31T12:00:00" },
+  { title:"FRG Crossover Night", date:"2026-11-28T20:00:00" },
+  { title:"FRG Weihnachts Special", date:"2026-12-19T00:00:00" },
+  { title:"FRG Neujahres Special", date:"2026-12-31T13:00:00" }
 ];
-
 
 /* -------------------------
 NEXT EVENT
 ------------------------- */
-
 function getNextEvent() {
 
   const now = new Date();
@@ -215,11 +191,9 @@ function getNextEvent() {
 
 }
 
-
 /* -------------------------
 COUNTDOWN
 ------------------------- */
-
 function initCountdown() {
 
   const title = document.getElementById("nextEventTitle");
@@ -272,12 +246,10 @@ function initCountdown() {
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
 
     if(document.body.classList.contains("home")){
-
       if(diff > sevenDays){
         container.style.display = "none";
         return;
       }
-
     }
 
     container.style.display = "flex";
