@@ -79,9 +79,6 @@ function initMenu() {
     }
   });
 
-  /* -------------------------
-  DROPDOWN NAVIGATION
-  ------------------------- */
 
  /* -------------------------
 DROPDOWN NAVIGATION
