@@ -83,26 +83,36 @@ function initMenu() {
   DROPDOWN NAVIGATION
   ------------------------- */
 
-  const dropdownBtns = document.querySelectorAll(".dropdown-toggle");
+ /* -------------------------
+DROPDOWN NAVIGATION
+------------------------- */
 
-  dropdownBtns.forEach(btn => {
+const dropdownBtns = nav.querySelectorAll(".dropdown-toggle");
 
-    btn.addEventListener("click", (e) => {
+dropdownBtns.forEach(btn => {
 
-      e.stopPropagation();
+  btn.addEventListener("click", (e) => {
 
-      const dropdown = btn.closest(".nav-dropdown");
+    e.preventDefault();
+    e.stopPropagation();
 
-      if (dropdown) {
-        dropdown.classList.toggle("open");
-      }
+    const dropdown = btn.closest(".nav-dropdown");
 
+    if (!dropdown) return;
+
+    /* andere Dropdowns schliessen */
+
+    nav.querySelectorAll(".nav-dropdown").forEach(d => {
+      if (d !== dropdown) d.classList.remove("open");
     });
+
+    /* aktuelles öffnen */
+
+    dropdown.classList.toggle("open");
 
   });
 
-}
-
+});
 
 /* -------------------------
 COOKIE BANNER
