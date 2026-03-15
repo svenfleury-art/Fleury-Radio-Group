@@ -266,3 +266,9 @@ function updateCountdown(){
   updateCountdown();
   setInterval(updateCountdown, 1000);
 }
+
+document.querySelectorAll(".dropdown-toggle").forEach(btn => {
+  btn.addEventListener("click", function() {
+    this.closest(".nav-dropdown").classList.toggle("open");
+  });
+});
