@@ -272,3 +272,18 @@ document.querySelectorAll(".dropdown-toggle").forEach(btn => {
     this.closest(".nav-dropdown").classList.toggle("open");
   });
 });
+
+
+document.querySelectorAll(".dropdown-toggle").forEach(btn => {
+
+  btn.addEventListener("click", function(e){
+
+    e.stopPropagation();
+
+    const dropdown = this.closest(".nav-dropdown");
+
+    dropdown.classList.toggle("open");
+
+  });
+
+});
