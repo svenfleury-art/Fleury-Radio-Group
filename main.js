@@ -18,6 +18,23 @@ window.addEventListener("load", () => {
 });
 
 /* -------------------------
+PARTIALS & DOM CONTENT
+------------------------- */
+document.addEventListener("DOMContentLoaded", async () => {
+
+  // Partials laden
+  await loadPartial("nav-slot", "partials/nav.html");
+  await loadPartial("footer-slot", "partials/footer.html");
+
+  // Initialisierungen
+  initMenu();
+  initCookies();
+  initFilter();
+  initCountdown();
+  initListeners(); // Laut.fm Hörerzahlen
+});
+
+/* -------------------------
 PARTIAL LOADER
 ------------------------- */
 async function loadPartial(slotId, url) {
@@ -42,7 +59,6 @@ function initMenu() {
   const btn = document.getElementById("hamburgerBtn");
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
-
   if (!btn || !nav) return;
 
   function closeMenu() {
@@ -61,18 +77,18 @@ function initMenu() {
 
   closeMenu();
 
-  btn.addEventListener("click", (e) => {
+  btn.addEventListener("click", e => {
     e.stopPropagation();
     nav.classList.contains("open") ? closeMenu() : openMenu();
   });
 
   if (overlay) overlay.addEventListener("click", closeMenu);
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", e => {
     if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu();
   });
 
-  nav.addEventListener("click", (e) => {
+  nav.addEventListener("click", e => {
     const toggleBtn = e.target.closest(".dropdown-toggle");
     if (!toggleBtn) return;
     e.preventDefault();
@@ -87,12 +103,11 @@ function initMenu() {
 }
 
 /* -------------------------
-COOKIE BANNER – FRG STYLE MIT SLIDE-OUT
+COOKIE BANNER
 ------------------------- */
 function initCookies() {
   const banner = document.getElementById("cookie-banner");
   const button = document.getElementById("cookie-accept");
-
   if (!banner || !button) return;
 
   if (localStorage.getItem("frgCookiesAccepted")) {
@@ -105,7 +120,7 @@ function initCookies() {
   button.addEventListener("click", () => {
     localStorage.setItem("frgCookiesAccepted", "true");
     banner.classList.add("hide");
-    setTimeout(() => { banner.style.display = "none"; }, 600);
+    setTimeout(() => banner.style.display = "none", 600);
   });
 }
 
@@ -145,9 +160,6 @@ const frgEvents = [
   { title:"FRG Neujahres Special", date:"2026-12-31T13:00:00" }
 ];
 
-/* -------------------------
-NEXT EVENT
-------------------------- */
 function getNextEvent() {
   const now = new Date();
   return frgEvents
@@ -187,11 +199,11 @@ function initCountdown() {
 
   function updateCountdown() {
     const event = getNextEvent();
-    if(!event) return;
+    if (!event) return;
     const now = new Date();
     const diff = event.dateObj - now;
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
-    if(document.body.classList.contains("home") && diff > sevenDays){
+    if (document.body.classList.contains("home") && diff > sevenDays) {
       container.style.display = "none";
       return;
     }
@@ -213,55 +225,38 @@ function initCountdown() {
 }
 
 /* -------------------------
-LAUT.FM SDK + LISTENER COUNTER
+LISTENER COUNTER – LAUT.FM JS-SDK
 ------------------------- */
-function loadLautFMSDK() {
-  return new Promise((resolve, reject) => {
-    if (window.lautFM) return resolve();
-    const script = document.createElement("script");
-    script.src = "https://cdn.laut.fm/sdk/latest/lautfm.min.js";
-    script.onload = resolve;
-    script.onerror = reject;
-    document.body.appendChild(script);
-  });
+function initListeners() {
+
+  // SDK einbinden
+  const script = document.createElement("script");
+  script.src = "https://cdn.laut.fm/sdk/latest/lautfm.min.js";
+  document.body.appendChild(script);
+
+  script.onload = () => {
+
+    const stations = [
+      { name: "rhywaelle", liveId: "rhywaelle-live", todayId: "rhywaelle-today" },
+      { name: "winterlordfm", liveId: "winterlord-live", todayId: "winterlord-today" },
+      { name: "rhyrockradio", liveId: "rhyrock-live", todayId: "rhyrock-today" }
+    ];
+
+    async function updateListeners() {
+      for (const s of stations) {
+        try {
+          const data = await lautFM.getListeners(s.name);
+          document.getElementById(s.liveId).textContent = data.listeners;
+          document.getElementById(s.todayId).textContent = data.listener_peak;
+        } catch (err) {
+          console.error("Listener konnten nicht geladen werden:", err);
+        }
+      }
+    }
+
+    updateListeners();
+    setInterval(updateListeners, 30000);
+
+  };
+
 }
-
-async function updateListeners(station, liveId) {
-  try {
-    const data = await lautFM.getListeners(station);
-    const el = document.getElementById(liveId);
-    if (el) el.textContent = data.listeners;
-  } catch (err) {
-    console.error("Listener konnten nicht geladen werden:", err);
-  }
-}
-
-async function initListeners() {
-  await loadLautFMSDK();
-
-  const stations = [
-    { name: "rhywaelle", id: "rhywaelle-live" },
-    { name: "winterlordfm", id: "winterlord-live" },
-    { name: "rhyrockradio", id: "rhyrock-live" }
-  ];
-
-  stations.forEach(s => updateListeners(s.name, s.id));
-
-  setInterval(() => {
-    stations.forEach(s => updateListeners(s.name, s.id));
-  }, 30000);
-}
-
-/* -------------------------
-DOM CONTENT LOADED
-------------------------- */
-document.addEventListener("DOMContentLoaded", async () => {
-  await loadPartial("nav-slot", "partials/nav.html");
-  await loadPartial("footer-slot", "partials/footer.html");
-
-  initMenu();
-  initCookies();
-  initFilter();
-  initCountdown();
-  initListeners();
-});
