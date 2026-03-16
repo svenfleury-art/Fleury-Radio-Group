@@ -4,36 +4,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 – Seite nicht gefunden | Fleury Radio Group</title>
+
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="content.htm" type="image/png">
+  <link rel="icon" href="favicon.png" type="image/png">
+
 </head>
 
 <body class="error-page">
 
-  <!-- NAV wird automatisch geladen -->
+  <!-- NAV -->
   <div id="nav-slot"></div>
 
   <main class="content">
-    <section class="card highlight">
+
+    <section class="card highlight error-card">
+
+      <h1 class="error-code">404</h1>
+
       <h2>Seite nicht gefunden</h2>
+
       <p>
-        Die Seite, die du suchst, ist leider nicht erreichbar.<br>
-        Vielleicht wurde sie verschoben – oder sie war nie auf Sendung.
+        Ups… diese Seite sendet gerade nicht.  
+        Vielleicht wurde sie verschoben oder existiert nicht mehr.
       </p>
 
       <p>
-        ➜ Zurück zur Startseite<br>
-        ➜ Oder wähle einen unserer Radiosender
+        Aber keine Sorge – unsere Radios laufen weiterhin 🎧
       </p>
 
-      <a href="index.html"><strong>🏠 Zur Startseite</strong></a>
+      <div class="error-buttons">
+
+        <a class="btn-primary" href="index.html">
+          🏠 Zur Startseite
+        </a>
+
+        <a class="btn-secondary" href="rhywaelle.html">
+          🎶 Radio Rhywälle
+        </a>
+
+        <a class="btn-secondary" href="winterlord.html">
+          ❄️ Winterlord FM
+        </a>
+
+        <a class="btn-secondary" href="rhyrock.html">
+          🎸 RhyRock Radio
+        </a>
+
+      </div>
+
     </section>
+
   </main>
 
-  <!-- FOOTER + COOKIE wird automatisch geladen -->
+  <!-- FOOTER -->
   <div id="footer-slot"></div>
 
-  <!-- Nur noch 1 Script -->
   <script src="main.js"></script>
 
 </body>
