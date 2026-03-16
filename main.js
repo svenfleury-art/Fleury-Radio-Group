@@ -18,9 +18,10 @@ window.addEventListener("load", () => {
 });
 
 /* -------------------------
-PARTIALS & DOMContentLoaded
+PARTIALS & START
 ------------------------- */
 document.addEventListener("DOMContentLoaded", async () => {
+
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
@@ -29,36 +30,39 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFilter();
   initCountdown();
 
-  loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
-  loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
-  loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
+  updateAllListeners();
 
-  setInterval(() => {
-    loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
-    loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
-    loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
-  }, 30000);
+  setInterval(updateAllListeners, 30000);
+
 });
 
 /* -------------------------
 PARTIAL LOADER
 ------------------------- */
 async function loadPartial(slotId, url) {
+
   const slot = document.getElementById(slotId);
   if (!slot) return;
 
   try {
+
     const res = await fetch(url);
-    slot.innerHTML = await res.text();
+    const html = await res.text();
+    slot.innerHTML = html;
+
   } catch (err) {
+
     console.error("Partial Fehler:", err);
+
   }
+
 }
 
 /* -------------------------
 MENU
 ------------------------- */
 function initMenu() {
+
   const btn = document.getElementById("hamburgerBtn");
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
@@ -66,23 +70,41 @@ function initMenu() {
   if (!btn || !nav) return;
 
   function closeMenu() {
+
     nav.classList.remove("open");
     btn.textContent = "☰";
+
     if (overlay) overlay.classList.remove("active");
+
   }
 
   function openMenu() {
+
     nav.classList.add("open");
     btn.textContent = "✕";
+
     if (overlay) overlay.classList.add("active");
+
   }
 
   btn.addEventListener("click", (e) => {
+
     e.stopPropagation();
-    nav.classList.contains("open") ? closeMenu() : openMenu();
+
+    if (nav.classList.contains("open")) {
+
+      closeMenu();
+
+    } else {
+
+      openMenu();
+
+    }
+
   });
 
   if (overlay) overlay.addEventListener("click", closeMenu);
+
 }
 
 /* -------------------------
@@ -96,15 +118,19 @@ function initCookies() {
   if (!banner || !button) return;
 
   if (localStorage.getItem("frgCookiesAccepted")) {
+
     banner.style.display = "none";
     return;
+
   }
 
   banner.style.display = "flex";
 
   button.addEventListener("click", () => {
+
     localStorage.setItem("frgCookiesAccepted", "true");
     banner.style.display = "none";
+
   });
 
 }
@@ -131,9 +157,13 @@ function initFilter() {
       events.forEach(event => {
 
         if (filter === "all" || event.classList.contains(filter)) {
+
           event.style.display = "block";
+
         } else {
+
           event.style.display = "none";
+
         }
 
       });
@@ -161,12 +191,13 @@ const frgEvents = [
 ];
 
 function getNextEvent(){
-const now=new Date();
 
-return frgEvents
-.map(e=>({...e,dateObj:new Date(e.date)}))
-.filter(e=>e.dateObj>now)
-.sort((a,b)=>a.dateObj-b.dateObj)[0];
+  const now = new Date();
+
+  return frgEvents
+  .map(e => ({...e,dateObj:new Date(e.date)}))
+  .filter(e => e.dateObj > now)
+  .sort((a,b)=>a.dateObj-b.dateObj)[0];
 
 }
 
@@ -175,56 +206,65 @@ COUNTDOWN
 ------------------------- */
 function initCountdown(){
 
-const daysEl=document.getElementById("cdDays");
-if(!daysEl) return;
+  const daysEl=document.getElementById("cdDays");
+  const hoursEl=document.getElementById("cdHours");
+  const minutesEl=document.getElementById("cdMinutes");
+  const secondsEl=document.getElementById("cdSeconds");
 
-const hoursEl=document.getElementById("cdHours");
-const minutesEl=document.getElementById("cdMinutes");
-const secondsEl=document.getElementById("cdSeconds");
+  if(!daysEl) return;
 
-function updateCountdown(){
+  function updateCountdown(){
 
-const event=getNextEvent();
-if(!event) return;
+    const event=getNextEvent();
+    if(!event) return;
 
-const diff=event.dateObj-new Date();
+    const diff=event.dateObj-new Date();
 
-const days=Math.floor(diff/(1000*60*60*24));
-const hours=Math.floor((diff/(1000*60*60))%24);
-const minutes=Math.floor((diff/(1000*60))%60);
-const seconds=Math.floor((diff/1000)%60);
+    const days=Math.floor(diff/(1000*60*60*24));
+    const hours=Math.floor((diff/(1000*60*60))%24);
+    const minutes=Math.floor((diff/(1000*60))%60);
+    const seconds=Math.floor((diff/1000)%60);
 
-daysEl.textContent=days;
-hoursEl.textContent=hours;
-minutesEl.textContent=minutes;
-secondsEl.textContent=seconds;
+    daysEl.textContent=days;
+    hoursEl.textContent=hours;
+    minutesEl.textContent=minutes;
+    secondsEl.textContent=seconds;
 
-}
+  }
 
-updateCountdown();
-setInterval(updateCountdown,1000);
+  updateCountdown();
+  setInterval(updateCountdown,1000);
 
 }
 
 /* -------------------------
-LISTENER ZAHLEN (PROXY)
+LISTENER ZAHLEN
 ------------------------- */
-async function loadListeners(station, liveId, todayId) {
 
-  try {
+function updateAllListeners(){
 
-    const res = await fetch(`http://localhost:3000/listeners/${station}`);
+  loadListeners("rhywaelle","rhywaelle-live","rhywaelle-today");
+  loadListeners("winterlordfm","winterlord-live","winterlord-today");
+  loadListeners("rhyrockradio","rhyrock-live","rhyrock-today");
+
+}
+
+async function loadListeners(station, liveId, todayId){
+
+  try{
+
+    const res = await fetch(`https://api.laut.fm/station/${station}`);
     const data = await res.json();
 
     const liveEl = document.getElementById(liveId);
     const todayEl = document.getElementById(todayId);
 
-    if (liveEl) liveEl.textContent = data.listener_count ?? "0";
-    if (todayEl) todayEl.textContent = data.listener_peak ?? "0";
+    if(liveEl) liveEl.textContent = data.listener_count ?? "0";
+    if(todayEl) todayEl.textContent = data.listener_peak ?? "0";
 
-  } catch (err) {
+  }catch(err){
 
-    console.error("Listener konnten nicht geladen werden:", err);
+    console.error("Listener Fehler:",err);
 
   }
 
