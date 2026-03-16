@@ -1,56 +1,28 @@
 /* -------------------------
 PAGE LOADER
 ------------------------- */
-
 function initLoader() {
-
   const loader = document.createElement("div");
   loader.id = "loader";
   loader.innerHTML = '<div class="radio">📻</div>';
-
   document.body.prepend(loader);
-
 }
 
 initLoader();
 
 window.addEventListener("load", () => {
-
   const loader = document.getElementById("loader");
   if (!loader) return;
-
   loader.style.opacity = "0";
-
-  setTimeout(() => {
-    loader.remove();
-  }, 400);
-
-});
-
-document.addEventListener("DOMContentLoaded", async () => {
-
-  // -------------------------
-  // Partials laden
-  // -------------------------
-  await loadPartial("nav-slot", "partials/nav.html");
-  await loadPartial("footer-slot", "partials/footer.html");
-
-  // Initialisierungen
-  initMenu();
-  initCookies();
-  initFilter();
-  initCountdown();
-
+  setTimeout(() => loader.remove(), 400);
 });
 
 /* -------------------------
 PARTIAL LOADER
 ------------------------- */
 async function loadPartial(slotId, url) {
-
   const slot = document.getElementById(slotId);
   if (!slot) return;
-
   try {
     const res = await fetch(url);
     if (!res.ok) {
@@ -61,21 +33,18 @@ async function loadPartial(slotId, url) {
   } catch (err) {
     console.error("Fetch Fehler:", err);
   }
-
 }
 
 /* -------------------------
 MENU SYSTEM & DROPDOWNS
 ------------------------- */
 function initMenu() {
-
   const btn = document.getElementById("hamburgerBtn");
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
 
   if (!btn || !nav) return;
 
-  // Menü schließen
   function closeMenu() {
     nav.classList.remove("open");
     btn.classList.remove("active");
@@ -83,7 +52,6 @@ function initMenu() {
     if (overlay) overlay.classList.remove("active");
   }
 
-  // Menü öffnen
   function openMenu() {
     nav.classList.add("open");
     btn.classList.add("active");
@@ -93,111 +61,72 @@ function initMenu() {
 
   closeMenu();
 
-  // Hamburger Klick
   btn.addEventListener("click", (e) => {
     e.stopPropagation();
     nav.classList.contains("open") ? closeMenu() : openMenu();
   });
 
-  // Overlay Klick
   if (overlay) overlay.addEventListener("click", closeMenu);
 
-  // Klick außerhalb schließt das Menü
   document.addEventListener("click", (e) => {
-    if (!nav.contains(e.target) && !btn.contains(e.target)) {
-      closeMenu();
-    }
+    if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu();
   });
 
-  // -------------------------
-  // Dropdown Navigation (Event Delegation)
-  // -------------------------
   nav.addEventListener("click", (e) => {
     const toggleBtn = e.target.closest(".dropdown-toggle");
     if (!toggleBtn) return;
-
     e.preventDefault();
     e.stopPropagation();
-
     const dropdown = toggleBtn.closest(".nav-dropdown");
     if (!dropdown) return;
-
-    // andere Dropdowns schließen
     nav.querySelectorAll(".nav-dropdown").forEach(d => {
       if (d !== dropdown) d.classList.remove("open");
     });
-
-    // aktuelles öffnen/schließen
     dropdown.classList.toggle("open");
   });
-
 }
-
 
 /* -------------------------
 COOKIE BANNER – FRG STYLE MIT SLIDE-OUT
 ------------------------- */
 function initCookies() {
-
   const banner = document.getElementById("cookie-banner");
   const button = document.getElementById("cookie-accept");
 
   if (!banner || !button) return;
 
-  // Prüfen, ob der Nutzer schon zugestimmt hat
   if (localStorage.getItem("frgCookiesAccepted")) {
     banner.style.display = "none";
     return;
   }
 
-  // Banner anzeigen
   banner.style.display = "flex";
 
-  // Klick auf "Akzeptieren"
   button.addEventListener("click", () => {
     localStorage.setItem("frgCookiesAccepted", "true");
-    // Slide-Out Animation starten
     banner.classList.add("hide");
-    // Nach Animation ausblenden
-    setTimeout(() => {
-      banner.style.display = "none";
-    }, 600); // Dauer = CSS transition
+    setTimeout(() => { banner.style.display = "none"; }, 600);
   });
-
 }
-
 
 /* -------------------------
 EVENT FILTER
 ------------------------- */
 function initFilter() {
-
   const buttons = document.querySelectorAll(".filter-btn");
   const events = document.querySelectorAll(".event-card");
-
   if (!buttons.length) return;
 
   buttons.forEach(button => {
-
     button.addEventListener("click", () => {
-
       const filter = button.dataset.filter;
-
       buttons.forEach(b => b.classList.remove("active"));
       button.classList.add("active");
-
       events.forEach(event => {
-        if (filter === "all" || event.classList.contains(filter)) {
-          event.style.display = "block";
-        } else {
-          event.style.display = "none";
-        }
+        event.style.display = (filter === "all" || event.classList.contains(filter)) ? "block" : "none";
       });
-
     });
-
   });
-
 }
 
 /* -------------------------
@@ -220,78 +149,53 @@ const frgEvents = [
 NEXT EVENT
 ------------------------- */
 function getNextEvent() {
-
   const now = new Date();
-
   return frgEvents
     .map(e => ({ ...e, dateObj: new Date(e.date) }))
     .filter(e => e.dateObj > now)
     .sort((a,b) => a.dateObj - b.dateObj)[0];
-
 }
 
 /* -------------------------
 COUNTDOWN
 ------------------------- */
 function initCountdown() {
-
-  const title = document.getElementById("nextEventTitle");
-  const date  = document.getElementById("nextEventDate");
-
   const daysEl = document.getElementById("cdDays");
   const hoursEl = document.getElementById("cdHours");
   const minutesEl = document.getElementById("cdMinutes");
   const secondsEl = document.getElementById("cdSeconds");
-
   const container = document.getElementById("countdown-container");
-
   if (!daysEl) return;
 
   const lastValues = { days:null, hours:null, minutes:null, seconds:null };
 
   function flipUpdate(el, value, key) {
-
     if (lastValues[key] !== value) {
-
       const front = el.querySelector(".front");
       const flipTop = el.querySelector(".flip-top");
       const flipBottom = el.querySelector(".flip-bottom");
-
       flipTop.textContent = front.textContent;
       flipBottom.textContent = value;
-
       el.querySelector(".flip-card").classList.add("is-flipping");
-
       setTimeout(() => {
-
         front.textContent = value;
         el.querySelector(".flip-card").classList.remove("is-flipping");
         lastValues[key] = value;
-
       }, 500);
-
     }
-
   }
 
-  function updateCountdown(){
-
+  function updateCountdown() {
     const event = getNextEvent();
     if(!event) return;
-
     const now = new Date();
     const diff = event.dateObj - now;
-
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
-
-    if(document.body.classList.contains("home")){
-      if(diff > sevenDays){
-        container.style.display = "none";
-        return;
-      }
+    if(document.body.classList.contains("home") && diff > sevenDays){
+      container.style.display = "none";
+      return;
     }
-    
-   container.style.display = "flex";
+    container.style.display = "flex";
 
     const days = Math.floor(diff / (1000*60*60*24));
     const hours = Math.floor((diff/(1000*60*60)) % 24);
@@ -302,37 +206,62 @@ function initCountdown() {
     flipUpdate(hoursEl, hours, "hours");
     flipUpdate(minutesEl, minutes, "minutes");
     flipUpdate(secondsEl, seconds, "seconds");
-
   }
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
-
 }
-async function loadListeners(station, liveId, todayId) {
+
+/* -------------------------
+LAUT.FM SDK + LISTENER COUNTER
+------------------------- */
+function loadLautFMSDK() {
+  return new Promise((resolve, reject) => {
+    if (window.lautFM) return resolve();
+    const script = document.createElement("script");
+    script.src = "https://cdn.laut.fm/sdk/latest/lautfm.min.js";
+    script.onload = resolve;
+    script.onerror = reject;
+    document.body.appendChild(script);
+  });
+}
+
+async function updateListeners(station, liveId) {
   try {
-    const res = await fetch(`https://api.laut.fm/station/${station}/listeners`);
-    const data = await res.json();
-
-    const liveEl = document.getElementById(liveId);
-    const todayEl = document.getElementById(todayId);
-
-    if (liveEl) liveEl.textContent = data.listeners;
-    if (todayEl) todayEl.textContent = data.listener_peak;
-
+    const data = await lautFM.getListeners(station);
+    const el = document.getElementById(liveId);
+    if (el) el.textContent = data.listeners;
   } catch (err) {
     console.error("Listener konnten nicht geladen werden:", err);
   }
 }
 
-// Direkt beim Laden einmal
-loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
-loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
-loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
+async function initListeners() {
+  await loadLautFMSDK();
 
-// Alle 30 Sekunden aktualisieren
-setInterval(() => {
-  loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
-  loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
-  loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
-}, 30000);
+  const stations = [
+    { name: "rhywaelle", id: "rhywaelle-live" },
+    { name: "winterlordfm", id: "winterlord-live" },
+    { name: "rhyrockradio", id: "rhyrock-live" }
+  ];
+
+  stations.forEach(s => updateListeners(s.name, s.id));
+
+  setInterval(() => {
+    stations.forEach(s => updateListeners(s.name, s.id));
+  }, 30000);
+}
+
+/* -------------------------
+DOM CONTENT LOADED
+------------------------- */
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadPartial("nav-slot", "partials/nav.html");
+  await loadPartial("footer-slot", "partials/footer.html");
+
+  initMenu();
+  initCookies();
+  initFilter();
+  initCountdown();
+  initListeners();
+});
