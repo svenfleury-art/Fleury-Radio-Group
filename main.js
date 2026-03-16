@@ -240,27 +240,20 @@ LISTENER ZAHLEN (LAUT.FM API)
 ------------------------- */
 async function loadListeners(station, liveId, todayId) {
   try {
-    const res = await fetch(`https://api.laut.fm/station/${station}/listeners`);
-    const data = await res.json();
+    const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.laut.fm/station/${station}/listeners`)}`;
+    const res = await fetch(url);
+    const result = await res.json();
+
+    // result.contents ist ein String, daher parsen
+    const data = JSON.parse(result.contents);
 
     const liveEl = document.getElementById(liveId);
     const todayEl = document.getElementById(todayId);
 
-    if (liveEl) {
-      liveEl.textContent = data.listeners !== undefined ? data.listeners : "0";
-    }
-
-    if (todayEl) {
-      todayEl.textContent = data.listener_peak !== undefined ? data.listener_peak : "0";
-    }
+    if (liveEl) liveEl.textContent = data.listeners ?? "0";
+    if (todayEl) todayEl.textContent = data.listener_peak ?? "0";
 
   } catch (err) {
     console.error("Listener konnten nicht geladen werden:", err);
-
-    const liveEl = document.getElementById(liveId);
-    const todayEl = document.getElementById(todayId);
-
-    if (liveEl) liveEl.textContent = "0";
-    if (todayEl) todayEl.textContent = "0";
   }
 }
