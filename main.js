@@ -290,33 +290,8 @@ function initCountdown() {
         return;
       }
     }
-
-  /* -------------------------
-LISTENER COUNTER
-------------------------- */
-
-async function loadListeners(station, liveId, todayId) {
-
-  try {
-
-    const res = await fetch(`https://api.laut.fm/station/${station}`);
-    const data = await res.json();
-
-    const liveEl = document.getElementById(liveId);
-    const todayEl = document.getElementById(todayId);
-
-    if(liveEl) liveEl.textContent = data.listeners;
-    if(todayEl) todayEl.textContent = data.listener_peak;
-
-  } catch (err) {
-
-    console.error("Listener konnten nicht geladen werden:", err);
-
-  }
-
-}
     
-    container.style.display = "flex";
+   container.style.display = "flex";
 
     const days = Math.floor(diff / (1000*60*60*24));
     const hours = Math.floor((diff/(1000*60*60)) % 24);
@@ -334,14 +309,33 @@ async function loadListeners(station, liveId, todayId) {
   setInterval(updateCountdown, 1000);
 
 }
+/* -------------------------
+LISTENER COUNTER
+------------------------- */
+async function loadListeners(station, liveId, todayId) {
+  try {
+    const res = await fetch(`https://api.laut.fm/station/${station}`);
+    const data = await res.json();
 
+    const liveEl = document.getElementById(liveId);
+    const todayEl = document.getElementById(todayId);
 
+    if (liveEl) liveEl.textContent = data.listeners;
+    if (todayEl) todayEl.textContent = data.listener_peak;
 
+  } catch (err) {
+    console.error("Listener konnten nicht geladen werden:", err);
+  }
+}
 
-setInterval(() => {
-
+// Direkt beim Laden einmal ausführen
 loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
 loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
 loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
 
+// Alle 30 Sekunden aktualisieren
+setInterval(() => {
+  loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
+  loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
+  loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
 }, 30000);
