@@ -1,3 +1,32 @@
+/* -------------------------
+PAGE LOADER
+------------------------- */
+
+function initLoader() {
+
+  const loader = document.createElement("div");
+  loader.id = "loader";
+  loader.innerHTML = '<div class="radio">📻</div>';
+
+  document.body.prepend(loader);
+
+}
+
+initLoader();
+
+window.addEventListener("load", () => {
+
+  const loader = document.getElementById("loader");
+  if (!loader) return;
+
+  loader.style.opacity = "0";
+
+  setTimeout(() => {
+    loader.remove();
+  }, 400);
+
+});
+
 document.addEventListener("DOMContentLoaded", async () => {
 
   // -------------------------
