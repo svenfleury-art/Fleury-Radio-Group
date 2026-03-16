@@ -7,25 +7,19 @@ function initLoader() {
   loader.innerHTML = '<div class="radio">📻</div>';
   document.body.prepend(loader);
 }
-
 initLoader();
 
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
   if (!loader) return;
-
   loader.style.opacity = "0";
-
-  setTimeout(() => {
-    loader.remove();
-  }, 400);
+  setTimeout(() => loader.remove(), 400);
 });
 
-/* -------------------------
-DOM CONTENT LOADED
-------------------------- */
 document.addEventListener("DOMContentLoaded", async () => {
+  // -------------------------
   // Partials laden
+  // -------------------------
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
@@ -34,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initCookies();
   initFilter();
   initCountdown();
-  initListeners(); // Laut.fm Listener
+  initListeners();
 });
 
 /* -------------------------
@@ -43,13 +37,9 @@ PARTIAL LOADER
 async function loadPartial(slotId, url) {
   const slot = document.getElementById(slotId);
   if (!slot) return;
-
   try {
     const res = await fetch(url);
-    if (!res.ok) {
-      console.error("Partial konnte nicht geladen werden:", url);
-      return;
-    }
+    if (!res.ok) return console.error("Partial konnte nicht geladen werden:", url);
     slot.innerHTML = await res.text();
   } catch (err) {
     console.error("Fetch Fehler:", err);
@@ -63,7 +53,6 @@ function initMenu() {
   const btn = document.getElementById("hamburgerBtn");
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
-
   if (!btn || !nav) return;
 
   function closeMenu() {
@@ -90,15 +79,12 @@ function initMenu() {
   if (overlay) overlay.addEventListener("click", closeMenu);
 
   document.addEventListener("click", (e) => {
-    if (!nav.contains(e.target) && !btn.contains(e.target)) {
-      closeMenu();
-    }
+    if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu();
   });
 
   nav.addEventListener("click", (e) => {
     const toggleBtn = e.target.closest(".dropdown-toggle");
     if (!toggleBtn) return;
-
     e.preventDefault();
     e.stopPropagation();
 
@@ -114,7 +100,7 @@ function initMenu() {
 }
 
 /* -------------------------
-COOKIE BANNER
+COOKIE BANNER – FRG STYLE MIT SLIDE-OUT
 ------------------------- */
 function initCookies() {
   const banner = document.getElementById("cookie-banner");
@@ -131,9 +117,7 @@ function initCookies() {
   button.addEventListener("click", () => {
     localStorage.setItem("frgCookiesAccepted", "true");
     banner.classList.add("hide");
-    setTimeout(() => {
-      banner.style.display = "none";
-    }, 600);
+    setTimeout(() => banner.style.display = "none", 600);
   });
 }
 
@@ -148,16 +132,11 @@ function initFilter() {
   buttons.forEach(button => {
     button.addEventListener("click", () => {
       const filter = button.dataset.filter;
-
       buttons.forEach(b => b.classList.remove("active"));
       button.classList.add("active");
 
       events.forEach(event => {
-        if (filter === "all" || event.classList.contains(filter)) {
-          event.style.display = "block";
-        } else {
-          event.style.display = "none";
-        }
+        event.style.display = (filter === "all" || event.classList.contains(filter)) ? "block" : "none";
       });
     });
   });
@@ -179,6 +158,9 @@ const frgEvents = [
   { title:"FRG Neujahres Special", date:"2026-12-31T13:00:00" }
 ];
 
+/* -------------------------
+NEXT EVENT
+------------------------- */
 function getNextEvent() {
   const now = new Date();
   return frgEvents
@@ -196,8 +178,8 @@ function initCountdown() {
   const minutesEl = document.getElementById("cdMinutes");
   const secondsEl = document.getElementById("cdSeconds");
   const container = document.getElementById("countdown-container");
-
   if (!daysEl) return;
+
   const lastValues = { days:null, hours:null, minutes:null, seconds:null };
 
   function flipUpdate(el, value, key) {
@@ -205,12 +187,9 @@ function initCountdown() {
       const front = el.querySelector(".front");
       const flipTop = el.querySelector(".flip-top");
       const flipBottom = el.querySelector(".flip-bottom");
-
       flipTop.textContent = front.textContent;
       flipBottom.textContent = value;
-
       el.querySelector(".flip-card").classList.add("is-flipping");
-
       setTimeout(() => {
         front.textContent = value;
         el.querySelector(".flip-card").classList.remove("is-flipping");
@@ -222,12 +201,9 @@ function initCountdown() {
   function updateCountdown(){
     const event = getNextEvent();
     if(!event) return;
-
     const now = new Date();
     const diff = event.dateObj - now;
-
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
-
     if(document.body.classList.contains("home") && diff > sevenDays){
       container.style.display = "none";
       return;
@@ -250,7 +226,7 @@ function initCountdown() {
 }
 
 /* -------------------------
-LAUT.FM LISTENERS
+LISTENER COUNTER MIT SDK
 ------------------------- */
 function initListeners() {
   const script = document.createElement("script");
