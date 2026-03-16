@@ -234,7 +234,6 @@ function initCountdown() {
   setInterval(updateCountdown, 1000);
 }
 
-
 /* -------------------------
 LISTENER ZAHLEN (LAUT.FM via AllOrigins)
 ------------------------- */
