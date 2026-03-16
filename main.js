@@ -309,12 +309,9 @@ function initCountdown() {
   setInterval(updateCountdown, 1000);
 
 }
-/* -------------------------
-LISTENER COUNTER
-------------------------- */
 async function loadListeners(station, liveId, todayId) {
   try {
-    const res = await fetch(`https://api.laut.fm/station/${station}`);
+    const res = await fetch(`https://api.laut.fm/station/${station}/listeners`);
     const data = await res.json();
 
     const liveEl = document.getElementById(liveId);
@@ -328,7 +325,7 @@ async function loadListeners(station, liveId, todayId) {
   }
 }
 
-// Direkt beim Laden einmal ausführen
+// Direkt beim Laden einmal
 loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
 loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
 loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
