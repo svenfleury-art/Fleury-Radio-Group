@@ -104,8 +104,9 @@ function initMenu() {
 
 }
 
+
 /* -------------------------
-COOKIE BANNER
+COOKIE BANNER – FRG STYLE MIT SLIDE-OUT
 ------------------------- */
 function initCookies() {
 
@@ -114,19 +115,28 @@ function initCookies() {
 
   if (!banner || !button) return;
 
+  // Prüfen, ob der Nutzer schon zugestimmt hat
   if (localStorage.getItem("frgCookiesAccepted")) {
     banner.style.display = "none";
     return;
   }
 
+  // Banner anzeigen
   banner.style.display = "flex";
 
+  // Klick auf "Akzeptieren"
   button.addEventListener("click", () => {
     localStorage.setItem("frgCookiesAccepted", "true");
-    banner.style.display = "none";
+    // Slide-Out Animation starten
+    banner.classList.add("hide");
+    // Nach Animation ausblenden
+    setTimeout(() => {
+      banner.style.display = "none";
+    }, 600); // Dauer = CSS transition
   });
 
 }
+
 
 /* -------------------------
 EVENT FILTER
