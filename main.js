@@ -291,6 +291,31 @@ function initCountdown() {
       }
     }
 
+  /* -------------------------
+LISTENER COUNTER
+------------------------- */
+
+async function loadListeners(station, liveId, todayId) {
+
+  try {
+
+    const res = await fetch(`https://api.laut.fm/station/${station}`);
+    const data = await res.json();
+
+    const liveEl = document.getElementById(liveId);
+    const todayEl = document.getElementById(todayId);
+
+    if(liveEl) liveEl.textContent = data.listeners;
+    if(todayEl) todayEl.textContent = data.listener_peak;
+
+  } catch (err) {
+
+    console.error("Listener konnten nicht geladen werden:", err);
+
+  }
+
+}
+    
     container.style.display = "flex";
 
     const days = Math.floor(diff / (1000*60*60*24));
@@ -311,24 +336,7 @@ function initCountdown() {
 }
 
 
-async function loadListeners(station, liveId, todayId) {
 
-  try {
-
-    const response = await fetch("https://api.laut.fm/station/" + station);
-    const data = await response.json();
-
-    document.getElementById(liveId).textContent = data.listeners;
-    document.getElementById(todayId).textContent = data.listener_peak;
-
-  } catch {
-
-    document.getElementById(liveId).textContent = "-";
-    document.getElementById(todayId).textContent = "-";
-
-  }
-
-}
 
 setInterval(() => {
 
