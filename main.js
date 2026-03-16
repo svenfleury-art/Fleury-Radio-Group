@@ -280,3 +280,31 @@ function initCountdown() {
   setInterval(updateCountdown, 1000);
 
 }
+
+
+async function loadListeners(station, liveId, todayId) {
+
+  try {
+
+    const response = await fetch("https://api.laut.fm/station/" + station);
+    const data = await response.json();
+
+    document.getElementById(liveId).textContent = data.listeners;
+    document.getElementById(todayId).textContent = data.listener_peak;
+
+  } catch {
+
+    document.getElementById(liveId).textContent = "-";
+    document.getElementById(todayId).textContent = "-";
+
+  }
+
+}
+
+setInterval(() => {
+
+loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
+loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
+loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
+
+}, 30000);
