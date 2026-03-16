@@ -236,24 +236,38 @@ function initCountdown() {
 
 
 /* -------------------------
-LISTENER ZAHLEN (LAUT.FM API)
+LISTENER ZAHLEN (LAUT.FM via AllOrigins)
 ------------------------- */
 async function loadListeners(station, liveId, todayId) {
   try {
+    // AllOrigins URL
     const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.laut.fm/station/${station}/listeners`)}`;
     const res = await fetch(url);
+    if (!res.ok) throw new Error("API konnte nicht geladen werden");
+
     const result = await res.json();
 
-    // result.contents ist ein String, daher parsen
-    const data = JSON.parse(result.contents);
+    // result.contents ist ein String → parse JSON
+    let data;
+    try {
+      data = JSON.parse(result.contents);
+    } catch (err) {
+      console.error("JSON konnte nicht geparst werden:", err);
+      data = {};
+    }
 
     const liveEl = document.getElementById(liveId);
     const todayEl = document.getElementById(todayId);
 
-    if (liveEl) liveEl.textContent = data.listeners ?? "0";
-    if (todayEl) todayEl.textContent = data.listener_peak ?? "0";
+    // Fallback auf 0, falls nichts da ist
+    if (liveEl) liveEl.textContent = (data.listeners != null) ? data.listeners : "0";
+    if (todayEl) todayEl.textContent = (data.listener_peak != null) ? data.listener_peak : "0";
 
   } catch (err) {
     console.error("Listener konnten nicht geladen werden:", err);
+    const liveEl = document.getElementById(liveId);
+    const todayEl = document.getElementById(todayId);
+    if (liveEl) liveEl.textContent = "0";
+    if (todayEl) todayEl.textContent = "0";
   }
 }
