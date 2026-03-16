@@ -10,19 +10,6 @@ function initLoader() {
 
 initLoader();
 
-window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
-  if (!loader) return;
-  loader.style.opacity = "0";
-  setTimeout(() => loader.remove(), 400);
-});
-
-/* -------------------------
-PARTIALS & DOMContentLoaded
-------------------------- */
-document.addEventListener("DOMContentLoaded", async () => {
-  await loadPartial("nav-slot", "partials/nav.html");
-  await loadPartial("footer-slot", "partials/footer.html");
 
   // Initialisierungen
   initMenu();
@@ -30,18 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFilter();
   initCountdown();
 
-  // Listener über Proxy laden
-  loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
-  loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
-  loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
-
-  setInterval(() => {
-    loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
-    loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
-    loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
-  }, 30000);
-});
-
+ 
 /* -------------------------
 PARTIAL LOADER
 ------------------------- */
@@ -234,28 +210,7 @@ function initCountdown() {
   setInterval(updateCountdown, 1000);
 }
 
-/* -------------------------
-LISTENER ZAHLEN (LAUT.FM via AllOrigins)
-------------------------- */
-async function loadListeners(station, liveId, todayId) {
-  try {
-    const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.laut.fm/station/${station}/listeners`)}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("API konnte nicht geladen werden");
 
-    const data = await res.json(); // direkt JSON, kein result.contents nötig
-
-    const liveEl = document.getElementById(liveId);
-    const todayEl = document.getElementById(todayId);
-
-    if (liveEl) liveEl.textContent = (data.listeners != null) ? data.listeners : "0";
-    if (todayEl) todayEl.textContent = (data.listener_peak != null) ? data.listener_peak : "0";
-
-  } catch (err) {
-    console.error("Listener konnten nicht geladen werden:", err);
-    const liveEl = document.getElementById(liveId);
-    const todayEl = document.getElementById(todayId);
-    if (liveEl) liveEl.textContent = "0";
     if (todayEl) todayEl.textContent = "0";
   }
 }
