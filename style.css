@@ -1239,29 +1239,4 @@ color:#aaa;
 }
 
 
-.listener-box{
-  display:flex;
-  justify-content:space-between;
-  gap:30px;
-  background:#0b1c3d;
-  padding:20px;
-  border-radius:10px;
-  color:white;
-}
 
-.station{
-  flex:1;
-  text-align:center;
-}
-
-.station h3{
-  margin-bottom:10px;
-}
-
-@media (max-width:700px){
-
-.listener-box{
-flex-direction:column;
-}
-
-}
