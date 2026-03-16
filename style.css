@@ -258,20 +258,43 @@ header,.site-header{
   padding:22px 16px;
 }
 
-/* COOKIE */
-#cookie-banner{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  background: rgba(11,27,74,.75);
-  backdrop-filter: blur(12px);
-  border-top:1px solid rgba(250,204,21,.45);
-  padding:14px;
-  display:none;
-  justify-content:center;
-  gap:12px;
-  z-index:2000;
+#cookie-banner.frg-banner {
+  display: none; /* wird per JS eingeblendet */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: royalblue;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 9999;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  max-width: 90%;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+#cookie-banner.frg-banner a {
+  color: gold;
+  text-decoration: underline;
+}
+
+#cookie-banner.frg-banner .frg-btn {
+  background: gold;
+  color: royalblue;
+  border: none;
+  padding: 8px 18px;
+  margin-left: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
 }
 
 /* RESPONSIVE */
