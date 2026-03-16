@@ -13,15 +13,18 @@ initLoader();
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
   if (!loader) return;
+
   loader.style.opacity = "0";
-  setTimeout(() => loader.remove(), 400);
+
+  setTimeout(() => {
+    loader.remove();
+  }, 400);
 });
 
 /* -------------------------
-PARTIALS & DOM CONTENT
+DOM CONTENT LOADED
 ------------------------- */
 document.addEventListener("DOMContentLoaded", async () => {
-
   // Partials laden
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
@@ -31,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initCookies();
   initFilter();
   initCountdown();
-  initListeners(); // Laut.fm Hörerzahlen
+  initListeners(); // Laut.fm Listener
 });
 
 /* -------------------------
@@ -40,6 +43,7 @@ PARTIAL LOADER
 async function loadPartial(slotId, url) {
   const slot = document.getElementById(slotId);
   if (!slot) return;
+
   try {
     const res = await fetch(url);
     if (!res.ok) {
@@ -59,6 +63,7 @@ function initMenu() {
   const btn = document.getElementById("hamburgerBtn");
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
+
   if (!btn || !nav) return;
 
   function closeMenu() {
@@ -77,27 +82,33 @@ function initMenu() {
 
   closeMenu();
 
-  btn.addEventListener("click", e => {
+  btn.addEventListener("click", (e) => {
     e.stopPropagation();
     nav.classList.contains("open") ? closeMenu() : openMenu();
   });
 
   if (overlay) overlay.addEventListener("click", closeMenu);
 
-  document.addEventListener("click", e => {
-    if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu();
+  document.addEventListener("click", (e) => {
+    if (!nav.contains(e.target) && !btn.contains(e.target)) {
+      closeMenu();
+    }
   });
 
-  nav.addEventListener("click", e => {
+  nav.addEventListener("click", (e) => {
     const toggleBtn = e.target.closest(".dropdown-toggle");
     if (!toggleBtn) return;
+
     e.preventDefault();
     e.stopPropagation();
+
     const dropdown = toggleBtn.closest(".nav-dropdown");
     if (!dropdown) return;
+
     nav.querySelectorAll(".nav-dropdown").forEach(d => {
       if (d !== dropdown) d.classList.remove("open");
     });
+
     dropdown.classList.toggle("open");
   });
 }
@@ -120,7 +131,9 @@ function initCookies() {
   button.addEventListener("click", () => {
     localStorage.setItem("frgCookiesAccepted", "true");
     banner.classList.add("hide");
-    setTimeout(() => banner.style.display = "none", 600);
+    setTimeout(() => {
+      banner.style.display = "none";
+    }, 600);
   });
 }
 
@@ -135,10 +148,16 @@ function initFilter() {
   buttons.forEach(button => {
     button.addEventListener("click", () => {
       const filter = button.dataset.filter;
+
       buttons.forEach(b => b.classList.remove("active"));
       button.classList.add("active");
+
       events.forEach(event => {
-        event.style.display = (filter === "all" || event.classList.contains(filter)) ? "block" : "none";
+        if (filter === "all" || event.classList.contains(filter)) {
+          event.style.display = "block";
+        } else {
+          event.style.display = "none";
+        }
       });
     });
   });
@@ -177,8 +196,8 @@ function initCountdown() {
   const minutesEl = document.getElementById("cdMinutes");
   const secondsEl = document.getElementById("cdSeconds");
   const container = document.getElementById("countdown-container");
-  if (!daysEl) return;
 
+  if (!daysEl) return;
   const lastValues = { days:null, hours:null, minutes:null, seconds:null };
 
   function flipUpdate(el, value, key) {
@@ -186,9 +205,12 @@ function initCountdown() {
       const front = el.querySelector(".front");
       const flipTop = el.querySelector(".flip-top");
       const flipBottom = el.querySelector(".flip-bottom");
+
       flipTop.textContent = front.textContent;
       flipBottom.textContent = value;
+
       el.querySelector(".flip-card").classList.add("is-flipping");
+
       setTimeout(() => {
         front.textContent = value;
         el.querySelector(".flip-card").classList.remove("is-flipping");
@@ -197,13 +219,16 @@ function initCountdown() {
     }
   }
 
-  function updateCountdown() {
+  function updateCountdown(){
     const event = getNextEvent();
-    if (!event) return;
+    if(!event) return;
+
     const now = new Date();
     const diff = event.dateObj - now;
+
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
-    if (document.body.classList.contains("home") && diff > sevenDays) {
+
+    if(document.body.classList.contains("home") && diff > sevenDays){
       container.style.display = "none";
       return;
     }
@@ -225,17 +250,14 @@ function initCountdown() {
 }
 
 /* -------------------------
-LISTENER COUNTER – LAUT.FM JS-SDK
+LAUT.FM LISTENERS
 ------------------------- */
 function initListeners() {
-
-  // SDK einbinden
   const script = document.createElement("script");
   script.src = "https://cdn.laut.fm/sdk/latest/lautfm.min.js";
   document.body.appendChild(script);
 
   script.onload = () => {
-
     const stations = [
       { name: "rhywaelle", liveId: "rhywaelle-live", todayId: "rhywaelle-today" },
       { name: "winterlordfm", liveId: "winterlord-live", todayId: "winterlord-today" },
@@ -244,19 +266,26 @@ function initListeners() {
 
     async function updateListeners() {
       for (const s of stations) {
+        const liveEl = document.getElementById(s.liveId);
+        const todayEl = document.getElementById(s.todayId);
+        if (!liveEl || !todayEl) continue;
+
+        liveEl.textContent = "...";
+        todayEl.textContent = "...";
+
         try {
           const data = await lautFM.getListeners(s.name);
-          document.getElementById(s.liveId).textContent = data.listeners;
-          document.getElementById(s.todayId).textContent = data.listener_peak;
+          liveEl.textContent = data.listeners ?? "0";
+          todayEl.textContent = data.listener_peak ?? "0";
         } catch (err) {
           console.error("Listener konnten nicht geladen werden:", err);
+          liveEl.textContent = "0";
+          todayEl.textContent = "0";
         }
       }
     }
 
     updateListeners();
     setInterval(updateListeners, 30000);
-
   };
-
 }
