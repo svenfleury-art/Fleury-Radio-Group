@@ -7,6 +7,7 @@ function initLoader() {
   loader.innerHTML = '<div class="radio">📻</div>';
   document.body.prepend(loader);
 }
+
 initLoader();
 
 window.addEventListener("load", () => {
@@ -16,10 +17,10 @@ window.addEventListener("load", () => {
   setTimeout(() => loader.remove(), 400);
 });
 
+/* -------------------------
+PARTIALS & DOMContentLoaded
+------------------------- */
 document.addEventListener("DOMContentLoaded", async () => {
-  // -------------------------
-  // Partials laden
-  // -------------------------
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
@@ -28,7 +29,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   initCookies();
   initFilter();
   initCountdown();
-  initListeners();
+
+  // Listener über Proxy laden
+  loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
+  loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
+  loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
+
+  setInterval(() => {
+    loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
+    loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
+    loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
+  }, 30000);
 });
 
 /* -------------------------
@@ -39,7 +50,10 @@ async function loadPartial(slotId, url) {
   if (!slot) return;
   try {
     const res = await fetch(url);
-    if (!res.ok) return console.error("Partial konnte nicht geladen werden:", url);
+    if (!res.ok) {
+      console.error("Partial konnte nicht geladen werden:", url);
+      return;
+    }
     slot.innerHTML = await res.text();
   } catch (err) {
     console.error("Fetch Fehler:", err);
@@ -87,20 +101,17 @@ function initMenu() {
     if (!toggleBtn) return;
     e.preventDefault();
     e.stopPropagation();
-
     const dropdown = toggleBtn.closest(".nav-dropdown");
     if (!dropdown) return;
-
     nav.querySelectorAll(".nav-dropdown").forEach(d => {
       if (d !== dropdown) d.classList.remove("open");
     });
-
     dropdown.classList.toggle("open");
   });
 }
 
 /* -------------------------
-COOKIE BANNER – FRG STYLE MIT SLIDE-OUT
+COOKIE BANNER
 ------------------------- */
 function initCookies() {
   const banner = document.getElementById("cookie-banner");
@@ -134,7 +145,6 @@ function initFilter() {
       const filter = button.dataset.filter;
       buttons.forEach(b => b.classList.remove("active"));
       button.classList.add("active");
-
       events.forEach(event => {
         event.style.display = (filter === "all" || event.classList.contains(filter)) ? "block" : "none";
       });
@@ -158,9 +168,6 @@ const frgEvents = [
   { title:"FRG Neujahres Special", date:"2026-12-31T13:00:00" }
 ];
 
-/* -------------------------
-NEXT EVENT
-------------------------- */
 function getNextEvent() {
   const now = new Date();
   return frgEvents
@@ -204,10 +211,12 @@ function initCountdown() {
     const now = new Date();
     const diff = event.dateObj - now;
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
     if(document.body.classList.contains("home") && diff > sevenDays){
       container.style.display = "none";
       return;
     }
+
     container.style.display = "flex";
 
     const days = Math.floor(diff / (1000*60*60*24));
@@ -226,42 +235,20 @@ function initCountdown() {
 }
 
 /* -------------------------
-LISTENER COUNTER MIT SDK
+LISTENER ZAHLEN (PROXY)
 ------------------------- */
-function initListeners() {
-  const script = document.createElement("script");
-  script.src = "https://cdn.laut.fm/sdk/latest/lautfm.min.js";
-  document.body.appendChild(script);
+async function loadListeners(station, liveId, todayId) {
+  try {
+    const res = await fetch(`http://localhost:3000/listeners/${station}`);
+    const data = await res.json();
 
-  script.onload = () => {
-    const stations = [
-      { name: "rhywaelle", liveId: "rhywaelle-live", todayId: "rhywaelle-today" },
-      { name: "winterlordfm", liveId: "winterlord-live", todayId: "winterlord-today" },
-      { name: "rhyrockradio", liveId: "rhyrock-live", todayId: "rhyrock-today" }
-    ];
+    const liveEl = document.getElementById(liveId);
+    const todayEl = document.getElementById(todayId);
 
-    async function updateListeners() {
-      for (const s of stations) {
-        const liveEl = document.getElementById(s.liveId);
-        const todayEl = document.getElementById(s.todayId);
-        if (!liveEl || !todayEl) continue;
+    if (liveEl) liveEl.textContent = data.listeners ?? "0";
+    if (todayEl) todayEl.textContent = data.listener_peak ?? "0";
 
-        liveEl.textContent = "...";
-        todayEl.textContent = "...";
-
-        try {
-          const data = await lautFM.getListeners(s.name);
-          liveEl.textContent = data.listeners ?? "0";
-          todayEl.textContent = data.listener_peak ?? "0";
-        } catch (err) {
-          console.error("Listener konnten nicht geladen werden:", err);
-          liveEl.textContent = "0";
-          todayEl.textContent = "0";
-        }
-      }
-    }
-
-    updateListeners();
-    setInterval(updateListeners, 30000);
-  };
+  } catch (err) {
+    console.error("Listener konnten nicht geladen werden:", err);
+  }
 }
