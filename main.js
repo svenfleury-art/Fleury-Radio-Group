@@ -240,26 +240,15 @@ LISTENER ZAHLEN (LAUT.FM via AllOrigins)
 ------------------------- */
 async function loadListeners(station, liveId, todayId) {
   try {
-    // AllOrigins URL
-    const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.laut.fm/station/${station}/listeners`)}`;
+    const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.laut.fm/station/${station}/listeners`)}`;
     const res = await fetch(url);
     if (!res.ok) throw new Error("API konnte nicht geladen werden");
 
-    const result = await res.json();
-
-    // result.contents ist ein String → parse JSON
-    let data;
-    try {
-      data = JSON.parse(result.contents);
-    } catch (err) {
-      console.error("JSON konnte nicht geparst werden:", err);
-      data = {};
-    }
+    const data = await res.json(); // direkt JSON, kein result.contents nötig
 
     const liveEl = document.getElementById(liveId);
     const todayEl = document.getElementById(todayId);
 
-    // Fallback auf 0, falls nichts da ist
     if (liveEl) liveEl.textContent = (data.listeners != null) ? data.listeners : "0";
     if (todayEl) todayEl.textContent = (data.listener_peak != null) ? data.listener_peak : "0";
 
