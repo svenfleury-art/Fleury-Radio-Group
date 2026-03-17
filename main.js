@@ -226,7 +226,7 @@ function initJinglePlayer() {
       hasPlayedJingle = true;
 
       // Jingle laden
-      audio.src = "/audio/frg-jingle.mp3"; // Pfad zu deinem Jingle
+      audio.src = "FRG jingle.mp3"; // Pfad zu deinem Jingle
       audio.play();
 
       // Nach Jingle automatisch Stream starten
