@@ -207,45 +207,47 @@ function initCountdown() {
 }
 
 /* -------------------------
-FRG JINGLE PLAYER
+FRG JINGLE PLAYER (MULTI SENDER)
 ------------------------- */
 
 function initJinglePlayer() {
 
-  const playBtn = document.getElementById("playBtn");
+  const buttons = document.querySelectorAll(".playBtn");
   const audio = document.getElementById("audioPlayer");
 
-  if (!playBtn || !audio) return;
+  if (!buttons.length || !audio) return;
 
   let hasPlayedJingle = false;
 
-  playBtn.addEventListener("click", () => {
+  buttons.forEach(button => {
 
-    // Wenn Jingle noch nicht gespielt wurde
-    if (!hasPlayedJingle) {
-      hasPlayedJingle = true;
+    button.addEventListener("click", () => {
 
-      // Jingle laden
-      audio.src = "FRG jingle.mp3"; // Pfad zu deinem Jingle
-      audio.play();
+      const streamUrl = button.getAttribute("data-stream");
 
-      // Nach Jingle automatisch Stream starten
-      audio.onended = () => {
-        audio.src = "https://stream.laut.fm/dein-sender"; // DEIN Stream-Link
+      if (!streamUrl) return;
+
+      // Jingle nur beim ersten Start
+      if (!hasPlayedJingle) {
+        hasPlayedJingle = true;
+
+        audio.src = "/audio/frg-jingle.mp3";
         audio.play();
-      };
 
-    } else {
-      // Normaler Play/Pause nach erstem Mal
-      if (audio.paused) {
-        audio.play();
+        audio.onended = () => {
+          audio.src = streamUrl;
+          audio.play();
+        };
+
       } else {
-        audio.pause();
+        // Direkt Stream wechseln
+        audio.src = streamUrl;
+        audio.play();
       }
-    }
+
+    });
 
   });
 }
 
-// Beim Laden starten
 document.addEventListener("DOMContentLoaded", initJinglePlayer);
