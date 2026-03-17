@@ -290,3 +290,29 @@ function initPlayerCounters() {
     });
   });
 }
+
+
+function initPlayerCounters() {
+  const players = [
+    { id: "rhywalle-player-wrapper", station: "Rhywaelle" },
+    { id: "winterlord-fm-player-wrapper", station: "Winterlord FM" },
+    { id: "rhyrock-radio-player-wrapper", station: "RhyRock Radio" }
+  ];
+
+  players.forEach(p => {
+    const wrapper = document.getElementById(p.id);
+    if (!wrapper) return;
+
+    const iframe = wrapper.querySelector("iframe");
+    if (!iframe) return;
+
+    let counted = false;
+    iframe.addEventListener("mouseenter", () => {
+      if (counted) return;
+      counted = true;
+      fetch(`https://frg-radio.svenfleury.workers.dev/?station=${encodeURIComponent(p.station)}`)
+        .then(() => console.log(`${p.station}-Hit gezählt!`))
+        .catch(err => console.error(err));
+    });
+  });
+}
