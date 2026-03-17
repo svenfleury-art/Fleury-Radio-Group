@@ -29,12 +29,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFilter();
   initCountdown();
 
-  // ✅ Listener über DEINEN Worker
-  trackPlayer("player-rhywalle", "Rhywaelle", "rhywalle-live", "rhywalle-peak");
-  trackPlayer("player-winterlord", "Winterlord FM", "winterlord-fm-live", "winterlord-fm-peak");
-  trackPlayer("player-rhyrock", "RhyRock Radio", "rhyrock-radio-live", "rhyrock-radio-peak");
-
-  // Update alle 30 Sekunden
+  // Listener & Peak anzeigen
+  refreshAllStations();
   setInterval(refreshAllStations, 30000);
 });
 
@@ -243,7 +239,7 @@ function initCountdown() {
 }
 
 /* -------------------------
-LISTENER ZAHLEN + PEAK (NEU)
+LISTENER & PEAK (OHNE PLAYER)
 ------------------------- */
 function updateStationUI(stationKey, liveId, peakId) {
   fetch(`https://frg-radio.svenfleury.workers.dev/?station=${encodeURIComponent(stationKey)}`)
@@ -251,18 +247,22 @@ function updateStationUI(stationKey, liveId, peakId) {
     .then(data => {
       const liveEl = document.getElementById(liveId);
       const peakEl = document.getElementById(peakId);
-      if (liveEl) liveEl.textContent = data.listeners ?? 0;
-      if (peakEl) peakEl.textContent = data.listener_peak ?? 0;
+      if (!liveEl) return;
+
+      const liveListeners = data.listeners ?? 0;
+      liveEl.textContent = liveListeners;
+
+      // Tages-Peak speichern
+      const peakStorageKey = `peak_${stationKey}_${new Date().toISOString().slice(0,10)}`;
+      let peak = parseInt(localStorage.getItem(peakStorageKey)) || 0;
+      if (liveListeners > peak) {
+        peak = liveListeners;
+        localStorage.setItem(peakStorageKey, peak);
+      }
+
+      if (peakEl) peakEl.textContent = peak;
     })
     .catch(err => console.error(err));
-}
-
-function trackPlayer(playerId, stationKey, liveId, peakId) {
-  const player = document.getElementById(playerId);
-  if (!player) return;
-  player.addEventListener("play", () => {
-    updateStationUI(stationKey, liveId, peakId);
-  });
 }
 
 function refreshAllStations() {
@@ -270,6 +270,3 @@ function refreshAllStations() {
   updateStationUI("Winterlord FM", "winterlord-fm-live", "winterlord-fm-peak");
   updateStationUI("RhyRock Radio", "rhyrock-radio-live", "rhyrock-radio-peak");
 }
-
-// Direkt beim Laden einmal ausführen
-document.addEventListener("DOMContentLoaded", refreshAllStations);
