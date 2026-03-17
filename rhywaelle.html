@@ -27,17 +27,21 @@
 <section class="card">
   <h2>Jetzt live hören – Radio Rhywälle</h2>
 
-  <div class="player-wrapper" id="rhywalle-player-wrapper">
+  <div class="player-wrapper">
     <img src="Radio Rhywaelle.png" alt="Rhywaelle Logo" class="player-logo">
-    <div class="player-wrap">
-      <iframe src="https://stream.laut.fm/rhywaelle" loading="lazy" allow="autoplay"></iframe>
-    </div>
+    
+    <button class="playBtn" data-stream="https://stream.laut.fm/rhywaelle">
+      ▶ Jetzt hören
+    </button>
   </div>
 
-      <p>
-        Radio Rhywälle ist deine lokale Welle aus Basel – für Pop, Rap und Oldies in einer Mischung,
-        die dich durch den Tag begleitet. Direkt, ehrlich und mit dem Vibe vom Rhein.
-      </p>
+  <audio id="audioPlayer"></audio>
+
+  <p>
+    Radio Rhywälle ist deine lokale Welle aus Basel – für Pop und Rap in einer Mischung,
+    die dich durch den Tag begleitet.
+  </p>
+
 
       <p style="margin-top:12px;">
         Falls der Player bei dir nicht startet: Seite kurz neu laden oder im Browser „Desktop-Website“ deaktivieren.
