@@ -206,3 +206,46 @@ function initCountdown() {
   setInterval(updateCountdown, 1000)
 }
 
+/* -------------------------
+FRG JINGLE PLAYER
+------------------------- */
+
+function initJinglePlayer() {
+
+  const playBtn = document.getElementById("playBtn");
+  const audio = document.getElementById("audioPlayer");
+
+  if (!playBtn || !audio) return;
+
+  let hasPlayedJingle = false;
+
+  playBtn.addEventListener("click", () => {
+
+    // Wenn Jingle noch nicht gespielt wurde
+    if (!hasPlayedJingle) {
+      hasPlayedJingle = true;
+
+      // Jingle laden
+      audio.src = "/audio/frg-jingle.mp3"; // Pfad zu deinem Jingle
+      audio.play();
+
+      // Nach Jingle automatisch Stream starten
+      audio.onended = () => {
+        audio.src = "https://stream.laut.fm/dein-sender"; // DEIN Stream-Link
+        audio.play();
+      };
+
+    } else {
+      // Normaler Play/Pause nach erstem Mal
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+
+  });
+}
+
+// Beim Laden starten
+document.addEventListener("DOMContentLoaded", initJinglePlayer);
