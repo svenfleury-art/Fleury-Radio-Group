@@ -207,7 +207,7 @@ function initCountdown() {
 }
 
 /* -------------------------
-FRG JINGLE PLAYER (MULTI SENDER)
+FRG JINGLE PLAYER (STABIL)
 ------------------------- */
 
 function initJinglePlayer() {
@@ -224,23 +224,27 @@ function initJinglePlayer() {
     button.addEventListener("click", () => {
 
       const streamUrl = button.getAttribute("data-stream");
-
       if (!streamUrl) return;
 
-      // Jingle nur beim ersten Start
+      // Falls gerade Jingle läuft → abbrechen
+      audio.pause();
+
       if (!hasPlayedJingle) {
         hasPlayedJingle = true;
 
         audio.src = "/audio/frg-jingle.mp3";
         audio.play();
 
-        audio.onended = () => {
+        // WICHTIG: Event nur einmal
+        const handleEnd = () => {
           audio.src = streamUrl;
           audio.play();
+          audio.removeEventListener("ended", handleEnd);
         };
 
+        audio.addEventListener("ended", handleEnd);
+
       } else {
-        // Direkt Stream wechseln
         audio.src = streamUrl;
         audio.play();
       }
