@@ -25,31 +25,16 @@
     </section>
 
 
- <section class="card">
+<section class="card">
   <h2>Jetzt live hören – Winterlord FM</h2>
 
-  <div class="player-wrapper" id="winterlordfm-player-wrapper">
+  <div class="player-wrapper" id="winterlord-fm-player-wrapper">
     <img src="Winterlord FM.png" alt="Winterlord FM Logo" class="player-logo">
     <div class="player-wrap">
-      <iframe src="https://stream.laut.fm/winterlord-fm" loading="lazy" allow="autoplay"></iframe>
+      <iframe src="https://stream.laut.fm/winterlord" loading="lazy" allow="autoplay"></iframe>
     </div>
   </div>
-
-  <script>
-    (function() {
-      const wrapper = document.getElementById("winterlordfm-player-wrapper");
-      let counted = false;
-      wrapper.addEventListener("click", () => {
-        if (counted) return;
-        counted = true;
-        fetch("https://frg-radio.svenfleury.workers.dev/?station=Winterlord FM")
-          .then(() => console.log("Winterlord FM-Hit gezählt!"))
-          .catch(err => console.error(err));
-      });
-    })();
-  </script>
 </section>
-
     
     <p>
       Winterlord FM ist dein Sender für Power Metal, Melodic Metal und Epic Metal.
