@@ -50,38 +50,46 @@ async function loadPartial(slotId, url) {
 }
 
 /* -------------------------
-MENU SYSTEM
+MENU SYSTEM & DROPDOWNS
 ------------------------- */
 function initMenu() {
-  const btn = document.getElementById("hamburgerBtn");
-  const nav = document.getElementById("mainNav");
-  const overlay = document.getElementById("menu-overlay");
-  if (!btn || !nav) return;
+  const btn = document.getElementById("hamburgerBtn")
+  const nav = document.getElementById("mainNav")
+  const overlay = document.getElementById("menu-overlay")
+  if (!btn || !nav) return
 
   function closeMenu() {
-    nav.classList.remove("open");
-    btn.classList.remove("active");
-    btn.textContent = "☰";
-    if (overlay) overlay.classList.remove("active");
+    nav.classList.remove("open")
+    btn.classList.remove("active")
+    btn.textContent = "☰"
+    if (overlay) overlay.classList.remove("active")
   }
-
   function openMenu() {
-    nav.classList.add("open");
-    btn.classList.add("active");
-    btn.textContent = "✕";
-    if (overlay) overlay.classList.add("active");
+    nav.classList.add("open")
+    btn.classList.add("active")
+    btn.textContent = "✕"
+    if (overlay) overlay.classList.add("active")
   }
+  closeMenu()
 
   btn.addEventListener("click", e => {
-    e.stopPropagation();
-    nav.classList.contains("open") ? closeMenu() : openMenu();
-  });
-
-  if (overlay) overlay.addEventListener("click", closeMenu);
-
+    e.stopPropagation()
+    nav.classList.contains("open") ? closeMenu() : openMenu()
+  })
+  if (overlay) overlay.addEventListener("click", closeMenu)
   document.addEventListener("click", e => {
-    if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu();
-  });
+    if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu()
+  })
+  nav.addEventListener("click", e => {
+    const toggleBtn = e.target.closest(".dropdown-toggle")
+    if (!toggleBtn) return
+    e.preventDefault()
+    e.stopPropagation()
+    const dropdown = toggleBtn.closest(".nav-dropdown")
+    if (!dropdown) return
+    nav.querySelectorAll(".nav-dropdown").forEach(d => { if (d !== dropdown) d.classList.remove("open") })
+    dropdown.classList.toggle("open")
+  })
 }
 
 /* -------------------------
