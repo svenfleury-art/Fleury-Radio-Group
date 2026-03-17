@@ -7,9 +7,7 @@ function initLoader() {
   loader.innerHTML = '<div class="radio">📻</div>';
   document.body.prepend(loader);
 }
-
 initLoader();
-
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
   if (!loader) return;
@@ -29,12 +27,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFilter();
   initCountdown();
 
-  // Hörerzahlen auf Startseite aktualisieren
+  // Listener-Zahlen aktualisieren, keine Hits zählen
   refreshAllStations();
-  setInterval(refreshAllStations, 30000);
 
-  // Player-Click-Zähler initialisieren
-  initPlayerCounters();
+  // Sender-Seiten: Player-Hits zählen
+  initPlayerCounting();
+
+  setInterval(refreshAllStations, 30000);
 });
 
 /* -------------------------
@@ -181,7 +180,6 @@ function initCountdown() {
       const front = el.querySelector(".front");
       const flipTop = el.querySelector(".flip-top");
       const flipBottom = el.querySelector(".flip-bottom");
-
       if (!front || !flipTop || !flipBottom) return;
 
       flipTop.textContent = front.textContent;
@@ -216,9 +214,7 @@ function initCountdown() {
     const now = new Date();
     const diff = event.dateObj - now;
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
-
     const isHome = window.location.pathname === "/" || window.location.pathname.includes("index");
-
     if (isHome && diff > sevenDays) {
       container.style.display = "none";
       return;
@@ -242,7 +238,7 @@ function initCountdown() {
 }
 
 /* -------------------------
-LISTENER & PEAK (OHNE PLAYER)
+LISTENER & PEAK
 ------------------------- */
 function updateStationUI(stationKey, liveId, peakId) {
   fetch(`https://frg-radio.svenfleury.workers.dev/?station=${encodeURIComponent(stationKey)}`)
@@ -252,62 +248,45 @@ function updateStationUI(stationKey, liveId, peakId) {
       const peakEl = document.getElementById(peakId);
       if (!liveEl) return;
 
-      liveEl.textContent = data.listeners ?? 0;
-      if (peakEl) peakEl.textContent = data.listener_peak ?? 0;
+      const liveListeners = data.listeners ?? 0;
+      liveEl.textContent = liveListeners;
+
+      // Tages-Peak lokal speichern
+      const peakStorageKey = `peak_${stationKey}_${new Date().toISOString().slice(0,10)}`;
+      let peak = parseInt(localStorage.getItem(peakStorageKey)) || 0;
+      if (liveListeners > peak) {
+        peak = liveListeners;
+        localStorage.setItem(peakStorageKey, peak);
+      }
+
+      if (peakEl) peakEl.textContent = peak;
     })
     .catch(err => console.error(err));
 }
 
 function refreshAllStations() {
+  // Nur Zahlen aktualisieren, kein Hit wird gezählt
   updateStationUI("Rhywaelle", "rhywalle-live", "rhywalle-peak");
   updateStationUI("Winterlord FM", "winterlord-fm-live", "winterlord-fm-peak");
   updateStationUI("RhyRock Radio", "rhyrock-radio-live", "rhyrock-radio-peak");
 }
 
 /* -------------------------
-PLAYER CLICK COUNTERS
+PLAYER HITS ZÄHLEN
 ------------------------- */
-function initPlayerCounters() {
+function initPlayerCounting() {
   const players = [
-    { id: "rhywalle-player-wrapper", station: "Rhywaelle" },
-    { id: "winterlord-fm-player-wrapper", station: "Winterlord FM" },
-    { id: "rhyrock-radio-player-wrapper", station: "RhyRock Radio" }
+    { wrapperId: "rhywalle-player-wrapper", station: "Rhywaelle" },
+    { wrapperId: "winterlord-player-wrapper", station: "Winterlord FM" },
+    { wrapperId: "rhyrock-player-wrapper", station: "RhyRock Radio" }
   ];
 
   players.forEach(p => {
-    const wrapper = document.getElementById(p.id);
+    const wrapper = document.getElementById(p.wrapperId);
     if (!wrapper) return;
-
-    const iframe = wrapper.querySelector("iframe");
-    if (!iframe) return;
-
-    // Klick / Fokus auf Player = zählt als Hörer
-    iframe.addEventListener("mouseenter", () => {
-      fetch(`https://frg-radio.svenfleury.workers.dev/?station=${encodeURIComponent(p.station)}`)
-        .then(res => res.json())
-        .then(data => console.log(`${p.station}-Hit gezählt!`))
-        .catch(err => console.error(err));
-    });
-  });
-}
-
-
-function initPlayerCounters() {
-  const players = [
-    { id: "rhywalle-player-wrapper", station: "Rhywaelle" },
-    { id: "winterlord-fm-player-wrapper", station: "Winterlord FM" },
-    { id: "rhyrock-radio-player-wrapper", station: "RhyRock Radio" }
-  ];
-
-  players.forEach(p => {
-    const wrapper = document.getElementById(p.id);
-    if (!wrapper) return;
-
-    const iframe = wrapper.querySelector("iframe");
-    if (!iframe) return;
 
     let counted = false;
-    iframe.addEventListener("mouseenter", () => {
+    wrapper.addEventListener("click", () => {
       if (counted) return;
       counted = true;
       fetch(`https://frg-radio.svenfleury.workers.dev/?station=${encodeURIComponent(p.station)}`)
