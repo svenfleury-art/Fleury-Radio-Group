@@ -30,15 +30,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   initCountdown();
 
   // ✅ Listener über DEINEN Worker
-  loadListeners("rhywalle", "rhywalle-live", "rhywalle-today");
-  loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
-  loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
+  trackPlayer("player-rhywalle", "Rhywaelle", "rhywalle-live", "rhywalle-peak");
+  trackPlayer("player-winterlord", "Winterlord FM", "winterlord-fm-live", "winterlord-fm-peak");
+  trackPlayer("player-rhyrock", "RhyRock Radio", "rhyrock-radio-live", "rhyrock-radio-peak");
 
-  setInterval(() => {
-    loadListeners("rhywalle", "rhywalle-live", "rhywalle-today");
-    loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
-    loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
-  }, 30000);
+  // Update alle 30 Sekunden
+  setInterval(refreshAllStations, 30000);
 });
 
 /* -------------------------
@@ -221,7 +218,6 @@ function initCountdown() {
     const diff = event.dateObj - now;
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
 
-    // Nur auf Startseite prüfen
     const isHome = window.location.pathname === "/" || window.location.pathname.includes("index");
 
     if (isHome && diff > sevenDays) {
@@ -247,37 +243,33 @@ function initCountdown() {
 }
 
 /* -------------------------
-LISTENER ZAHLEN (✅ FIX MIT WORKER)
+LISTENER ZAHLEN + PEAK (NEU)
 ------------------------- */
-fetch('https://api.laut.fm/station/Rhywaelle/listeners')
-  .then(r => r.text())
-  .then(t => console.log('Rhywaelle:', t))
-  .catch(e => console.error('Fehler:', e));
-
-async function loadListeners() {
-  const stations = {
-    "Rhywaelle": "Rhywaelle",
-    "winterlord-fm": "winterlord-fm",
-    "rhyrock-radio": "rhyrock-radio"
-  };
-
-  for (const id in stations) {
-    try {
-      const res = await fetch(`https://api.laut.fm/station/${stations[id]}/listeners`);
-      const text = await res.text();
-      const listeners = parseInt(text) || 0;
-      const el = document.getElementById(`${id}-live`);
-      if (el) el.textContent = listeners;
-    } catch (err) {
-      const el = document.getElementById(`${id}-live`);
-      if (el) el.textContent = "–";
-      console.error(`Fehler bei ${id}:`, err);
-    }
-  }
+function updateStationUI(stationKey, liveId, peakId) {
+  fetch(`https://frg-radio.svenfleury.workers.dev/?station=${encodeURIComponent(stationKey)}`)
+    .then(res => res.json())
+    .then(data => {
+      const liveEl = document.getElementById(liveId);
+      const peakEl = document.getElementById(peakId);
+      if (liveEl) liveEl.textContent = data.listeners ?? 0;
+      if (peakEl) peakEl.textContent = data.listener_peak ?? 0;
+    })
+    .catch(err => console.error(err));
 }
 
-// Laden, sobald die Seite bereit ist + alle 30 Sekunden aktualisieren
-document.addEventListener("DOMContentLoaded", () => {
-  loadListeners();
-  setInterval(loadListeners, 30000);
-});
+function trackPlayer(playerId, stationKey, liveId, peakId) {
+  const player = document.getElementById(playerId);
+  if (!player) return;
+  player.addEventListener("play", () => {
+    updateStationUI(stationKey, liveId, peakId);
+  });
+}
+
+function refreshAllStations() {
+  updateStationUI("Rhywaelle", "rhywalle-live", "rhywalle-peak");
+  updateStationUI("Winterlord FM", "winterlord-fm-live", "winterlord-fm-peak");
+  updateStationUI("RhyRock Radio", "rhyrock-radio-live", "rhyrock-radio-peak");
+}
+
+// Direkt beim Laden einmal ausführen
+document.addEventListener("DOMContentLoaded", refreshAllStations);
