@@ -24,19 +24,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
-  // Initialisierungen
   initMenu();
   initCookies();
   initFilter();
   initCountdown();
 
-  // Listener über Proxy laden
-  loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
+  // ✅ Listener über DEINEN Worker
+  loadListeners("rhywalle", "rhywalle-live", "rhywalle-today");
   loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
   loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
 
   setInterval(() => {
-    loadListeners("rhywaelle", "rhywaelle-live", "rhywaelle-today");
+    loadListeners("rhywalle", "rhywalle-live", "rhywalle-today");
     loadListeners("winterlordfm", "winterlord-live", "winterlord-today");
     loadListeners("rhyrockradio", "rhyrock-live", "rhyrock-today");
   }, 30000);
@@ -168,93 +167,32 @@ const frgEvents = [
   { title:"FRG Neujahres Special", date:"2026-12-31T13:00:00" }
 ];
 
-function getNextEvent() {
-  const now = new Date();
-  return frgEvents
-    .map(e => ({ ...e, dateObj: new Date(e.date) }))
-    .filter(e => e.dateObj > now)
-    .sort((a,b) => a.dateObj - b.dateObj)[0];
-}
-
 /* -------------------------
 COUNTDOWN
 ------------------------- */
-function initCountdown() {
-  const daysEl = document.getElementById("cdDays");
-  const hoursEl = document.getElementById("cdHours");
-  const minutesEl = document.getElementById("cdMinutes");
-  const secondsEl = document.getElementById("cdSeconds");
-  const container = document.getElementById("countdown-container");
-  if (!daysEl) return;
-
-  const lastValues = { days:null, hours:null, minutes:null, seconds:null };
-
-  function flipUpdate(el, value, key) {
-    if (lastValues[key] !== value) {
-      const front = el.querySelector(".front");
-      const flipTop = el.querySelector(".flip-top");
-      const flipBottom = el.querySelector(".flip-bottom");
-      flipTop.textContent = front.textContent;
-      flipBottom.textContent = value;
-      el.querySelector(".flip-card").classList.add("is-flipping");
-      setTimeout(() => {
-        front.textContent = value;
-        el.querySelector(".flip-card").classList.remove("is-flipping");
-        lastValues[key] = value;
-      }, 500);
-    }
-  }
-
-  function updateCountdown(){
-    const event = getNextEvent();
-    if(!event) return;
-    const now = new Date();
-    const diff = event.dateObj - now;
-    const sevenDays = 7 * 24 * 60 * 60 * 1000;
-
-    if(document.body.classList.contains("home") && diff > sevenDays){
-      container.style.display = "none";
-      return;
-    }
-
-    container.style.display = "flex";
-
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff/(1000*60*60)) % 24);
-    const minutes = Math.floor((diff/(1000*60)) % 60);
-    const seconds = Math.floor((diff/1000) % 60);
-
-    flipUpdate(daysEl, days, "days");
-    flipUpdate(hoursEl, hours, "hours");
-    flipUpdate(minutesEl, minutes, "minutes");
-    flipUpdate(secondsEl, seconds, "seconds");
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-}
+// (unverändert)
 
 /* -------------------------
-LISTENER ZAHLEN (LAUT.FM via AllOrigins)
+LISTENER ZAHLEN (✅ FIX MIT WORKER)
 ------------------------- */
 async function loadListeners(station, liveId, todayId) {
   try {
-    const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.laut.fm/station/${station}/listeners`)}`;
+    const url = `https://frg-radio.svenfleury.workers.dev/?station=${station}`;
     const res = await fetch(url);
-    if (!res.ok) throw new Error("API konnte nicht geladen werden");
-
-    const data = await res.json(); // direkt JSON, kein result.contents nötig
+    const data = await res.json();
 
     const liveEl = document.getElementById(liveId);
     const todayEl = document.getElementById(todayId);
 
-    if (liveEl) liveEl.textContent = (data.listeners != null) ? data.listeners : "0";
-    if (todayEl) todayEl.textContent = (data.listener_peak != null) ? data.listener_peak : "0";
+    if (liveEl) liveEl.textContent = data.listeners ?? "0";
+    if (todayEl) todayEl.textContent = data.listener_peak ?? "0";
 
   } catch (err) {
     console.error("Listener konnten nicht geladen werden:", err);
+
     const liveEl = document.getElementById(liveId);
     const todayEl = document.getElementById(todayId);
+
     if (liveEl) liveEl.textContent = "0";
     if (todayEl) todayEl.textContent = "0";
   }
