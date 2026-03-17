@@ -7,7 +7,9 @@ function initLoader() {
   loader.innerHTML = '<div class="radio">📻</div>';
   document.body.prepend(loader);
 }
+
 initLoader();
+
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
   if (!loader) return;
@@ -27,13 +29,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFilter();
   initCountdown();
 
-  // Listener-Zahlen aktualisieren, keine Hits zählen
+  // Zahlen aktualisieren (Live + Peak)
   refreshAllStations();
-
-  // Sender-Seiten: Player-Hits zählen
-  initPlayerCounting();
-
   setInterval(refreshAllStations, 30000);
+
+  // Player Hits zählen (nur auf Player-Seiten)
+  initPlayerCounting();
 });
 
 /* -------------------------
@@ -180,6 +181,7 @@ function initCountdown() {
       const front = el.querySelector(".front");
       const flipTop = el.querySelector(".flip-top");
       const flipBottom = el.querySelector(".flip-bottom");
+
       if (!front || !flipTop || !flipBottom) return;
 
       flipTop.textContent = front.textContent;
@@ -214,7 +216,9 @@ function initCountdown() {
     const now = new Date();
     const diff = event.dateObj - now;
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
     const isHome = window.location.pathname === "/" || window.location.pathname.includes("index");
+
     if (isHome && diff > sevenDays) {
       container.style.display = "none";
       return;
@@ -251,7 +255,6 @@ function updateStationUI(stationKey, liveId, peakId) {
       const liveListeners = data.listeners ?? 0;
       liveEl.textContent = liveListeners;
 
-      // Tages-Peak lokal speichern
       const peakStorageKey = `peak_${stationKey}_${new Date().toISOString().slice(0,10)}`;
       let peak = parseInt(localStorage.getItem(peakStorageKey)) || 0;
       if (liveListeners > peak) {
@@ -265,7 +268,6 @@ function updateStationUI(stationKey, liveId, peakId) {
 }
 
 function refreshAllStations() {
-  // Nur Zahlen aktualisieren, kein Hit wird gezählt
   updateStationUI("Rhywaelle", "rhywalle-live", "rhywalle-peak");
   updateStationUI("Winterlord FM", "winterlord-fm-live", "winterlord-fm-peak");
   updateStationUI("RhyRock Radio", "rhyrock-radio-live", "rhyrock-radio-peak");
