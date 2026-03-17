@@ -249,28 +249,7 @@ function initCountdown() {
 /* -------------------------
 LISTENER ZAHLEN (✅ FIX MIT WORKER)
 ------------------------- */
-async function loadListeners(station, liveId, todayId) {
-  try {
-    const url = `https://frg-radio.svenfleury.workers.dev/?station=${station}`;
-    const res = await fetch(url);
-    const data = await res.json();
 
-    const liveEl = document.getElementById(liveId);
-    const todayEl = document.getElementById(todayId);
-
-    if (liveEl) liveEl.textContent = data.listeners ?? "0";
-    if (todayEl) todayEl.textContent = data.listener_peak ?? "0";
-
-  } catch (err) {
-    console.error("Listener konnten nicht geladen werden:", err);
-
-    const liveEl = document.getElementById(liveId);
-    const todayEl = document.getElementById(todayId);
-
-    if (liveEl) liveEl.textContent = "0";
-    if (todayEl) todayEl.textContent = "0";
-  }
-}
 
 async function loadListeners() {
   const stations = {
