@@ -170,7 +170,81 @@ const frgEvents = [
 /* -------------------------
 COUNTDOWN
 ------------------------- */
-// (unverändert)
+function initCountdown() {
+  const daysEl = document.getElementById("cdDays");
+  const hoursEl = document.getElementById("cdHours");
+  const minutesEl = document.getElementById("cdMinutes");
+  const secondsEl = document.getElementById("cdSeconds");
+  const container = document.getElementById("countdown-container");
+  if (!daysEl || !container) return;
+
+  const lastValues = { days: null, hours: null, minutes: null, seconds: null };
+
+  function flipUpdate(el, value, key) {
+    if (lastValues[key] !== value) {
+      const front = el.querySelector(".front");
+      const flipTop = el.querySelector(".flip-top");
+      const flipBottom = el.querySelector(".flip-bottom");
+
+      if (!front || !flipTop || !flipBottom) return;
+
+      flipTop.textContent = front.textContent;
+      flipBottom.textContent = value;
+
+      el.querySelector(".flip-card").classList.add("is-flipping");
+
+      setTimeout(() => {
+        front.textContent = value;
+        el.querySelector(".flip-card").classList.remove("is-flipping");
+        lastValues[key] = value;
+      }, 500);
+    }
+  }
+
+  function getNextEvent() {
+    const now = new Date();
+    for (const e of frgEvents) {
+      const dateObj = new Date(e.date);
+      if (dateObj > now) return { ...e, dateObj };
+    }
+    return null;
+  }
+
+  function updateCountdown() {
+    const event = getNextEvent();
+    if (!event) {
+      container.style.display = "none";
+      return;
+    }
+
+    const now = new Date();
+    const diff = event.dateObj - now;
+    const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
+    // Nur auf Startseite prüfen
+    const isHome = window.location.pathname === "/" || window.location.pathname.includes("index");
+
+    if (isHome && diff > sevenDays) {
+      container.style.display = "none";
+      return;
+    }
+
+    container.style.display = "flex";
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    flipUpdate(daysEl, days, "days");
+    flipUpdate(hoursEl, hours, "hours");
+    flipUpdate(minutesEl, minutes, "minutes");
+    flipUpdate(secondsEl, seconds, "seconds");
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+}
 
 /* -------------------------
 LISTENER ZAHLEN (✅ FIX MIT WORKER)
