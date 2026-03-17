@@ -29,9 +29,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFilter();
   initCountdown();
 
-  // Listener & Peak anzeigen
+  // Hörerzahlen auf Startseite aktualisieren
   refreshAllStations();
   setInterval(refreshAllStations, 30000);
+
+  // Player-Click-Zähler initialisieren
+  initPlayerCounters();
 });
 
 /* -------------------------
@@ -249,18 +252,8 @@ function updateStationUI(stationKey, liveId, peakId) {
       const peakEl = document.getElementById(peakId);
       if (!liveEl) return;
 
-      const liveListeners = data.listeners ?? 0;
-      liveEl.textContent = liveListeners;
-
-      // Tages-Peak speichern
-      const peakStorageKey = `peak_${stationKey}_${new Date().toISOString().slice(0,10)}`;
-      let peak = parseInt(localStorage.getItem(peakStorageKey)) || 0;
-      if (liveListeners > peak) {
-        peak = liveListeners;
-        localStorage.setItem(peakStorageKey, peak);
-      }
-
-      if (peakEl) peakEl.textContent = peak;
+      liveEl.textContent = data.listeners ?? 0;
+      if (peakEl) peakEl.textContent = data.listener_peak ?? 0;
     })
     .catch(err => console.error(err));
 }
@@ -269,4 +262,31 @@ function refreshAllStations() {
   updateStationUI("Rhywaelle", "rhywalle-live", "rhywalle-peak");
   updateStationUI("Winterlord FM", "winterlord-fm-live", "winterlord-fm-peak");
   updateStationUI("RhyRock Radio", "rhyrock-radio-live", "rhyrock-radio-peak");
+}
+
+/* -------------------------
+PLAYER CLICK COUNTERS
+------------------------- */
+function initPlayerCounters() {
+  const players = [
+    { id: "rhywalle-player-wrapper", station: "Rhywaelle" },
+    { id: "winterlord-fm-player-wrapper", station: "Winterlord FM" },
+    { id: "rhyrock-radio-player-wrapper", station: "RhyRock Radio" }
+  ];
+
+  players.forEach(p => {
+    const wrapper = document.getElementById(p.id);
+    if (!wrapper) return;
+
+    const iframe = wrapper.querySelector("iframe");
+    if (!iframe) return;
+
+    // Klick / Fokus auf Player = zählt als Hörer
+    iframe.addEventListener("mouseenter", () => {
+      fetch(`https://frg-radio.svenfleury.workers.dev/?station=${encodeURIComponent(p.station)}`)
+        .then(res => res.json())
+        .then(data => console.log(`${p.station}-Hit gezählt!`))
+        .catch(err => console.error(err));
+    });
+  });
 }
