@@ -27,28 +27,13 @@
 <section class="card">
   <h2>Jetzt live hören – RhyRock Radio</h2>
 
-  <div class="player-wrapper" id="rhyrock-player-wrapper">
-    <img src="RhyRock Radio.png" alt="RhyRock Radio Logo" class="player-logo">
+  <div class="player-wrapper" id="rhyrock-radio-player-wrapper">
+    <img src="RhyRock Radio.png" alt="RhyRock Logo" class="player-logo">
     <div class="player-wrap">
-      <iframe src="https://stream.laut.fm/rhyrock-radio" loading="lazy" allow="autoplay"></iframe>
+      <iframe src="https://stream.laut.fm/rhyrock" loading="lazy" allow="autoplay"></iframe>
     </div>
   </div>
-
-  <script>
-    (function() {
-      const wrapper = document.getElementById("rhyrock-player-wrapper");
-      let counted = false;
-      wrapper.addEventListener("click", () => {
-        if (counted) return;
-        counted = true;
-        fetch("https://frg-radio.svenfleury.workers.dev/?station=RhyRock Radio")
-          .then(() => console.log("RhyRock Radio-Hit gezählt!"))
-          .catch(err => console.error(err));
-      });
-    })();
-  </script>
 </section>
-
       <p>
         RhyRock Radio bringt Gitarren nach vorne: Classic Rock, Alternative und moderne Rock-Sounds.
         Für alle, die Druck, Riffs und echte Energie wollen.
