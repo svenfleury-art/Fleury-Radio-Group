@@ -338,30 +338,54 @@ header,.site-header{
 
 /* Neues sauberes Overlay-Logo */
 .player-logo {
-  position: absolute;
-  top: 0px;                 /* ganz oben */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 420px;             /* deutlich größer */
-  max-width: 95%;           /* responsive Sicherheit */
-  z-index: 10;
-  pointer-events: none;
+  display: block;
+  margin: 20px auto;
+  max-width: 220px;
+  width: 100%;
+  height: auto;
 
-  background: none;
-  padding: 0;
-  border-radius: 0;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.55);
+  border-radius: 16px;
+
+  /* leichter Glow (frostig) */
+  box-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.15),
+    0 0 25px rgba(100, 150, 255, 0.25);
+
+  /* smoother Effekt */
+  transition: all 0.3s ease;
+}
+
+/* Hover Effekt */
+.player-logo:hover {
+  transform: scale(1.05);
+
+  box-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.3),
+    0 0 40px rgba(100, 150, 255, 0.5);
 }
 
 
-/* Mobile */
+/* Standard bleibt wie vorher */
+
+/* MOBILE OPTIMIERUNG */
 @media (max-width: 600px) {
   .player-logo {
-    width: 260px;
+    max-width: 160px;   /* kleiner auf Handy */
+    margin: 15px auto;
+
+    border-radius: 12px;
+
+    /* weniger intensiver Glow (besser für kleine Screens) */
+    box-shadow: 
+      0 0 8px rgba(255, 255, 255, 0.15),
+      0 0 15px rgba(100, 150, 255, 0.2);
   }
 
-  .player-wrap iframe {
-    height: 400px;
+  .player-logo:hover {
+    transform: none; /* kein Hover auf Mobile nötig */
+    box-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.2),
+      0 0 20px rgba(100, 150, 255, 0.3);
   }
 }
 
