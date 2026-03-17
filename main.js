@@ -271,3 +271,31 @@ async function loadListeners(station, liveId, todayId) {
     if (todayEl) todayEl.textContent = "0";
   }
 }
+
+async function loadListeners() {
+  const stations = {
+    "Rhywaelle": "Rhywaelle",
+    "winterlord-fm": "winterlord-fm",
+    "rhyrock-radio": "rhyrock-radio"
+  };
+
+  for (const id in stations) {
+    try {
+      const res = await fetch(`https://api.laut.fm/station/${stations[id]}/listeners`);
+      const text = await res.text();
+      const listeners = parseInt(text) || 0;
+      const el = document.getElementById(`${id}-live`);
+      if (el) el.textContent = listeners;
+    } catch (err) {
+      const el = document.getElementById(`${id}-live`);
+      if (el) el.textContent = "–";
+      console.error(`Fehler bei ${id}:`, err);
+    }
+  }
+}
+
+// Laden, sobald die Seite bereit ist + alle 30 Sekunden aktualisieren
+document.addEventListener("DOMContentLoaded", () => {
+  loadListeners();
+  setInterval(loadListeners, 30000);
+});
