@@ -242,30 +242,27 @@ function initCountdown() {
 }
 
 /* -------------------------
-LISTENER & PEAK
+LISTENER & PEAK (Frontend)
 ------------------------- */
-function updateStationUI(stationKey, liveId, peakId, countHit = false) {
-  fetch(`https://frg-radio.svenfleury.workers.dev/?station=${encodeURIComponent(stationKey)}&countHit=${countHit}`)
+function updateStationUI(stationKey, liveId, peakId) {
+  fetch(`https://frg-radio.svenfleury.workers.dev/?station=${encodeURIComponent(stationKey)}`)
     .then(res => res.json())
     .then(data => {
-      const liveEl = document.getElementById(liveId);
-      const peakEl = document.getElementById(peakId);
-      if (!liveEl) return;
+      const liveEl = document.getElementById(liveId)
+      const peakEl = document.getElementById(peakId)
+      if (!liveEl) return
 
-      const liveListeners = data.listeners ?? 0;
-      liveEl.textContent = liveListeners;
-
-      const peak = data.listener_peak ?? 0;
-      if (peakEl) peakEl.textContent = peak;
+      liveEl.textContent = data.listeners ?? 0
+      if (peakEl) peakEl.textContent = data.listener_peak ?? 0
     })
-    .catch(err => console.error(err));
+    .catch(err => console.error(err))
 }
 
 function refreshAllStations() {
-  // Nur Zahlen aktualisieren, kein Hit
-  updateStationUI("Rhywaelle", "rhywalle-live", "rhywalle-peak", false);
-  updateStationUI("Winterlord FM", "winterlord-fm-live", "winterlord-fm-peak", false);
-  updateStationUI("RhyRock Radio", "rhyrock-radio-live", "rhyrock-radio-peak", false);
+  // Nur Zahlen aktualisieren
+  updateStationUI("Rhywaelle", "rhywalle-live", "rhywalle-peak")
+  updateStationUI("Winterlord FM", "winterlord-fm-live", "winterlord-fm-peak")
+  updateStationUI("RhyRock Radio", "rhyrock-radio-live", "rhyrock-radio-peak")
 }
 
 /* -------------------------
@@ -273,29 +270,31 @@ PLAYER HITS ZÄHLEN
 ------------------------- */
 function initPlayerCounting() {
   const players = [
-    { wrapperId: "rhywalle-player-wrapper", station: "Rhywaelle", liveId: "rhywalle-live", peakId: "rhywalle-peak" },
-    { wrapperId: "winterlord-player-wrapper", station: "Winterlord FM", liveId: "winterlord-fm-live", peakId: "winterlord-fm-peak" },
-    { wrapperId: "rhyrock-player-wrapper", station: "RhyRock Radio", liveId: "rhyrock-radio-live", peakId: "rhyrock-radio-peak" }
-  ];
+    { wrapperId: "rhywalle-player-wrapper", station: "Rhywaelle" },
+    { wrapperId: "winterlord-player-wrapper", station: "Winterlord FM" },
+    { wrapperId: "rhyrock-player-wrapper", station: "RhyRock Radio" }
+  ]
 
   players.forEach(p => {
-    const wrapper = document.getElementById(p.wrapperId);
-    if (!wrapper) return;
+    const wrapper = document.getElementById(p.wrapperId)
+    if (!wrapper) return
 
-    let counted = false;
+    let counted = false
     wrapper.addEventListener("click", () => {
-      if (counted) return;
-      counted = true;
-
-      // Hit zählen und UI sofort aktualisieren
-      updateStationUI(p.station, p.liveId, p.peakId, true);
-    });
-  });
+      if (counted) return
+      counted = true
+      fetch(`https://frg-radio.svenfleury.workers.dev/?station=${encodeURIComponent(p.station)}&countHit=true`)
+        .then(() => console.log(`${p.station}-Hit gezählt!`))
+        .catch(err => console.error(err))
+    })
+  })
 }
 
-// Aufrufen, nachdem DOM geladen ist
+/* -------------------------
+INIT ALLES
+------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
-  refreshAllStations();
-  setInterval(refreshAllStations, 30000);
-  initPlayerCounting();
-});
+  refreshAllStations()
+  initPlayerCounting()
+  setInterval(refreshAllStations, 30000) // Live-Zahlen alle 30s
+})
