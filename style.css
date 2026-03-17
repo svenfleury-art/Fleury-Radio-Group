@@ -1238,3 +1238,17 @@ color:#aaa;
   100%{transform:scale(1);}
 }
 
+
+.playBtn {
+  background: #0a1f44;
+  color: gold;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.playBtn:hover {
+  transform: scale(1.05);
+}
