@@ -25,24 +25,30 @@
     </section>
 
 
-  <section class="card">
-    <h2>Jetzt live hören</h2>
-    
-   <div class="player-wrapper">
-  
-  <!-- Overlay-Logo -->
-  <img src="Winterlord FM Logo.PNG" alt="Winterlord FM Logo" class="player-logo">
+ <section class="card">
+  <h2>Jetzt live hören – Winterlord FM</h2>
 
-  <!-- LAUT.FM IFRAME -->
-  <div class="player-wrap">
-    <iframe 
-      src="https://stream.laut.fm/winterlord-fm" 
-      loading="lazy" 
-      allow="autoplay">
-    </iframe>
+  <div class="player-wrapper" id="winterlordfm-player-wrapper">
+    <img src="Winterlord FM.png" alt="Winterlord FM Logo" class="player-logo">
+    <div class="player-wrap">
+      <iframe src="https://stream.laut.fm/winterlord-fm" loading="lazy" allow="autoplay"></iframe>
+    </div>
   </div>
 
-</div>
+  <script>
+    (function() {
+      const wrapper = document.getElementById("winterlordfm-player-wrapper");
+      let counted = false;
+      wrapper.addEventListener("click", () => {
+        if (counted) return;
+        counted = true;
+        fetch("https://frg-radio.svenfleury.workers.dev/?station=Winterlord FM")
+          .then(() => console.log("Winterlord FM-Hit gezählt!"))
+          .catch(err => console.error(err));
+      });
+    })();
+  </script>
+</section>
 
     
     <p>
