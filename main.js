@@ -245,7 +245,7 @@ function initCountdown() {
 LISTENER & PEAK
 ------------------------- */
 function updateStationUI(stationKey, liveId, peakId) {
-  fetch(`https://frg-radio.svenfleury.workers.dev/?station=${encodeURIComponent(stationKey)}`)
+ fetch(`https://frg-radio.svenfleury.workers.dev/?station=${encodeURIComponent(stationKey)}&read=true`)
     .then(res => res.json())
     .then(data => {
       const liveEl = document.getElementById(liveId);
