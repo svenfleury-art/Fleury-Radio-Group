@@ -249,7 +249,10 @@ function initCountdown() {
 /* -------------------------
 LISTENER ZAHLEN (✅ FIX MIT WORKER)
 ------------------------- */
-
+fetch('https://api.laut.fm/station/Rhywaelle/listeners')
+  .then(r => r.text())
+  .then(t => console.log('Rhywaelle:', t))
+  .catch(e => console.error('Fehler:', e));
 
 async function loadListeners() {
   const stations = {
