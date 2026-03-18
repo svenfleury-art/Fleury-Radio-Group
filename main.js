@@ -150,6 +150,7 @@ function initCountdown() {
   if (!daysEl) return;
 
   const frgEvents = [
+    { title: "FRG Showcase Week", date: "2026-03-23T00:00:00" },
     { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
     { title: "FRG Simulcast", date: "2026-05-30T19:00:00" },
     { title: "FRG Crossover Night", date: "2026-06-27T19:00:00" },
