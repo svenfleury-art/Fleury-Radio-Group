@@ -1285,14 +1285,21 @@ color:#aaa;
   flex-direction: column;
   gap: 12px;
   padding: 16px;
-  background-color: #001f5b; /* dunkles Royal Blue */
+  background-color: #001f5b; /* Royal Blue */
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
+.artist-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #ffd700; /* Gold */
+}
+
 .artist-form input,
 .artist-form textarea {
-  padding: 10px 12px;
+  padding: 10px;
   border: 2px solid #ffd700; /* Gold */
   border-radius: 8px;
   background-color: #ffffff; /* Weiß */
@@ -1301,8 +1308,8 @@ color:#aaa;
 }
 
 .artist-form textarea {
-  resize: vertical;
   min-height: 80px;
+  resize: vertical;
 }
 
 .artist-form button {
@@ -1322,7 +1329,11 @@ color:#aaa;
   transform: scale(1.03);
 }
 
-/* Responsive */
+#form-msg {
+  color: #ffd700;
+  font-weight: bold;
+}
+
 @media (max-width: 600px) {
   .artist-form {
     padding: 12px;
