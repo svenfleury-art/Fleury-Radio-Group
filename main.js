@@ -297,9 +297,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Öffnet Mail-Client
     window.location.href = `mailto:kontakt@frg-radio.ch?subject=${subject}&body=${body}`;
 
-    alert("Vielen Dank! Dein Track wurde zur FRG gesendet.");
-
-    // Formular zurücksetzen
-    artistForm.reset();
+    // Formular zurücksetzen nach kurzer Verzögerung
+    setTimeout(() => {
+      artistForm.reset();
+      alert("Vielen Dank! Dein Track wurde zur FRG gesendet.");
+    }, 500);
   });
 });
