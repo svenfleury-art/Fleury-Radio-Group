@@ -89,16 +89,17 @@
       </p>
     </section>
 
-    <section class="card">
-      <h2>🎤 Track einreichen</h2>
-      <form class="artist-form">
-        <input type="text" placeholder="Künstlername" required>
-        <input type="email" placeholder="E-Mail" required>
-        <input type="text" placeholder="Song / Link (Spotify, SoundCloud etc.)" required>
-        <textarea placeholder="Infos zu dir"></textarea>
-        <button type="submit">Absenden</button>
-      </form>
-    </section>
+   <section class="card">
+  <h2>🎤 Track einreichen</h2>
+  <form class="artist-form" id="artist-form" action="https://formspree.io/f/{DEIN_FORM_ID}" method="POST">
+    <input type="text" name="name" placeholder="Künstlername" required>
+    <input type="email" name="email" placeholder="E-Mail" required>
+    <input type="text" name="link" placeholder="Song / Link (Spotify, SoundCloud etc.)" required>
+    <textarea name="info" placeholder="Infos zu dir"></textarea>
+    <button type="submit">Absenden</button>
+    <p id="form-msg" style="display:none; margin-top:10px;"></p>
+  </form>
+</section>
 
     <section class="card">
       <h2>⚡ Jetzt Teil der FRG werden</h2>
