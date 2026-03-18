@@ -273,34 +273,36 @@ function initJinglePlayer() {
 
 // Künstler-Formular Submission – FRG
 document.addEventListener("DOMContentLoaded", function () {
-  const artistForm = document.querySelector(".artist-form");
-  if (!artistForm) return;
+  const form = document.getElementById("artist-form");
+  const msg = document.getElementById("form-msg");
 
-  artistForm.addEventListener("submit", function (event) {
+  if (!form) return;
+
+  form.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const name = document.getElementById("artist-name").value.trim();
-    const email = document.getElementById("artist-email").value.trim();
-    const link = document.getElementById("song-link").value.trim();
-    const info = document.getElementById("artist-info").value.trim();
+    const formData = new FormData(form);
 
-    if (!name || !email || !link) {
-      alert("Bitte fülle alle Pflichtfelder aus.");
-      return;
-    }
-
-    const subject = encodeURIComponent(`Neuer Artist Submission: ${name}`);
-    const body = encodeURIComponent(
-      `Künstlername: ${name}\nE-Mail: ${email}\nSong / Link: ${link}\nInfos:\n${info}`
-    );
-
-    // Öffnet Mail-Client
-    window.location.href = `mailto:kontakt@frg-radio.ch?subject=${subject}&body=${body}`;
-
-    // Formular zurücksetzen nach kurzer Verzögerung
-    setTimeout(() => {
-      artistForm.reset();
-      alert("Vielen Dank! Dein Track wurde zur FRG gesendet.");
-    }, 500);
+    fetch(form.action, {
+      method: "POST",
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        msg.style.display = "block";
+        msg.textContent = "Vielen Dank! Dein Track wurde erfolgreich eingereicht.";
+        form.reset();
+      } else {
+        response.json().then(data => {
+          msg.style.display = "block";
+          msg.textContent = data.errors ? data.errors.map(e => e.message).join(", ") : "Fehler beim Senden.";
+        });
+      }
+    }).catch(() => {
+      msg.style.display = "block";
+      msg.textContent = "Fehler beim Senden. Bitte versuche es später erneut.";
+    });
   });
 });
