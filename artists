@@ -1,1 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Für Künstler & Labels – Fleury Radio Group</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="content.htm" type="image/png">
+</head>
 
+<body>
+
+  <!-- Header/Nav wird automatisch geladen -->
+  <div id="nav-slot"></div>
+
+  <main class="content">
+
+    <section class="card">
+      <h2>Für Künstler & Labels</h2>
+      <p><strong>Deine Musik im Radio – direkt aus Basel</strong></p>
+      <p>
+        Die Fleury Radio Group (FRG) ist ein unabhängiges Online-Radio mit Fokus auf neue Musik,
+        junge Artists und frische Sounds. Wir geben Newcomern eine echte Plattform.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>🚀 Warum FRG?</h2>
+      <p>Wir sind kein klassischer Radiosender – wir pushen neue Künstler aktiv.</p>
+      <ul>
+        <li>📻 Airplay im Radio (z. B. Radio Rhywälle)</li>
+        <li>📱 Promotion auf Social Media</li>
+        <li>🎤 Interviews & Artist Features</li>
+        <li>🔥 Möglichkeit für exklusive Releases</li>
+        <li>🌍 Neue Reichweite & Hörer</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🎯 Wen wir suchen</h2>
+      <p>Wir arbeiten besonders gerne mit:</p>
+      <ul>
+        <li>Jungen Künstlern & Newcomern</li>
+        <li>Independent Artists</li>
+        <li>Kleinen Labels</li>
+        <li>Artists aus der Schweiz 🇨🇭 und Deutschland 🇩🇪</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🎵 Was du uns schicken solltest</h2>
+      <p>Für eine Zusammenarbeit benötigen wir:</p>
+      <ul>
+        <li>Deinen Song (MP3 oder Streaming-Link)</li>
+        <li>Kurze Infos zu dir</li>
+        <li>Social Media Links</li>
+      </ul>
+
+      <p><strong>Optional:</strong></p>
+      <ul>
+        <li>Pressebilder</li>
+        <li>Release-Datum</li>
+        <li>Interesse an einem Interview</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🤝 Zusammenarbeit</h2>
+      <p>
+        Unser Ziel ist nicht nur, deinen Song einmal zu spielen – wir wollen dich langfristig unterstützen.
+      </p>
+      <ul>
+        <li>Regelmäßiges Airplay</li>
+        <li>Vorstellung im Programm</li>
+        <li>Interviews & Specials</li>
+        <li>Langfristige Zusammenarbeit</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>📩 Kontakt</h2>
+      <p>Du möchtest deine Musik bei uns vorstellen?</p>
+      <p>
+        📧 <a href="mailto:kontakt@frg-radio.ch">kontakt@frg-radio.ch</a><br>
+        📱 Instagram: @fleuryradiogroup
+      </p>
+      <p>
+        Oder nutze direkt das Formular unten.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>🎤 Track einreichen</h2>
+      <form class="artist-form">
+        <input type="text" placeholder="Künstlername" required>
+        <input type="email" placeholder="E-Mail" required>
+        <input type="text" placeholder="Song / Link (Spotify, SoundCloud etc.)" required>
+        <textarea placeholder="Infos zu dir"></textarea>
+        <button type="submit">Absenden</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>⚡ Jetzt Teil der FRG werden</h2>
+      <p>
+        Reiche deinen Track ein und werde Teil der nächsten Generation von Artists auf der Fleury Radio Group.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- Footer/Cookie wird automatisch geladen -->
+  <div id="footer-slot"></div>
+
+  <!-- Script -->
+  <script src="main.js"></script>
+
+</body>
+</html>
