@@ -270,3 +270,36 @@ function initJinglePlayer() {
     });
   });
 }
+
+// Künstler-Formular Submission – FRG
+document.addEventListener("DOMContentLoaded", function () {
+  const artistForm = document.querySelector(".artist-form");
+  if (!artistForm) return;
+
+  artistForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById("artist-name").value.trim();
+    const email = document.getElementById("artist-email").value.trim();
+    const link = document.getElementById("song-link").value.trim();
+    const info = document.getElementById("artist-info").value.trim();
+
+    if (!name || !email || !link) {
+      alert("Bitte fülle alle Pflichtfelder aus.");
+      return;
+    }
+
+    const subject = encodeURIComponent(`Neuer Artist Submission: ${name}`);
+    const body = encodeURIComponent(
+      `Künstlername: ${name}\nE-Mail: ${email}\nSong / Link: ${link}\nInfos:\n${info}`
+    );
+
+    // Öffnet Mail-Client
+    window.location.href = `mailto:kontakt@frg-radio.ch?subject=${subject}&body=${body}`;
+
+    alert("Vielen Dank! Dein Track wurde zur FRG gesendet.");
+
+    // Formular zurücksetzen
+    artistForm.reset();
+  });
+});
