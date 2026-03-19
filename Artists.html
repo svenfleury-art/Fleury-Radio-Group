@@ -89,34 +89,42 @@
       </p>
     </section>
 
-  <section class="card">
-  <h2>🎤 Track einreichen</h2>
-  <form class="artist-form" id="artist-form" action="https://formspree.io/f/xvzwdvaq" method="POST">
-    <label>
-      Künstlername:
-      <input type="text" name="name" placeholder="Künstlername" required>
-    </label>
+    <section class="card">
+      <h2>🎤 Track einreichen</h2>
+      <form class="artist-form" id="artist-form" action="https://formspree.io/f/xvzwdvaq" method="POST">
+        <label>
+          Künstlername:
+          <input type="text" name="name" placeholder="Künstlername" required>
+        </label>
 
-    <label>
-      E-Mail:
-      <input type="email" name="email" placeholder="E-Mail" required>
-    </label>
+        <label>
+          E-Mail:
+          <input type="email" name="email" placeholder="E-Mail" required>
+        </label>
 
-    <label>
-      Song / Link (Spotify, SoundCloud etc.):
-      <input type="text" name="link" placeholder="Song / Link" required>
-    </label>
+        <label>
+          Song / Link (Spotify, SoundCloud etc.):
+          <input type="text" name="link" placeholder="Song / Link" required>
+        </label>
 
-    <label>
-      Infos zu dir:
-      <textarea name="info" placeholder="Erzähl uns etwas über dich"></textarea>
-    </label>
+        <label>
+          Infos zu dir:
+          <textarea name="info" placeholder="Erzähl uns etwas über dich"></textarea>
+        </label>
 
-    <button type="submit">Absenden</button>
+        <!-- AGB Checkbox -->
+        <div class="checkbox-container">
+          <input type="checkbox" id="agb" name="agb">
+          <label for="agb">
+            Ich akzeptiere die <a href="agb.html" target="_blank">AGB</a> und bestätige die Rechte am Song
+          </label>
+        </div>
 
-    <p id="form-msg" style="display:none; margin-top:10px;"></p>
-  </form>
-</section>
+        <button type="submit" id="submitBtn" disabled>Absenden</button>
+
+        <p id="form-msg" style="display:none; margin-top:10px;"></p>
+      </form>
+    </section>
 
     <section class="card">
       <h2>⚡ Jetzt Teil der FRG werden</h2>
