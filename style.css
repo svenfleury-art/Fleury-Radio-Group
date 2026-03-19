@@ -1421,3 +1421,26 @@ color:#aaa;
     grid-template-columns: 1fr;
   }
 }
+
+/* Checkbox Container */
+.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-weight: bold;
+  color: #ffd700; /* Gold */
+  font-size: 0.95rem;
+}
+
+/* Entfernt jegliches Button-Feeling vom Link */
+.checkbox-container .agb-link {
+  color: #ffd700; /* Gold */
+  text-decoration: underline;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.checkbox-container .agb-link:hover {
+  color: #ffec70; /* Hellere Goldfarbe beim Hover */
+  text-decoration: underline;
+}
