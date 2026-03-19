@@ -1425,22 +1425,37 @@ color:#aaa;
 /* Checkbox Container */
 .checkbox-container {
   display: flex;
-  align-items: flex-start;
+  align-items: center; /* Checkbox und Text nebeneinander */
   gap: 8px;
-  font-weight: bold;
+  font-weight: normal; /* nicht fett, wirkt weniger wie Button */
   color: #ffd700; /* Gold */
   font-size: 0.95rem;
+  background: none; /* kein Hintergrund */
+  padding: 0; /* kein Padding */
+  border: none; /* keine Umrandung */
 }
 
-/* Entfernt jegliches Button-Feeling vom Link */
+/* Label für Checkbox Text */
+.checkbox-container label {
+  display: inline; /* kein Block, damit es wie Text aussieht */
+  font-weight: normal;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Link Styling */
 .checkbox-container .agb-link {
   color: #ffd700; /* Gold */
-  text-decoration: underline;
+  text-decoration: underline; /* klassischer Link */
   font-weight: normal;
+  background: none;
+  padding: 0;
+  border: none;
   cursor: pointer;
 }
 
 .checkbox-container .agb-link:hover {
-  color: #ffec70; /* Hellere Goldfarbe beim Hover */
+  color: #ffec70; /* heller beim Hover */
   text-decoration: underline;
 }
