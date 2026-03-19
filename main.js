@@ -306,3 +306,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+// main.js – nur die AGB Checkbox Logik
+const agbCheckbox = document.getElementById('agb');
+const submitBtn = document.getElementById('submitBtn');
+
+if (agbCheckbox && submitBtn) {
+  agbCheckbox.addEventListener('change', () => {
+    submitBtn.disabled = !agbCheckbox.checked;
+  });
+}
