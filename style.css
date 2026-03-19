@@ -1435,7 +1435,7 @@ color:#aaa;
 /* Label Text – schwarz */
 .checkbox-container label {
   display: inline;
-  color: #000000; /* schwarz für den normalen Text */
+  color: #ffffff; /* schwarz für den normalen Text */
   font-weight: normal;
   background: none;
   padding: 0;
