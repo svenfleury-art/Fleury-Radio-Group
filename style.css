@@ -1469,3 +1469,23 @@ color:#aaa;
   margin-left: auto;
   margin-right: auto;
 }
+
+.page-header {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.content {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.text-block {
+  margin-bottom: 40px;
+}
+
+.cta-section {
+  text-align: center;
+  padding: 40px 20px;
+}
