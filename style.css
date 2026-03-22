@@ -1496,43 +1496,38 @@ color:#aaa;
 =================================== */
 .content {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap; /* damit die Cards nebeneinander laufen */
   gap: 24px;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
+/* Alle Cards */
 .card {
   background: linear-gradient(145deg, rgba(7,25,70,.95), rgba(11,42,106,.92));
   border: 1px solid rgba(212,175,55,.25);
   border-radius: 18px;
   padding: 20px;
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-  display: flex;
-  flex-direction: column; /* Überschrift oben */
-  gap: 16px;
   color: #fff;
 }
 
-/* Inhalt unter der Überschrift nebeneinander */
-.card-content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+/* Erste Card nimmt die volle Breite */
+.card:first-child {
+  flex: 1 1 100%;
 }
 
-/* Jede Box nimmt etwa die Hälfte */
-.card-content > * {
-  flex: 1 1 calc(50% - 16px); /* zwei nebeneinander mit Lücke */
+/* Alle weiteren Cards: jeweils 2 nebeneinander */
+.card:not(:first-child) {
+  flex: 1 1 calc(50% - 12px); /* zwei nebeneinander mit Lücke */
 }
 
-/* Responsive: unter 768px alles untereinander */
+/* Responsive: unter 768px alle Cards volle Breite */
 @media (max-width: 768px) {
-  .card-content {
-    flex-direction: column;
-  }
-  .card-content > * {
+  .card,
+  .card:first-child,
+  .card:not(:first-child) {
     flex: 1 1 100%;
   }
 }
