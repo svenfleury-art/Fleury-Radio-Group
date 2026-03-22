@@ -1457,3 +1457,15 @@ color:#aaa;
   color: #ffec70; /* heller Gold beim Hover */
   text-decoration: underline;
 }
+
+/* Bilder in Team-Cards */
+.team-photo {
+  width: 100%;
+  max-width: 200px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
