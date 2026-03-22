@@ -1531,3 +1531,13 @@ color:#aaa;
     flex: 1 1 100%;
   }
 }
+
+/* Erste Card volle Breite */
+.card.full-width {
+  flex: 1 1 100%;
+}
+
+/* Alle anderen Cards jeweils 2 nebeneinander */
+.card:not(.full-width) {
+  flex: 1 1 calc(50% - 12px);
+}
