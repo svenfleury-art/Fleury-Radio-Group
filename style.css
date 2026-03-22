@@ -1541,3 +1541,26 @@ color:#aaa;
 .card:not(.full-width) {
   flex: 1 1 calc(50% - 12px);
 }
+
+
+main.content {
+  display: flex;
+  flex-wrap: wrap;        /* Damit die Cards umbrechen */
+  gap: 24px;              /* Abstand zwischen den Cards */
+}
+
+/* Erste Card volle Breite */
+.card.full-width {
+  flex: 1 1 100%;         /* Nimmt ganze Zeile ein */
+}
+
+/* Alle anderen Cards jeweils 2 nebeneinander */
+.card:not(.full-width) {
+  flex: 1 1 calc(50% - 12px); /* 2 Cards pro Reihe minus halben Gap */
+}
+
+@media (max-width: 768px) {
+  .card:not(.full-width) {
+    flex: 1 1 100%;
+  }
+}
