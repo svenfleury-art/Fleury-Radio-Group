@@ -1525,14 +1525,6 @@ color:#aaa;
   flex: 1 1 calc(50% - 12px);
 }
 
-/* Bilder in Cards */
-.card img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  display: block;
-}
-
 /* Card Inhalte sauber paddings & spacing */
 .card h2, .card h3, .card p, .card a {
   margin: 0 0 12px 0;
