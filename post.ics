@@ -1,0 +1,570 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+CALSCALE:GREGORIAN
+PRODID:-//FRG Insta Plan//EN
+# März
+
+BEGIN:VEVENT
+UID:20260323-1@frg
+DTSTAMP:20260323T000000Z
+DTSTART;VALUE=DATE:20260323
+SUMMARY:1️⃣ – 🎧 Was läuft grad bei dir? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schule, Arbeit oder Chillen? Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260324-5@frg
+DTSTAMP:20260324T000000Z
+DTSTART;VALUE=DATE:20260324
+SUMMARY:5️⃣ – 🔥 Feierabend oder noch Stress? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Kommentier 👇 🎧 Wir begleiten dich durch den Tag
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260325-2@frg
+DTSTAMP:20260325T000000Z
+DTSTART;VALUE=DATE:20260325
+SUMMARY:2️⃣ – ⚡ RAP oder ROCK? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib deine Antwort 👇 📻 Wir haben beides für dich
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260326-8@frg
+DTSTAMP:20260326T000000Z
+DTSTART;VALUE=DATE:20260326
+SUMMARY:8️⃣ – 💬 Was hörst du heute? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Drop deinen Song in die Kommentare 👇 👀 Vielleicht spielen wir ihn
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260327-4@frg
+DTSTAMP:20260327T000000Z
+DTSTART;VALUE=DATE:20260327
+SUMMARY:4️⃣ – 📻 Kennst du schon unseren Sender? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:🔵 Chill & Vibes 🔊 Radio Rhywälle 👉 Jetzt einschalten
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260328-6@frg
+DTSTAMP:20260328T000000Z
+DTSTART;VALUE=DATE:20260328
+SUMMARY:6️⃣ – ⚡ Kopfhörer oder Boxen? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260329-7@frg
+DTSTAMP:20260329T000000Z
+DTSTART;VALUE=DATE:20260329
+SUMMARY:7️⃣ – 🌆 Basel Vibes Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Wir liefern dir den Sound 🎶 🔊 Jetzt reinhören
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260330-3@frg
+DTSTAMP:20260330T000000Z
+DTSTART;VALUE=DATE:20260330
+SUMMARY:3️⃣ – 🎶 Song der Stunde Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Jetzt bei uns: [Songname] 🔊 Hör rein – Link in Bio
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260331-9@frg
+DTSTAMP:20260331T000000Z
+DTSTART;VALUE=DATE:20260331
+SUMMARY:9️⃣ – 📻 3 Sender – 1 Vibe Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:🔵 Rhywälle 🔴 RhyRock ⚔️ Winterlord FM
+END:VEVENT
+
+# April (01.04 – 30.04)
+BEGIN:VEVENT
+UID:20260401-1@frg
+DTSTAMP:20260401T000000Z
+DTSTART;VALUE=DATE:20260401
+SUMMARY:1️⃣ – 🎧 Was läuft grad bei dir? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schule, Arbeit oder Chillen? Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260402-10@frg
+DTSTAMP:20260402T000000Z
+DTSTART;VALUE=DATE:20260402
+SUMMARY:10️⃣ – ⚡ Spotify oder Radio? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Sei ehrlich 👇 🎧 Team Streaming oder Team Live?
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260403-2@frg
+DTSTAMP:20260403T000000Z
+DTSTART;VALUE=DATE:20260403
+SUMMARY:2️⃣ – ⚡ RAP oder ROCK? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib deine Antwort 👇 📻 Wir haben beides für dich
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260404-5@frg
+DTSTAMP:20260404T000000Z
+DTSTART;VALUE=DATE:20260404
+SUMMARY:5️⃣ – 🔥 Feierabend oder noch Stress? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Kommentier 👇 🎧 Wir begleiten dich durch den Tag
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260405-8@frg
+DTSTAMP:20260405T000000Z
+DTSTART;VALUE=DATE:20260405
+SUMMARY:8️⃣ – 💬 Was hörst du heute? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Drop deinen Song in die Kommentare 👇 👀 Vielleicht spielen wir ihn
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260406-4@frg
+DTSTAMP:20260406T000000Z
+DTSTART;VALUE=DATE:20260406
+SUMMARY:4️⃣ – 📻 Kennst du schon unseren Sender? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:🔵 Chill & Vibes 🔊 Radio Rhywälle 👉 Jetzt einschalten
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260407-6@frg
+DTSTAMP:20260407T000000Z
+DTSTART;VALUE=DATE:20260407
+SUMMARY:6️⃣ – ⚡ Kopfhörer oder Boxen? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260408-7@frg
+DTSTAMP:20260408T000000Z
+DTSTART;VALUE=DATE:20260408
+SUMMARY:7️⃣ – 🌆 Basel Vibes Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Wir liefern dir den Sound 🎶 🔊 Jetzt reinhören
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260409-1@frg
+DTSTAMP:20260409T000000Z
+DTSTART;VALUE=DATE:20260409
+SUMMARY:1️⃣ – 🎧 Was läuft grad bei dir? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schule, Arbeit oder Chillen? Schreib’s in die Kommentare 👇
+END:VEVENT
+
+# April
+BEGIN:VEVENT
+UID:20260410-2@frg
+DTSTAMP:20260410T000000Z
+DTSTART;VALUE=DATE:20260410
+SUMMARY:2️⃣ – ⚡ RAP oder ROCK? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib deine Antwort 👇 📻 Wir haben beides für dich
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260411-11@frg
+DTSTAMP:20260411T000000Z
+DTSTART;VALUE=DATE:20260411
+SUMMARY:11️⃣ – 🔥 Deine Musik. Deine Welle. Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Willkommen bei der Fleury Radio Group 📻 Hör rein und werde Teil davon
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260412-5@frg
+DTSTAMP:20260412T000000Z
+DTSTART;VALUE=DATE:20260412
+SUMMARY:5️⃣ – 🔥 Feierabend oder noch Stress? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Kommentier 👇 🎧 Wir begleiten dich durch den Tag
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260413-8@frg
+DTSTAMP:20260413T000000Z
+DTSTART;VALUE=DATE:20260413
+SUMMARY:8️⃣ – 💬 Was hörst du heute? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Drop deinen Song in die Kommentare 👇 👀 Vielleicht spielen wir ihn
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260414-3@frg
+DTSTAMP:20260414T000000Z
+DTSTART;VALUE=DATE:20260414
+SUMMARY:3️⃣ – 🎶 Song der Stunde Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Jetzt bei uns: [Songname] 🔊 Hör rein – Link in Bio
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260415-9@frg
+DTSTAMP:20260415T000000Z
+DTSTART;VALUE=DATE:20260415
+SUMMARY:9️⃣ – 📻 3 Sender – 1 Vibe Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:🔵 Rhywälle 🔴 RhyRock ⚔️ Winterlord FM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260416-6@frg
+DTSTAMP:20260416T000000Z
+DTSTART;VALUE=DATE:20260416
+SUMMARY:6️⃣ – ⚡ Kopfhörer oder Boxen? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260417-1@frg
+DTSTAMP:20260417T000000Z
+DTSTART;VALUE=DATE:20260417
+SUMMARY:1️⃣ – 🎧 Was läuft grad bei dir? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schule, Arbeit oder Chillen? Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260418-2@frg
+DTSTAMP:20260418T000000Z
+DTSTART;VALUE=DATE:20260418
+SUMMARY:2️⃣ – ⚡ RAP oder ROCK? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib deine Antwort 👇 📻 Wir haben beides für dich
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260419-10@frg
+DTSTAMP:20260419T000000Z
+DTSTART;VALUE=DATE:20260419
+SUMMARY:10️⃣ – ⚡ Spotify oder Radio? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Sei ehrlich 👇 🎧 Team Streaming oder Team Live?
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260420-5@frg
+DTSTAMP:20260420T000000Z
+DTSTART;VALUE=DATE:20260420
+SUMMARY:5️⃣ – 🔥 Feierabend oder noch Stress? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Kommentier 👇 🎧 Wir begleiten dich durch den Tag
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260421-7@frg
+DTSTAMP:20260421T000000Z
+DTSTART;VALUE=DATE:20260421
+SUMMARY:7️⃣ – 🌆 Basel Vibes Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Wir liefern dir den Sound 🎶 🔊 Jetzt reinhören
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260422-8@frg
+DTSTAMP:20260422T000000Z
+DTSTART;VALUE=DATE:20260422
+SUMMARY:8️⃣ – 💬 Was hörst du heute? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Drop deinen Song in die Kommentare 👇 👀 Vielleicht spielen wir ihn
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260423-4@frg
+DTSTAMP:20260423T000000Z
+DTSTART;VALUE=DATE:20260423
+SUMMARY:4️⃣ – 📻 Kennst du schon unseren Sender? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:🔵 Chill & Vibes 🔊 Radio Rhywälle 👉 Jetzt einschalten
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260424-1@frg
+DTSTAMP:20260424T000000Z
+DTSTART;VALUE=DATE:20260424
+SUMMARY:1️⃣ – 🎧 Was läuft grad bei dir? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schule, Arbeit oder Chillen? Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260425-6@frg
+DTSTAMP:20260425T000000Z
+DTSTART;VALUE=DATE:20260425
+SUMMARY:6️⃣ – ⚡ Kopfhörer oder Boxen? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260426-2@frg
+DTSTAMP:20260426T000000Z
+DTSTART;VALUE=DATE:20260426
+SUMMARY:2️⃣ – ⚡ RAP oder ROCK? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib deine Antwort 👇 📻 Wir haben beides für dich
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260427-3@frg
+DTSTAMP:20260427T000000Z
+DTSTART;VALUE=DATE:20260427
+SUMMARY:3️⃣ – 🎶 Song der Stunde Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Jetzt bei uns: [Songname] 🔊 Hör rein – Link in Bio
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260428-5@frg
+DTSTAMP:20260428T000000Z
+DTSTART;VALUE=DATE:20260428
+SUMMARY:5️⃣ – 🔥 Feierabend oder noch Stress? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Kommentier 👇 🎧 Wir begleiten dich durch den Tag
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260429-11@frg
+DTSTAMP:20260429T000000Z
+DTSTART;VALUE=DATE:20260429
+SUMMARY:11️⃣ – 🔥 Deine Musik. Deine Welle. Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Willkommen bei der Fleury Radio Group 📻 Hör rein und werde Teil davon
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260430-7@frg
+DTSTAMP:20260430T000000Z
+DTSTART;VALUE=DATE:20260430
+SUMMARY:7️⃣ – 🌆 Basel Vibes Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Wir liefern dir den Sound 🎶 🔊 Jetzt reinhören
+END:VEVENT
+
+# --- Mai 2026 ---
+BEGIN:VEVENT
+UID:20260501-1@frg
+DTSTAMP:20260501T000000Z
+DTSTART;VALUE=DATE:20260501
+SUMMARY:1️⃣ – 🎧 Was läuft grad bei dir? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schule, Arbeit oder Chillen? Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260502-2@frg
+DTSTAMP:20260502T000000Z
+DTSTART;VALUE=DATE:20260502
+SUMMARY:2️⃣ – ⚡ RAP oder ROCK? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib deine Antwort 👇 📻 Wir haben beides für dich
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260503-8@frg
+DTSTAMP:20260503T000000Z
+DTSTART;VALUE=DATE:20260503
+SUMMARY:8️⃣ – 💬 Was hörst du heute? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Drop deinen Song in die Kommentare 👇 👀 Vielleicht spielen wir ihn
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260504-6@frg
+DTSTAMP:20260504T000000Z
+DTSTART;VALUE=DATE:20260504
+SUMMARY:6️⃣ – ⚡ Kopfhörer oder Boxen? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260505-5@frg
+DTSTAMP:20260505T000000Z
+DTSTART;VALUE=DATE:20260505
+SUMMARY:5️⃣ – 🔥 Feierabend oder noch Stress? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Kommentier 👇 🎧 Wir begleiten dich durch den Tag
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260506-4@frg
+DTSTAMP:20260506T000000Z
+DTSTART;VALUE=DATE:20260506
+SUMMARY:4️⃣ – 📻 Kennst du schon unseren Sender? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:🔵 Chill & Vibes 🔊 Radio Rhywälle 👉 Jetzt einschalten
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260507-7@frg
+DTSTAMP:20260507T000000Z
+DTSTART;VALUE=DATE:20260507
+SUMMARY:7️⃣ – 🌆 Basel Vibes Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Wir liefern dir den Sound 🎶 🔊 Jetzt reinhören
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260508-10@frg
+DTSTAMP:20260508T000000Z
+DTSTART;VALUE=DATE:20260508
+SUMMARY:10️⃣ – ⚡ Spotify oder Radio? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Sei ehrlich 👇 🎧 Team Streaming oder Team Live?
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260509-1@frg
+DTSTAMP:20260509T000000Z
+DTSTART;VALUE=DATE:20260509
+SUMMARY:1️⃣ – 🎧 Was läuft grad bei dir? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schule, Arbeit oder Chillen? Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260510-2@frg
+DTSTAMP:20260510T000000Z
+DTSTART;VALUE=DATE:20260510
+SUMMARY:2️⃣ – ⚡ RAP oder ROCK? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib deine Antwort 👇 📻 Wir haben beides für dich
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260511-3@frg
+DTSTAMP:20260511T000000Z
+DTSTART;VALUE=DATE:20260511
+SUMMARY:3️⃣ – 🎶 Song der Stunde Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Jetzt bei uns: [Songname] 🔊 Hör rein – Link in Bio
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260512-5@frg
+DTSTAMP:20260512T000000Z
+DTSTART;VALUE=DATE:20260512
+SUMMARY:5️⃣ – 🔥 Feierabend oder noch Stress? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Kommentier 👇 🎧 Wir begleiten dich durch den Tag
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260513-8@frg
+DTSTAMP:20260513T000000Z
+DTSTART;VALUE=DATE:20260513
+SUMMARY:8️⃣ – 💬 Was hörst du heute? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Drop deinen Song in die Kommentare 👇 👀 Vielleicht spielen wir ihn
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260514-9@frg
+DTSTAMP:20260514T000000Z
+DTSTART;VALUE=DATE:20260514
+SUMMARY:9️⃣ – 📻 3 Sender – 1 Vibe Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:🔵 Rhywälle 🔴 RhyRock ⚔️ Winterlord FM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260515-6@frg
+DTSTAMP:20260515T000000Z
+DTSTART;VALUE=DATE:20260515
+SUMMARY:6️⃣ – ⚡ Kopfhörer oder Boxen? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260516-1@frg
+DTSTAMP:20260516T000000Z
+DTSTART;VALUE=DATE:20260516
+SUMMARY:1️⃣ – 🎧 Was läuft grad bei dir? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schule, Arbeit oder Chillen? Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260517-2@frg
+DTSTAMP:20260517T000000Z
+DTSTART;VALUE=DATE:20260517
+SUMMARY:2️⃣ – ⚡ RAP oder ROCK? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib deine Antwort 👇 📻 Wir haben beides für dich
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260518-11@frg
+DTSTAMP:20260518T000000Z
+DTSTART;VALUE=DATE:20260518
+SUMMARY:11️⃣ – 🔥 Deine Musik. Deine Welle. Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Willkommen bei der Fleury Radio Group 📻 Hör rein und werde Teil davon
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260519-5@frg
+DTSTAMP:20260519T000000Z
+DTSTART;VALUE=DATE:20260519
+SUMMARY:5️⃣ – 🔥 Feierabend oder noch Stress? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Kommentier 👇 🎧 Wir begleiten dich durch den Tag
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260520-7@frg
+DTSTAMP:20260520T000000Z
+DTSTART;VALUE=DATE:20260520
+SUMMARY:7️⃣ – 🌆 Basel Vibes Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Wir liefern dir den Sound 🎶 🔊 Jetzt reinhören
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260521-8@frg
+DTSTAMP:20260521T000000Z
+DTSTART;VALUE=DATE:20260521
+SUMMARY:8️⃣ – 💬 Was hörst du heute? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Drop deinen Song in die Kommentare 👇 👀 Vielleicht spielen wir ihn
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260522-4@frg
+DTSTAMP:20260522T000000Z
+DTSTART;VALUE=DATE:20260522
+SUMMARY:4️⃣ – 📻 Kennst du schon unseren Sender? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:🔵 Chill & Vibes 🔊 Radio Rhywälle 👉 Jetzt einschalten
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260523-1@frg
+DTSTAMP:20260523T000000Z
+DTSTART;VALUE=DATE:20260523
+SUMMARY:1️⃣ – 🎧 Was läuft grad bei dir? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schule, Arbeit oder Chillen? Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260524-2@frg
+DTSTAMP:20260524T000000Z
+DTSTART;VALUE=DATE:20260524
+SUMMARY:2️⃣ – ⚡ RAP oder ROCK? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib deine Antwort 👇 📻 Wir haben beides für dich
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260525-10@frg
+DTSTAMP:20260525T000000Z
+DTSTART;VALUE=DATE:20260525
+SUMMARY:10️⃣ – ⚡ Spotify oder Radio? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Sei ehrlich 👇 🎧 Team Streaming oder Team Live?
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260526-5@frg
+DTSTAMP:20260526T000000Z
+DTSTART;VALUE=DATE:20260526
+SUMMARY:5️⃣ – 🔥 Feierabend oder noch Stress? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Kommentier 👇 🎧 Wir begleiten dich durch den Tag
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260527-3@frg
+DTSTAMP:20260527T000000Z
+DTSTART;VALUE=DATE:20260527
+SUMMARY:3️⃣ – 🎶 Song der Stunde Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Jetzt bei uns: [Songname] 🔊 Hör rein – Link in Bio
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260528-6@frg
+DTSTAMP:20260528T000000Z
+DTSTART;VALUE=DATE:20260528
+SUMMARY:6️⃣ – ⚡ Kopfhörer oder Boxen? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Schreib’s in die Kommentare 👇
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260529-8@frg
+DTSTAMP:20260529T000000Z
+DTSTART;VALUE=DATE:20260529
+SUMMARY:8️⃣ – 💬 Was hörst du heute? Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Drop deinen Song in die Kommentare 👇 👀 Vielleicht spielen wir ihn
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260530-7@frg
+DTSTAMP:20260530T000000Z
+DTSTART;VALUE=DATE:20260530
+SUMMARY:7️⃣ – 🌆 Basel Vibes Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:Wir liefern dir den Sound 🎶 🔊 Jetzt reinhören
+END:VEVENT
+
+BEGIN:VEVENT
+UID:20260531-9@frg
+DTSTAMP:20260531T000000Z
+DTSTART;VALUE=DATE:20260531
+SUMMARY:9️⃣ – 📻 3 Sender – 1 Vibe Story: Post teilen + 1 Interaktions-Story
+DESCRIPTION:🔵 Rhywälle 🔴 RhyRock ⚔️ Winterlord FM
+END:VEVENT
+
+END:VCALENDAR
