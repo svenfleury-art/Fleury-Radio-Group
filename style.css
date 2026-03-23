@@ -1134,7 +1134,7 @@ background:#3b82f6;
 
 
 /* ================================
-   FRG COUNTDOWN – CLEAN VERSION
+   FRG COUNTDOWN – NEON + SMOOTH
 ================================ */
 
 .countdown {
@@ -1144,9 +1144,10 @@ background:#3b82f6;
 
 /* Titel */
 #countdown-title {
-  margin-bottom: 20px;
-  font-size: 24px;
+  margin-bottom: 25px;
+  font-size: 26px;
   font-weight: bold;
+  color: #fff;
 }
 
 /* Container */
@@ -1167,13 +1168,15 @@ background:#3b82f6;
   width: 90px;
   height: 110px;
 
-  background: #1c1c1c;
-  border-radius: 10px;
+  background: #111;
+  border-radius: 12px;
 
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  box-shadow:
+    0 0 10px rgba(0, 200, 255, 0.2),
+    0 4px 10px rgba(0,0,0,0.5);
 }
 
-/* Zahl */
+/* ZAHL */
 .time-box div {
   display: flex;
   align-items: center;
@@ -1182,9 +1185,20 @@ background:#3b82f6;
   width: 100%;
   height: 60%;
 
-  font-size: 40px;
+  font-size: 42px;
   font-weight: bold;
   letter-spacing: 2px;
+
+  color: #00c8ff;
+
+  /* 🔥 Neon Glow */
+  text-shadow:
+    0 0 5px #00c8ff,
+    0 0 10px #00c8ff,
+    0 0 20px rgba(0, 200, 255, 0.6);
+
+  /* ⚡ Smooth Animation */
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 /* Label */
@@ -1196,12 +1210,18 @@ background:#3b82f6;
   width: 100%;
   height: 40%;
 
-  font-size: 12px;
+  font-size: 11px;
   color: #aaa;
   text-transform: uppercase;
 }
 
-/* Responsive (Handy) */
+/* 🔥 Animation Klasse */
+.time-box div.animate {
+  transform: translateY(-10px) scale(1.1);
+  opacity: 0.6;
+}
+
+/* Responsive */
 @media (max-width: 500px) {
   .time-box {
     width: 70px;
@@ -1209,10 +1229,6 @@ background:#3b82f6;
   }
 
   .time-box div {
-    font-size: 28px;
-  }
-
-  .time-box span {
-    font-size: 10px;
+    font-size: 30px;
   }
 }
