@@ -162,30 +162,38 @@ function initCountdown() {
 
   const lastValues = { days: null, hours: null, minutes: null, seconds: null };
 
-  function flipUpdate(el, value, key) {
-    if (lastValues[key] !== value) {
-      const front = el.querySelector(".front");
-      const flipTop = el.querySelector(".flip-top");
-      const flipBottom = el.querySelector(".flip-bottom");
-      const card = el.querySelector(".flip-card");
+ function flipUpdate(el, value, key) {
+  if (lastValues[key] === value) return;
 
-      if (!front || !flipTop || !flipBottom || !card) return;
+  const front = el.querySelector(".front");
+  const flipTop = el.querySelector(".flip-top");
+  const flipBottom = el.querySelector(".flip-bottom");
+  const card = el.querySelector(".flip-card");
 
-      flipTop.textContent = front.textContent;
-      flipBottom.textContent = value;
+  if (!front || !flipTop || !flipBottom || !card) return;
 
-      card.classList.add("is-flipping");
+  // Werte setzen
+  flipTop.textContent = front.textContent;
+  flipBottom.textContent = value;
 
-      // 👉 WICHTIG: sofort setzen (Fix)
-      lastValues[key] = value;
+  // sofort speichern (wichtig)
+  lastValues[key] = value;
 
-      setTimeout(() => {
-        front.textContent = value;
-        card.classList.remove("is-flipping");
-      }, 500);
-    }
-  }
+  // reset falls Animation noch läuft
+  card.classList.remove("is-flipping");
 
+  // force reflow (🔥 wichtig für sauberen restart)
+  void card.offsetWidth;
+
+  // Animation starten
+  card.classList.add("is-flipping");
+
+  setTimeout(() => {
+    front.textContent = value;
+    card.classList.remove("is-flipping");
+  }, 550);
+}
+  
   function getNextEvent() {
     const now = new Date();
     for (const e of frgEvents) {
