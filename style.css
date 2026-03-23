@@ -1133,90 +1133,198 @@ background:#3b82f6;
 }
 
 
-/* ----------------------------
-   FLIP CARD ADJUSTED
----------------------------- */
+/* ================================
+   FRG COUNTDOWN – FLIP-UHR FINAL
+================================ */
 
-.flip-card{
-  width:70px;
-  height:90px;
-  position:relative;
-  perspective:1200px;
+/* BOX */
+.countdown {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(11,42,106,0.95), rgba(11,42,106,0.85));
+  border: 1px solid rgba(212,175,55,0.35);
+  color: #ffffff;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.flip-card .front{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(#1a1a1a,#0f0f0f);
-  border-radius:12px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:46px;
-  font-weight:900;
+/* TITLE */
+.countdown-title {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #D4AF37;
+  margin-bottom: 16px;
+}
+
+/* CONTAINER */
+#countdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* EVENT TEXT */
+.event-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* CLOCK */
+.flip-clock {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+/* UNIT */
+.flip-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =======================
+   FLIP CARD
+======================= */
+.flip-card {
+  width: 70px;
+  height: 90px;
+  position: relative;
+  perspective: 1200px;
+}
+
+.flip-card .front {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#1a1a1a,#0f0f0f);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 46px;
+  font-weight: 900;
   box-shadow:
     inset 0 -3px 8px rgba(0,0,0,0.6),
     0 6px 14px rgba(0,0,0,0.5);
-  z-index:1;
+  z-index: 1;
 }
 
+/* HALF PARTS */
 .flip-card .flip-top,
-.flip-card .flip-bottom{
-  position:absolute;
-  left:0;
-  width:100%;
-  height:50%;
-  overflow:hidden;
-  background:linear-gradient(#1a1a1a,#0f0f0f);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:46px;
-  font-weight:900;
-  backface-visibility:hidden;
-  opacity:0;
+.flip-card .flip-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  background: linear-gradient(#1a1a1a,#0f0f0f);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 46px;
+  font-weight: 900;
+  backface-visibility: hidden;
+  opacity: 0;
 }
 
-.flip-card .flip-top{
-  top:0;
-  transform-origin:bottom;
-  border-top-left-radius:12px;
-  border-top-right-radius:12px;
+/* TOP HALF */
+.flip-card .flip-top {
+  top: 0;
+  transform-origin: bottom;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
-.flip-card .flip-bottom{
-  bottom:0;
-  transform-origin:top;
-  transform:rotateX(180deg);
-  border-bottom-left-radius:12px;
-  border-bottom-right-radius:12px;
+/* BOTTOM HALF */
+.flip-card .flip-bottom {
+  bottom: 0;
+  transform-origin: top;
+  transform: rotateX(180deg);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
-.flip-card.is-flipping .front{
-  visibility:hidden;
+/* SPLIT LINE */
+.flip-card::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 50%;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  z-index: 5;
+}
+
+/* FLIP ANIMATION */
+.flip-card.is-flipping .front {
+  visibility: hidden;
 }
 
 .flip-card.is-flipping .flip-top,
-.flip-card.is-flipping .flip-bottom{
-  opacity:1;
+.flip-card.is-flipping .flip-bottom {
+  opacity: 1;
 }
 
-.flip-card.is-flipping .flip-top{
-  animation:flipTop 0.55s cubic-bezier(.22,.61,.36,1);
+.flip-card.is-flipping .flip-top {
+  animation: flipTop 0.55s cubic-bezier(.22,.61,.36,1);
 }
 
-.flip-card.is-flipping .flip-bottom{
-  animation:flipBottom 0.55s cubic-bezier(.22,.61,.36,1);
+.flip-card.is-flipping .flip-bottom {
+  animation: flipBottom 0.55s cubic-bezier(.22,.61,.36,1);
 }
 
-@keyframes flipTop{
-  0%{ transform:rotateX(0deg); }
-  100%{ transform:rotateX(-180deg); }
+@keyframes flipTop {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-180deg); }
 }
 
-@keyframes flipBottom{
-  0%{ transform:rotateX(180deg); }
-  100%{ transform:rotateX(0deg); }
+@keyframes flipBottom {
+  0% { transform: rotateX(180deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+/* LABEL */
+.label {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #ccc;
+}
+
+/* =======================
+   RESPONSIVE
+======================= */
+@media (max-width: 768px) {
+  .flip-card {
+    width: 60px;
+    height: 80px;
+  }
+
+  .flip-card .front,
+  .flip-card .flip-top,
+  .flip-card .flip-bottom {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 420px) {
+  .flip-card {
+    width: 55px;
+    height: 72px;
+  }
+
+  .flip-card .front,
+  .flip-card .flip-top,
+  .flip-card .flip-bottom {
+    font-size: 30px;
+  }
 }
 
 .label {
