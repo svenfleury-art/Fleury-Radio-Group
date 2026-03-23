@@ -1189,13 +1189,12 @@ background:#3b82f6;
   font-weight: bold;
   letter-spacing: 2px;
 
-  color: #00c8ff;
+color: #4da6ff;
 
-  /* 🔥 Neon Glow */
-  text-shadow:
-    0 0 5px #00c8ff,
-    0 0 10px #00c8ff,
-    0 0 20px rgba(0, 200, 255, 0.6);
+text-shadow:
+  0 0 5px #4da6ff,
+  0 0 10px #4da6ff,
+  0 0 20px rgba(77, 166, 255, 0.5);
 
   /* ⚡ Smooth Animation */
   transition: transform 0.3s ease, opacity 0.3s ease;
