@@ -156,33 +156,35 @@ const frgEvents = [
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
-// 🔥 WICHTIG: ändern je Seite
-const PAGE_MODE = "home"; // "special" für zweite Seite
+const PAGE_MODE = "home";
 
 function pad(n) {
   return String(Math.floor(n)).padStart(2, "0");
 }
 
-// 🔎 nächstes Event
+// 🔎 nächstes Event (SAFE)
 function getNextEvent() {
-  const now = new Date();
+  const now = Date.now();
 
   const future = frgEvents
-    .map(e => ({ ...e, dateObj: new Date(e.date) }))
-    .filter(e => e.dateObj > now)
+    .map(e => ({
+      ...e,
+      dateObj: new Date(e.date)
+    }))
+    .filter(e => e.dateObj.getTime() > now)
     .sort((a, b) => a.dateObj - b.dateObj);
 
   return future[0] || null;
 }
 
-// 🧠 7 Tage Regel
+// 🧠 Anzeige-Regel
 function shouldShow(event) {
   if (!event) return false;
 
   if (PAGE_MODE === "special") return true;
 
-  const now = new Date();
-  const diff = event.dateObj - now;
+  const now = Date.now();
+  const diff = event.dateObj.getTime() - now;
 
   return diff <= 7 * 24 * 60 * 60 * 1000;
 }
@@ -191,20 +193,14 @@ function shouldShow(event) {
 function updateCountdown() {
   const wrapper = document.querySelector(".countdown");
 
-  if (!wrapper) {
-    console.error("❌ .countdown NICHT gefunden");
-    return;
-  }
+  if (!wrapper) return;
 
   const event = getNextEvent();
 
   if (!event) {
-    console.warn("❌ Kein Event gefunden");
+    wrapper.style.display = "none";
     return;
   }
-
-  // 👉 DEBUG (wichtig!)
-  console.log("EVENT:", event.title);
 
   if (!shouldShow(event)) {
     wrapper.style.display = "none";
@@ -213,18 +209,29 @@ function updateCountdown() {
 
   wrapper.style.display = "block";
 
-  document.getElementById("countdown-title").textContent = event.title;
+  // 🔥 DOM SAFE CHECK
+  const titleEl = document.getElementById("countdown-title");
+  const daysEl = document.getElementById("days");
+  const hoursEl = document.getElementById("hours");
+  const minutesEl = document.getElementById("minutes");
+  const secondsEl = document.getElementById("seconds");
 
-  const now = new Date();
-  const diff = event.dateObj - now;
+  if (!titleEl || !daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
-  document.getElementById("days").textContent = pad(diff / (1000 * 60 * 60 * 24));
-  document.getElementById("hours").textContent = pad((diff / (1000 * 60 * 60)) % 24);
-  document.getElementById("minutes").textContent = pad((diff / (1000 * 60)) % 60);
-  document.getElementById("seconds").textContent = pad((diff / 1000) % 60);
+  titleEl.textContent = event.title;
+
+  const now = Date.now();
+  const diff = event.dateObj.getTime() - now;
+
+  if (diff <= 0) return;
+
+  daysEl.textContent = pad(diff / (1000 * 60 * 60 * 24));
+  hoursEl.textContent = pad((diff / (1000 * 60 * 60)) % 24);
+  minutesEl.textContent = pad((diff / (1000 * 60)) % 60);
+  secondsEl.textContent = pad((diff / 1000) % 60);
 }
 
-// ⏱ START (WICHTIG)
+// ⏱ START (SAFE)
 document.addEventListener("DOMContentLoaded", () => {
   updateCountdown();
   setInterval(updateCountdown, 1000);
