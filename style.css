@@ -479,6 +479,14 @@ header,.site-header{
   animation:flipBottomSmooth 0.55s cubic-bezier(.22,.61,.36,1);
 }
 
+.flip-clock{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+
 /* ✨ Smooth Keyframes */
 @keyframes flipTopSmooth{
   0%{
