@@ -142,6 +142,9 @@ function initFilter() {
 Countdown
 ------------------------- */
   
+// ================================
+// FRG EVENT DATEN
+// ================================
 const frgEvents = [
   { title: "FRG Showcase Week", date: "2026-03-23T00:00:00" },
   { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
@@ -156,14 +159,34 @@ const frgEvents = [
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
+// ================================
+// PAGE MODE (AUTO)
+// ================================
 const PAGE_MODE = document.body.dataset.page || "home";
 
-
+// ================================
+// HELPERS
+// ================================
 function pad(n) {
   return String(Math.floor(n)).padStart(2, "0");
 }
 
-// 🔎 nächstes Event (SAFE)
+// 🔥 Smooth Animation
+function updateWithAnimation(el, newValue) {
+  if (!el) return;
+  if (el.textContent === newValue) return;
+
+  el.classList.add("animate");
+
+  setTimeout(() => {
+    el.textContent = newValue;
+    el.classList.remove("animate");
+  }, 150);
+}
+
+// ================================
+// NEXT EVENT FINDEN
+// ================================
 function getNextEvent() {
   const now = Date.now();
 
@@ -175,10 +198,12 @@ function getNextEvent() {
     .filter(e => e.dateObj.getTime() > now)
     .sort((a, b) => a.dateObj - b.dateObj);
 
-  return future[0] || null;
+  return future.length ? future[0] : null;
 }
 
-// 🧠 Anzeige-Regel
+// ================================
+// ANZEIGE LOGIK
+// ================================
 function shouldShow(event) {
   if (!event) return false;
 
@@ -190,10 +215,11 @@ function shouldShow(event) {
   return diff <= 7 * 24 * 60 * 60 * 1000;
 }
 
-// 🚀 MAIN LOOP
+// ================================
+// MAIN COUNTDOWN
+// ================================
 function updateCountdown() {
   const wrapper = document.querySelector(".countdown");
-
   if (!wrapper) return;
 
   const event = getNextEvent();
@@ -210,7 +236,6 @@ function updateCountdown() {
 
   wrapper.style.display = "block";
 
-  // 🔥 DOM SAFE CHECK
   const titleEl = document.getElementById("countdown-title");
   const daysEl = document.getElementById("days");
   const hoursEl = document.getElementById("hours");
@@ -226,13 +251,20 @@ function updateCountdown() {
 
   if (diff <= 0) return;
 
-  daysEl.textContent = pad(diff / (1000 * 60 * 60 * 24));
-  hoursEl.textContent = pad((diff / (1000 * 60 * 60)) % 24);
-  minutesEl.textContent = pad((diff / (1000 * 60)) % 60);
-  secondsEl.textContent = pad((diff / 1000) % 60);
+  const days = diff / (1000 * 60 * 60 * 24);
+  const hours = (diff / (1000 * 60 * 60)) % 24;
+  const minutes = (diff / (1000 * 60)) % 60;
+  const seconds = (diff / 1000) % 60;
+
+  updateWithAnimation(daysEl, pad(days));
+  updateWithAnimation(hoursEl, pad(hours));
+  updateWithAnimation(minutesEl, pad(minutes));
+  updateWithAnimation(secondsEl, pad(seconds));
 }
 
-// ⏱ START (SAFE)
+// ================================
+// START
+// ================================
 document.addEventListener("DOMContentLoaded", () => {
   updateCountdown();
   setInterval(updateCountdown, 1000);
