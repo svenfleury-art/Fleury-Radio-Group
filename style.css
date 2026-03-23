@@ -1203,8 +1203,9 @@ background:#3b82f6;
   font-size: 0.9rem;
   color: #333;
 }
-.label {
-  text-align: center;
-  font-size: 14px;
-  margin-top: 5px;
+
+
+
+.countdown > :not(#countdown-wrapper) {
+  display: none !important;
 }
