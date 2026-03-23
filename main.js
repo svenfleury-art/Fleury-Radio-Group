@@ -155,62 +155,118 @@ const frgEvents = [
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
+// 👉 TRUE = Spezial-Seite | FALSE = Startseite
+const ALWAYS_SHOW = false;
+
+function pad(num) {
+  return String(num).padStart(2, "0");
+}
+
+// 🔥 Holt IMMER das nächste zukünftige Event
 function getNextEvent() {
   const now = new Date();
-  return frgEvents.find(e => new Date(e.date) > now);
+
+  const next = frgEvents
+    .map(e => ({ ...e, dateObj: new Date(e.date) }))
+    .filter(e => e.dateObj > now)
+    .sort((a, b) => a.dateObj - b.dateObj)[0];
+
+  return next || null;
 }
+
+function shouldShow(event) {
+  if (ALWAYS_SHOW) return true;
+
+  const now = new Date();
+  const diff = event.dateObj - now;
+
+  return diff <= 7 * 24 * 60 * 60 * 1000;
+}
+
+function updateUnit(id, newValue) {
+  const flipCard = document.getElementById(id);
+  const staticTop = flipCard.querySelector(".static .top");
+  const staticBottom = flipCard.querySelector(".static .bottom");
+
+  const currentValue = staticTop.textContent;
+  if (currentValue === newValue) return;
+
+  const animTop = flipCard.querySelector(".flip-animation .top");
+  const animBottom = flipCard.querySelector(".flip-animation .bottom");
+
+  animTop.textContent = currentValue;
+  animBottom.textContent = newValue;
+
+  flipCard.classList.add("flip");
+
+  setTimeout(() => {
+    staticTop.textContent = newValue;
+    staticBottom.textContent = newValue;
+    flipCard.classList.remove("flip");
+  }, 1000);
+}
+
+let currentEventId = null;
 
 function updateCountdown() {
   const event = getNextEvent();
+  const wrapper = document.querySelector(".countdown");
+
   if (!event) {
-    document.getElementById("countdown-wrapper").style.display = "none";
+    wrapper.style.display = "none";
     return;
   }
 
-  const now = new Date();
-  const diff = new Date(event.date) - now;
+  // 🔄 Wenn Event wechselt → sofort UI reset
+  if (currentEventId !== event.date) {
+    currentEventId = event.date;
 
-  const days = Math.floor(diff / (1000*60*60*24));
-  const hours = Math.floor((diff / (1000*60*60)) % 24);
-  const minutes = Math.floor((diff / (1000*60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
+    ["flipDays", "flipHours", "flipMinutes", "flipSeconds"].forEach(id => {
+      const el = document.getElementById(id);
+      el.querySelector(".static .top").textContent = "00";
+      el.querySelector(".static .bottom").textContent = "00";
+    });
+  }
 
-  flip("flipDays", days);
-  flip("flipHours", hours);
-  flip("flipMinutes", minutes);
-  flip("flipSeconds", seconds);
-
-  document.getElementById("countdown-title").textContent = event.title;
-
-  // Startseite nur 7 Tage vorher
-  const wrapper = document.getElementById("countdown-wrapper");
-  if (window.location.pathname.includes("index.html")) {
-    wrapper.style.display = (diff <= 7*24*60*60*1000) ? "flex" : "none";
+  // Anzeige-Regel
+  if (!shouldShow(event)) {
+    wrapper.style.display = "none";
+    return;
   } else {
-    wrapper.style.display = "flex";
+    wrapper.style.display = "block";
   }
+
+  // Titel setzen
+  const titleEl = document.getElementById("countdown-title");
+  if (titleEl) titleEl.textContent = event.title;
+
+  const now = new Date();
+  const diff = event.dateObj - now;
+
+  // 🔥 Wenn Event genau jetzt endet → sofort nächstes holen
+  if (diff <= 0) return;
+
+  const d = pad(Math.floor(diff / (1000 * 60 * 60 * 24)));
+  const h = pad(Math.floor((diff / (1000 * 60 * 60)) % 24));
+  const m = pad(Math.floor((diff / (1000 * 60)) % 60));
+  const s = pad(Math.floor((diff / 1000) % 60));
+
+  updateUnit("flipDays", d);
+  updateUnit("flipHours", h);
+  updateUnit("flipMinutes", m);
+  updateUnit("flipSeconds", s);
 }
 
-function flip(id, value) {
-  const card = document.getElementById(id);
-  const top = card.querySelector(".top");
-  const bottom = card.querySelector(".bottom");
+// Initial setzen
+["flipDays", "flipHours", "flipMinutes", "flipSeconds"].forEach(id => {
+  const el = document.getElementById(id);
+  el.querySelector(".static .top").textContent = "00";
+  el.querySelector(".static .bottom").textContent = "00";
+});
 
-  const strValue = String(value).padStart(2,'0');
-
-  if (top.textContent !== strValue) {
-    card.classList.add("flipping");
-    bottom.textContent = strValue;
-    setTimeout(() => {
-      top.textContent = strValue;
-      card.classList.remove("flipping");
-    }, 600);
-  }
-}
-
-setInterval(updateCountdown, 1000);
+// 🚀 Läuft flüssiger (optional: 500ms statt 1000ms)
+setInterval(updateCountdown, 500);
 updateCountdown();
-
 
 /* -------------------------
 FRG JINGLE PLAYER
