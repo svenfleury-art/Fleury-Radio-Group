@@ -137,50 +137,103 @@ function initFilter() {
 }
 
 
-/* -------------------------
-Countdown
-------------------------- */
-/* --- Flip-Countdown Script --- */
-function flipAnimation(card, newNumber) {
-  const top = card.querySelector('.flip-top');
-  const bottom = card.querySelector('.flip-bottom');
-  const next = card.querySelector('.flip-next');
+function initCountdown() {
+  const container = document.getElementById("countdown-container");
+  if (!container) return;
 
-  if (top.textContent == newNumber) return;
+  const daysEl = document.getElementById("cdDays");
+  const hoursEl = document.getElementById("cdHours");
+  const minutesEl = document.getElementById("cdMinutes");
+  const secondsEl = document.getElementById("cdSeconds");
+  if (!daysEl) return;
 
-  next.textContent = newNumber;
-  top.classList.add('animate');
-  next.classList.add('animate');
+  const frgEvents = [
+    { title: "FRG Showcase Week", date: "2026-03-23T00:00:00" },
+    { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
+    { title: "FRG Simulcast", date: "2026-05-30T19:00:00" },
+    { title: "FRG Crossover Night", date: "2026-06-27T19:00:00" },
+    { title: "FRG Schweiz Special", date: "2026-08-01T12:00:00" },
+    { title: "FRG Crossover Night", date: "2026-09-26T19:00:00" },
+    { title: "1 Jahr Fleury Radio Group", date: "2026-10-28T12:00:00" },
+    { title: "FRG Halloween Special", date: "2026-10-31T12:00:00" },
+    { title: "FRG Crossover Night", date: "2026-11-28T20:00:00" },
+    { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
+    { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
+  ];
 
-  top.addEventListener('animationend', () => {
-    top.textContent = newNumber;
-    bottom.textContent = newNumber;
-    top.classList.remove('animate');
-    next.classList.remove('animate');
-  }, { once: true });
+  const lastValues = { days: null, hours: null, minutes: null, seconds: null };
+
+  function flipUpdate(el, value, key) {
+    const card = el.querySelector(".flip-card");
+    const front = card.querySelector(".front");
+    const flipTop = card.querySelector(".flip-top");
+    const flipBottom = card.querySelector(".flip-bottom");
+
+    if (lastValues[key] === value) return;
+
+    // Werte setzen
+    flipTop.textContent = front.textContent; // aktuelle Zahl oben
+    flipBottom.textContent = value;          // neue Zahl unten
+    card.classList.add("is-flipping");
+
+    lastValues[key] = value;
+
+    // Animation beenden
+    setTimeout(() => {
+      front.textContent = value;
+      card.classList.remove("is-flipping");
+    }, 550); // passend zur CSS-Dauer
+  }
+
+  function getNextEvent() {
+    const now = new Date();
+    for (const e of frgEvents) {
+      const dateObj = new Date(e.date);
+      if (dateObj > now) return { ...e, dateObj };
+    }
+    return null;
+  }
+
+  function updateCountdown() {
+    const event = getNextEvent();
+    if (!event) {
+      container.style.display = "none";
+      return;
+    }
+
+    const now = new Date();
+    const diff = event.dateObj - now;
+
+    const sevenDays = 7 * 24 * 60 * 60 * 1000;
+    const isHome =
+      window.location.pathname === "/" || window.location.pathname.includes("index");
+
+    if (isHome && diff > sevenDays) {
+      container.style.display = "none";
+      return;
+    }
+
+    container.style.display = "flex";
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    flipUpdate(daysEl, days, "days");
+    flipUpdate(hoursEl, hours, "hours");
+    flipUpdate(minutesEl, minutes, "minutes");
+    flipUpdate(secondsEl, seconds, "seconds");
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 }
 
-// Zielzeit einstellen (Beispiel: 5 Minuten von jetzt)
-let targetDate = new Date();
-targetDate.setMinutes(targetDate.getMinutes() + 5);
+// Starte Countdown
+initCountdown();
 
-function updateCountdown() {
-  const now = new Date();
-  const diff = Math.max(0, Math.floor((targetDate - now) / 1000));
 
-  const days = Math.floor(diff / 86400);
-  const hours = Math.floor((diff % 86400) / 3600);
-  const minutes = Math.floor((diff % 3600) / 60);
-  const seconds = diff % 60;
-
-  flipAnimation(document.getElementById('days'), days);
-  flipAnimation(document.getElementById('hours'), hours);
-  flipAnimation(document.getElementById('minutes'), minutes);
-  flipAnimation(document.getElementById('seconds'), seconds);
-}
-
-updateCountdown(); // sofort initialisieren
-setInterval(updateCountdown, 1000);
 /* -------------------------
 FRG JINGLE PLAYER
 ------------------------- */
