@@ -137,6 +137,10 @@ function initFilter() {
 }
 
 
+
+/* -------------------------
+Countdown
+------------------------- */
 function initCountdown() {
   const container = document.getElementById("countdown-container");
   if (!container) return;
@@ -145,7 +149,7 @@ function initCountdown() {
   const hoursEl = document.getElementById("cdHours");
   const minutesEl = document.getElementById("cdMinutes");
   const secondsEl = document.getElementById("cdSeconds");
-  if (!daysEl) return;
+  if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
   const frgEvents = [
     { title: "FRG Showcase Week", date: "2026-03-23T00:00:00" },
@@ -166,23 +170,22 @@ function initCountdown() {
   function flipUpdate(el, value, key) {
     const card = el.querySelector(".flip-card");
     const front = card.querySelector(".front");
-    const flipTop = card.querySelector(".flip-top");
-    const flipBottom = card.querySelector(".flip-bottom");
+    const top = card.querySelector(".flip-top");
+    const bottom = card.querySelector(".flip-bottom");
 
     if (lastValues[key] === value) return;
 
-    // Werte setzen
-    flipTop.textContent = front.textContent; // aktuelle Zahl oben
-    flipBottom.textContent = value;          // neue Zahl unten
+    top.textContent = front.textContent;  // aktuelle Zahl oben
+    bottom.textContent = value;           // neue Zahl unten
     card.classList.add("is-flipping");
 
     lastValues[key] = value;
 
-    // Animation beenden
+    // Animation sofort sichtbar und Front aktualisieren
     setTimeout(() => {
       front.textContent = value;
       card.classList.remove("is-flipping");
-    }, 550); // passend zur CSS-Dauer
+    }, 550); // Dauer passt zu CSS-Animation
   }
 
   function getNextEvent() {
@@ -204,9 +207,9 @@ function initCountdown() {
     const now = new Date();
     const diff = event.dateObj - now;
 
+    // Nur innerhalb 7 Tagen auf Home zeigen
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
-    const isHome =
-      window.location.pathname === "/" || window.location.pathname.includes("index");
+    const isHome = window.location.pathname === "/" || window.location.pathname.includes("index");
 
     if (isHome && diff > sevenDays) {
       container.style.display = "none";
@@ -230,9 +233,8 @@ function initCountdown() {
   setInterval(updateCountdown, 1000);
 }
 
-// Starte Countdown
+// Countdown starten
 initCountdown();
-
 
 /* -------------------------
 FRG JINGLE PLAYER
