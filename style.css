@@ -427,7 +427,8 @@ header,.site-header{
   left:0;
   width:100%;
   height:50%;
-  overflow:hidden;
+
+  overflow:hidden; /* 🔥 DAS IST DER KEY */
 
   background:linear-gradient(#1a1a1a,#0f0f0f);
 
@@ -441,7 +442,6 @@ header,.site-header{
   backface-visibility:hidden;
   opacity:0;
 }
-
 /* obere Hälfte */
 .flip-card .flip-top{
   top:0;
