@@ -156,29 +156,29 @@ const frgEvents = [
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
-// 👉 index.html = "home"
-// 👉 special.html = "special"
-const PAGE_MODE = "home";
+// 🔥 WICHTIG: ändern je Seite
+const PAGE_MODE = "home"; // "special" für zweite Seite
 
 function pad(n) {
   return String(Math.floor(n)).padStart(2, "0");
 }
 
-// 🔎 nächstes Event finden
+// 🔎 nächstes Event
 function getNextEvent() {
   const now = new Date();
 
   const future = frgEvents
     .map(e => ({ ...e, dateObj: new Date(e.date) }))
-    .filter(e => e.dateObj.getTime() > now.getTime())
+    .filter(e => e.dateObj > now)
     .sort((a, b) => a.dateObj - b.dateObj);
 
-  return future.length ? future[0] : null;
+  return future[0] || null;
 }
 
-// 🧠 Anzeige-Regel
+// 🧠 7 Tage Regel
 function shouldShow(event) {
   if (!event) return false;
+
   if (PAGE_MODE === "special") return true;
 
   const now = new Date();
@@ -187,12 +187,24 @@ function shouldShow(event) {
   return diff <= 7 * 24 * 60 * 60 * 1000;
 }
 
-// ⏱ Update Loop
+// 🚀 MAIN LOOP
 function updateCountdown() {
   const wrapper = document.querySelector(".countdown");
+
+  if (!wrapper) {
+    console.error("❌ .countdown NICHT gefunden");
+    return;
+  }
+
   const event = getNextEvent();
 
-  if (!wrapper || !event) return;
+  if (!event) {
+    console.warn("❌ Kein Event gefunden");
+    return;
+  }
+
+  // 👉 DEBUG (wichtig!)
+  console.log("EVENT:", event.title);
 
   if (!shouldShow(event)) {
     wrapper.style.display = "none";
@@ -206,15 +218,13 @@ function updateCountdown() {
   const now = new Date();
   const diff = event.dateObj - now;
 
-  if (diff <= 0) return;
-
   document.getElementById("days").textContent = pad(diff / (1000 * 60 * 60 * 24));
   document.getElementById("hours").textContent = pad((diff / (1000 * 60 * 60)) % 24);
   document.getElementById("minutes").textContent = pad((diff / (1000 * 60)) % 60);
   document.getElementById("seconds").textContent = pad((diff / 1000) % 60);
 }
 
-// 🚀 Start sicher
+// ⏱ START (WICHTIG)
 document.addEventListener("DOMContentLoaded", () => {
   updateCountdown();
   setInterval(updateCountdown, 1000);
