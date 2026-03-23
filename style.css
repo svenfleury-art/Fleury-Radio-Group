@@ -1133,66 +1133,17 @@ background:#3b82f6;
 }
 
 
-/* ================================
-   FRG COUNTDOWN – FINAL VERSION
-================================ */
-
-/* BOX */
+/* --- Flip-Countdown Styles --- */
 .countdown {
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, rgba(11,42,106,0.95), rgba(11,42,106,0.85));
-  border: 1px solid rgba(212,175,55,0.35);
-  color: #ffffff;
-  text-align: center;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  display: flex;
+  gap: 15px;
 }
 
-/* TITLE */
-.countdown-title {
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #D4AF37;
-  margin-bottom: 16px;
+.unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-/* CONTAINER */
-#countdown-container{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-/* EVENT TEXT */
-.event-info{
-  text-align:center;
-  margin-bottom:20px;
-}
-
-/* CLOCK */
-.flip-clock{
-  display:flex;
-  justify-content:center;
-  gap:18px;
-  flex-wrap:wrap;
-}
-
-/* UNIT */
-.flip-unit{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-/* =======================
-   FLIP CARD
-======================= */
 
 .flip-card {
   position: relative;
@@ -1202,27 +1153,26 @@ background:#3b82f6;
   font-size: 50px;
 }
 
-.flip-top, .flip-bottom, .flip-next {
+.flip-card span {
+  display: block;
   position: absolute;
   width: 100%;
   height: 50%;
-  left: 0;
   overflow: hidden;
-  background: #333;
-  color: #fff;
   text-align: center;
+  line-height: 40px;
+  background: #333;
+  border: 1px solid #111;
 }
 
 .flip-top {
   top: 0;
-  border-bottom: 1px solid #111;
   transform-origin: bottom;
   z-index: 3;
 }
 
 .flip-bottom {
   bottom: 0;
-  border-top: 1px solid #111;
   z-index: 1;
 }
 
@@ -1232,7 +1182,6 @@ background:#3b82f6;
   z-index: 2;
 }
 
-/* Animation */
 .flip-top.animate {
   animation: flipTop 0.5s forwards;
 }
@@ -1251,39 +1200,8 @@ background:#3b82f6;
   100% { transform: rotateX(0deg); }
 }
 
-/* LABEL */
-.label{
-  margin-top:10px;
-  font-size:13px;
-  color:#ccc;
-}
-
-/* =======================
-   RESPONSIVE
-======================= */
-
-@media (max-width: 768px){
-  .flip-card{
-    width:60px;
-    height:80px;
-  }
-
-  .flip-card .front,
-  .flip-card .flip-top,
-  .flip-card .flip-bottom{
-    font-size:36px;
-  }
-}
-
-@media (max-width: 420px){
-  .flip-card{
-    width:55px;
-    height:72px;
-  }
-
-  .flip-card .front,
-  .flip-card .flip-top,
-  .flip-card .flip-bottom{
-    font-size:30px;
-  }
+.label {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 5px;
 }
