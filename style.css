@@ -1137,16 +1137,6 @@ background:#3b82f6;
    FRG COUNTDOWN – FLIP-UHR FINAL
 ================================ */
 
-body {
-  background: #111;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
 /* Layout */
 .countdown-container {
   display: flex;
