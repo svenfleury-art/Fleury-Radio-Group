@@ -1191,11 +1191,6 @@ background:#3b82f6;
 
 color: #4da6ff;
 
-text-shadow:
-  0 0 5px #4da6ff,
-  0 0 10px #4da6ff,
-  0 0 20px rgba(77, 166, 255, 0.5);
-
   /* ⚡ Smooth Animation */
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
