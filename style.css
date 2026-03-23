@@ -1137,75 +1137,30 @@ background:#3b82f6;
    FRG COUNTDOWN – FLIP-UHR PRO
 ================================ */
 
-body {
-  background: #0f0f0f;
-  color: white;
-  font-family: Arial, sans-serif;
-}
-
 .countdown {
-  text-align: center;
-  margin-top: 100px;
+  margin-top: 80px;
 }
 
 .countdown-container {
   display: flex;
   justify-content: center;
   gap: 20px;
+  margin-top: 20px;
 }
 
-.flip-unit span {
-  display: block;
-  margin-top: 8px;
-  color: #aaa;
-}
-
-.flip-card {
-  position: relative;
+.time-box {
+  background: #1c1c1c;
+  padding: 15px;
+  border-radius: 10px;
   width: 90px;
-  height: 110px;
-  perspective: 600px;
 }
 
-.top,
-.bottom {
-  position: absolute;
-  width: 100%;
-  height: 50%;
-  background: #222;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 42px;
-  border-radius: 6px;
-  backface-visibility: hidden;
+.time-box div {
+  font-size: 40px;
+  font-weight: bold;
 }
 
-.top {
-  top: 0;
-  border-bottom: 1px solid #000;
-}
-
-.bottom {
-  bottom: 0;
-  transform: rotateX(180deg);
-}
-
-/* Flip Animation */
-.flip .top {
-  animation: flipTop 0.5s forwards;
-}
-
-.flip .bottom {
-  animation: flipBottom 0.5s 0.5s forwards;
-}
-
-@keyframes flipTop {
-  0% { transform: rotateX(0); }
-  100% { transform: rotateX(-90deg); }
-}
-
-@keyframes flipBottom {
-  0% { transform: rotateX(90deg); }
-  100% { transform: rotateX(0); }
+.time-box span {
+  font-size: 12px;
+  color: #aaa;
 }
