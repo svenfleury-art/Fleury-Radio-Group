@@ -156,13 +156,16 @@ const frgEvents = [
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
-const PAGE_MODE = "special"; // "home" oder "special"
+// ⭐ MODE:
+// "home" = 7 Tage vorher
+// "special" = immer sichtbar
+const PAGE_MODE = "home";
 
 function pad(n) {
-  return String(n).padStart(2, "0");
+  return String(Math.floor(n)).padStart(2, "0");
 }
 
-// nächstes Event
+// 🔎 nächstes Event
 function getNextEvent() {
   const now = new Date();
 
@@ -172,56 +175,31 @@ function getNextEvent() {
     .sort((a, b) => a.dateObj - b.dateObj)[0] || null;
 }
 
-// Anzeige-Regel
+// 🧠 Anzeige-Regel
 function shouldShow(event) {
   if (PAGE_MODE === "special") return true;
 
   const now = new Date();
-  return (event.dateObj - now) <= 7 * 24 * 60 * 60 * 1000;
+  const diff = event.dateObj - now;
+
+  return diff <= 7 * 24 * 60 * 60 * 1000;
 }
 
-// Flip Funktion
-function flip(el, value) {
-  const top = el.querySelector(".top");
-  const bottom = el.querySelector(".bottom");
-
-  if (top.textContent === value) return;
-
-  const old = top.textContent;
-
-  el.classList.add("flip");
-
-  top.textContent = old;
-  bottom.textContent = value;
-
-  setTimeout(() => {
-    top.textContent = value;
-    bottom.textContent = value;
-    el.classList.remove("flip");
-  }, 900);
-}
-
-let currentEvent = null;
-
-// Loop
-function update() {
+// ⏱ Countdown Update
+function updateCountdown() {
   const event = getNextEvent();
+
   const wrapper = document.querySelector(".countdown");
 
   if (!event || !wrapper) return;
 
-  // Event Wechsel
-  if (currentEvent !== event.date) {
-    currentEvent = event.date;
-  }
-
-  // Anzeige
+  // 🧠 Startseiten-Logik
   if (!shouldShow(event)) {
     wrapper.style.display = "none";
     return;
+  } else {
+    wrapper.style.display = "block";
   }
-
-  wrapper.style.display = "block";
 
   // Titel
   document.getElementById("countdown-title").textContent = event.title;
@@ -231,20 +209,20 @@ function update() {
 
   if (diff <= 0) return;
 
-  const d = pad(Math.floor(diff / (1000 * 60 * 60 * 24)));
-  const h = pad(Math.floor((diff / (1000 * 60 * 60)) % 24));
-  const m = pad(Math.floor((diff / (1000 * 60)) % 60));
-  const s = pad(Math.floor((diff / 1000) % 60));
+  const days = diff / (1000 * 60 * 60 * 24);
+  const hours = (diff / (1000 * 60 * 60)) % 24;
+  const minutes = (diff / (1000 * 60)) % 60;
+  const seconds = (diff / 1000) % 60;
 
-  flip(document.getElementById("days"), d);
-  flip(document.getElementById("hours"), h);
-  flip(document.getElementById("minutes"), m);
-  flip(document.getElementById("seconds"), s);
+  document.getElementById("days").textContent = pad(days);
+  document.getElementById("hours").textContent = pad(hours);
+  document.getElementById("minutes").textContent = pad(minutes);
+  document.getElementById("seconds").textContent = pad(seconds);
 }
 
-setInterval(update, 1000);
-update();
-
+// 🚀 Start
+setInterval(updateCountdown, 1000);
+updateCountdown();
 /* -------------------------
 FRG JINGLE PLAYER
 ------------------------- */
