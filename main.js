@@ -156,27 +156,29 @@ const frgEvents = [
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
-// ⭐ MODE:
-// "home" = 7 Tage vorher
-// "special" = immer sichtbar
+// 👉 index.html = "home"
+// 👉 special.html = "special"
 const PAGE_MODE = "home";
 
 function pad(n) {
   return String(Math.floor(n)).padStart(2, "0");
 }
 
-// 🔎 nächstes Event
+// 🔎 nächstes Event finden
 function getNextEvent() {
   const now = new Date();
 
-  return frgEvents
+  const future = frgEvents
     .map(e => ({ ...e, dateObj: new Date(e.date) }))
-    .filter(e => e.dateObj > now)
-    .sort((a, b) => a.dateObj - b.dateObj)[0] || null;
+    .filter(e => e.dateObj.getTime() > now.getTime())
+    .sort((a, b) => a.dateObj - b.dateObj);
+
+  return future.length ? future[0] : null;
 }
 
 // 🧠 Anzeige-Regel
 function shouldShow(event) {
+  if (!event) return false;
   if (PAGE_MODE === "special") return true;
 
   const now = new Date();
@@ -185,23 +187,20 @@ function shouldShow(event) {
   return diff <= 7 * 24 * 60 * 60 * 1000;
 }
 
-// ⏱ Countdown Update
+// ⏱ Update Loop
 function updateCountdown() {
+  const wrapper = document.querySelector(".countdown");
   const event = getNextEvent();
 
-  const wrapper = document.querySelector(".countdown");
+  if (!wrapper || !event) return;
 
-  if (!event || !wrapper) return;
-
-  // 🧠 Startseiten-Logik
   if (!shouldShow(event)) {
     wrapper.style.display = "none";
     return;
-  } else {
-    wrapper.style.display = "block";
   }
 
-  // Titel
+  wrapper.style.display = "block";
+
   document.getElementById("countdown-title").textContent = event.title;
 
   const now = new Date();
@@ -209,20 +208,20 @@ function updateCountdown() {
 
   if (diff <= 0) return;
 
-  const days = diff / (1000 * 60 * 60 * 24);
-  const hours = (diff / (1000 * 60 * 60)) % 24;
-  const minutes = (diff / (1000 * 60)) % 60;
-  const seconds = (diff / 1000) % 60;
-
-  document.getElementById("days").textContent = pad(days);
-  document.getElementById("hours").textContent = pad(hours);
-  document.getElementById("minutes").textContent = pad(minutes);
-  document.getElementById("seconds").textContent = pad(seconds);
+  document.getElementById("days").textContent = pad(diff / (1000 * 60 * 60 * 24));
+  document.getElementById("hours").textContent = pad((diff / (1000 * 60 * 60)) % 24);
+  document.getElementById("minutes").textContent = pad((diff / (1000 * 60)) % 60);
+  document.getElementById("seconds").textContent = pad((diff / 1000) % 60);
 }
 
-// 🚀 Start
-setInterval(updateCountdown, 1000);
-updateCountdown();
+// 🚀 Start sicher
+document.addEventListener("DOMContentLoaded", () => {
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+});
+
+
+
 /* -------------------------
 FRG JINGLE PLAYER
 ------------------------- */
