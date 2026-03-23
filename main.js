@@ -155,40 +155,43 @@ const frgEvents = [
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
-// 👉 TRUE = Spezial-Seite | FALSE = Startseite
-const ALWAYS_SHOW = false;
+// ⭐ PAGE MODE: "home" oder "special"
+const PAGE_MODE = "special";
 
 function pad(num) {
   return String(num).padStart(2, "0");
 }
 
-// 🔥 Holt IMMER das nächste zukünftige Event
+// 🔥 nächstes Event finden
 function getNextEvent() {
   const now = new Date();
 
-  const next = frgEvents
+  return frgEvents
     .map(e => ({ ...e, dateObj: new Date(e.date) }))
     .filter(e => e.dateObj > now)
-    .sort((a, b) => a.dateObj - b.dateObj)[0];
-
-  return next || null;
+    .sort((a, b) => a.dateObj - b.dateObj)[0] || null;
 }
 
+// 🧠 Anzeige-Regel
 function shouldShow(event) {
-  if (ALWAYS_SHOW) return true;
-
   const now = new Date();
   const diff = event.dateObj - now;
 
+  // ⭐ Spezial-Seite: immer anzeigen
+  if (PAGE_MODE === "special") return true;
+
+  // 🏠 Startseite: nur 7 Tage vorher
   return diff <= 7 * 24 * 60 * 60 * 1000;
 }
 
+// 🎬 Flip Update
 function updateUnit(id, newValue) {
   const flipCard = document.getElementById(id);
   const staticTop = flipCard.querySelector(".static .top");
   const staticBottom = flipCard.querySelector(".static .bottom");
 
   const currentValue = staticTop.textContent;
+
   if (currentValue === newValue) return;
 
   const animTop = flipCard.querySelector(".flip-animation .top");
@@ -206,29 +209,30 @@ function updateUnit(id, newValue) {
   }, 1000);
 }
 
+// 🔄 aktuelles Event merken
 let currentEventId = null;
 
+// 🚀 Hauptloop
 function updateCountdown() {
   const event = getNextEvent();
   const wrapper = document.querySelector(".countdown");
 
-  if (!event) {
-    wrapper.style.display = "none";
-    return;
-  }
+  if (!event || !wrapper) return;
 
-  // 🔄 Wenn Event wechselt → sofort UI reset
+  // 🔄 Event Wechsel erkennen
   if (currentEventId !== event.date) {
     currentEventId = event.date;
 
     ["flipDays", "flipHours", "flipMinutes", "flipSeconds"].forEach(id => {
       const el = document.getElementById(id);
+      if (!el) return;
+
       el.querySelector(".static .top").textContent = "00";
       el.querySelector(".static .bottom").textContent = "00";
     });
   }
 
-  // Anzeige-Regel
+  // ⭐ Anzeige-Regel
   if (!shouldShow(event)) {
     wrapper.style.display = "none";
     return;
@@ -236,14 +240,13 @@ function updateCountdown() {
     wrapper.style.display = "block";
   }
 
-  // Titel setzen
+  // 🏷️ Titel setzen
   const titleEl = document.getElementById("countdown-title");
   if (titleEl) titleEl.textContent = event.title;
 
   const now = new Date();
   const diff = event.dateObj - now;
 
-  // 🔥 Wenn Event genau jetzt endet → sofort nächstes holen
   if (diff <= 0) return;
 
   const d = pad(Math.floor(diff / (1000 * 60 * 60 * 24)));
@@ -257,14 +260,16 @@ function updateCountdown() {
   updateUnit("flipSeconds", s);
 }
 
-// Initial setzen
+// 🧱 Initial Reset
 ["flipDays", "flipHours", "flipMinutes", "flipSeconds"].forEach(id => {
   const el = document.getElementById(id);
+  if (!el) return;
+
   el.querySelector(".static .top").textContent = "00";
   el.querySelector(".static .bottom").textContent = "00";
 });
 
-// 🚀 Läuft flüssiger (optional: 500ms statt 1000ms)
+// ▶ Start
 setInterval(updateCountdown, 500);
 updateCountdown();
 
