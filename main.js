@@ -156,7 +156,8 @@ const frgEvents = [
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
-const PAGE_MODE = "home";
+const PAGE_MODE = document.body.dataset.page || "home";
+
 
 function pad(n) {
   return String(Math.floor(n)).padStart(2, "0");
