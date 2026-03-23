@@ -849,7 +849,7 @@ background:#3b82f6;
   display:flex;
   justify-content:center;
   align-items:center;
-  flex-direction:column;
+}
 
   min-height:60vh;
   padding:40px 20px;
