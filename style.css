@@ -387,41 +387,8 @@ header,.site-header{
   }
 }
 
-/* ================================
-   FRG Flip Countdown – CLEAN FIX
-================================ */
-
-#countdown-container{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-
-  min-height:60vh;
-  padding:40px 20px;
-
-  background:#1b1b1b;
-  font-family:"Courier New", monospace;
-  color:white;
-}
-
-.event-info{
-  text-align:center;
-  margin-bottom:18px;
-}
-
-/* CLOCK */
-.flip-clock{
-  display:flex;
-  gap:12px;
-}
-
-.flip-unit{
-  text-align:center;
-}
-
 /* =======================
-   FLIP CARD (FIXED)
+   FLIP CARD (ORIGINAL FIXED)
 ======================= */
 
 .flip-card{
@@ -430,8 +397,6 @@ header,.site-header{
   position:relative;
   perspective:1000px;
   overflow:hidden;
-
-  transform-style: preserve-3d;
 }
 
 /* Hauptzahl */
@@ -453,14 +418,15 @@ header,.site-header{
     0 4px 10px rgba(0,0,0,0.6);
 }
 
-/* Flip Hälften */
+/* HALBE FLÄCHEN (wichtig!) */
 .flip-card .flip-top,
 .flip-card .flip-bottom{
   position:absolute;
   left:0;
-
   width:100%;
   height:50%;
+
+  overflow:hidden; /* 🔥 DAS FEHLT DIR */
 
   background:linear-gradient(#222,#111);
 
@@ -472,20 +438,26 @@ header,.site-header{
   font-weight:bold;
 
   backface-visibility:hidden;
-  will-change: transform;
-
   opacity:0;
 }
 
+/* obere Hälfte */
 .flip-card .flip-top{
   top:0;
   transform-origin:bottom;
 }
 
+/* untere Hälfte */
 .flip-card .flip-bottom{
   bottom:0;
   transform-origin:top;
   transform:rotateX(180deg);
+}
+
+/* TEXT POSITION KORRIGIEREN */
+.flip-card .flip-top span,
+.flip-card .flip-bottom span{
+  position:absolute;
 }
 
 /* Animation */
@@ -499,11 +471,11 @@ header,.site-header{
 }
 
 .flip-card.is-flipping .flip-top{
-  animation:flipTop 0.5s ease forwards;
+  animation:flipTop 0.5s forwards;
 }
 
 .flip-card.is-flipping .flip-bottom{
-  animation:flipBottom 0.5s ease forwards;
+  animation:flipBottom 0.5s forwards;
 }
 
 @keyframes flipTop{
@@ -515,47 +487,6 @@ header,.site-header{
   0%{ transform:rotateX(180deg); }
   100%{ transform:rotateX(0deg); }
 }
-
-/* Labels */
-.label{
-  display:block;
-  margin-top:8px;
-  font-size:14px;
-  color:#bbb;
-}
-
-/* Responsive */
-@media (max-width: 768px){
-  .flip-clock{
-    flex-wrap:wrap;
-    justify-content:center;
-  }
-
-  .flip-card{
-    width:60px;
-    height:80px;
-  }
-
-  .flip-card .front,
-  .flip-card .flip-top,
-  .flip-card .flip-bottom{
-    font-size:38px;
-  }
-}
-
-@media (max-width: 420px){
-  .flip-card{
-    width:55px;
-    height:72px;
-  }
-
-  .flip-card .front,
-  .flip-card .flip-top,
-  .flip-card .flip-bottom{
-    font-size:32px;
-  }
-}
-
 /* =====================================
    FRG EVENT HERO – ZENTRIERT
 ===================================== */
