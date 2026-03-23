@@ -173,8 +173,8 @@ function initCountdown() {
   if (!front || !flipTop || !flipBottom || !card) return;
 
   // Werte setzen
-  flipTop.textContent = front.textContent;
-  flipBottom.textContent = value;
+  flipTop.innerHTML = "<span>" + front.textContent + "</span>";
+flipBottom.innerHTML = "<span>" + value + "</span>";
 
   // sofort speichern (wichtig)
   lastValues[key] = value;
