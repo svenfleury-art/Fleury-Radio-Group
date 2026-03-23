@@ -171,46 +171,55 @@ function updateCountdown() {
   const target = new Date(event.date);
   const diff = target - now;
 
-  if (diff <= 0) return; // Event vorbei
+  if (diff <= 0) return;
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
   const seconds = Math.floor((diff / 1000) % 60);
 
-  flip("cdDays", days);
-  flip("cdHours", hours);
-  flip("cdMinutes", minutes);
-  flip("cdSeconds", seconds);
+  flip("flipDays", days);
+  flip("flipHours", hours);
+  flip("flipMinutes", minutes);
+  flip("flipSeconds", seconds);
 
   document.getElementById("countdown-title").textContent = event.title;
 
-  // Startseite nur 7 Tage vorher anzeigen
   const wrapper = document.getElementById("countdown-wrapper");
   if (window.location.pathname.includes("index.html")) {
     wrapper.style.display = (diff <= 7*24*60*60*1000) ? "flex" : "none";
   } else {
-    wrapper.style.display = "flex"; // Spezialseite immer anzeigen
+    wrapper.style.display = "flex";
   }
 }
 
 function flip(id, value) {
-  const topEl = document.getElementById(id);
-  const bottomEl = document.getElementById(id + "Bottom");
+  const card = document.getElementById(id);
+  const top = card.querySelector(".top");
+  const bottom = card.querySelector(".bottom");
+  const flipTop = card.querySelector(".flip-top");
+  const flipBottom = card.querySelector(".flip-bottom");
 
-  if (topEl.textContent != String(value).padStart(2, '0')) {
-    topEl.parentElement.classList.add("flip");
+  const strValue = String(value).padStart(2,'0');
+
+  if (top.textContent !== strValue) {
+    flipTop.textContent = top.textContent;
+    flipBottom.textContent = strValue;
+
+    card.classList.add("flip");
+
     setTimeout(() => {
-      topEl.textContent = String(value).padStart(2, '0');
-      bottomEl.textContent = String(value).padStart(2, '0');
-      topEl.parentElement.classList.remove("flip");
-    }, 300);
+      top.textContent = strValue;
+      bottom.textContent = strValue;
+      card.classList.remove("flip");
+    }, 600);
   }
 }
 
-// Update jede Sekunde
 setInterval(updateCountdown, 1000);
 updateCountdown();
+
+
 /* -------------------------
 FRG JINGLE PLAYER
 ------------------------- */
