@@ -1137,57 +1137,83 @@ background:#3b82f6;
    FRG COUNTDOWN – FLIP-UHR FINAL
 ================================ */
 
-#countdown-container {
+body {
+  background: #111;
+  color: #fff;
+  font-family: Arial, sans-serif;
   display: flex;
-  gap: 15px;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Layout */
+.countdown-container {
+  display: flex;
+  gap: 20px;
 }
 
 .flip-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
 }
 
+.unit-label {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* Flip Card */
 .flip-card {
   position: relative;
-  width: 60px;
-  height: 80px;
-  perspective: 1000px;
+  width: 80px;
+  height: 100px;
+  perspective: 300px;
 }
 
 .card-face {
   position: absolute;
   width: 100%;
   height: 50%;
-  line-height: 40px;
-  text-align: center;
-  font-size: 2rem;
   background: #222;
-  color: #fff;
-  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  border-radius: 6px;
   backface-visibility: hidden;
-  overflow: hidden;
 }
 
-.card-face.top {
+.top {
   top: 0;
   border-bottom: 1px solid #000;
 }
 
-.card-face.bottom {
+.bottom {
   bottom: 0;
+  transform: rotateX(180deg);
   border-top: 1px solid #000;
 }
 
-.flip-card.flipping .top {
-  animation: flipTop 0.6s forwards;
+/* Animation Layer */
+.flip-animation .top {
+  transform-origin: bottom;
 }
 
-.flip-card.flipping .bottom {
-  animation: flipBottom 0.6s forwards;
+.flip-animation .bottom {
+  transform-origin: top;
 }
 
+/* ACTIVE FLIP */
+.flip-card.flip .flip-animation .top {
+  animation: flipTop 0.5s forwards;
+}
+
+.flip-card.flip .flip-animation .bottom {
+  animation: flipBottom 0.5s 0.5s forwards;
+}
+
+/* Keyframes */
 @keyframes flipTop {
   0% { transform: rotateX(0deg); }
   100% { transform: rotateX(-90deg); }
@@ -1196,16 +1222,4 @@ background:#3b82f6;
 @keyframes flipBottom {
   0% { transform: rotateX(90deg); }
   100% { transform: rotateX(0deg); }
-}
-
-.unit-label {
-  margin-top: 5px;
-  font-size: 0.9rem;
-  color: #333;
-}
-
-
-
-.countdown > :not(#countdown-wrapper) {
-  display: none !important;
 }
