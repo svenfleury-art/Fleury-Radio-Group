@@ -168,14 +168,11 @@ function updateCountdown() {
   }
 
   const now = new Date();
-  const target = new Date(event.date);
-  const diff = target - now;
+  const diff = new Date(event.date) - now;
 
-  if (diff <= 0) return;
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff / (1000*60*60)) % 24);
+  const minutes = Math.floor((diff / (1000*60)) % 60);
   const seconds = Math.floor((diff / 1000) % 60);
 
   flip("flipDays", days);
@@ -185,6 +182,7 @@ function updateCountdown() {
 
   document.getElementById("countdown-title").textContent = event.title;
 
+  // Startseite nur 7 Tage vorher
   const wrapper = document.getElementById("countdown-wrapper");
   if (window.location.pathname.includes("index.html")) {
     wrapper.style.display = (diff <= 7*24*60*60*1000) ? "flex" : "none";
@@ -197,21 +195,15 @@ function flip(id, value) {
   const card = document.getElementById(id);
   const top = card.querySelector(".top");
   const bottom = card.querySelector(".bottom");
-  const flipTop = card.querySelector(".flip-top");
-  const flipBottom = card.querySelector(".flip-bottom");
 
   const strValue = String(value).padStart(2,'0');
 
   if (top.textContent !== strValue) {
-    flipTop.textContent = top.textContent;
-    flipBottom.textContent = strValue;
-
-    card.classList.add("flip");
-
+    card.classList.add("flipping");
+    bottom.textContent = strValue;
     setTimeout(() => {
       top.textContent = strValue;
-      bottom.textContent = strValue;
-      card.classList.remove("flip");
+      card.classList.remove("flipping");
     }, 600);
   }
 }
