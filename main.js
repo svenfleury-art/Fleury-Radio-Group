@@ -136,9 +136,6 @@ function initFilter() {
   });
 }
 
-/* -------------------------
-COUNTDOWN
-------------------------- */
 function initCountdown() {
   const container = document.getElementById("countdown-container");
   if (!container) return;
@@ -170,14 +167,21 @@ function initCountdown() {
       const front = el.querySelector(".front");
       const flipTop = el.querySelector(".flip-top");
       const flipBottom = el.querySelector(".flip-bottom");
-      if (!front || !flipTop || !flipBottom) return;
+      const card = el.querySelector(".flip-card");
+
+      if (!front || !flipTop || !flipBottom || !card) return;
+
       flipTop.textContent = front.textContent;
       flipBottom.textContent = value;
-      el.querySelector(".flip-card").classList.add("is-flipping");
+
+      card.classList.add("is-flipping");
+
+      // 👉 WICHTIG: sofort setzen (Fix)
+      lastValues[key] = value;
+
       setTimeout(() => {
         front.textContent = value;
-        el.querySelector(".flip-card").classList.remove("is-flipping");
-        lastValues[key] = value;
+        card.classList.remove("is-flipping");
       }, 500);
     }
   }
@@ -200,19 +204,23 @@ function initCountdown() {
 
     const now = new Date();
     const diff = event.dateObj - now;
+
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
     const isHome =
       window.location.pathname === "/" || window.location.pathname.includes("index");
+
     if (isHome && diff > sevenDays) {
       container.style.display = "none";
       return;
     }
 
     container.style.display = "flex";
+
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
+
     flipUpdate(daysEl, days, "days");
     flipUpdate(hoursEl, hours, "hours");
     flipUpdate(minutesEl, minutes, "minutes");
