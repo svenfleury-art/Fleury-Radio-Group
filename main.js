@@ -141,6 +141,7 @@ function initFilter() {
 /* -------------------------
 Countdown
 ------------------------- */
+  
 const frgEvents = [
   { title: "FRG Showcase Week", date: "2026-03-23T00:00:00" },
   { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
@@ -155,14 +156,13 @@ const frgEvents = [
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
-// ⭐ PAGE MODE: "home" oder "special"
-const PAGE_MODE = "special";
+const PAGE_MODE = "special"; // "home" oder "special"
 
-function pad(num) {
-  return String(num).padStart(2, "0");
+function pad(n) {
+  return String(n).padStart(2, "0");
 }
 
-// 🔥 nächstes Event finden
+// nächstes Event
 function getNextEvent() {
   const now = new Date();
 
@@ -172,77 +172,59 @@ function getNextEvent() {
     .sort((a, b) => a.dateObj - b.dateObj)[0] || null;
 }
 
-// 🧠 Anzeige-Regel
+// Anzeige-Regel
 function shouldShow(event) {
-  const now = new Date();
-  const diff = event.dateObj - now;
-
-  // ⭐ Spezial-Seite: immer anzeigen
   if (PAGE_MODE === "special") return true;
 
-  // 🏠 Startseite: nur 7 Tage vorher
-  return diff <= 7 * 24 * 60 * 60 * 1000;
+  const now = new Date();
+  return (event.dateObj - now) <= 7 * 24 * 60 * 60 * 1000;
 }
 
-// 🎬 Flip Update
-function updateUnit(id, newValue) {
-  const flipCard = document.getElementById(id);
-  const staticTop = flipCard.querySelector(".static .top");
-  const staticBottom = flipCard.querySelector(".static .bottom");
+// Flip Funktion
+function flip(el, value) {
+  const top = el.querySelector(".top");
+  const bottom = el.querySelector(".bottom");
 
-  const currentValue = staticTop.textContent;
+  if (top.textContent === value) return;
 
-  if (currentValue === newValue) return;
+  const old = top.textContent;
 
-  const animTop = flipCard.querySelector(".flip-animation .top");
-  const animBottom = flipCard.querySelector(".flip-animation .bottom");
+  el.classList.add("flip");
 
-  animTop.textContent = currentValue;
-  animBottom.textContent = newValue;
-
-  flipCard.classList.add("flip");
+  top.textContent = old;
+  bottom.textContent = value;
 
   setTimeout(() => {
-    staticTop.textContent = newValue;
-    staticBottom.textContent = newValue;
-    flipCard.classList.remove("flip");
-  }, 1000);
+    top.textContent = value;
+    bottom.textContent = value;
+    el.classList.remove("flip");
+  }, 900);
 }
 
-// 🔄 aktuelles Event merken
-let currentEventId = null;
+let currentEvent = null;
 
-// 🚀 Hauptloop
-function updateCountdown() {
+// Loop
+function update() {
   const event = getNextEvent();
   const wrapper = document.querySelector(".countdown");
 
   if (!event || !wrapper) return;
 
-  // 🔄 Event Wechsel erkennen
-  if (currentEventId !== event.date) {
-    currentEventId = event.date;
-
-    ["flipDays", "flipHours", "flipMinutes", "flipSeconds"].forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-
-      el.querySelector(".static .top").textContent = "00";
-      el.querySelector(".static .bottom").textContent = "00";
-    });
+  // Event Wechsel
+  if (currentEvent !== event.date) {
+    currentEvent = event.date;
   }
 
-  // ⭐ Anzeige-Regel
+  // Anzeige
   if (!shouldShow(event)) {
     wrapper.style.display = "none";
     return;
-  } else {
-    wrapper.style.display = "block";
   }
 
-  // 🏷️ Titel setzen
-  const titleEl = document.getElementById("countdown-title");
-  if (titleEl) titleEl.textContent = event.title;
+  wrapper.style.display = "block";
+
+  // Titel
+  document.getElementById("countdown-title").textContent = event.title;
 
   const now = new Date();
   const diff = event.dateObj - now;
@@ -254,24 +236,14 @@ function updateCountdown() {
   const m = pad(Math.floor((diff / (1000 * 60)) % 60));
   const s = pad(Math.floor((diff / 1000) % 60));
 
-  updateUnit("flipDays", d);
-  updateUnit("flipHours", h);
-  updateUnit("flipMinutes", m);
-  updateUnit("flipSeconds", s);
+  flip(document.getElementById("days"), d);
+  flip(document.getElementById("hours"), h);
+  flip(document.getElementById("minutes"), m);
+  flip(document.getElementById("seconds"), s);
 }
 
-// 🧱 Initial Reset
-["flipDays", "flipHours", "flipMinutes", "flipSeconds"].forEach(id => {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  el.querySelector(".static .top").textContent = "00";
-  el.querySelector(".static .bottom").textContent = "00";
-});
-
-// ▶ Start
-setInterval(updateCountdown, 500);
-updateCountdown();
+setInterval(update, 1000);
+update();
 
 /* -------------------------
 FRG JINGLE PLAYER
