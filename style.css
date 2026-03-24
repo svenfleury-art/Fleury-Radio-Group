@@ -110,7 +110,7 @@ header,.site-header{
   max-width:640px;
   margin:16px auto 0;
 
-  max-height:0;
+  max-height:none;
   overflow:hidden;
 
   opacity:0;
