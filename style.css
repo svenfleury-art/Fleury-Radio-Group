@@ -1236,12 +1236,13 @@ color: #4da6ff;
 .section-header h2 {
   font-size: 2rem;
   margin-bottom: 10px;
+  color: #000; /* Schwarz */
 }
 
 .section-header p {
   font-size: 1rem;
   margin-bottom: 30px;
-  color: #555;
+  color: #000; /* Schwarz */
 }
 
 .artist-grid {
@@ -1267,7 +1268,14 @@ color: #4da6ff;
 
 .artist-photo {
   width: 100%;
-  height: auto;
-  border-radius: 50%;
+  aspect-ratio: 1 / 1; /* quadratisch */
+  object-fit: cover;
   margin-bottom: 10px;
+  border-radius: 5px; /* leicht abgerundet */
+}
+
+.artist-card p {
+  margin: 0;
+  font-weight: bold;
+  color: #000; /* Schwarz */
 }
