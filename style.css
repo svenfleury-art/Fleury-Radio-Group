@@ -1226,3 +1226,43 @@ color: #4da6ff;
     font-size: 30px;
   }
 }
+
+
+.accordion-btn {
+  background-color: #0055a5;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.accordion-btn:hover {
+  background-color: #003f7d;
+}
+
+.accordion-content {
+  display: none;
+  margin-top: 15px;
+}
+
+.artist-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.artist-card {
+  width: 120px;
+  text-align: center;
+}
+
+.artist-photo {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 8px;
+}
