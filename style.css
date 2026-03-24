@@ -110,13 +110,11 @@ header,.site-header{
   max-width:640px;
   margin:16px auto 0;
 
-
-  max-height: none; /* unbegrenzt */
-  overflow-y: auto; /* falls es scrollbar sein soll */
+  max-height:0;
+  overflow:hidden;
 
   opacity:0;
   transform: translateY(-20px);
-   
 
   /* ⬇️ CLOSE = langsamer */
   transition:
