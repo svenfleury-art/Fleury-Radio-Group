@@ -110,7 +110,7 @@ header,.site-header{
   max-width:640px;
   margin:16px auto 0;
 
-  max-height:none;
+  max-height:0;
   overflow:hidden;
 
   opacity:0;
@@ -1225,26 +1225,4 @@ color: #4da6ff;
   .time-box div {
     font-size: 30px;
   }
-}
-
-
-.artist-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-  margin-top: 15px;
-}
-
-.artist-card {
-  width: 120px;
-  text-align: center;
-}
-
-.artist-photo {
-  width: 100%;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 8px;
 }
