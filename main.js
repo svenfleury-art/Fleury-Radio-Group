@@ -276,6 +276,10 @@ document.addEventListener("DOMContentLoaded", () => {
 /* -------------------------
 FRG JINGLE PLAYER
 ------------------------- */
+
+/* -------------------------
+FRG JINGLE PLAYER – STABIL
+------------------------- */
 function initJinglePlayer() {
   const buttons = document.querySelectorAll(".playBtn");
   const audio = document.getElementById("audioPlayer");
@@ -283,44 +287,52 @@ function initJinglePlayer() {
   if (!buttons.length || !audio) return;
 
   let hasPlayedJingle = false;
+  let isPlaying = false; // verhindert Doppelstarts
 
   buttons.forEach(button => {
     button.addEventListener("click", () => {
       const streamUrl = button.getAttribute("data-stream");
       if (!streamUrl) return;
 
-      audio.pause();
-      audio.currentTime = 0;
+      // Abbrechen, falls gerade schon was läuft
+      if (isPlaying) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
 
+      isPlaying = true;
+
+      // Erstes Mal: Jingle abspielen
       if (!hasPlayedJingle) {
         hasPlayedJingle = true;
-
         console.log("▶️ Jingle startet");
 
-        audio.src = "frg-jingle.mp3"; // ✅ Datei liegt im gleichen Ordner wie HTML
-        audio.play().catch(err => console.log(err));
+        audio.src = "frg-jingle.mp3";
 
         const handleEnd = () => {
           console.log("🎧 Stream startet");
-
           audio.src = streamUrl;
-          audio.play().catch(err => console.log(err));
-
+          audio.play().catch(err => console.log("Stream Play Fehler:", err));
           audio.removeEventListener("ended", handleEnd);
         };
 
         audio.addEventListener("ended", handleEnd);
 
-      } else {
-        console.log("🎧 Direkt Stream");
+        audio.play().catch(err => console.log("Jingle Play Fehler:", err));
 
+      } else {
+        // Stream direkt starten
+        console.log("🎧 Direkt Stream");
         audio.src = streamUrl;
-        audio.play().catch(err => console.log(err));
+        audio.play().catch(err => console.log("Stream Play Fehler:", err));
       }
     });
   });
 }
 
+// Funktion aufrufen, sobald DOM bereit ist
+document.addEventListener("DOMContentLoaded", initJinglePlayer);
+    
 // Künstler-Formular Submission – FRG
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("artist-form");
