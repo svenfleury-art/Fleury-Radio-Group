@@ -1302,3 +1302,8 @@ color: #4da6ff;
 .ad-package h3 {
   color: #003399; /* FRG-Royalblau für Titel */
 }
+
+
+#werbepreise {
+  scroll-margin-top: 120px;
+}
