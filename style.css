@@ -1283,3 +1283,22 @@ color: #4da6ff;
   font-weight: bold;
   color: #000; /* Schwarz für Text in den Karten */
 }
+
+
+.ad-packages-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.ad-package {
+  flex: 1 1 300px; /* jede Karte mindestens 300px breit */
+  border: 2px solid #ffd700; /* goldener Rahmen */
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.ad-package h3 {
+  color: #003399; /* FRG-Royalblau für Titel */
+}
