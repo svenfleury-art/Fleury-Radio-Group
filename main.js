@@ -378,3 +378,16 @@ if (agbCheckbox && submitBtn) {
     submitBtn.disabled = !agbCheckbox.checked;
   });
 }
+
+
+
+<script>
+window.addEventListener("load", function () {
+  if (window.location.hash) {
+    const el = document.querySelector(window.location.hash);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+});
+</script>
