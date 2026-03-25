@@ -381,4 +381,14 @@ if (agbCheckbox && submitBtn) {
 
 
 
-
+// Anchor-Fix beim Laden
+window.addEventListener("load", function () {
+  if (window.location.hash) {
+    const el = document.querySelector(window.location.hash);
+    if (el) {
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: "smooth" });
+      }, 100); // kleiner Delay hilft bei geladenem Layout
+    }
+  }
+});
