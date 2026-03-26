@@ -148,6 +148,7 @@ Countdown
 const frgEvents = [
   { title: "FRG Showcase Week", date: "2026-03-23T00:00:00" },
   { title: "premiere von Labirinth von Skip auf Radio Rhywälle", date: "2026-03-24T12:30:00" },
+  { title: "Oldies bei Rhywälle", date: "2026-03-30T15:00:00" },
   { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
   { title: "FRG Simulcast", date: "2026-05-30T19:00:00" },
   { title: "FRG Crossover Night", date: "2026-06-27T19:00:00" },
