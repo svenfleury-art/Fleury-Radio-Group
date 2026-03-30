@@ -179,34 +179,41 @@
 
       <!-- Werbeanfragen Formular -->
       <!-- Werbeanfragen Formular -->
-<section class="card" id="werbeanfragen">
+<section class="card">
   <h2>📩 Werbeanfrage</h2>
-  <p>Füllen Sie das Formular aus, um Ihre Werbung bei FRG anzufragen. Wir melden uns so schnell wie möglich bei Ihnen!</p>
-  <form action="https://formspree.io/f/maqlopya" method="POST">
+  <form class="artist-form" id="werbe-form" action="https://formspree.io/f/maqlopya" method="POST">
     <label>
       Name / Unternehmen:
-      <input type="text" name="name" required>
+      <input type="text" name="name" placeholder="Name oder Unternehmen" required>
     </label>
+
     <label>
-      Ihre E-Mail:
-      <input type="email" name="email" required>
+      E-Mail:
+      <input type="email" name="email" placeholder="E-Mail" required>
     </label>
+
     <label>
       Betreff:
-      <input type="text" name="subject">
+      <input type="text" name="subject" placeholder="Betreff">
     </label>
+
     <label>
-      Ihre Nachricht:
-      <textarea name="message" rows="5" required></textarea>
+      Nachricht:
+      <textarea name="message" placeholder="Ihre Nachricht" rows="5" required></textarea>
     </label>
-    <label>
-      <input type="checkbox" name="agb" required>
-      Ich habe die <a href="agb.html" target="_blank">AGB</a> gelesen und akzeptiere sie
-    </label>
-    <button type="submit">Absenden</button>
+
+    <!-- AGB Checkbox -->
+    <div class="checkbox-container">
+      <input type="checkbox" id="agb" name="agb">
+      <label for="agb">
+        Ich habe die <a href="AGB.pdf" class="agb-link" target="_blank">AGB</a> gelesen und akzeptiere sie
+      </label>
+    </div>
+
+    <button type="submit" id="submitBtn" disabled>Absenden</button>
+    <p id="form-msg" style="display:none; margin-top:10px;"></p>
   </form>
 </section>
-
     </div>
 
     <!-- Kontakt -->
