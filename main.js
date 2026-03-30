@@ -355,7 +355,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }).then(response => {
       if (response.ok) {
         msg.style.display = "block";
-        msg.textContent = "Vielen Dank! Dein Track wurde erfolgreich eingereicht.";
+        msg.textContent = "Vielen Dank! Deine Anfrage wurde erfolgreich eingereicht.";
         form.reset();
       } else {
         response.json().then(data => {
