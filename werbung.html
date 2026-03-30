@@ -182,7 +182,8 @@
       <!-- Werbeanfragen Formular -->
 <section class="card">
   <h2>📩 Werbeanfrage</h2>
-  <form class="artist-form" id="werbe-form" action="https://formspree.io/f/maqlopya" method="POST">
+  <form class="artist-form" id="artist-form" action="https://formspree.io/f/maqlopya" method="POST">
+    
     <label>
       Name / Unternehmen:
       <input type="text" name="name" placeholder="Name oder Unternehmen" required>
@@ -200,19 +201,20 @@
 
     <label>
       Nachricht:
-      <textarea name="message" placeholder="Ihre Nachricht" rows="5" required></textarea>
+      <textarea name="message" placeholder="Ihre Nachricht" required></textarea>
     </label>
 
     <!-- AGB Checkbox -->
     <div class="checkbox-container">
       <input type="checkbox" id="agb" name="agb">
       <label for="agb">
-        Ich habe die <a href="AGB.pdf" class="agb-link" target="_blank">AGB</a> gelesen und akzeptiere sie
+        Ich akzeptiere die <a href="agb.html" class="agb-link" target="_blank">AGBs</a>
       </label>
     </div>
 
     <button type="submit" id="submitBtn" disabled>Absenden</button>
     <p id="form-msg" style="display:none; margin-top:10px;"></p>
+
   </form>
 </section>
   
