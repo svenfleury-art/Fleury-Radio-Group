@@ -178,29 +178,34 @@
       </section>
 
       <!-- Werbeanfragen Formular -->
-      <section class="card" id="werbeanfragen">
-        <h2>📩 Werbeanfrage</h2>
-        <p>Füllen Sie das Formular aus, um Ihre Werbung bei FRG anzufragen. Wir melden uns so schnell wie möglich bei Ihnen!</p>
-        <form action="https://formspree.io/f/maqlopya" method="POST">
-          <label>
-            Name / Unternehmen:
-            <input type="text" name="name" required>
-          </label>
-          <label>
-            Ihre E-Mail:
-            <input type="email" name="email" required>
-          </label>
-          <label>
-            Betreff:
-            <input type="text" name="subject">
-          </label>
-          <label>
-            Ihre Nachricht:
-            <textarea name="message" rows="5" required></textarea>
-          </label>
-          <button type="submit">Absenden</button>
-        </form>
-      </section>
+      <!-- Werbeanfragen Formular -->
+<section class="card" id="werbeanfragen">
+  <h2>📩 Werbeanfrage</h2>
+  <p>Füllen Sie das Formular aus, um Ihre Werbung bei FRG anzufragen. Wir melden uns so schnell wie möglich bei Ihnen!</p>
+  <form action="https://formspree.io/f/maqlopya" method="POST">
+    <label>
+      Name / Unternehmen:
+      <input type="text" name="name" required>
+    </label>
+    <label>
+      Ihre E-Mail:
+      <input type="email" name="email" required>
+    </label>
+    <label>
+      Betreff:
+      <input type="text" name="subject">
+    </label>
+    <label>
+      Ihre Nachricht:
+      <textarea name="message" rows="5" required></textarea>
+    </label>
+    <label>
+      <input type="checkbox" name="agb" required>
+      Ich habe die <a href="AGB.html" target="_blank">AGB</a> gelesen und akzeptiere sie
+    </label>
+    <button type="submit">Absenden</button>
+  </form>
+</section>
 
     </div>
 
