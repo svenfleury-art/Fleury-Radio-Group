@@ -704,7 +704,6 @@ background:#3b82f6;
   height:220px;
 }
 
-/* Mobile */
 @media (max-width:768px){
 
   /* Text ausblenden */
@@ -712,14 +711,27 @@ background:#3b82f6;
     display:none;
   }
 
-  /* Logo etwas kleiner für Mobile */
+  /* 🔥 Logo perfekt zentrieren */
+  .logo-area{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+  }
+
+  .logo-img{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* 🔧 bessere Größe für Mobile */
   .logo-img img{
-    height:320px;
+    height:120px;
   }
 
 }
-
-
 
 /* =======================
    LABELS
