@@ -1,203 +1,1321 @@
-/* ==============================
-   Root & Farben
-============================== */
-:root {
-  --primary: #2563EB;
-  --secondary: #1D4ED8;
-  --text: #0B1B4A;
-  --bg: #F9FAFB;
-  --card-bg: #FFFFFF;
-  --btn-bg: #2563EB;
-  --btn-text: #FFF;
+/* ==================================================
+   FRG – style.css (iOS / Apple Style)
+================================================== */
+
+:root{
+  --bg1:#2563EB;
+  --bg2:#1D4ED8;
+  --dark:#0B1B4A;
+  --surface:#102A6B;
+  --text:#F9FAFB;
+  --muted:rgba(249,250,251,.78);
+  --gold:#FACC15;
+  --red:#EF4444;
+
+  --radius:18px;
+  --shadow: 0 14px 35px rgba(0,0,0,.28);
+  --shadow2: 0 10px 24px rgba(0,0,0,.22);
 }
 
-/* ==============================
-   Global Styles
-============================== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* RESET */
+*{ box-sizing:border-box; margin:0; padding:0; }
+img{ max-width:100%; display:block; }
+a{ color: var(--gold); text-decoration:none; }
+a:hover{ text-decoration:underline; }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg);
+/* GLOBAL */
+body{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.7;
+  text-align: center;
+  font-size: 18px;
+
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(250,204,21,.12), transparent 60%),
+    radial-gradient(900px 500px at 80% 10%, rgba(239,68,68,.10), transparent 62%),
+    linear-gradient(160deg, var(--bg1), var(--bg2));
+
+  min-height: 100vh;
+  padding-bottom: 100px;
 }
 
-/* ==============================
-   Links & Buttons
-============================== */
-a {
-  color: var(--primary);
-  text-decoration: none;
+/* TYPO */
+h1,h2,h3{ letter-spacing:-0.02em; }
+h1{ font-size: clamp(30px, 4vw, 50px); }
+h2{ font-size: clamp(22px, 2.5vw, 30px); }
+h3{ font-size: 22px; }
+p{ color: var(--muted); }
+
+/* HEADER */
+header,.site-header{
+  background: rgba(11,27,74,.55);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(250,204,21,.45);
+  padding: 22px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 1200;
 }
 
-a:hover {
+.logo-link{
+  color: var(--text);
+  text-decoration:none;
+}
+
+/* HAMBURGER */
+.hamburger{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;
+  height:44px;
+  margin-top:12px;
+
+  border-radius:12px;
+  cursor:pointer;
+
+  background: rgba(250,204,21,.12);
+  border:1px solid rgba(250,204,21,.55);
+  color:var(--gold);
+  font-size:22px;
+
+  transition:
+    background .25s ease,
+    transform .25s ease;
+}
+
+.hamburger:hover{
+  background: rgba(250,204,21,.18);
+  transform: translateY(-1px);
+}
+
+.hamburger.active{
+  background: rgba(239,68,68,.22);
+  border-color: rgba(239,68,68,.6);
+}
+
+
+/* ===============================
+   NAV – iOS STYLE (ASYMMETRISCH)
+=============================== */
+
+.nav-links{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+
+  width:100%;
+  max-width:640px;
+  margin:16px auto 0;
+
+  max-height:0;
+  overflow:hidden;
+
+  opacity:0;
+  transform: translateY(-20px);
+
+  /* ⬇️ CLOSE = langsamer */
+  transition:
+    max-height 0.75s ease,
+    opacity 0.45s ease,
+    transform 0.75s ease;
+
+  z-index:1201;
+}
+
+/* ⬆️ OPEN = langsamer + Overshoot */
+.nav-links.open{
+  max-height:560px;
+  opacity:1;
+  transform: translateY(0);
+
+  /* 🍎 iOS Overshoot */
+  transition:
+    max-height 1.05s cubic-bezier(.22,1.15,.36,1),
+    opacity 0.55s ease,
+    transform 1.05s cubic-bezier(.22,1.15,.36,1);
+}
+
+
+/* OPEN – sanfter Overshoot, kein Nach-Bounce */
+.nav-links.open{
+  max-height:560px;
+  opacity:1;
+  transform: translateY(0);
+
+  /* 🍎 iOS: sehr langsames Öffnen */
+  transition:
+    max-height 1.8s cubic-bezier(.22,1.15,.36,1),
+    opacity 0.7s ease,
+    transform 1.8s cubic-bezier(.22,1.15,.36,1);
+}
+
+
+.nav-links a{
+  width:100%;
+  text-align:center;
+  padding:14px 16px;
+
+  border-radius:14px;
+  background: rgba(16,42,107,.88);
+  border:1px solid rgba(250,204,21,.35);
+  color:rgba(249,250,251,.95);
+  font-weight:700;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,.18);
+}
+
+/* OVERLAY */
+#menu-overlay{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,.55);
+  opacity:0;
+  pointer-events:none;
+
+  transition: opacity .45s cubic-bezier(.4,0,.2,1);
+  z-index:1000;
+}
+
+#menu-overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* CONTENT */
+.content{
+  max-width:1100px;
+  margin:0 auto;
+  padding:26px 16px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:18px;
+}
+
+.cards{
+  max-width:1200px;
+  margin:0 auto;
+  padding:26px 16px;
+  display:grid;
+  grid-template-columns: repeat(3, minmax(280px,1fr));
+  gap:18px;
+}
+
+/* CARDS */
+.card{
+  max-width:520px;
+  width:100%;
+  padding:22px;
+  border-radius:18px;
+  background: rgba(16,42,107,.78);
+  border:1px solid rgba(250,204,21,.35);
+  box-shadow: var(--shadow2);
+  text-align:left;
+}
+
+.card h2::after{
+  content:"";
+  display:block;
+  width:52px;
+  height:3px;
+  margin-top:10px;
+  border-radius:999px;
+  background: linear-gradient(90deg,var(--gold),rgba(250,204,21,.2));
+}
+
+/* BUTTON */
+.card a{
+  display:inline-flex;
+  justify-content:center;
+  margin-top:10px;
+  padding:12px 18px;
+  border-radius:14px;
+  background: linear-gradient(180deg,var(--gold),rgba(250,204,21,.85));
+  color:#0B1B4A;
+  font-weight:900;
+  box-shadow: var(--shadow2);
+}
+
+/* RADIO PLAYER */
+.player-wrap iframe{
+  width:100%;
+  height:320px;
+  border-radius:18px;
+  box-shadow: var(--shadow);
+}
+
+/* FOOTER */
+.site-footer{
+  background: rgba(11,27,74,.55);
+  backdrop-filter: blur(14px);
+  border-top:1px solid rgba(250,204,21,.35);
+  padding:22px 16px;
+}
+
+/* Cookie Banner */
+#cookie-banner.frg-banner {
+  display: none; /* wird per JS eingeblendet */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  background: royalblue;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 9999;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  width: 90%;          /* fast volle Breite */
+  max-width: 960px;    /* größere maximale Breite */
+  margin: 16px auto 0;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+#cookie-banner.frg-banner.hide {
+  transform: translateX(-50%) translateY(120px);
+  opacity: 0;
+}
+
+#cookie-banner.frg-banner a {
+  color: gold;
   text-decoration: underline;
+}
+
+#cookie-banner.frg-banner .frg-btn {
+  background: gold;
+  color: royalblue;
+  border: none;
+  padding: 8px 18px;
+  margin-left: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* RESPONSIVE */
+@media (max-width:1100px){
+  .cards{ grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width:768px){
+  body{ font-size:19px; }
+  .cards{ grid-template-columns:1fr; }
+  .player-wrap iframe{ height:380px; }
+}
+@media (max-width:480px){
+  body{ font-size:20px; }
+  .player-wrap iframe{ height:420px; }
+}
+
+.card.highlight h3 {
+  margin-top: 30px;
+}
+
+.player-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 40px auto;
+}
+
+.player-wrap iframe {
+  width: 100%;
+  height: 480px;   /* höher, damit oben genug Platz ist */
+  border: none;
+  border-radius: 28px;
+}
+
+/* Neues sauberes Overlay-Logo */
+.player-logo {
+  display: block;
+  margin: 20px auto;
+  max-width: 220px;
+  width: 100%;
+  height: auto;
+
+  border-radius: 16px;
+
+  /* leichter Glow (frostig) */
+  box-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.15),
+    0 0 25px rgba(100, 150, 255, 0.25);
+
+  /* smoother Effekt */
+  transition: all 0.3s ease;
+}
+
+/* Hover Effekt */
+.player-logo:hover {
+  transform: scale(1.05);
+
+  box-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.3),
+    0 0 40px rgba(100, 150, 255, 0.5);
+}
+
+
+/* Standard bleibt wie vorher */
+
+/* MOBILE OPTIMIERUNG */
+@media (max-width: 600px) {
+  .player-logo {
+    max-width: 160px;   /* kleiner auf Handy */
+    margin: 15px auto;
+
+    border-radius: 12px;
+
+    /* weniger intensiver Glow (besser für kleine Screens) */
+    box-shadow: 
+      0 0 8px rgba(255, 255, 255, 0.15),
+      0 0 15px rgba(100, 150, 255, 0.2);
+  }
+
+  .player-logo:hover {
+    transform: none; /* kein Hover auf Mobile nötig */
+    box-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.2),
+      0 0 20px rgba(100, 150, 255, 0.3);
+  }
+}
+
+
+/* Labels */
+.label{
+  display:block;
+  margin-top:8px;
+  font-size:14px;
+  color:#bbb;
+}
+
+
+/* =====================================
+   FRG EVENT HERO – ZENTRIERT
+===================================== */
+
+.hero {
+  padding: 90px 0 80px;
+  background: linear-gradient(
+      135deg,
+      rgba(11, 42, 106, 0.95),
+      rgba(11, 42, 106, 0.85)
+    ),
+    radial-gradient(circle at top center, rgba(212,175,55,0.18), transparent 60%);
+  color: #ffffff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-copy h1 {
+  font-size: clamp(34px, 4vw, 50px);
+  font-weight: 900;
+  margin: 12px 0 18px;
+  letter-spacing: -0.5px;
+}
+
+.hero .lead {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  max-width: 600px;
+  opacity: 0.95;
+}
+
+/* =====================================
+   PILL
+===================================== */
+
+.pill {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.18);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: #D4AF37;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* =====================================
+   MINI SCHEDULE
+===================================== */
+
+.schedule-mini {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 32px;
+  width: 100%;
+  max-width: 750px;
+}
+
+.slot {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 18px;
+  padding: 18px 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.slot:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+}
+
+.slot .time {
+  display: block;
+  font-weight: 900;
+  font-size: 20px;
+  color: #D4AF37;
+  margin-bottom: 6px;
+}
+
+.slot .label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.95);
+}
+
+/* =====================================
+   BUTTONS
+===================================== */
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .btn {
   display: inline-block;
-  background-color: var(--btn-bg);
-  color: var(--btn-text);
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
+  padding: 14px 22px;
+  border-radius: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn.primary {
+  background: #D4AF37;
+  color: #0B2A6A;
+}
+
+.btn.primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.btn.ghost {
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #ffffff;
+  background: transparent;
+}
+
+.btn.ghost:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 900px) {
+  .schedule-mini {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .schedule-mini {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding: 70px 0;
+  }
+
+  .hero-copy h1 {
+    font-size: 30px;
+  }
+
+  .hero .lead {
+    font-size: 16px;
+  }
+}
+
+
+/* === CARD SECTIONS sauber zentrieren === */
+.card{
+  width: min(1100px, calc(100% - 32px));
+  margin: 24px auto;
+  padding: 28px;
+  border-radius: 22px;
+
+  /* Dunkler statt milchig */
+  background: linear-gradient(
+    145deg,
+    rgba(7, 25, 70, 0.95),
+    rgba(11, 42, 106, 0.92)
+  );
+
+  border: 1px solid rgba(212,175,55,0.25);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+/* Wenn du in der card nochmal .container hast: NICHT nochmal begrenzen */
+.card .container{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.frg-events {
+  padding: 80px 20px;
+  background: #0f172a;
+  color: #fff;
+}
+
+.section-title {
   text-align: center;
-  transition: background-color 0.2s;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
 }
 
-.btn:hover {
-  background-color: var(--secondary);
-}
-
-/* ==============================
-   Header
-============================== */
-header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 1rem;
-  background-color: var(--card-bg);
-  border-bottom: 1px solid #ddd;
-}
-
-header h1 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.hamburger {
-  font-size: 1.5rem;
-  cursor: pointer;
-  margin-top: 0.5rem;
-}
-
-.nav {
-  display: none;
-  flex-direction: column;
-  margin-top: 1rem;
-}
-
-.nav a {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
-}
-
-.nav a:last-child {
-  border-bottom: none;
-}
-
-/* ==============================
-   Hero Section
-============================== */
-.hero {
+.section-subtitle {
   text-align: center;
-  padding: 2rem 1rem;
+  color: #94a3b8;
+  margin-bottom: 50px;
 }
 
-.hero h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
 }
 
-.hero p {
-  font-size: 1rem;
-  color: #555;
+.event-card {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 16px;
+  transition: 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
-/* ==============================
-   Container & Grid
-============================== */
-.container {
-  padding: 1rem;
+.event-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
 }
 
-.grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.event-date {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #38bdf8;
 }
 
-.card {
-  background-color: var(--card-bg);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+.event-card h3 {
+  margin-bottom: 10px;
 }
 
-.card h2 {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
+.event-card p {
+  color: #cbd5e1;
+  font-size: 0.95rem;
 }
 
-.card p {
-  margin-bottom: 0.5rem;
+/* Farb-Akzente je Typ */
+
+.crossover {
+  border-left: 4px solid #3b82f6;
 }
 
-/* ==============================
-   Countdown
-============================== */
-#countdown-title {
-  text-align: center;
-  margin-bottom: 1rem;
+.simulcast {
+  border-left: 4px solid #22c55e;
 }
 
-#countdown-title + .grid {
-  justify-content: space-around;
+.special {
+  border-left: 4px solid #f59e0b;
 }
 
-#countdown-title .card {
-  text-align: center;
+.hinweis {
+  border-left: 4px solid #ef4444;;
 }
 
-/* ==============================
-   Footer
-============================== */
-footer {
-  text-align: center;
-  padding: 1rem;
-  background-color: var(--card-bg);
-  border-top: 1px solid #ddd;
-  font-size: 0.9rem;
-  color: #555;
+.event-filter{
+display:flex;
+gap:10px;
+justify-content:center;
+margin-bottom:40px;
+flex-wrap:wrap;
 }
 
-/* ==============================
-   Media Queries (Tablet & Desktop)
-============================== */
-@media (min-width: 600px) {
-  .nav {
+.filter-btn{
+padding:10px 18px;
+border-radius:20px;
+border:none;
+cursor:pointer;
+background:#1e293b;
+color:white;
+transition:0.3s;
+}
+
+.filter-btn:hover{
+background:#334155;
+}
+
+.filter-btn.active{
+background:#3b82f6;
+}
+
+/* Logo + Text nebeneinander */
+.logo-area{
+  display:flex;
+  align-items:center;
+  gap:200px;
+}
+
+/* Desktop Logo (grösser) */
+.logo-img img{
+  height:220px;
+}
+
+@media (max-width:768px){
+
+  /* Text ausblenden */
+  .logo-text{
+    display:none;
+  }
+
+  /* 🔥 Logo perfekt zentrieren */
+  .logo-area{
     display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    margin-top: 0;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    width: 100%;
   }
 
-  .hamburger {
-    display: none;
+  .logo-img{
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
 
-  .grid {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1rem;
+  /* 🔧 bessere Größe für Mobile */
+  .logo-img img{
+    height:300px;
   }
 
-  .card {
-    flex: 1 1 calc(50% - 1rem);
+}
+
+/* =======================
+   LABELS
+======================= */
+
+.label{
+  display:block;
+  margin-top:8px;
+  font-size:14px;
+  color:#bbb;
+}
+
+/* =========================
+   MOBILE – RADIO LOGOS AUSBLENDEN
+========================= */
+
+@media (max-width: 768px){
+
+  .radio-logo,
+  .station-logo,
+  .sender-logo,
+  .card img{
+    display: none !important;
+  }
+
+}
+
+.nav-dropdown{
+  width:100%;
+}
+
+.nav-button{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+
+  padding:16px;
+  border-radius:18px;
+
+  background:#1f3b82;
+  border:1px solid #FACC15;
+
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.arrow{
+  transition:transform 0.3s ease;
+}
+
+.dropdown-menu{
+  display:none;
+  flex-direction:column;
+  gap:10px;
+  margin-top:10px;
+}
+
+.dropdown-menu a{
+  background:#1f3b82;
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+  color:white;
+  text-decoration:none;
+  font-size:18px;
+  transition: background 0.2s;
+}
+
+.dropdown-menu a:hover{
+  background:#374ea3;
+}
+
+/* Spezieller Stil für Radio Übersicht */
+.dropdown-menu a.radio-overview{
+  background:#FACC15;   /* goldener Hintergrund */
+  color:#0B1B4A;        /* dunkle Schrift */
+  font-weight:bold;
+  font-size:20px;
+  border-radius:16px;
+}
+.dropdown-menu a.radio-overview:hover{
+  background:#e6b800;   /* dunkleres Gold beim Hover */
+}
+
+.nav-dropdown.open .dropdown-menu{
+  display:flex;
+}
+
+.nav-dropdown.open .arrow{
+  transform:rotate(180deg);
+}
+
+
+#loader{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#0b1c3d;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.radio{
+  font-size:60px;
+  animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.2);}
+  100%{transform:scale(1);}
+}
+
+
+.playBtn {
+  background: #0a1f44;
+  color: gold;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.playBtn:hover {
+  transform: scale(1.05);
+}
+
+
+/* Künstler-Formular – FRG Style */
+.artist-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background-color: #001f5b; /* Royal Blue */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.artist-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #ffd700; /* Gold */
+}
+
+.artist-form input,
+.artist-form textarea {
+  padding: 10px;
+  border: 2px solid #ffd700; /* Gold */
+  border-radius: 8px;
+  background-color: #ffffff; /* Weiß */
+  color: #001f5b; /* Royal Blue Text */
+  font-size: 1rem;
+}
+
+.artist-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.artist-form button {
+  padding: 12px 16px;
+  background-color: #ffd700; /* Gold */
+  color: #001f5b;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.artist-form button:hover {
+  background-color: #ffec70;
+  transform: scale(1.03);
+}
+
+#form-msg {
+  color: #ffd700;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .artist-form {
+    padding: 12px;
   }
 }
 
-@media (min-width: 900px) {
-  .card {
-    flex: 1 1 calc(33.333% - 1rem);
+
+/* Organigramm */
+
+.org-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.org-level {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.org-level.center {
+  justify-content: center;
+}
+
+.org-box {
+  background: white;
+  border: 2px solid royalblue;
+  border-radius: 12px;
+  padding: 12px 16px;
+  text-align: center;
+  min-width: 160px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-size: 0.95rem;
+  color: black; /* 👈 DAS ist die wichtige Zeile */
+}
+
+.org-box.main {
+  background: royalblue;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.org-line {
+  width: 2px;
+  height: 30px;
+  background: royalblue;
+  margin-top: 5px;
+}
+
+/* Mobile Optimierung */
+@media (max-width: 600px) {
+  .org-level {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .hero h1 {
-    font-size: 2.5rem;
+  .org-box {
+    width: 100%;
+    max-width: 280px;
   }
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Checkbox Container */
+.checkbox-container {
+  display: flex;
+  align-items: center; /* Checkbox und Text nebeneinander */
+  gap: 8px;
+  font-size: 0.95rem;
+  background: none;
+  padding: 0;
+  border: none;
+}
+
+/* Label Text – schwarz */
+.checkbox-container label {
+  display: inline;
+  color: #ffffff; /* schwarz für den normalen Text */
+  font-weight: normal;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* AGB-Link – Gold */
+.checkbox-container .agb-link {
+  color: #ffd700; /* Gold */
+  text-decoration: underline; /* klassischer Link */
+  font-weight: normal;
+  background: none;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.checkbox-container .agb-link:hover {
+  color: #ffec70; /* heller Gold beim Hover */
+  text-decoration: underline;
+}
+
+/* Bilder in Team-Cards */
+.team-photo {
+  width: 100%;
+  max-width: 200px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-header {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.content {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.text-block {
+  margin-bottom: 40px;
+}
+
+.cta-section {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+
+/* ==============================
+   CARDS – Komplett Überschrieben
+============================== */
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Allgemeine Card Styles */
+.card {
+  background: linear-gradient(145deg, rgba(7,25,70,.95), rgba(11,42,106,.92));
+  border: 1px solid rgba(212,175,55,.25);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+  color: #fff;
+  box-sizing: border-box;
+}
+
+/* Erste Card volle Breite */
+.card:first-child {
+  flex: 1 1 100%;
+}
+
+/* Alle weiteren Cards: 2 nebeneinander */
+.card:not(:first-child) {
+  flex: 1 1 calc(50% - 12px);
+}
+
+/* Card Inhalte sauber paddings & spacing */
+.card h2, .card h3, .card p, .card a {
+  margin: 0 0 12px 0;
+}
+
+/* Buttons innerhalb Cards */
+.card a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #FACC15, rgba(250,204,21,.85));
+  color: #0B1B4A;
+  font-weight: 900;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.card a:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+/* Responsive: unter 768px alle Cards untereinander */
+@media (max-width: 768px) {
+  .card,
+  .card:first-child,
+  .card:not(:first-child) {
+    flex: 1 1 100%;
+  }
+}
+
+
+/* ================================
+   FRG COUNTDOWN – NEON + SMOOTH
+================================ */
+
+.countdown {
+  margin: 40px 0;
+  text-align: center;
+}
+
+/* Titel */
+#countdown-title {
+  margin-bottom: 25px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Container */
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Box */
+.time-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 90px;
+  height: 110px;
+
+  background: #111;
+  border-radius: 12px;
+
+  box-shadow:
+    0 0 10px rgba(0, 200, 255, 0.2),
+    0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* ZAHL */
+.time-box div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 60%;
+
+  font-size: 42px;
+  font-weight: bold;
+  letter-spacing: 2px;
+
+color: #4da6ff;
+
+  /* ⚡ Smooth Animation */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Label */
+.time-box span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 40%;
+
+  font-size: 11px;
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+/* 🔥 Animation Klasse */
+.time-box div.animate {
+  transform: translateY(-10px) scale(1.1);
+  opacity: 0.6;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .time-box {
+    width: 70px;
+    height: 90px;
+  }
+
+  .time-box div {
+    font-size: 30px;
+  }
+}
+
+/*Artists */
+.artists-section {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.section-header h2,
+.section-header p {
+  color: #fff; /* Weiß für Überschrift und Beschreibung */
+  margin: 0;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.section-header p {
+  font-size: 1rem;
+  margin-bottom: 30px;
+}
+
+.artist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+.artist-card {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 200px;
+  transition: transform 0.2s;
+}
+
+.artist-card:hover {
+  transform: translateY(-5px);
+}
+
+.artist-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* quadratisch */
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 5px; /* leicht abgerundet */
+}
+
+.artist-card p {
+  margin: 0;
+  font-weight: bold;
+  color: #000; /* Schwarz für Text in den Karten */
+}
+
+
+.ad-packages-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.ad-package {
+  flex: 1 1 300px; /* jede Karte mindestens 300px breit */
+  border: 2px solid #ffd700; /* goldener Rahmen */
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #000;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.ad-package h3 {
+  color: #003399; /* FRG-Royalblau für Titel */
+}
+
+
+#werbepreise {
+  scroll-margin-top: 120px;
 }
