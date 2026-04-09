@@ -1060,8 +1060,15 @@ background:#3b82f6;
 }
 
 .page-header {
-  text-align: center;
+  width: 100%;
   padding: 60px 20px;
+  background: linear-gradient(to right, #2563EB, #1D4ED8);
+}
+
+.page-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .content {
