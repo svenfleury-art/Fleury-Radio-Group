@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Rhywälle Now Playing</title>
+
+<style>
+body {
+  margin: 0;
+  background: transparent;
+  font-family: Arial, sans-serif;
+}
+
+.player {
+  background: linear-gradient(90deg, #2563EB, #1D4ED8);
+  color: white;
+  padding: 25px 40px;
+  border-radius: 20px;
+  width: fit-content;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+
+.subtitle {
+  font-size: 18px;
+  opacity: 0.85;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 1.3;
+}
+</style>
+</head>
+
+<body>
+
+<div class="player">
+  <div class="subtitle">🎧 Jetzt läuft</div>
+  <div class="title" id="song">Lade...</div>
+</div>
+
+<script>
+let nextSong = ""; // Variable zum Zwischenspeichern
+
+// Funktion, um den Song von der API zu holen
+async function fetchSong() {
+  try {
+    const res = await fetch("https://api.laut.fm/station/winterlord-fm/current_song");
+    const data = await res.json();
+
+    const artist = data.artist?.name || "Unbekannt";
+    const title = data.title || "Kein Titel";
+
+    // Speichere den Song erst, zeige ihn erst nach 30 Sekunden
+    nextSong = `"${title}" von "${artist}"`;
+    setTimeout(() => {
+      document.getElementById("song").innerText = nextSong;
+    }, 30000); // 30 Sekunden Verzögerung
+  } catch (e) {
+    document.getElementById("song").innerText = "Keine Verbindung";
+  }
+}
+
+// Update alle 10 Sekunden die API, aber Anzeige immer 30 Sekunden verzögert
+setInterval(fetchSong, 10000);
+fetchSong();
+</script>
+
+</body>
+</html>
