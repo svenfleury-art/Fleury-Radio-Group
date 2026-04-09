@@ -11,7 +11,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* Container */
 .player {
   background: linear-gradient(90deg, #2563EB, #1D4ED8);
   color: white;
@@ -21,14 +20,12 @@ body {
   box-shadow: 0 15px 40px rgba(0,0,0,0.5);
 }
 
-/* "Jetzt läuft" */
 .subtitle {
   font-size: 18px;
   opacity: 0.85;
   margin-bottom: 8px;
 }
 
-/* Titel groß */
 .title {
   font-size: 32px;
   font-weight: bold;
@@ -45,7 +42,10 @@ body {
 </div>
 
 <script>
-async function updateSong() {
+let nextSong = ""; // Variable zum Zwischenspeichern
+
+// Funktion, um den Song von der API zu holen
+async function fetchSong() {
   try {
     const res = await fetch("https://api.laut.fm/station/rhywaelle/current_song");
     const data = await res.json();
@@ -53,15 +53,19 @@ async function updateSong() {
     const artist = data.artist?.name || "Unbekannt";
     const title = data.title || "Kein Titel";
 
-    document.getElementById("song").innerText =
-      `"${title}" von "${artist}"`;
+    // Speichere den Song erst, zeige ihn erst nach 30 Sekunden
+    nextSong = `"${title}" von "${artist}"`;
+    setTimeout(() => {
+      document.getElementById("song").innerText = nextSong;
+    }, 30000); // 30 Sekunden Verzögerung
   } catch (e) {
     document.getElementById("song").innerText = "Keine Verbindung";
   }
 }
 
-setInterval(updateSong, 10000);
-updateSong();
+// Update alle 10 Sekunden die API, aber Anzeige immer 30 Sekunden verzögert
+setInterval(fetchSong, 10000);
+fetchSong();
 </script>
 
 </body>
