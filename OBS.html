@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>FRG Now Playing</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: transparent;
+}
+
+.player {
+  background: linear-gradient(90deg, #2563EB, #1D4ED8);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 15px;
+  width: fit-content;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 14px;
+  opacity: 0.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="player">
+  <div class="subtitle">🎧 Jetzt läuft</div>
+  <div class="title" id="song">Lade...</div>
+</div>
+
+<script>
+async function updateSong() {
+  try {
+    const res = await fetch("https://api.laut.fm/station/rhywaelle/current_song");
+    const data = await res.json();
+
+    document.getElementById("song").innerText =
+      data.artist + " - " + data.title;
+  } catch (e) {
+    document.getElementById("song").innerText = "Keine Verbindung";
+  }
+}
+
+setInterval(updateSong, 10000);
+updateSong();
+</script>
+
+</body>
+</html>
