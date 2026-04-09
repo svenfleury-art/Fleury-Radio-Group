@@ -46,7 +46,7 @@ async function updateSong() {
     const data = await res.json();
 
     document.getElementById("song").innerText =
-      data.artist + " - " + data.title;
+      data.artist.name + " - " + data.title;
   } catch (e) {
     document.getElementById("song").innerText = "Keine Verbindung";
   }
@@ -56,5 +56,6 @@ setInterval(updateSong, 10000);
 updateSong();
 </script>
 
+  
 </body>
 </html>
