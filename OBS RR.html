@@ -57,7 +57,7 @@ async function fetchSong() {
     nextSong = `"${title}" von "${artist}"`;
     setTimeout(() => {
       document.getElementById("song").innerText = nextSong;
-    }, 30000); // 30 Sekunden Verzögerung
+    }, 10000); // 10 Sekunden Verzögerung
   } catch (e) {
     document.getElementById("song").innerText = "Keine Verbindung";
   }
