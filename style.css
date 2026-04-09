@@ -1271,7 +1271,7 @@ color: #4da6ff;
 .artist-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
+  gap: 5px;
   justify-items: center;
 }
 
