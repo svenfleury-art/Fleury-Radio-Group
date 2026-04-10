@@ -215,6 +215,7 @@ a{
 =============================== */
 
 .cards{
+    background:#0B2A6F;
   display:grid;
   grid-template-columns:1fr;
   gap:18px;
