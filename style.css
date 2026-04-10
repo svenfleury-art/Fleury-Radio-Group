@@ -204,7 +204,7 @@ a{
 =============================== */
 
 .container{
-   background:#0B2A6F;
+
   max-width:1100px;
   margin:auto;
   padding:20px;
@@ -215,7 +215,7 @@ a{
 =============================== */
 
 .cards{
-    background:#0B2A6F;
+   background:#0B2A6F;
   display:grid;
   grid-template-columns:1fr;
   gap:18px;
