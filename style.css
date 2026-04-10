@@ -202,7 +202,7 @@ section,
   border-radius:14px;
 }
 
-.img{
+.card full-width img{
   height:300px;   /* 🔥 grösser */
 }
 
