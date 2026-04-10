@@ -97,6 +97,10 @@ section, .cards, .event-grid, .artist-form{
    NAV
 =============================== */
 
+/* ===============================
+   CLEAN ACCORDION NAV
+=============================== */
+
 .nav-links{
   display:flex;
   flex-direction:column;
@@ -104,30 +108,81 @@ section, .cards, .event-grid, .artist-form{
 
   max-height:0;
   overflow:hidden;
-  transition:max-height .35s ease;
+  transition:max-height .4s ease;
 }
 
+/* OPEN STATE */
 .nav-links.open{
-  max-height:900px;
+  max-height:1000px;
   padding:10px 0;
 }
 
+/* MAIN LINKS */
 .nav-links a{
-  padding:12px 16px;
-  border-radius:12px;
   background:var(--surface-2);
+  padding:12px 14px;
+  border-radius:12px;
+  display:block;
+  transition:0.2s;
 }
 
-/* DESKTOP NAV */
-@media (min-width:900px){
-  .nav-links{
-    flex-direction:row;
-    max-height:none;
-    overflow:visible;
-    gap:12px;
-  }
+.nav-links a:hover{
+  background:rgba(250,204,21,.15);
+  transform:translateX(4px);
 }
 
+/* ===============================
+   DROPDOWN (ACCORDION STYLE)
+=============================== */
+
+.nav-dropdown{
+  display:flex;
+  flex-direction:column;
+}
+
+/* BUTTON */
+.nav-button{
+  background:var(--surface-2);
+  border:1px solid rgba(250,204,21,.3);
+  color:var(--text);
+
+  padding:12px 14px;
+  border-radius:12px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  cursor:pointer;
+}
+
+/* DROPDOWN CONTENT */
+.dropdown-menu{
+  display:none;
+  flex-direction:column;
+  gap:8px;
+
+  margin-top:6px;
+  padding-left:12px;
+  border-left:2px solid var(--gold);
+}
+
+/* OPEN STATE */
+.nav-dropdown.open .dropdown-menu{
+  display:flex;
+}
+
+/* DROPDOWN LINKS */
+.dropdown-menu a{
+  background:rgba(12,37,82,.8);
+  padding:10px 12px;
+  border-radius:10px;
+  font-size:14px;
+}
+
+.dropdown-menu a:hover{
+  background:rgba(250,204,21,.12);
+}
 /* ===============================
    CARDS / BOXES CLEAN
 =============================== */
