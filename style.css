@@ -228,7 +228,7 @@ section,
   flex-wrap:wrap;
   gap:15px;
 
-  margin:40px auto;
+  margin:20px auto;
   text-align:center;
 }
 
@@ -257,7 +257,7 @@ section,
 
 /* Zahl */
 .time-box span{
-  font-size:25px;
+  font-size:50px;
   font-weight:700;
   color:var(--gold);
 }
