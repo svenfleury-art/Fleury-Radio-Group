@@ -17,29 +17,12 @@ window.addEventListener("load", () => {
 });
 
 /* -------------------------
-PARTIALS & DOMContentLoaded
-------------------------- */
-document.addEventListener("DOMContentLoaded", async () => {
-  await loadPartial("nav-slot", "partials/nav.html");
-  await loadPartial("footer-slot", "partials/footer.html");
-
-  initMenu();
-  initCookies();
-  initFilter();
-  initCountdown();
-  initJinglePlayer(); // 🔥 WICHTIG: Jingle Player initialisieren
-
-  refreshAllStations();
-  initPlayerCounting();
-  setInterval(refreshAllStations, 30000);
-});
-
-/* -------------------------
 PARTIAL LOADER
 ------------------------- */
 async function loadPartial(slotId, url) {
   const slot = document.getElementById(slotId);
   if (!slot) return;
+
   try {
     const res = await fetch(url);
     if (!res.ok) return console.error("Partial konnte nicht geladen werden:", url);
@@ -50,46 +33,66 @@ async function loadPartial(slotId, url) {
 }
 
 /* -------------------------
-MENU SYSTEM & DROPDOWNS
+MENU SYSTEM
 ------------------------- */
 function initMenu() {
-  const btn = document.getElementById("hamburgerBtn")
-  const nav = document.getElementById("mainNav")
-  const overlay = document.getElementById("menu-overlay")
-  if (!btn || !nav) return
+  const btn = document.getElementById("hamburgerBtn");
+  const nav = document.getElementById("mainNav");
+  const overlay = document.getElementById("menu-overlay");
+
+  if (!btn || !nav) return;
+
+  const dropdowns = nav.querySelectorAll(".nav-dropdown");
+
+  function closeAllDropdowns() {
+    dropdowns.forEach(d => d.classList.remove("open"));
+  }
 
   function closeMenu() {
-    nav.classList.remove("open")
-    btn.classList.remove("active")
-    btn.textContent = "☰"
-    if (overlay) overlay.classList.remove("active")
+    nav.classList.remove("open");
+    btn.classList.remove("active");
+    btn.textContent = "☰";
+    if (overlay) overlay.classList.remove("active");
+    closeAllDropdowns();
   }
+
   function openMenu() {
-    nav.classList.add("open")
-    btn.classList.add("active")
-    btn.textContent = "✕"
-    if (overlay) overlay.classList.add("active")
+    nav.classList.add("open");
+    btn.classList.add("active");
+    btn.textContent = "✕";
+    if (overlay) overlay.classList.add("active");
   }
-  closeMenu()
+
+  closeMenu();
 
   btn.addEventListener("click", e => {
-    e.stopPropagation()
-    nav.classList.contains("open") ? closeMenu() : openMenu()
-  })
-  if (overlay) overlay.addEventListener("click", closeMenu)
+    e.stopPropagation();
+    nav.classList.contains("open") ? closeMenu() : openMenu();
+  });
+
+  if (overlay) overlay.addEventListener("click", closeMenu);
+
   document.addEventListener("click", e => {
-    if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu()
-  })
+    if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu();
+  });
+
+  // DROPDOWN
   nav.addEventListener("click", e => {
-    const toggleBtn = e.target.closest(".dropdown-toggle")
-    if (!toggleBtn) return
-    e.preventDefault()
-    e.stopPropagation()
-    const dropdown = toggleBtn.closest(".nav-dropdown")
-    if (!dropdown) return
-    nav.querySelectorAll(".nav-dropdown").forEach(d => { if (d !== dropdown) d.classList.remove("open") })
-    dropdown.classList.toggle("open")
-  })
+    const toggleBtn = e.target.closest(".dropdown-toggle");
+    if (!toggleBtn) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const dropdown = toggleBtn.closest(".nav-dropdown");
+    if (!dropdown) return;
+
+    const isOpen = dropdown.classList.contains("open");
+
+    closeAllDropdowns();
+
+    if (!isOpen) dropdown.classList.add("open");
+  });
 }
 
 /* -------------------------
@@ -125,161 +128,77 @@ function initFilter() {
   buttons.forEach(button => {
     button.addEventListener("click", () => {
       const filter = button.dataset.filter;
+
       buttons.forEach(b => b.classList.remove("active"));
       button.classList.add("active");
 
       events.forEach(event => {
         event.style.display =
-          filter === "all" || event.classList.contains(filter) ? "block" : "none";
+          filter === "all" || event.classList.contains(filter)
+            ? "block"
+            : "none";
       });
     });
   });
 }
 
-
-
 /* -------------------------
-Countdown
+COUNTDOWN
 ------------------------- */
-  
-// ================================
-// FRG EVENT DATEN
-// ================================
 const frgEvents = [
   { title: "FRG Showcase Week", date: "2026-03-23T00:00:00" },
-  { title: "premiere von Labirinth von Skip auf Radio Rhywälle", date: "2026-03-24T12:30:00" },
-  { title: "Oldies bei Rhywälle", date: "2026-03-30T15:00:00" },
-  { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
-  { title: "FRG Simulcast", date: "2026-05-30T19:00:00" },
-  { title: "FRG Crossover Night", date: "2026-06-27T19:00:00" },
-  { title: "FRG Schweiz Special", date: "2026-08-01T12:00:00" },
-  { title: "FRG Crossover Night", date: "2026-09-26T19:00:00" },
-  { title: "1 Jahr Fleury Radio Group", date: "2026-10-28T12:00:00" },
-  { title: "FRG Halloween Special", date: "2026-10-31T12:00:00" },
-  { title: "FRG Crossover Night", date: "2026-11-28T20:00:00" },
-  { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
-  { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
+  { title: "Premiere Skip", date: "2026-03-24T12:30:00" },
+  { title: "Oldies Rhywälle", date: "2026-03-30T15:00:00" }
 ];
 
-// ================================
-// PAGE MODE (AUTO)
-// ================================
 const PAGE_MODE = document.body.dataset.page || "home";
 
-// ================================
-// HELPERS
-// ================================
 function pad(n) {
   return String(Math.floor(n)).padStart(2, "0");
 }
 
-// 🔥 Smooth Animation
-function updateWithAnimation(el, newValue) {
-  if (!el) return;
-  if (el.textContent === newValue) return;
-
-  el.classList.add("animate");
-
-  setTimeout(() => {
-    el.textContent = newValue;
-    el.classList.remove("animate");
-  }, 150);
-}
-
-// ================================
-// NEXT EVENT FINDEN
-// ================================
 function getNextEvent() {
   const now = Date.now();
 
-  const future = frgEvents
-    .map(e => ({
-      ...e,
-      dateObj: new Date(e.date)
-    }))
-    .filter(e => e.dateObj.getTime() > now)
-    .sort((a, b) => a.dateObj - b.dateObj);
-
-  return future.length ? future[0] : null;
+  return frgEvents
+    .map(e => ({ ...e, dateObj: new Date(e.date) }))
+    .filter(e => e.dateObj > now)
+    .sort((a, b) => a.dateObj - b.dateObj)[0] || null;
 }
 
-// ================================
-// ANZEIGE LOGIK
-// ================================
-function shouldShow(event) {
-  if (!event) return false;
-
-  if (PAGE_MODE === "special") return true;
-
-  const now = Date.now();
-  const diff = event.dateObj.getTime() - now;
-
-  return diff <= 7 * 24 * 60 * 60 * 1000;
-}
-
-// ================================
-// MAIN COUNTDOWN
-// ================================
 function updateCountdown() {
   const wrapper = document.querySelector(".countdown");
   if (!wrapper) return;
 
   const event = getNextEvent();
+  if (!event) return (wrapper.style.display = "none");
 
-  if (!event) {
-    wrapper.style.display = "none";
-    return;
-  }
-
-  if (!shouldShow(event)) {
-    wrapper.style.display = "none";
-    return;
-  }
+  const diff = event.dateObj - Date.now();
+  if (diff <= 0) return;
 
   wrapper.style.display = "block";
 
-  const titleEl = document.getElementById("countdown-title");
-  const daysEl = document.getElementById("days");
-  const hoursEl = document.getElementById("hours");
-  const minutesEl = document.getElementById("minutes");
-  const secondsEl = document.getElementById("seconds");
+  const title = document.getElementById("countdown-title");
+  const days = document.getElementById("days");
+  const hours = document.getElementById("hours");
+  const minutes = document.getElementById("minutes");
+  const seconds = document.getElementById("seconds");
 
-  if (!titleEl || !daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+  if (title) title.textContent = event.title;
 
-  titleEl.textContent = event.title;
-
-  const now = Date.now();
-  const diff = event.dateObj.getTime() - now;
-
-  if (diff <= 0) return;
-
-  const days = diff / (1000 * 60 * 60 * 24);
-  const hours = (diff / (1000 * 60 * 60)) % 24;
-  const minutes = (diff / (1000 * 60)) % 60;
-  const seconds = (diff / 1000) % 60;
-
-  updateWithAnimation(daysEl, pad(days));
-  updateWithAnimation(hoursEl, pad(hours));
-  updateWithAnimation(minutesEl, pad(minutes));
-  updateWithAnimation(secondsEl, pad(seconds));
+  update(days, diff / 86400000);
+  update(hours, (diff / 3600000) % 24);
+  update(minutes, (diff / 60000) % 60);
+  update(seconds, (diff / 1000) % 60);
 }
 
-// ================================
-// START
-// ================================
-document.addEventListener("DOMContentLoaded", () => {
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-});
-
-
+function update(el, val) {
+  if (!el) return;
+  el.textContent = pad(val);
+}
 
 /* -------------------------
-FRG JINGLE PLAYER
-------------------------- */
-
-/* -------------------------
-FRG JINGLE PLAYER – STABIL
+JINGLE PLAYER
 ------------------------- */
 function initJinglePlayer() {
   const buttons = document.querySelectorAll(".playBtn");
@@ -287,15 +206,14 @@ function initJinglePlayer() {
 
   if (!buttons.length || !audio) return;
 
-  let hasPlayedJingle = false;
-  let isPlaying = false; // verhindert Doppelstarts
+  let played = false;
+  let isPlaying = false;
 
-  buttons.forEach(button => {
-    button.addEventListener("click", () => {
-      const streamUrl = button.getAttribute("data-stream");
-      if (!streamUrl) return;
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const stream = btn.getAttribute("data-stream");
+      if (!stream) return;
 
-      // Abbrechen, falls gerade schon was läuft
       if (isPlaying) {
         audio.pause();
         audio.currentTime = 0;
@@ -303,93 +221,86 @@ function initJinglePlayer() {
 
       isPlaying = true;
 
-      // Erstes Mal: Jingle abspielen
-      if (!hasPlayedJingle) {
-        hasPlayedJingle = true;
-        console.log("▶️ Jingle startet");
+      if (!played) {
+        played = true;
 
         audio.src = "frg-jingle.mp3";
 
-        const handleEnd = () => {
-          console.log("🎧 Stream startet");
-          audio.src = streamUrl;
-          audio.play().catch(err => console.log("Stream Play Fehler:", err));
-          audio.removeEventListener("ended", handleEnd);
+        const onEnd = () => {
+          audio.src = stream;
+          audio.play();
+          audio.removeEventListener("ended", onEnd);
         };
 
-        audio.addEventListener("ended", handleEnd);
-
-        audio.play().catch(err => console.log("Jingle Play Fehler:", err));
-
+        audio.addEventListener("ended", onEnd);
+        audio.play();
       } else {
-        // Stream direkt starten
-        console.log("🎧 Direkt Stream");
-        audio.src = streamUrl;
-        audio.play().catch(err => console.log("Stream Play Fehler:", err));
+        audio.src = stream;
+        audio.play();
       }
     });
   });
 }
 
-// Funktion aufrufen, sobald DOM bereit ist
-document.addEventListener("DOMContentLoaded", initJinglePlayer);
-    
-// Künstler-Formular Submission – FRG
-document.addEventListener("DOMContentLoaded", function () {
+/* -------------------------
+FORM + AGB
+------------------------- */
+function initForms() {
   const form = document.getElementById("artist-form");
   const msg = document.getElementById("form-msg");
 
-  if (!form) return;
+  if (form) {
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
 
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" }
+      });
 
-    const formData = new FormData(form);
-
-    fetch(form.action, {
-      method: "POST",
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
-    }).then(response => {
-      if (response.ok) {
-        msg.style.display = "block";
-        msg.textContent = "Vielen Dank! Deine Anfrage wurde erfolgreich eingereicht.";
+      if (res.ok) {
+        msg.textContent = "Erfolgreich gesendet!";
         form.reset();
       } else {
-        response.json().then(data => {
-          msg.style.display = "block";
-          msg.textContent = data.errors ? data.errors.map(e => e.message).join(", ") : "Fehler beim Senden.";
-        });
+        msg.textContent = "Fehler beim Senden.";
       }
-    }).catch(() => {
-      msg.style.display = "block";
-      msg.textContent = "Fehler beim Senden. Bitte versuche es später erneut.";
     });
-  });
-});
+  }
 
-// main.js – nur die AGB Checkbox Logik
-const agbCheckbox = document.getElementById('agb');
-const submitBtn = document.getElementById('submitBtn');
+  const agb = document.getElementById("agb");
+  const submit = document.getElementById("submitBtn");
 
-if (agbCheckbox && submitBtn) {
-  agbCheckbox.addEventListener('change', () => {
-    submitBtn.disabled = !agbCheckbox.checked;
-  });
+  if (agb && submit) {
+    agb.addEventListener("change", () => {
+      submit.disabled = !agb.checked;
+    });
+  }
 }
 
-
-
-// Anchor-Fix beim Laden
-window.addEventListener("load", function () {
+/* -------------------------
+ANCHOR FIX
+------------------------- */
+window.addEventListener("load", () => {
   if (window.location.hash) {
     const el = document.querySelector(window.location.hash);
-    if (el) {
-      setTimeout(() => {
-        el.scrollIntoView({ behavior: "smooth" });
-      }, 100); // kleiner Delay hilft bei geladenem Layout
-    }
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   }
+});
+
+/* -------------------------
+BOOT
+------------------------- */
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadPartial("nav-slot", "partials/nav.html");
+  await loadPartial("footer-slot", "partials/footer.html");
+
+  initMenu();
+  initCookies();
+  initFilter();
+  initForms();
+  initJinglePlayer();
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 });
