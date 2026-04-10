@@ -194,13 +194,16 @@ section,
   display:grid;
   grid-template-columns:1fr;
   gap:16px;
-  img:100px
 }
 
 .cards > div{
   background:var(--surface-2);
   padding:16px;
   border-radius:14px;
+}
+
+.img{
+  height:300px;   /* 🔥 grösser */
 }
 
 /* =========================
