@@ -213,6 +213,17 @@ section,
 
   box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
+
+.card.full-width img{
+  width:auto !important;
+  height:80px !important;
+  max-width:160px;
+
+  object-fit:contain;
+  display:block;
+  margin:10px auto;
+}
+
 /* =========================
    EVENTS
 ========================= */
