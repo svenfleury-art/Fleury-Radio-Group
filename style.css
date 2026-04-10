@@ -1,5 +1,5 @@
 /* ==================================================
-   FRG – FINAL CLEAN CSS (TOGGLE NAV FIXED)
+   FRG – FINAL CSS (DESKTOP FIX + DROPDOWN FIX)
 ================================================== */
 
 :root{
@@ -8,7 +8,6 @@
   --dark:#071942;
   --surface:#0B2A6A;
   --text:#F9FAFB;
-  --muted:rgba(249,250,251,.75);
   --gold:#FACC15;
 }
 
@@ -16,12 +15,11 @@
 *{ box-sizing:border-box; margin:0; padding:0; }
 img{ max-width:100%; display:block; }
 
-/* BODY */
 body{
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
   color:var(--text);
-  text-align:center;
   background:linear-gradient(160deg,var(--bg1),var(--bg2));
+  text-align:center;
 }
 
 /* LINKS */
@@ -29,40 +27,52 @@ a{
   color:var(--gold);
   text-decoration:none;
 }
-a:hover{ text-decoration:underline; }
 
-/* HEADER */
+/* ===============================
+   HEADER (DESKTOP FIX)
+=============================== */
 .site-header{
   background:rgba(5,15,50,.95);
-  backdrop-filter:blur(15px);
-  padding:20px;
+  backdrop-filter:blur(12px);
+  padding:15px 20px;
 }
 
-/* LOGO */
-.logo-area{
+/* FLEX HEADER */
+.header-inner{
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:space-between;
 }
 
+/* LOGO LINKS */
 .logo-img img{
-  height:200px;
+  height:80px;
 }
 
-/* MOBILE LOGO TEXT AUS */
+/* TEXT LOGO */
+.logo-text{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:22px;
+  font-weight:bold;
+}
+
+/* MOBILE */
 @media (max-width:768px){
   .logo-text{ display:none; }
+
+  .header-inner{
+    justify-content:center;
+  }
 }
 
-/* HAMBURGER */
+/* ===============================
+   HAMBURGER
+=============================== */
 .hamburger{
-  display:inline-flex;
-  justify-content:center;
-  align-items:center;
   width:45px;
   height:45px;
-  margin-top:10px;
-
   border-radius:12px;
   background:rgba(250,204,21,.15);
   border:1px solid var(--gold);
@@ -72,90 +82,77 @@ a:hover{ text-decoration:underline; }
 }
 
 /* ===============================
-   NAV (IMMER TOGGLEBAR)
+   NAV (IMMER TOGGLE)
 =============================== */
 .nav-links{
   display:flex;
   flex-direction:column;
-  gap:12px;
+  gap:10px;
 
   max-height:0;
   overflow:hidden;
 
-  opacity:0;
-  transform:translateY(-10px);
-
-  transition:all .4s ease;
+  transition:.4s;
 }
 
 .nav-links.open{
-  max-height:800px;
-  opacity:1;
-  transform:translateY(0);
+  max-height:1000px;
 }
 
-/* NAV LINKS */
+/* LINKS */
 .nav-links a{
-  padding:14px;
-  border-radius:14px;
-
+  padding:12px 16px;
+  border-radius:12px;
   background:rgba(16,42,107,.7);
-  border:1px solid rgba(250,204,21,.3);
-
-  transition:.25s;
 }
 
-.nav-links a:hover{
-  background:rgba(250,204,21,.15);
-  transform:translateY(-2px);
-}
-
-/* DROPDOWN */
+/* ===============================
+   DROPDOWN FIX
+=============================== */
 .nav-dropdown{
-  width:100%;
+  display:flex;
+  flex-direction:column;
 }
 
+/* BUTTON */
 .nav-button{
-  width:100%;
-  padding:14px;
-  border-radius:14px;
-
+  padding:12px;
+  border-radius:12px;
   background:#1f3b82;
   border:1px solid var(--gold);
   color:white;
   cursor:pointer;
 }
 
+/* MENU */
 .dropdown-menu{
   display:none;
   flex-direction:column;
-  gap:10px;
-  margin-top:10px;
+  gap:8px;
+  margin-top:8px;
 }
 
+/* ACTIVE */
 .nav-dropdown.open .dropdown-menu{
   display:flex;
 }
 
-/* DESKTOP (AUCH TOGGLE) */
+/* ===============================
+   DESKTOP NAV (WICHTIG)
+=============================== */
 @media (min-width:900px){
-
-  .hamburger{
-    display:inline-flex; /* BLEIBT SICHTBAR */
-  }
 
   .nav-links{
     flex-direction:row;
     justify-content:center;
+    align-items:center;
     flex-wrap:wrap;
 
     max-height:0;
-    opacity:0;
   }
 
   .nav-links.open{
     max-height:500px;
-    opacity:1;
   }
 
   .nav-links a{
@@ -164,7 +161,6 @@ a:hover{ text-decoration:underline; }
 
   .nav-dropdown{
     position:relative;
-    width:auto;
   }
 
   .dropdown-menu{
@@ -173,13 +169,13 @@ a:hover{ text-decoration:underline; }
     left:0;
     background:#0B2A6A;
     padding:10px;
-    border-radius:12px;
-    min-width:200px;
+    border-radius:10px;
+    min-width:180px;
   }
 }
 
 /* ===============================
-   CARDS
+   GRID SYSTEM (DESKTOP FIX)
 =============================== */
 .cards{
   display:grid;
@@ -194,18 +190,6 @@ a:hover{ text-decoration:underline; }
   }
 }
 
-.card{
-  background:linear-gradient(145deg,#071946,#0B2A6A);
-  border:1px solid rgba(250,204,21,.3);
-  border-radius:18px;
-  padding:20px;
-  transition:.3s;
-}
-
-.card:hover{
-  transform:translateY(-5px);
-}
-
 /* ===============================
    COUNTDOWN
 =============================== */
@@ -214,14 +198,13 @@ a:hover{ text-decoration:underline; }
   justify-content:center;
   gap:20px;
   flex-wrap:wrap;
-  padding:20px;
 }
 
 .time-box{
   width:90px;
   height:110px;
-  border-radius:14px;
   background:#111;
+  border-radius:12px;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -230,11 +213,6 @@ a:hover{ text-decoration:underline; }
 .time-box div{
   font-size:36px;
   color:var(--gold);
-}
-
-.time-box span{
-  font-size:12px;
-  color:#aaa;
 }
 
 @media (min-width:900px){
@@ -264,49 +242,36 @@ a:hover{ text-decoration:underline; }
   }
 }
 
-.event-card{
-  background:#0f1f4d;
-  padding:20px;
-  border-radius:16px;
-  transition:.3s;
-}
-
-.event-card:hover{
-  transform:translateY(-6px);
-}
-
 /* ===============================
-   FORMULAR
+   FORM
 =============================== */
 .artist-form{
-  background:#06163a;
-  padding:20px;
-  border-radius:16px;
   max-width:500px;
   margin:auto;
+  padding:20px;
+  background:#06163a;
+  border-radius:14px;
 }
 
 .artist-form input,
 .artist-form textarea{
   width:100%;
-  padding:12px;
+  padding:10px;
   margin-top:10px;
-  border-radius:10px;
+  border-radius:8px;
   border:none;
 }
 
 .artist-form button{
-  margin-top:15px;
+  margin-top:12px;
   padding:12px;
   background:var(--gold);
   border:none;
   border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
 }
 
 /* ===============================
-   ARTISTS
+   ARTISTS (DESKTOP NEBENEINANDER)
 =============================== */
 .artist-grid{
   display:grid;
@@ -331,6 +296,5 @@ a:hover{ text-decoration:underline; }
 =============================== */
 .site-footer{
   background:#050f32;
-  padding:30px;
-  margin-top:40px;
+  padding:25px;
 }
