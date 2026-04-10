@@ -1,5 +1,5 @@
 /* ==================================================
-   FRG CLEAN UI FIX (PROFESSIONAL LAYOUT)
+   FRG CLEAN UI (OPTIMIZED VERSION)
 ================================================== */
 
 :root{
@@ -7,20 +7,18 @@
   --bg2:#1D4ED8;
   --dark:#071942;
   --surface:#0B2A6A;
+  --surface-light:#102A6B;
   --text:#F9FAFB;
   --gold:#FACC15;
 }
 
 /* RESET */
-*{
+*,
+*::before,
+*::after{
   box-sizing:border-box;
   margin:0;
   padding:0;
-}
-
-img{
-  max-width:100%;
-  display:block;
 }
 
 body{
@@ -28,23 +26,32 @@ body{
   color:var(--text);
   background:linear-gradient(160deg,var(--bg1),var(--bg2));
   line-height:1.5;
-
-  /* ❌ WICHTIG FIX */
   text-align:center;
+}
+
+/* MEDIA */
+img{
+  max-width:100%;
+  display:block;
 }
 
 /* LINKS */
 a{
   color:var(--gold);
   text-decoration:none;
+  transition:0.2s;
+}
+
+a:hover{
+  opacity:0.85;
 }
 
 /* ===============================
-   HEADER FIX
+   HEADER
 =============================== */
 
 .site-header{
-  background:#0B2A6F;
+  background:rgba(11,42,111,0.95);
   backdrop-filter:blur(12px);
   padding:12px 20px;
   position:sticky;
@@ -57,21 +64,21 @@ a{
   align-items:center;
   justify-content:space-between;
   position:relative;
+  max-width:1100px;
+  margin:auto;
 }
 
-/* LOGO LINKS */
+/* LOGO */
 .logo-img img{
-  height:120px;
+  height:100px;
 }
 
-/* TEXT LOGO CENTER */
 .logo-text{
   position:absolute;
   left:50%;
   transform:translateX(-50%);
   font-size:20px;
   font-weight:700;
-  color:var(--text);
   white-space:nowrap;
 }
 
@@ -99,17 +106,21 @@ a{
   color:var(--gold);
   font-size:22px;
   cursor:pointer;
+  transition:0.2s;
+}
+
+.hamburger:hover{
+  background:rgba(250,204,21,.3);
 }
 
 /* ===============================
-   NAV SYSTEM (FIXED TOGGLE)
+   NAVIGATION
 =============================== */
 
 .nav-links{
   display:flex;
   flex-direction:column;
   gap:10px;
-
   max-height:0;
   overflow:hidden;
   transition:max-height .35s ease;
@@ -120,15 +131,19 @@ a{
   padding:10px 0;
 }
 
-/* NAV LINKS */
 .nav-links a{
   padding:12px 16px;
   border-radius:12px;
   background:rgba(16,42,107,.75);
+  transition:0.2s;
+}
+
+.nav-links a:hover{
+  background:rgba(16,42,107,1);
 }
 
 /* ===============================
-   DROPDOWN FIX (CRITICAL)
+   DROPDOWN
 =============================== */
 
 .nav-dropdown{
@@ -148,7 +163,6 @@ a{
   align-items:center;
 }
 
-/* DROPDOWN MENU */
 .dropdown-menu{
   display:none;
   flex-direction:column;
@@ -162,7 +176,7 @@ a{
 }
 
 /* ===============================
-   DESKTOP NAV FIX
+   DESKTOP NAV
 =============================== */
 
 @media (min-width:900px){
@@ -172,14 +186,9 @@ a{
     justify-content:center;
     align-items:center;
     flex-wrap:wrap;
-
     max-height:none;
     overflow:visible;
     gap:15px;
-  }
-
-  .nav-links a{
-    width:auto;
   }
 
   .nav-dropdown{
@@ -191,20 +200,18 @@ a{
     top:120%;
     left:0;
     background:var(--surface);
-    padding:10px;
+    padding:12px;
     border-radius:12px;
     min-width:200px;
     box-shadow:0 10px 30px rgba(0,0,0,.3);
-    z-index:999;
   }
 }
 
 /* ===============================
-   CONTAINER (WICHTIG FIX)
+   CONTAINER
 =============================== */
 
 .container{
-
   max-width:1100px;
   margin:auto;
   padding:20px;
@@ -215,10 +222,8 @@ a{
 =============================== */
 
 .cards{
-   background:#0B2A6F;
   display:grid;
-  grid-template-columns:1fr;
-  gap:18px;
+  gap:20px;
 }
 
 @media (min-width:900px){
@@ -228,13 +233,12 @@ a{
 }
 
 /* ===============================
-   EVENTS (CLEAN GRID)
+   EVENTS
 =============================== */
 
 .event-grid{
   display:grid;
-  grid-template-columns:1fr;
-  gap:18px;
+  gap:20px;
 }
 
 @media (min-width:900px){
@@ -244,7 +248,7 @@ a{
 }
 
 /* ===============================
-   ARTISTS (SMALL + CLEAN)
+   ARTISTS
 =============================== */
 
 .artist-grid{
@@ -268,7 +272,7 @@ a{
 }
 
 /* ===============================
-   COUNTDOWN (CLEANER)
+   COUNTDOWN
 =============================== */
 
 .countdown-container{
@@ -296,7 +300,7 @@ a{
 }
 
 /* ===============================
-   FORM (MODERN)
+   FORM
 =============================== */
 
 .artist-form{
@@ -324,15 +328,20 @@ a{
   border:none;
   border-radius:10px;
   font-weight:bold;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.artist-form button:hover{
+  opacity:0.9;
 }
 
 /* ===============================
-   FOOTER CLEAN
+   FOOTER
 =============================== */
 
 .site-footer{
   background:#0B2A6F;
   padding:30px;
   margin-top:40px;
-  text-align:center;
 }
