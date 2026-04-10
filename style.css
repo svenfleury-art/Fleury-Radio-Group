@@ -1,317 +1,122 @@
-/* ==================================================
-   FRG CLEAN DARK UI + CENTER LAYOUT FIX (FINAL)
-================================================== */
-
 :root{
   --bg1:#2563EB;
   --bg2:#1D4ED8;
-
-  --dark:#06152F;
-  --surface:#0A1F44;
-  --surface-2:#0C2552;
-
+  --dark:#071942;
+  --surface:rgba(11,42,106,.65);
   --text:#F9FAFB;
+  --muted:rgba(249,250,251,.75);
   --gold:#FACC15;
 }
 
-/* RESET */
+/* =========================
+   RESET
+========================= */
 *{
   box-sizing:border-box;
-  margin:0;
-  padding:0;
 }
-
-/* ===============================
-   GLOBAL CENTER LAYOUT (WICHTIG)
-=============================== */
 
 body{
+  margin:0;
   font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  color:var(--text);
   background:linear-gradient(160deg,var(--bg1),var(--bg2));
+  color:var(--text);
   line-height:1.5;
-
-  display:flex;
-  justify-content:center; /* 🔥 ALLES ZENTRIERT */
 }
 
-/* ===============================
-   GLOBAL WRAP FOR ALL CONTENT
-=============================== */
-
+/* =========================
+   PAGE CENTER WRAPPER
+========================= */
 header,
 main,
 footer{
-  width:100%;
   max-width:1100px;
-
-  margin:12px;
-}
-
-/* ===============================
-   BOX SYSTEM (DEIN DESIGN BEHALTEN)
-=============================== */
-
-section,
-.cards,
-.event-grid,
-.artist-form{
+  margin:20px auto;
+  padding:20px;
   background:var(--surface);
   border-radius:16px;
-  padding:20px;
-  margin:20px auto;
-  width:100%;
-
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  box-shadow:0 20px 50px rgba(0,0,0,.25);
 }
 
-/* ===============================
-   LINKS
-=============================== */
-
-a{
-  color:var(--gold);
-  text-decoration:none;
+/* =========================
+   HEADER + LOGO
+========================= */
+header{
+  text-align:center;
 }
 
-/* ===============================
-   HEADER
-=============================== */
+header img{
+  width:140px;        /* 🔥 LOGO GRÖSSER */
+  height:auto;
+  margin-bottom:10px;
+}
 
-.site-header{
-  background:var(--dark);
-  padding:12px 20px;
+/* =========================
+   NAVIGATION (VERTIKAL)
+========================= */
+nav{
+  margin-top:15px;
+}
+
+nav ul{
+  list-style:none;
+  padding:0;
+  margin:0;
 
   display:flex;
-  align-items:center;
-  justify-content:space-between;
+  flex-direction:column;   /* 🔥 UNTEREINANDER */
   gap:10px;
 }
 
-/* LOGO SMALL */
-.logo-img img{
-  height:55px;
+nav ul li{
+  text-align:center;
 }
 
-/* TEXT LOGO */
-.logo-text{
-  font-size:18px;
-  font-weight:700;
-  color:var(--text);
-  white-space:nowrap;
-}
-
-/* MOBILE */
-@media (max-width:768px){
-  .logo-text{
-    display:none;
-  }
-}
-
-/* ===============================
-   NAV (ACCORDION CLEAN)
-=============================== */
-
-.nav-links{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-
-  max-height:0;
-  overflow:hidden;
-  transition:max-height .4s ease;
-}
-
-.nav-links.open{
-  max-height:1000px;
-  padding:10px 0;
-}
-
-.nav-links a{
-  background:var(--surface-2);
-  padding:12px 14px;
-  border-radius:12px;
+nav a{
   display:block;
-  transition:0.2s;
-}
-
-.nav-links a:hover{
-  background:rgba(250,204,21,.15);
-  transform:translateX(4px);
-}
-
-/* ===============================
-   DROPDOWN
-=============================== */
-
-.nav-dropdown{
-  display:flex;
-  flex-direction:column;
-}
-
-.nav-button{
-  background:var(--surface-2);
-  border:1px solid rgba(250,204,21,.3);
+  padding:12px 16px;
+  border-radius:10px;
+  text-decoration:none;
   color:var(--text);
-
-  padding:12px 14px;
-  border-radius:12px;
-
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  cursor:pointer;
+  background:rgba(255,255,255,.08);
+  transition:.2s;
 }
 
-.dropdown-menu{
+nav a:hover{
+  background:rgba(255,255,255,.18);
+  transform:scale(1.02);
+}
+
+/* =========================
+   DROPDOWN MENÜ
+========================= */
+nav ul li ul{
+  margin-top:8px;
   display:none;
   flex-direction:column;
-  gap:8px;
-
-  margin-top:6px;
-  padding-left:12px;
-  border-left:2px solid var(--gold);
+  gap:6px;
 }
 
-.nav-dropdown.open .dropdown-menu{
+nav ul li:hover ul{
   display:flex;
 }
 
-.dropdown-menu a{
-  background:rgba(12,37,82,.8);
-  padding:10px 12px;
-  border-radius:10px;
+nav ul li ul a{
   font-size:14px;
+  background:rgba(255,255,255,.05);
 }
 
-/* ===============================
-   CARDS
-=============================== */
-
-.cards{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:16px;
-}
-
-@media (min-width:900px){
-  .cards{
-    grid-template-columns:repeat(3,1fr);
-  }
-}
-
-.cards > div{
-  background:var(--surface-2);
-  padding:16px;
-  border-radius:14px;
-}
-
-/* ===============================
-   EVENTS
-=============================== */
-
-.event-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:16px;
-}
-
-@media (min-width:900px){
-  .event-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-}
-
-.event-grid > div{
-  background:var(--surface-2);
-  padding:16px;
-  border-radius:14px;
-}
-
-/* ===============================
-   ARTISTS
-=============================== */
-
-.artist-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
-@media (min-width:900px){
-  .artist-grid{
-    grid-template-columns:repeat(5,1fr);
-  }
-}
-
-.artist-photo{
-  width:55px;
-  height:55px;
-  object-fit:cover;
-  border-radius:12px;
-  margin:auto;
-}
-
-/* ===============================
-   COUNTDOWN
-=============================== */
-
-.countdown-container{
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-.time-box{
-  width:85px;
-  height:95px;
-  background:var(--dark);
-  border-radius:14px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-}
-
-/* ===============================
-   FORM
-=============================== */
-
-.artist-form{
-  max-width:520px;
-  margin:30px auto;
-}
-
-.artist-form input,
-.artist-form textarea{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border-radius:10px;
-  border:none;
-  background:var(--surface-2);
-  color:var(--text);
-}
-
-.artist-form button{
-  margin-top:12px;
-  padding:12px;
-  width:100%;
-  background:var(--gold);
-  border:none;
-  border-radius:10px;
-  font-weight:bold;
-}
-
-/* ===============================
-   FOOTER
-=============================== */
-
-.site-footer{
-  background:var(--dark);
-  padding:30px;
+/* =========================
+   MAIN CONTENT
+========================= */
+main{
   text-align:center;
-  border-radius:16px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer{
+  text-align:center;
+  font-size:14px;
+  color:var(--muted);
 }
