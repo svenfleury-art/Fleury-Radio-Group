@@ -1,21 +1,21 @@
 /* ==================================================
-   FRG CLEAN UI (OPTIMIZED VERSION)
+   FRG CLEAN DARK UI (UPGRADED)
 ================================================== */
 
 :root{
   --bg1:#2563EB;
   --bg2:#1D4ED8;
-  --dark:#071942;
-  --surface:#0B2A6A;
-  --surface-light:#102A6B;
+
+  --dark:#06152F;
+  --surface:#0A1F44;
+  --surface-2:#0C2552;
+
   --text:#F9FAFB;
   --gold:#FACC15;
 }
 
 /* RESET */
-*,
-*::before,
-*::after{
+*{
   box-sizing:border-box;
   margin:0;
   padding:0;
@@ -26,33 +26,40 @@ body{
   color:var(--text);
   background:linear-gradient(160deg,var(--bg1),var(--bg2));
   line-height:1.5;
-  text-align:center;
-}
-
-/* MEDIA */
-img{
-  max-width:100%;
-  display:block;
+  text-align:left;
 }
 
 /* LINKS */
 a{
   color:var(--gold);
   text-decoration:none;
-  transition:0.2s;
-}
-
-a:hover{
-  opacity:0.85;
 }
 
 /* ===============================
-   HEADER
+   GLOBAL BOX SYSTEM (WICHTIG)
+=============================== */
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+/* Jede Sektion wird eine Box */
+section, .cards, .event-grid, .artist-form{
+  background:var(--surface);
+  border-radius:16px;
+  padding:20px;
+  margin:20px 0;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+/* ===============================
+   HEADER (FIX OVERLAP)
 =============================== */
 
 .site-header{
-  background:rgba(11,42,111,0.95);
-  backdrop-filter:blur(12px);
+  background:var(--dark);
   padding:12px 20px;
   position:sticky;
   top:0;
@@ -63,22 +70,19 @@ a:hover{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  position:relative;
-  max-width:1100px;
-  margin:auto;
+  gap:10px;
 }
 
-/* LOGO */
+/* LOGO (KLEINER) */
 .logo-img img{
-  height:100px;
+  height:55px;   /* FIX: viel kleiner */
 }
 
+/* TEXT LOGO (KEIN OVERLAP MEHR) */
 .logo-text{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:20px;
+  font-size:18px;
   font-weight:700;
+  color:var(--text);
   white-space:nowrap;
 }
 
@@ -87,40 +91,17 @@ a:hover{
   .logo-text{
     display:none;
   }
-
-  .header-inner{
-    justify-content:center;
-  }
 }
 
 /* ===============================
-   HAMBURGER
-=============================== */
-
-.hamburger{
-  width:44px;
-  height:44px;
-  border-radius:12px;
-  background:rgba(250,204,21,.15);
-  border:1px solid var(--gold);
-  color:var(--gold);
-  font-size:22px;
-  cursor:pointer;
-  transition:0.2s;
-}
-
-.hamburger:hover{
-  background:rgba(250,204,21,.3);
-}
-
-/* ===============================
-   NAVIGATION
+   NAV
 =============================== */
 
 .nav-links{
   display:flex;
   flex-direction:column;
   gap:10px;
+
   max-height:0;
   overflow:hidden;
   transition:max-height .35s ease;
@@ -134,96 +115,27 @@ a:hover{
 .nav-links a{
   padding:12px 16px;
   border-radius:12px;
-  background:rgba(16,42,107,.75);
-  transition:0.2s;
+  background:var(--surface-2);
 }
 
-.nav-links a:hover{
-  background:rgba(16,42,107,1);
-}
-
-/* ===============================
-   DROPDOWN
-=============================== */
-
-.nav-dropdown{
-  display:flex;
-  flex-direction:column;
-}
-
-.nav-button{
-  padding:12px 16px;
-  border-radius:12px;
-  background:#1f3b82;
-  border:1px solid var(--gold);
-  color:white;
-  cursor:pointer;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.dropdown-menu{
-  display:none;
-  flex-direction:column;
-  gap:8px;
-  margin-top:8px;
-  padding-left:10px;
-}
-
-.nav-dropdown.open .dropdown-menu{
-  display:flex;
-}
-
-/* ===============================
-   DESKTOP NAV
-=============================== */
-
+/* DESKTOP NAV */
 @media (min-width:900px){
-
   .nav-links{
     flex-direction:row;
-    justify-content:center;
-    align-items:center;
-    flex-wrap:wrap;
     max-height:none;
     overflow:visible;
-    gap:15px;
-  }
-
-  .nav-dropdown{
-    position:relative;
-  }
-
-  .dropdown-menu{
-    position:absolute;
-    top:120%;
-    left:0;
-    background:var(--surface);
-    padding:12px;
-    border-radius:12px;
-    min-width:200px;
-    box-shadow:0 10px 30px rgba(0,0,0,.3);
+    gap:12px;
   }
 }
 
 /* ===============================
-   CONTAINER
-=============================== */
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
-
-/* ===============================
-   CARDS
+   CARDS / BOXES CLEAN
 =============================== */
 
 .cards{
   display:grid;
-  gap:20px;
+  grid-template-columns:1fr;
+  gap:16px;
 }
 
 @media (min-width:900px){
@@ -232,13 +144,21 @@ a:hover{
   }
 }
 
+/* einzelne Card */
+.cards > div{
+  background:var(--surface-2);
+  padding:16px;
+  border-radius:14px;
+}
+
 /* ===============================
-   EVENTS
+   EVENT GRID
 =============================== */
 
 .event-grid{
   display:grid;
-  gap:20px;
+  grid-template-columns:1fr;
+  gap:16px;
 }
 
 @media (min-width:900px){
@@ -247,14 +167,20 @@ a:hover{
   }
 }
 
+.event-grid > div{
+  background:var(--surface-2);
+  padding:16px;
+  border-radius:14px;
+}
+
 /* ===============================
-   ARTISTS
+   ARTISTS (LOGOS FIX)
 =============================== */
 
 .artist-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:15px;
+  gap:12px;
 }
 
 @media (min-width:900px){
@@ -264,8 +190,8 @@ a:hover{
 }
 
 .artist-photo{
-  width:80px;
-  height:80px;
+  width:55px;   /* FIX: kleiner */
+  height:55px;
   object-fit:cover;
   border-radius:12px;
   margin:auto;
@@ -278,25 +204,19 @@ a:hover{
 .countdown-container{
   display:flex;
   justify-content:center;
-  gap:15px;
+  gap:12px;
   flex-wrap:wrap;
 }
 
 .time-box{
-  width:95px;
-  height:110px;
-  background:#111827;
+  width:85px;
+  height:95px;
+  background:var(--dark);
   border-radius:14px;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  box-shadow:0 8px 20px rgba(0,0,0,.3);
-}
-
-.time-box div{
-  font-size:34px;
-  color:var(--gold);
 }
 
 /* ===============================
@@ -306,9 +226,6 @@ a:hover{
 .artist-form{
   max-width:520px;
   margin:30px auto;
-  padding:20px;
-  background:rgba(6,22,58,.9);
-  border-radius:16px;
 }
 
 .artist-form input,
@@ -318,30 +235,17 @@ a:hover{
   margin-top:10px;
   border-radius:10px;
   border:none;
-}
-
-.artist-form button{
-  margin-top:12px;
-  padding:12px;
-  width:100%;
-  background:var(--gold);
-  border:none;
-  border-radius:10px;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.2s;
-}
-
-.artist-form button:hover{
-  opacity:0.9;
+  background:var(--surface-2);
+  color:var(--text);
 }
 
 /* ===============================
-   FOOTER
+   FOOTER (DUNKLER ALS REST)
 =============================== */
 
 .site-footer{
-  background:#0B2A6F;
+  background:var(--dark);
   padding:30px;
   margin-top:40px;
+  text-align:center;
 }
