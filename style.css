@@ -1,5 +1,5 @@
 /* ==================================================
-   FRG CLEAN DARK UI (UPGRADED)
+   FRG CLEAN DARK UI + CENTER LAYOUT FIX (FINAL)
 ================================================== */
 
 :root{
@@ -21,64 +21,79 @@
   padding:0;
 }
 
+/* ===============================
+   GLOBAL CENTER LAYOUT (WICHTIG)
+=============================== */
+
 body{
   font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial;
   color:var(--text);
   background:linear-gradient(160deg,var(--bg1),var(--bg2));
   line-height:1.5;
-  text-align:left;
+
+  display:flex;
+  justify-content:center; /* 🔥 ALLES ZENTRIERT */
 }
 
-/* LINKS */
+/* ===============================
+   GLOBAL WRAP FOR ALL CONTENT
+=============================== */
+
+header,
+main,
+footer{
+  width:100%;
+  max-width:1100px;
+
+  margin:12px;
+}
+
+/* ===============================
+   BOX SYSTEM (DEIN DESIGN BEHALTEN)
+=============================== */
+
+section,
+.cards,
+.event-grid,
+.artist-form{
+  background:var(--surface);
+  border-radius:16px;
+  padding:20px;
+  margin:20px auto;
+  width:100%;
+
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+/* ===============================
+   LINKS
+=============================== */
+
 a{
   color:var(--gold);
   text-decoration:none;
 }
 
 /* ===============================
-   GLOBAL BOX SYSTEM (WICHTIG)
-=============================== */
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
-
-/* Jede Sektion wird eine Box */
-section, .cards, .event-grid, .artist-form{
-  background:var(--surface);
-  border-radius:16px;
-  padding:20px;
-  margin:20px 0;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-}
-
-/* ===============================
-   HEADER (FIX OVERLAP)
+   HEADER
 =============================== */
 
 .site-header{
   background:var(--dark);
   padding:12px 20px;
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
 
-.header-inner{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:10px;
 }
 
-/* LOGO (KLEINER) */
+/* LOGO SMALL */
 .logo-img img{
-  height:55px;   /* FIX: viel kleiner */
+  height:55px;
 }
 
-/* TEXT LOGO (KEIN OVERLAP MEHR) */
+/* TEXT LOGO */
 .logo-text{
   font-size:18px;
   font-weight:700;
@@ -94,11 +109,7 @@ section, .cards, .event-grid, .artist-form{
 }
 
 /* ===============================
-   NAV
-=============================== */
-
-/* ===============================
-   CLEAN ACCORDION NAV
+   NAV (ACCORDION CLEAN)
 =============================== */
 
 .nav-links{
@@ -111,13 +122,11 @@ section, .cards, .event-grid, .artist-form{
   transition:max-height .4s ease;
 }
 
-/* OPEN STATE */
 .nav-links.open{
   max-height:1000px;
   padding:10px 0;
 }
 
-/* MAIN LINKS */
 .nav-links a{
   background:var(--surface-2);
   padding:12px 14px;
@@ -132,7 +141,7 @@ section, .cards, .event-grid, .artist-form{
 }
 
 /* ===============================
-   DROPDOWN (ACCORDION STYLE)
+   DROPDOWN
 =============================== */
 
 .nav-dropdown{
@@ -140,7 +149,6 @@ section, .cards, .event-grid, .artist-form{
   flex-direction:column;
 }
 
-/* BUTTON */
 .nav-button{
   background:var(--surface-2);
   border:1px solid rgba(250,204,21,.3);
@@ -156,7 +164,6 @@ section, .cards, .event-grid, .artist-form{
   cursor:pointer;
 }
 
-/* DROPDOWN CONTENT */
 .dropdown-menu{
   display:none;
   flex-direction:column;
@@ -167,12 +174,10 @@ section, .cards, .event-grid, .artist-form{
   border-left:2px solid var(--gold);
 }
 
-/* OPEN STATE */
 .nav-dropdown.open .dropdown-menu{
   display:flex;
 }
 
-/* DROPDOWN LINKS */
 .dropdown-menu a{
   background:rgba(12,37,82,.8);
   padding:10px 12px;
@@ -180,11 +185,8 @@ section, .cards, .event-grid, .artist-form{
   font-size:14px;
 }
 
-.dropdown-menu a:hover{
-  background:rgba(250,204,21,.12);
-}
 /* ===============================
-   CARDS / BOXES CLEAN
+   CARDS
 =============================== */
 
 .cards{
@@ -199,7 +201,6 @@ section, .cards, .event-grid, .artist-form{
   }
 }
 
-/* einzelne Card */
 .cards > div{
   background:var(--surface-2);
   padding:16px;
@@ -207,7 +208,7 @@ section, .cards, .event-grid, .artist-form{
 }
 
 /* ===============================
-   EVENT GRID
+   EVENTS
 =============================== */
 
 .event-grid{
@@ -229,7 +230,7 @@ section, .cards, .event-grid, .artist-form{
 }
 
 /* ===============================
-   ARTISTS (LOGOS FIX)
+   ARTISTS
 =============================== */
 
 .artist-grid{
@@ -245,7 +246,7 @@ section, .cards, .event-grid, .artist-form{
 }
 
 .artist-photo{
-  width:55px;   /* FIX: kleiner */
+  width:55px;
   height:55px;
   object-fit:cover;
   border-radius:12px;
@@ -294,13 +295,23 @@ section, .cards, .event-grid, .artist-form{
   color:var(--text);
 }
 
+.artist-form button{
+  margin-top:12px;
+  padding:12px;
+  width:100%;
+  background:var(--gold);
+  border:none;
+  border-radius:10px;
+  font-weight:bold;
+}
+
 /* ===============================
-   FOOTER (DUNKLER ALS REST)
+   FOOTER
 =============================== */
 
 .site-footer{
   background:var(--dark);
   padding:30px;
-  margin-top:40px;
   text-align:center;
+  border-radius:16px;
 }
