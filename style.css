@@ -62,12 +62,12 @@ footer{
 
 /* LOGO */
 .logo-img img{
-  height:150px;   /* 🔥 grösser */
+  height:200px;   /* 🔥 grösser */
 }
 
 /* TEXT LOGO */
 .logo-text{
-  font-size:20px;
+  font-size:50px;
   font-weight:700;
   color:var(--text);
 }
