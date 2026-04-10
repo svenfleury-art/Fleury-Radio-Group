@@ -257,7 +257,7 @@ section,
 
 /* Zahl */
 .time-box span{
-  font-size:28px;
+  font-size:50px;
   font-weight:700;
   color:var(--gold);
 }
