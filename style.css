@@ -1,26 +1,32 @@
 /* ==================================================
-   FRG – FINAL CSS (DESKTOP FIX + DROPDOWN FIX)
+   FRG – FINAL CSS (FULL FIXED SYSTEM)
 ================================================== */
 
 :root{
   --bg1:#2563EB;
   --bg2:#1D4ED8;
-  --dark:#071942;
+  --dark:#061A3F;
   --surface:#0B2A6A;
   --text:#F9FAFB;
   --gold:#FACC15;
+  --glass:rgba(5,15,50,.85);
 }
 
 /* RESET */
-*{ box-sizing:border-box; margin:0; padding:0; }
-img{ max-width:100%; display:block; }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
 body{
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  color:var(--text);
   background:linear-gradient(160deg,var(--bg1),var(--bg2));
+  color:var(--text);
   text-align:center;
 }
+
+img{ max-width:100%; display:block; }
 
 /* LINKS */
 a{
@@ -28,62 +34,66 @@ a{
   text-decoration:none;
 }
 
-/* ===============================
-   HEADER (DESKTOP FIX)
-=============================== */
+/* ==================================================
+   HEADER (DESKTOP + MOBILE FIX)
+================================================== */
+
 .site-header{
-  background:rgba(5,15,50,.95);
-  backdrop-filter:blur(12px);
+  background:var(--glass);
+  backdrop-filter:blur(14px);
   padding:15px 20px;
+  position:sticky;
+  top:0;
+  z-index:1000;
 }
 
-/* FLEX HEADER */
 .header-inner{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  position:relative;
 }
 
 /* LOGO LINKS */
 .logo-img img{
-  height:80px;
+  height:60px;
 }
 
-/* TEXT LOGO */
+/* CENTER TEXT LOGO */
 .logo-text{
   position:absolute;
   left:50%;
   transform:translateX(-50%);
-  font-size:22px;
-  font-weight:bold;
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:.5px;
 }
 
-/* MOBILE */
+/* MOBILE: TEXT LOGO AUS */
 @media (max-width:768px){
   .logo-text{ display:none; }
-
-  .header-inner{
-    justify-content:center;
-  }
+  .header-inner{ justify-content:center; }
 }
 
-/* ===============================
+/* ==================================================
    HAMBURGER
-=============================== */
+================================================== */
+
 .hamburger{
-  width:45px;
-  height:45px;
+  width:44px;
+  height:44px;
   border-radius:12px;
-  background:rgba(250,204,21,.15);
   border:1px solid var(--gold);
+  background:rgba(250,204,21,.12);
   color:var(--gold);
   font-size:22px;
   cursor:pointer;
 }
 
-/* ===============================
-   NAV (IMMER TOGGLE)
-=============================== */
+/* ==================================================
+   NAV SYSTEM (FIXED TOGGLE)
+================================================== */
+
 .nav-links{
   display:flex;
   flex-direction:column;
@@ -91,55 +101,80 @@ a{
 
   max-height:0;
   overflow:hidden;
-
-  transition:.4s;
+  transition:max-height .35s ease;
 }
 
 .nav-links.open{
-  max-height:1000px;
+  max-height:900px;
 }
 
-/* LINKS */
+/* NAV LINKS */
 .nav-links a{
   padding:12px 16px;
   border-radius:12px;
-  background:rgba(16,42,107,.7);
+  background:rgba(11,42,106,.7);
+  transition:.2s;
 }
 
-/* ===============================
-   DROPDOWN FIX
-=============================== */
+.nav-links a:hover{
+  transform:scale(1.02);
+  background:rgba(255,255,255,.08);
+}
+
+/* ==================================================
+   DROPDOWN (FIXED + STABLE)
+================================================== */
+
 .nav-dropdown{
   display:flex;
   flex-direction:column;
 }
 
-/* BUTTON */
 .nav-button{
-  padding:12px;
+  padding:12px 16px;
   border-radius:12px;
-  background:#1f3b82;
+  background:#163a82;
   border:1px solid var(--gold);
   color:white;
   cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-/* MENU */
+.nav-button:hover{
+  background:#1c4aa3;
+}
+
+.arrow{
+  font-size:12px;
+  transition:transform .2s ease;
+}
+
+/* DROPDOWN MENU */
 .dropdown-menu{
   display:none;
   flex-direction:column;
-  gap:8px;
+  gap:6px;
   margin-top:8px;
+  background:#071a3f;
+  border-radius:12px;
+  padding:8px;
 }
 
-/* ACTIVE */
+/* OPEN STATE */
 .nav-dropdown.open .dropdown-menu{
   display:flex;
 }
 
-/* ===============================
-   DESKTOP NAV (WICHTIG)
-=============================== */
+.nav-dropdown.open .arrow{
+  transform:rotate(180deg);
+}
+
+/* ==================================================
+   DESKTOP NAV (IMPORTANT FIX)
+================================================== */
+
 @media (min-width:900px){
 
   .nav-links{
@@ -148,11 +183,8 @@ a{
     align-items:center;
     flex-wrap:wrap;
 
-    max-height:0;
-  }
-
-  .nav-links.open{
-    max-height:500px;
+    max-height:none;
+    overflow:visible;
   }
 
   .nav-links a{
@@ -167,16 +199,15 @@ a{
     position:absolute;
     top:110%;
     left:0;
-    background:#0B2A6A;
-    padding:10px;
-    border-radius:10px;
-    min-width:180px;
+    min-width:190px;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
   }
 }
 
-/* ===============================
-   GRID SYSTEM (DESKTOP FIX)
-=============================== */
+/* ==================================================
+   GRID SYSTEM (CARDS)
+================================================== */
+
 .cards{
   display:grid;
   grid-template-columns:1fr;
@@ -190,9 +221,10 @@ a{
   }
 }
 
-/* ===============================
-   COUNTDOWN
-=============================== */
+/* ==================================================
+   COUNTDOWN (DESKTOP IMPROVED)
+================================================== */
+
 .countdown-container{
   display:flex;
   justify-content:center;
@@ -203,15 +235,15 @@ a{
 .time-box{
   width:90px;
   height:110px;
-  background:#111;
-  border-radius:12px;
+  background:#0b0b0b;
+  border-radius:14px;
   display:flex;
   flex-direction:column;
   justify-content:center;
 }
 
 .time-box div{
-  font-size:36px;
+  font-size:40px;
   color:var(--gold);
 }
 
@@ -222,13 +254,14 @@ a{
   }
 
   .time-box div{
-    font-size:48px;
+    font-size:52px;
   }
 }
 
-/* ===============================
-   EVENTS
-=============================== */
+/* ==================================================
+   EVENTS (DESKTOP GRID)
+================================================== */
+
 .event-grid{
   display:grid;
   grid-template-columns:1fr;
@@ -242,9 +275,10 @@ a{
   }
 }
 
-/* ===============================
-   FORM
-=============================== */
+/* ==================================================
+   FORM (CLEAN UI)
+================================================== */
+
 .artist-form{
   max-width:500px;
   margin:auto;
@@ -256,9 +290,9 @@ a{
 .artist-form input,
 .artist-form textarea{
   width:100%;
-  padding:10px;
+  padding:12px;
   margin-top:10px;
-  border-radius:8px;
+  border-radius:10px;
   border:none;
 }
 
@@ -268,11 +302,13 @@ a{
   background:var(--gold);
   border:none;
   border-radius:10px;
+  cursor:pointer;
 }
 
-/* ===============================
-   ARTISTS (DESKTOP NEBENEINANDER)
-=============================== */
+/* ==================================================
+   ARTISTS (DESKTOP FIX)
+================================================== */
+
 .artist-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -287,14 +323,17 @@ a{
 }
 
 .artist-photo{
-  max-width:100px;
+  max-width:90px;
   margin:auto;
+  border-radius:12px;
 }
 
-/* ===============================
-   FOOTER
-=============================== */
+/* ==================================================
+   FOOTER (DARKER + CLEAN)
+================================================== */
+
 .site-footer{
-  background:#050f32;
-  padding:25px;
+  background:#040c22;
+  padding:30px;
+  margin-top:40px;
 }
