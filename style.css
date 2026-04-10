@@ -62,7 +62,7 @@ footer{
 
 /* LOGO */
 .logo-img img{
-  height:150px;   /* 🔥 grösser */
+  height:300px;   /* 🔥 grösser */
 }
 
 /* TEXT LOGO */
@@ -194,6 +194,7 @@ section,
   display:grid;
   grid-template-columns:1fr;
   gap:16px;
+  img:100px
 }
 
 .cards > div{
