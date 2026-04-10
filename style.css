@@ -10,17 +10,18 @@
   --gold:#FACC15;
 }
 
-/* RESET */
+/* =========================
+   RESET
+========================= */
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
-/* ===============================
-   BODY FIX (WICHTIG!)
-=============================== */
-
+/* =========================
+   BODY (KEIN FLEX!)
+========================= */
 body{
   font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial;
   color:var(--text);
@@ -28,18 +29,146 @@ body{
   line-height:1.5;
 }
 
-/* ===============================
-   CENTER CONTAINER (NEU)
-=============================== */
+/* =========================
+   CENTER LAYOUT (ALLES MITTE)
+========================= */
 
-body > *{
+header,
+main,
+footer{
   max-width:1100px;
-  margin:12px auto;
+  margin:20px auto;
+  padding:20px;
 }
 
-/* ===============================
-   BOX SYSTEM
-=============================== */
+/* =========================
+   HEADER (ALLES ZENTRIERT)
+========================= */
+
+.site-header{
+  background:var(--dark);
+  padding:20px;
+  border-radius:16px;
+
+  display:flex;
+  flex-direction:column;   /* 🔥 alles untereinander */
+  align-items:center;      /* 🔥 zentriert */
+  text-align:center;
+  gap:10px;
+}
+
+/* LOGO */
+.logo-img img{
+  height:90px;   /* 🔥 grösser */
+}
+
+/* TEXT LOGO */
+.logo-text{
+  font-size:20px;
+  font-weight:700;
+  color:var(--text);
+}
+
+/* =========================
+   LINKS
+========================= */
+
+a{
+  color:var(--gold);
+  text-decoration:none;
+}
+
+/* =========================
+   NAV (EINGEKLAPPT START)
+========================= */
+
+.nav-links{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+
+  max-height:0;              /* 🔥 START ZU */
+  overflow:hidden;
+  transition:max-height .4s ease;
+
+  width:100%;
+  align-items:center;
+}
+
+/* OPEN STATE */
+.nav-links.open{
+  max-height:900px;
+  padding-top:10px;
+}
+
+/* NAV LINKS */
+.nav-links a{
+  background:var(--surface-2);
+  padding:12px 14px;
+  border-radius:12px;
+  width:100%;
+  max-width:300px;
+  text-align:center;
+}
+
+/* =========================
+   HAMBURGER BUTTON (falls vorhanden)
+========================= */
+
+#hamburgerBtn{
+  background:var(--surface-2);
+  border:none;
+  color:var(--text);
+  padding:12px 16px;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+/* =========================
+   DROPDOWN (ALSO ZU START)
+========================= */
+
+.nav-dropdown .dropdown-menu{
+  display:none;
+  flex-direction:column;
+  gap:8px;
+  margin-top:8px;
+  width:100%;
+  align-items:center;
+}
+
+/* OPEN DROPDOWN */
+.nav-dropdown.open .dropdown-menu{
+  display:flex;
+}
+
+/* DROPDOWN LINKS */
+.dropdown-menu a{
+  background:rgba(12,37,82,.9);
+  padding:10px 12px;
+  border-radius:10px;
+  width:100%;
+  max-width:260px;
+  text-align:center;
+}
+
+/* BUTTON */
+.nav-button{
+  width:100%;
+  max-width:300px;
+  padding:12px;
+  border-radius:12px;
+
+  background:var(--surface-2);
+  border:1px solid rgba(250,204,21,.3);
+  color:var(--text);
+
+  cursor:pointer;
+}
+
+/* =========================
+   SECTIONS
+========================= */
 
 section,
 .cards,
@@ -50,107 +179,45 @@ section,
   padding:20px;
   margin:20px auto;
   width:100%;
+  text-align:center;
   box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
 
-/* ===============================
-   LINKS
-=============================== */
-
-a{
-  color:var(--gold);
-  text-decoration:none;
-}
-
-/* ===============================
-   HEADER (VERTIKAL)
-=============================== */
-
-.site-header{
-  background:var(--dark);
-  padding:20px;
-  text-align:center;   /* 🔥 alles untereinander + zentriert */
-}
-
-/* LOGO GRÖSSER */
-.logo-img img{
-  height:85px;
-  margin-bottom:10px;
-}
-
-/* TEXT LOGO */
-.logo-text{
-  font-size:20px;
-  font-weight:700;
-  color:var(--text);
-}
-
-/* ===============================
-   NAV (UNTEREINANDER)
-=============================== */
-
-.nav-links{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.nav-links a{
-  background:var(--surface-2);
-  padding:12px 14px;
-  border-radius:12px;
-  display:block;
-  text-align:center;
-}
-
-/* Dropdown */
-.nav-dropdown{
-  display:flex;
-  flex-direction:column;
-}
-
-.nav-button{
-  background:var(--surface-2);
-  border:1px solid rgba(250,204,21,.3);
-  color:var(--text);
-  padding:12px;
-  border-radius:12px;
-  text-align:center;
-}
-
-.dropdown-menu{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  margin-top:8px;
-  padding-left:0;
-}
-
-/* ===============================
+/* =========================
    CARDS
-=============================== */
+========================= */
 
 .cards{
   display:grid;
   grid-template-columns:1fr;
   gap:16px;
-  text-align:center;
 }
 
-/* ===============================
+.cards > div{
+  background:var(--surface-2);
+  padding:16px;
+  border-radius:14px;
+}
+
+/* =========================
    EVENTS
-=============================== */
+========================= */
 
 .event-grid{
   display:grid;
   grid-template-columns:1fr;
   gap:16px;
-  text-align:center;
 }
 
-/* ===============================
+.event-grid > div{
+  background:var(--surface-2);
+  padding:16px;
+  border-radius:14px;
+}
+
+/* =========================
    ARTISTS
-=============================== */
+========================= */
 
 .artist-grid{
   display:grid;
@@ -159,22 +226,52 @@ a{
   text-align:center;
 }
 
-/* ===============================
+.artist-photo{
+  width:60px;
+  height:60px;
+  object-fit:cover;
+  border-radius:12px;
+  margin:auto;
+}
+
+/* =========================
    FORM
-=============================== */
+========================= */
 
 .artist-form{
   max-width:520px;
-  margin:30px auto;
-  text-align:center;
 }
 
-/* ===============================
-   FOOTER
-=============================== */
+/* Inputs */
+.artist-form input,
+.artist-form textarea{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:none;
+  background:var(--surface-2);
+  color:var(--text);
+}
+
+/* Button */
+.artist-form button{
+  margin-top:12px;
+  padding:12px;
+  width:100%;
+  background:var(--gold);
+  border:none;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+/* =========================
+   FOOTER (ZENTRIERT)
+========================= */
 
 .site-footer{
   background:var(--dark);
   padding:30px;
+  border-radius:16px;
   text-align:center;
 }
