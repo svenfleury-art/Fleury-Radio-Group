@@ -44,7 +44,7 @@ a{
 =============================== */
 
 .site-header{
-  background:rgba(5,15,50,.92);
+  background:#0B2A6F;
   backdrop-filter:blur(12px);
   padding:12px 20px;
   position:sticky;
@@ -61,7 +61,7 @@ a{
 
 /* LOGO LINKS */
 .logo-img img{
-  height:65px;
+  height:120px;
 }
 
 /* TEXT LOGO CENTER */
@@ -204,6 +204,7 @@ a{
 =============================== */
 
 .container{
+   background:#0B2A6F;
   max-width:1100px;
   margin:auto;
   padding:20px;
@@ -329,7 +330,7 @@ a{
 =============================== */
 
 .site-footer{
-  background:#050f32;
+  background:#0B2A6F;
   padding:30px;
   margin-top:40px;
   text-align:center;
