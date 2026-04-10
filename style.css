@@ -62,7 +62,7 @@ footer{
 
 /* LOGO */
 .logo-img img{
-  height:300px;   /* 🔥 grösser */
+  height:400px;   /* 🔥 grösser */
 }
 
 /* TEXT LOGO */
@@ -216,7 +216,7 @@ section,
 
 .card.full-width img{
   width:auto !important;
-  height:80px !important;
+  height:150px !important;
   max-width:160px;
 
   object-fit:contain;
