@@ -257,14 +257,14 @@ section,
 
 /* Zahl */
 .time-box span{
-  font-size:50px;
+  font-size:25px;
   font-weight:700;
   color:var(--gold);
 }
 
 /* Label (z.B. Days / Hours) */
 .time-box small{
-  font-size:12px;
+  font-size:35px;
   opacity:0.8;
   margin-top:5px;
 }
