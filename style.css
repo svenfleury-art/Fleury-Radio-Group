@@ -469,6 +469,47 @@ section,
   font-weight:bold;
 }
 
+.playBtn {
+  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  color: #ffffff;
+  border: none;
+  padding: 12px 22px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 999px; /* pill style */
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* Hover Effekt */
+.playBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+  background: linear-gradient(135deg, #1D4ED8, #1E40AF);
+}
+
+/* Klick Effekt */
+.playBtn:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Fokus (Accessibility) */
+.playBtn:focus {
+  outline: 2px solid #93C5FD;
+  outline-offset: 3px;
+}
+
+/* Mobile Anpassung */
+@media (max-width: 600px) {
+  .playBtn {
+    width: 100%;
+    font-size: 15px;
+    padding: 14px;
+  }
+}
+
 /* =========================
    FOOTER (ZENTRIERT)
 ========================= */
