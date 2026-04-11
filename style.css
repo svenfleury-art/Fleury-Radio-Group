@@ -43,6 +43,85 @@ footer{
   text-align:center;
 }
 
+/* ==========================================
+   FRG COOKIE BANNER
+========================================== */
+
+.frg-banner{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 16px;
+  background: #0B2A6A; /* dein dunkles Blau */
+  color: #F9FAFB;
+
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+  z-index: 9999;
+}
+
+/* Text */
+.frg-banner span{
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Link */
+.frg-banner a{
+  color: #FACC15; /* Gold */
+  text-decoration: underline;
+}
+
+/* Button */
+.frg-btn{
+  background: #FACC15;
+  color: #0B2A6A;
+
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover (nur Desktop relevant) */
+.frg-btn:hover{
+  background: #eab308;
+}
+
+/* ==========================================
+   DESKTOP VERSION
+========================================== */
+
+@media(min-width: 768px){
+  .frg-banner{
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 40px;
+  }
+
+  .frg-banner span{
+    max-width: 75%;
+    font-size: 15px;
+  }
+
+  .frg-btn{
+    font-size: 15px;
+    padding: 12px 20px;
+  }
+}
+
 /* =========================
    HEADER (ALLES ZENTRIERT)
 ========================= */
