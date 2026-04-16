@@ -12,48 +12,63 @@
 
   <p>Dini Musik, dini Wälle – direkt vom Rhy.</p>
 
+  <!-- 🎧 FRG GLOBAL PLAYER -->
+  <div class="frg-player">
+
+    <button id="playBtn" class="play-btn">▶</button>
+
+    <div class="station-switch">
+      <button class="station active" data-station="rhywaelle">Rhywälle</button>
+      <button class="station" data-station="winterlord">Winterlord</button>
+      <button class="station" data-station="rhyrock">RhyRock</button>
+    </div>
+
+    <div class="now-playing" id="nowPlaying">Bereit</div>
+
+  </div>
+
   <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen">☰</button>
 
-<nav id="mainNav" class="nav-links">
+  <nav id="mainNav" class="nav-links">
 
-  <a href="index.html">Home</a>
+    <a href="index.html">Home</a>
 
-  <div class="nav-dropdown">
-    <button class="nav-button dropdown-toggle">
-      Radios
-      <span class="arrow">▼</span>
-    </button>
+    <div class="nav-dropdown">
+      <button class="nav-button dropdown-toggle">
+        Radios
+        <span class="arrow">▼</span>
+      </button>
 
-    <div class="dropdown-menu">
-      <a href="radios.html" class="radio-overview">Radio Auswahl</a>
-      <a href="rhywaelle.html">Radio Rhywälle</a>
-      <a href="winterlord.html">Winterlord FM</a>
-      <a href="rhyrock.html">RhyRock Radio</a>
+      <div class="dropdown-menu">
+        <a href="radios.html" class="radio-overview">Radio Auswahl</a>
+        <a href="rhywaelle.html">Radio Rhywälle</a>
+        <a href="winterlord.html">Winterlord FM</a>
+        <a href="rhyrock.html">RhyRock Radio</a>
+      </div>
     </div>
-  </div>
 
+    <div class="nav-dropdown">
+      <button class="nav-button dropdown-toggle">
+        Infos über die FRG
+        <span class="arrow">▼</span>
+      </button>
 
-  
-   <div class="nav-dropdown">
-    <button class="nav-button dropdown-toggle">
-     Infos über die FRG
-      <span class="arrow">▼</span>
-    </button>
-
-    <div class="dropdown-menu">
-    <a href="frg-inside.html">Inside</a>
-    <a href="team.html">Team</a>
-    <a href="geschichte.html">Geschichte</a>
-    <a href="about.html">Über uns</a>
-    <a href="mitmachen.html">Mitmachen</a>
+      <div class="dropdown-menu">
+        <a href="frg-inside.html">Inside</a>
+        <a href="team.html">Team</a>
+        <a href="geschichte.html">Geschichte</a>
+        <a href="about.html">Über uns</a>
+        <a href="mitmachen.html">Mitmachen</a>
+      </div>
     </div>
-  </div>
-  
-   <a href="spezial-programm.html">Spezial-Programm</a>
-  <a href="Artists.html">Für Künstler&Labels</a>
-  <a href="werbung.html">Werbung machen</a>
 
-</nav>
+    <a href="spezial-programm.html">Spezial-Programm</a>
+    <a href="Artists.html">Für Künstler&Labels</a>
+    <a href="werbung.html">Werbung machen</a>
+
+  </nav>
 </header>
 
 <div id="menu-overlay"></div>
+
+<audio id="audioPlayer"></audio>
