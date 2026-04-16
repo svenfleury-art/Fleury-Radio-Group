@@ -510,22 +510,28 @@ section,
   }
 }
 
-/* TEAM GRID */
+/* GRID: IMMER 2 NEBENEINANDER */
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 25px;
   padding: 40px 20px;
 }
 
+/* MOBILE: untereinander */
+@media (max-width: 600px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* TEAM PHOTO – OVAL & MODERN */
 .team-photo {
   width: 130px;
-  height: 160px; /* höher als breit = oval */
+  height: 160px;
   object-fit: cover;
 
-  border-radius: 50% / 60%; /* echtes Oval statt Kreis */
+  border-radius: 50% / 60%;
   margin-bottom: 15px;
 
   border: 3px solid #eee;
@@ -540,8 +546,6 @@ section,
   border: 3px solid gold;
   box-shadow: 0 12px 30px rgba(255, 215, 0, 0.3);
 }
-
-
 /* =========================
    FOOTER (ZENTRIERT)
 ========================= */
