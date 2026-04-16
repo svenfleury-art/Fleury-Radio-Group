@@ -1,75 +1,67 @@
 <header>
 
   <div class="logo-area">
-    <a href="index.html" class="logo-img">
+    <a href="/" class="logo-img" data-link>
       <img src="img/logo.png" alt="Fleury Radio Group Logo">
     </a>
 
     <h1 class="logo-text">
-      <a href="index.html">Fleury Radio Group</a>
+      <a href="/" data-link>Fleury Radio Group</a>
     </h1>
   </div>
 
   <p>Dini Musik, dini Wälle – direkt vom Rhy.</p>
 
-  <!-- 🎧 FRG GLOBAL PLAYER -->
-<div class="frg-player" id="globalPlayer">
+  <!-- 🎧 GLOBAL PLAYER (EXAKT 1x!) -->
+  <div class="frg-player" id="globalPlayer">
 
-  <button id="playBtn" class="play-btn">▶</button>
+    <button id="playBtn" class="play-btn">▶</button>
 
-  <div class="station-switch">
-    <button class="station active" data-station="rhywaelle">Rhywälle</button>
-    <button class="station" data-station="winterlord">Winterlord</button>
-    <button class="station" data-station="rhyrock">RhyRock</button>
+    <div class="station-switch">
+      <button class="station active" data-station="rhywaelle">Rhywälle</button>
+      <button class="station" data-station="winterlord">Winterlord</button>
+      <button class="station" data-station="rhyrock">RhyRock</button>
+    </div>
+
+    <div class="now-playing" id="nowPlaying">Bereit</div>
+
   </div>
 
-  <div class="now-playing" id="nowPlaying">Bereit</div>
-
-  <audio id="audioPlayer"></audio>
-
-</div>
   <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen">☰</button>
 
   <nav id="mainNav" class="nav-links">
 
-    <a href="index.html">Home</a>
+    <a href="/" data-link>Home</a>
 
     <div class="nav-dropdown">
-      <button class="nav-button dropdown-toggle">
-        Radios
-        <span class="arrow">▼</span>
-      </button>
+      <button class="nav-button dropdown-toggle">Radios</button>
 
       <div class="dropdown-menu">
-        <a href="radios.html" class="radio-overview">Radio Auswahl</a>
-        <a href="rhywaelle.html">Radio Rhywälle</a>
-        <a href="winterlord.html">Winterlord FM</a>
-        <a href="rhyrock.html">RhyRock Radio</a>
+        <a href="/radios" data-link>Radio Auswahl</a>
+        <a href="/rhywälle" data-link>Radio Rhywälle</a>
+        <a href="/winterlord" data-link>Winterlord FM</a>
+        <a href="/rhyrock" data-link>RhyRock Radio</a>
       </div>
     </div>
 
     <div class="nav-dropdown">
-      <button class="nav-button dropdown-toggle">
-        Infos über die FRG
-        <span class="arrow">▼</span>
-      </button>
+      <button class="nav-button dropdown-toggle">Infos über die FRG</button>
 
       <div class="dropdown-menu">
-        <a href="frg-inside.html">Inside</a>
-        <a href="team.html">Team</a>
-        <a href="geschichte.html">Geschichte</a>
-        <a href="about.html">Über uns</a>
-        <a href="mitmachen.html">Mitmachen</a>
+        <a href="/frg-inside" data-link>Inside</a>
+        <a href="/team" data-link>Team</a>
+        <a href="/geschichte" data-link>Geschichte</a>
+        <a href="/about" data-link>Über uns</a>
+        <a href="/mitmachen" data-link>Mitmachen</a>
       </div>
     </div>
 
-    <a href="spezial-programm.html">Spezial-Programm</a>
-    <a href="Artists.html">Für Künstler&Labels</a>
-    <a href="werbung.html">Werbung machen</a>
+    <a href="/spezial-programm" data-link>Spezial-Programm</a>
+    <a href="/artists" data-link>Für Künstler & Labels</a>
+    <a href="/werbung" data-link>Werbung machen</a>
 
   </nav>
+
 </header>
 
 <div id="menu-overlay"></div>
-
-<audio id="audioPlayer"></audio>
