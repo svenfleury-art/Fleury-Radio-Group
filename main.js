@@ -1,10 +1,9 @@
-
 /* =========================
 ROUTES
 ========================= */
 const routes = {
   "/": "/pages/home.html",
-  "/rhywälle": "/pages/rhywaelle.html",
+  "/rhywaelle": "/pages/rhywaelle.html",
   "/winterlord": "/pages/winterlord.html",
   "/rhyrock": "/pages/rhyrock.html",
   "/radios": "/pages/radios.html",
@@ -14,51 +13,99 @@ const routes = {
 };
 
 /* =========================
-PAGE LOADER
+GET APP CONTAINER
 ========================= */
-async function loadPage(path){
-  const app = document.getElementById("app");
+function getApp(){
+  return document.getElementById("app");
+}
+
+/* =========================
+LOAD PAGE (CORE SPA ENGINE)
+========================= */
+async function loadPage(path = "/") {
+  const app = getApp();
+  if (!app) return;
+
+  // Normalisierung
+  if (path === "/index.html") path = "/";
+  if (!routes[path]) path = "/";
+
   const file = routes[path] || "/pages/404.html";
 
-  try{
+  try {
     const res = await fetch(file);
-    const html = await res.text();
 
+    if (!res.ok) {
+      app.innerHTML = "<h2>404 - Seite nicht gefunden</h2>";
+      return;
+    }
+
+    const html = await res.text();
     app.innerHTML = html;
 
+    // Page re-init hook (Player etc.)
     reInitPage();
 
-  } catch(err){
-    app.innerHTML = "<h2>Fehler beim Laden</h2>";
+  } catch (err) {
+    console.error("LoadPage Error:", err);
+    app.innerHTML = "<h2>Ladefehler</h2>";
   }
 }
 
 /* =========================
-NAVIGATION HANDLER
+NAVIGATION (SPA LINK HANDLER)
 ========================= */
 document.addEventListener("click", (e) => {
-  const link = e.target.closest("a");
-  if(!link) return;
+  const link = e.target.closest("a[href]");
+  if (!link) return;
 
   const href = link.getAttribute("href");
 
-  if(href && href.startsWith("/")){
-    e.preventDefault();
-    history.pushState({}, "", href);
-    loadPage(href);
-  }
+  // nur interne SPA links
+  if (!href.startsWith("/")) return;
+
+  e.preventDefault();
+
+  history.pushState({}, "", href);
+  loadPage(href);
 });
 
 /* =========================
-BACK BUTTON
+BACK / FORWARD BUTTON
 ========================= */
 window.addEventListener("popstate", () => {
   loadPage(location.pathname);
 });
 
 /* =========================
-INIT
+INIT APP
 ========================= */
 window.addEventListener("DOMContentLoaded", () => {
-  loadPage(location.pathname);
+  loadPage(location.pathname || "/");
 });
+
+/* =========================
+REINIT HOOK (WICHTIG)
+========================= */
+function reInitPage(){
+
+  // Falls Player existiert → neu verbinden
+  if (typeof initRadioPlayer === "function") {
+    initRadioPlayer();
+  }
+
+  // Menu sicher neu aktivieren
+  if (typeof initMenu === "function") {
+    initMenu();
+  }
+
+  // Countdown
+  if (typeof initCountdown === "function") {
+    initCountdown();
+  }
+
+  // Filter
+  if (typeof initFilter === "function") {
+    initFilter();
+  }
+}
