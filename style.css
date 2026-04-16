@@ -494,6 +494,53 @@ section,
   }
 }
 
+
+
+/* =========================
+FULL WIDTH CARD
+========================= */
+.card.full-width {
+  width: 100%;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+/* =========================
+PLAYER LOGO (BILD)
+========================= */
+.player-logo {
+  width: 100%;
+  max-width: 320px;        /* maximale Größe */
+  height: auto;
+  margin: 25px auto 0;
+  display: block;
+
+  border-radius: 20px;     /* moderne abgerundete Ecken */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover Effekt */
+.player-logo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================
+LINK STYLE
+========================= */
+.card.full-width a {
+  color: #d4af37; /* Gold */
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.card.full-width a:hover {
+  opacity: 0.7;
+}
+
 /* =========================
    FOOTER
 ========================= */
