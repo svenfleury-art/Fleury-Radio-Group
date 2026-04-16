@@ -8,7 +8,7 @@
 
   <link rel="stylesheet" href="style.css">
 
-  <link rel="icon" href="img/favicon.png" type="image/png">
+  <link rel="icon" href="img/favicon.png">
   <link rel="apple-touch-icon" href="img/Fleury Radio Group Logo.png">
 
   <meta name="description" content="FRG – Dini Musik, dini Wälle">
@@ -16,13 +16,13 @@
 
 <body>
 
-  <!-- 🔵 LOADER (optional) -->
+  <!-- LOADER -->
   <div id="loader"></div>
 
-  <!-- 🔵 NAV (wird dynamisch geladen) -->
+  <!-- NAV -->
   <div id="nav-slot"></div>
 
-  <!-- 🎧 GLOBAL PLAYER (WICHTIG!) -->
+  <!-- 🔥 GLOBAL PLAYER (BLEIBT IMMER) -->
   <div class="frg-player">
 
     <button id="playBtn" class="play-btn">▶</button>
@@ -35,21 +35,16 @@
 
     <div class="now-playing" id="nowPlaying">Bereit</div>
 
+    <audio id="audioPlayer"></audio>
   </div>
 
-  <!-- 📦 SPA CONTENT CONTAINER -->
-  <main id="app"> <h1 style="color:white;text-align:center;">
-      FRG TEST PAGE
-    </h1></main>
+  <!-- SPA CONTENT -->
+  <main id="app"></main>
 
-  <!-- 🍪 FOOTER (dynamisch geladen) -->
+  <!-- FOOTER -->
   <div id="footer-slot"></div>
 
-  <!-- ⚙️ MAIN SYSTEM -->
   <script src="main.js"></script>
-
-  <!-- 🎧 PLAYER LOGIC -->
-  <script src="player.js"></script>
 
 </body>
 </html>
