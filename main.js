@@ -165,6 +165,7 @@ const frgEvents = [
   { title: "Labirinth Premiere", date: "2026-03-24T12:30:00" },
   { title: "Oldies Special", date: "2026-03-30T15:00:00" },
   { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" }
+  { title: "FRG Showcase Week", date: "2026-04-26T15:00:00" },
 ];
 
 const isHome = document.body.dataset.page === "home";
