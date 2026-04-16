@@ -615,6 +615,96 @@ section,
 }
 
 
+/* ORG SECTION CARD */
+.card {
+  margin: 40px 20px;
+}
+
+/* ORG CHART CONTAINER */
+.org-chart {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* LEVELS */
+.org-level {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.org-level.center {
+  justify-content: center;
+}
+
+/* BOXES */
+.org-box {
+  background: #fff;
+  padding: 15px 20px;
+  border-radius: 15px;
+  text-align: center;
+  min-width: 180px;
+  max-width: 220px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+/* MAIN BOX (Geschäftsleitung) */
+.org-box.main {
+  border: 2px solid gold;
+  box-shadow: 0 12px 30px rgba(255, 215, 0, 0.25);
+}
+
+/* HOVER EFFECT */
+.org-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+
+/* LINE BETWEEN LEVELS */
+.org-line {
+  width: 3px;
+  height: 40px;
+  background: #ccc;
+  margin: 15px 0;
+  position: relative;
+}
+
+/* OPTIONAL: horizontal connector line */
+.org-level:not(.center)::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  height: 2px;
+  width: 60%;
+  background: #ccc;
+}
+
+/* TEXT STYLING */
+.org-box strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .org-level {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .org-line {
+    height: 25px;
+  }
+}
+
+
 /* =========================
    FOOTER (ZENTRIERT)
 ========================= */
