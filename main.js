@@ -35,13 +35,13 @@ async function loadPartial(slotId, url) {
 
 
 /* =========================
-INIT ALL
+INIT SYSTEM
 ========================= */
 document.addEventListener("DOMContentLoaded", async () => {
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
-  // wichtig: nach DOM Update initialisieren
+  // sicherstellen dass DOM wirklich drin ist
   setTimeout(() => {
     initMenu();
   }, 50);
@@ -50,13 +50,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFilter();
   initCountdown();
   initRadioPlayer();
-
-  setInterval(updateCountdown, 1000);
 });
 
 
 /* =========================
-MENU SYSTEM + DROPDOWNS
+MENU + DROPDOWNS
 ========================= */
 function initMenu() {
   const btn = document.getElementById("hamburgerBtn");
@@ -90,7 +88,7 @@ function initMenu() {
     }
   });
 
-  // DROPDOWN FIX
+  // DROPDOWNS FIX
   nav.addEventListener("click", (e) => {
     const toggle = e.target.closest(".dropdown-toggle");
     if (!toggle) return;
@@ -133,7 +131,7 @@ function initCookies() {
 
 
 /* =========================
-FILTER
+FILTER SYSTEM
 ========================= */
 function initFilter() {
   const buttons = document.querySelectorAll(".filter-btn");
@@ -159,23 +157,34 @@ function initFilter() {
 
 
 /* =========================
-COUNTDOWN
+COUNTDOWN (7 TAGE LOGIK)
 ========================= */
+
 const frgEvents = [
   { title: "FRG Showcase Week", date: "2026-03-23T00:00:00" },
   { title: "Labirinth Premiere", date: "2026-03-24T12:30:00" },
-  { title: "Oldies Special", date: "2026-03-30T15:00:00" }
+  { title: "Oldies Special", date: "2026-03-30T15:00:00" },
+  { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" }
 ];
+
+const isHome = document.body.dataset.page === "home";
 
 function getNextEvent() {
   const now = Date.now();
 
-  const future = frgEvents
+  return frgEvents
     .map(e => ({ ...e, dateObj: new Date(e.date) }))
     .filter(e => e.dateObj.getTime() > now)
-    .sort((a, b) => a.dateObj - b.dateObj);
+    .sort((a, b) => a.dateObj - b.dateObj)[0] || null;
+}
 
-  return future[0] || null;
+function shouldShowCountdown(event) {
+  if (!event) return false;
+  if (!isHome) return false;
+
+  const diff = event.dateObj.getTime() - Date.now();
+
+  return diff <= 7 * 24 * 60 * 60 * 1000;
 }
 
 function pad(n) {
@@ -187,9 +196,16 @@ function updateCountdown() {
   if (!wrapper) return;
 
   const event = getNextEvent();
-  if (!event) return;
 
-  const diff = event.dateObj - Date.now();
+  if (!shouldShowCountdown(event)) {
+    wrapper.style.display = "none";
+    return;
+  }
+
+  wrapper.style.display = "block";
+
+  const diff = event.dateObj.getTime() - Date.now();
+  if (diff <= 0) return;
 
   const days = diff / (1000 * 60 * 60 * 24);
   const hours = (diff / (1000 * 60 * 60)) % 24;
@@ -209,12 +225,14 @@ function updateCountdown() {
 
 function initCountdown() {
   updateCountdown();
+  setInterval(updateCountdown, 1000);
 }
 
 
 /* =========================
-RADIO PLAYER (JINGLE + STREAM)
+RADIO PLAYER (JINGLE → STREAM)
 ========================= */
+
 function initRadioPlayer() {
   const audio = document.getElementById("audioPlayer");
   const playBtn = document.getElementById("playBtn");
@@ -272,9 +290,7 @@ function initRadioPlayer() {
 
       current = btn.dataset.station;
 
-      if (isPlaying) {
-        playStream();
-      }
+      if (isPlaying) playStream();
     });
   });
 
@@ -295,9 +311,7 @@ function initRadioPlayer() {
       playBtn.textContent = "▶";
       isPlaying = false;
 
-      if (nowPlaying) {
-        nowPlaying.textContent = "Pause";
-      }
+      if (nowPlaying) nowPlaying.textContent = "Pause";
     }
   });
 }
