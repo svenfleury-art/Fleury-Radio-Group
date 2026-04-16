@@ -1,7 +1,20 @@
-/* =========================
-CONFIG
-========================= */
+async function loadPartial(id, file) {
+  const el = document.getElementById(id);
+  if (!el) return;
 
+  try {
+    const res = await fetch(file);
+    const html = await res.text();
+    el.innerHTML = html;
+  } catch (err) {
+    console.error("Partial Fehler:", file, err);
+  }
+}
+
+
+/* =========================
+ROUTES
+========================= */
 const routes = {
   "/": "/pages/home.html",
   "/rhywälle": "/pages/rhywaelle.html",
@@ -14,25 +27,16 @@ const routes = {
 };
 
 /* =========================
-STATE
+LOADER
 ========================= */
-let countdownInterval = null;
+function initLoader() {
+  const loader = document.getElementById("loader");
+  if (!loader) return;
 
-/* =========================
-PARTIAL LOADER
-========================= */
-async function loadPartial(id, file) {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  try {
-    const res = await fetch(file);
-    if (!res.ok) throw new Error(file);
-
-    el.innerHTML = await res.text();
-  } catch (err) {
-    console.error("Partial Fehler:", file, err);
-  }
+  setTimeout(() => {
+    loader.style.opacity = "0";
+    setTimeout(() => loader.remove(), 400);
+  }, 500);
 }
 
 /* =========================
@@ -40,17 +44,17 @@ PAGE LOADER (SPA)
 ========================= */
 async function loadPage(path) {
   const app = document.getElementById("app");
-  if (!app) return;
 
   const file = routes[path] || "/pages/404.html";
 
   try {
     const res = await fetch(file);
-    app.innerHTML = await res.text();
+    const html = await res.text();
 
-    window.scrollTo(0, 0);
+    app.innerHTML = html;
 
     reInitPage();
+    window.scrollTo(0, 0);
 
   } catch (err) {
     console.error(err);
@@ -59,16 +63,7 @@ async function loadPage(path) {
 }
 
 /* =========================
-REINIT AFTER ROUTE CHANGE
-========================= */
-function reInitPage() {
-  initMenu();
-  initCountdown();
-  initCookieBanner();
-}
-
-/* =========================
-ROUTING (LINK HANDLER)
+NAVIGATION (SPA LINKS)
 ========================= */
 document.addEventListener("click", (e) => {
   const link = e.target.closest("a");
@@ -76,7 +71,7 @@ document.addEventListener("click", (e) => {
 
   const href = link.getAttribute("href");
 
-  if (href && href.startsWith("/") && routes[href]) {
+  if (href && href.startsWith("/")) {
     e.preventDefault();
     history.pushState({}, "", href);
     loadPage(href);
@@ -86,6 +81,14 @@ document.addEventListener("click", (e) => {
 window.addEventListener("popstate", () => {
   loadPage(location.pathname);
 });
+
+/* =========================
+REINIT AFTER PAGE CHANGE
+========================= */
+function reInitPage() {
+  initMenu();
+  initCountdown();
+}
 
 /* =========================
 MENU
@@ -97,8 +100,7 @@ function initMenu() {
 
   if (!btn || !nav) return;
 
-  btn.onclick = (e) => {
-    e.stopPropagation();
+  btn.onclick = () => {
     nav.classList.toggle("open");
   };
 
@@ -108,162 +110,8 @@ function initMenu() {
 }
 
 /* =========================
-COUNTDOWN
+COUNTDOWN (MINI FIXED)
 ========================= */
-const frgEvents = [
-  { title: "FRG Showcase", date: "2026-04-25T20:00:00" },
-  { title: "FRG Special", date: "2026-06-01T20:00:00" }
-];
-
-function initCountdown() {
-  const wrapper = document.querySelector(".countdown");
-  if (!wrapper) return;
-
-  if (countdownInterval) clearInterval(countdownInterval);
-
-  const next = frgEvents.find(e => new Date(e.date) > Date.now());
-  if (!next) return;
-
-  const target = new Date(next.date);
-
-  countdownInterval = setInterval(() => {
-    const diff = target - Date.now();
-    if (diff <= 0) return;
-
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const m = Math.floor((diff / (1000 * 60)) % 60);
-    const s = Math.floor((diff / 1000) % 60);
-
-    const set = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = String(val).padStart(2, "0");
-    };
-
-    set("days", d);
-    set("hours", h);
-    set("minutes", m);
-    set("seconds", s);
-
-  }, 1000);
-}
-/* =========================
-CONFIG
-========================= */
-
-const routes = {
-  "/": "/pages/home.html",
-  "/rhywälle": "/pages/rhywaelle.html",
-  "/winterlord": "/pages/winterlord.html",
-  "/rhyrock": "/pages/rhyrock.html",
-  "/radios": "/pages/radios.html",
-  "/geschichte": "/pages/geschichte.html",
-  "/artists": "/pages/artists.html",
-  "/team": "/pages/team.html"
-};
-
-/* =========================
-PARTIAL LOADER (NAV / FOOTER)
-========================= */
-
-async function loadPartial(id, file) {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  try {
-    const res = await fetch(file);
-    if (!res.ok) throw new Error(file);
-    el.innerHTML = await res.text();
-  } catch (err) {
-    console.error("Partial Fehler:", file, err);
-  }
-}
-
-/* =========================
-PAGE LOADER (SPA)
-========================= */
-
-async function loadPage(path) {
-  const app = document.getElementById("app");
-  if (!app) return;
-
-  const file = routes[path] || "/pages/404.html";
-
-  try {
-    const res = await fetch(file);
-    const html = await res.text();
-
-    app.innerHTML = html;
-
-    window.scrollTo(0, 0);
-
-    // WICHTIG: nur Page-spezifische Dinge neu starten
-    initCountdown();
-
-  } catch (err) {
-    console.error(err);
-    app.innerHTML = "<h2 style='color:white'>Fehler beim Laden</h2>";
-  }
-}
-
-/* =========================
-NAVIGATION (SPA LINKS)
-========================= */
-
-document.addEventListener("click", (e) => {
-  const link = e.target.closest("a");
-  if (!link) return;
-
-  const href = link.getAttribute("href");
-
-  // nur interne SPA routes
-  if (href && href.startsWith("/") && routes[href]) {
-    e.preventDefault();
-    history.pushState({}, "", href);
-    loadPage(href);
-  }
-});
-
-window.addEventListener("popstate", () => {
-  loadPage(location.pathname);
-});
-
-/* =========================
-LOADER
-========================= */
-
-function initLoader() {
-  const loader = document.getElementById("loader");
-  if (!loader) return;
-
-  setTimeout(() => {
-    loader.style.opacity = "0";
-    setTimeout(() => loader.remove(), 400);
-  }, 600);
-}
-
-/* =========================
-MENU (STATIC HEADER)
-========================= */
-
-function initMenu() {
-  const btn = document.getElementById("hamburgerBtn");
-  const nav = document.getElementById("mainNav");
-  const overlay = document.getElementById("menu-overlay");
-
-  if (!btn || !nav) return;
-
-  btn.onclick = () => nav.classList.toggle("open");
-
-  overlay?.addEventListener("click", () => {
-    nav.classList.remove("open");
-  });
-}
-
-/* =========================
-COUNTDOWN
-========================= */
-
 const frgEvents = [
   { title: "FRG Showcase", date: "2026-04-25T20:00:00" },
   { title: "FRG Special", date: "2026-06-01T20:00:00" }
@@ -278,10 +126,9 @@ function initCountdown() {
 
   const target = new Date(next.date);
 
-  clearInterval(window._frgCountdown);
-
-  window._frgCountdown = setInterval(() => {
+  setInterval(() => {
     const diff = target - Date.now();
+
     if (diff <= 0) return;
 
     const d = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -303,10 +150,10 @@ function initCountdown() {
 }
 
 /* =========================
-RADIO PLAYER (GLOBAL FIX)
+GLOBAL RADIO PLAYER
 ========================= */
-
 function initRadioPlayer() {
+
   const audio = document.getElementById("audioPlayer");
   const playBtn = document.getElementById("playBtn");
   const nowPlaying = document.getElementById("nowPlaying");
@@ -331,10 +178,28 @@ function initRadioPlayer() {
 
   let current = localStorage.getItem("frg_station") || "rhywaelle";
   let isPlaying = localStorage.getItem("frg_playing") === "true";
+  let songTimer = null;
 
-  let songTimer;
+  function play() {
+    audio.src = streams[current].url;
+    audio.play();
 
-  function syncUI() {
+    isPlaying = true;
+    localStorage.setItem("frg_playing", "true");
+    localStorage.setItem("frg_station", current);
+
+    updateUI();
+    fetchSong();
+  }
+
+  function pause() {
+    audio.pause();
+    isPlaying = false;
+    localStorage.setItem("frg_playing", "false");
+    updateUI();
+  }
+
+  function updateUI() {
     stations.forEach(b => {
       b.classList.toggle("active", b.dataset.station === current);
     });
@@ -355,30 +220,9 @@ function initRadioPlayer() {
         if (isPlaying && nowPlaying) {
           nowPlaying.textContent = "🎵 " + text;
         }
-      }, 5000);
+      }, 6000);
 
     } catch (e) {}
-  }
-
-  function play() {
-    audio.src = streams[current].url;
-    audio.play().catch(() => {});
-
-    isPlaying = true;
-
-    localStorage.setItem("frg_playing", "true");
-    localStorage.setItem("frg_station", current);
-
-    syncUI();
-    fetchSong();
-  }
-
-  function pause() {
-    audio.pause();
-    isPlaying = false;
-
-    localStorage.setItem("frg_playing", "false");
-    syncUI();
   }
 
   stations.forEach(btn => {
@@ -393,17 +237,18 @@ function initRadioPlayer() {
   });
 
   window.setStation = (s) => {
-    if (!streams[s]) return;
     current = s;
     play();
   };
 
-  syncUI();
+  function autoResume() {
+    updateUI();
+    setTimeout(() => {
+      if (isPlaying) play();
+    }, 300);
+  }
 
-  // Auto-resume
-  setTimeout(() => {
-    if (isPlaying) play();
-  }, 300);
+  autoResume();
 
   setInterval(() => {
     if (isPlaying) fetchSong();
@@ -411,18 +256,10 @@ function initRadioPlayer() {
 }
 
 /* =========================
-BOOT
+INIT SYSTEM
 ========================= */
-
-window.addEventListener("DOMContentLoaded", async () => {
+window.addEventListener("DOMContentLoaded", () => {
   initLoader();
-
-  await loadPartial("nav-slot", "partials/nav.html");
-  await loadPartial("footer-slot", "partials/footer.html");
-
-  initMenu();
-  initCountdown();
-  initRadioPlayer();
-
   loadPage(location.pathname);
+  initRadioPlayer();
 });
