@@ -14,9 +14,13 @@ const routes = {
 };
 
 /* =========================
-PARTIAL LOADER (NAV / FOOTER)
+STATE
 ========================= */
+let countdownInterval = null;
 
+/* =========================
+PARTIAL LOADER
+========================= */
 async function loadPartial(id, file) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -24,6 +28,7 @@ async function loadPartial(id, file) {
   try {
     const res = await fetch(file);
     if (!res.ok) throw new Error(file);
+
     el.innerHTML = await res.text();
   } catch (err) {
     console.error("Partial Fehler:", file, err);
@@ -33,7 +38,6 @@ async function loadPartial(id, file) {
 /* =========================
 PAGE LOADER (SPA)
 ========================= */
-
 async function loadPage(path) {
   const app = document.getElementById("app");
   if (!app) return;
@@ -42,32 +46,36 @@ async function loadPage(path) {
 
   try {
     const res = await fetch(file);
-    const html = await res.text();
-
-    app.innerHTML = html;
+    app.innerHTML = await res.text();
 
     window.scrollTo(0, 0);
 
-    // WICHTIG: nur Page-spezifische Dinge neu starten
-    initCountdown();
+    reInitPage();
 
   } catch (err) {
     console.error(err);
-    app.innerHTML = "<h2 style='color:white'>Fehler beim Laden</h2>";
+    app.innerHTML = "<h2 style='color:white;text-align:center;'>Fehler beim Laden</h2>";
   }
 }
 
 /* =========================
-NAVIGATION (SPA LINKS)
+REINIT AFTER ROUTE CHANGE
 ========================= */
+function reInitPage() {
+  initMenu();
+  initCountdown();
+  initCookieBanner();
+}
 
+/* =========================
+ROUTING (LINK HANDLER)
+========================= */
 document.addEventListener("click", (e) => {
   const link = e.target.closest("a");
   if (!link) return;
 
   const href = link.getAttribute("href");
 
-  // nur interne SPA routes
   if (href && href.startsWith("/") && routes[href]) {
     e.preventDefault();
     history.pushState({}, "", href);
@@ -80,23 +88,8 @@ window.addEventListener("popstate", () => {
 });
 
 /* =========================
-LOADER
+MENU
 ========================= */
-
-function initLoader() {
-  const loader = document.getElementById("loader");
-  if (!loader) return;
-
-  setTimeout(() => {
-    loader.style.opacity = "0";
-    setTimeout(() => loader.remove(), 400);
-  }, 600);
-}
-
-/* =========================
-MENU (STATIC HEADER)
-========================= */
-
 function initMenu() {
   const btn = document.getElementById("hamburgerBtn");
   const nav = document.getElementById("mainNav");
@@ -104,7 +97,10 @@ function initMenu() {
 
   if (!btn || !nav) return;
 
-  btn.onclick = () => nav.classList.toggle("open");
+  btn.onclick = (e) => {
+    e.stopPropagation();
+    nav.classList.toggle("open");
+  };
 
   overlay?.addEventListener("click", () => {
     nav.classList.remove("open");
@@ -114,7 +110,6 @@ function initMenu() {
 /* =========================
 COUNTDOWN
 ========================= */
-
 const frgEvents = [
   { title: "FRG Showcase", date: "2026-04-25T20:00:00" },
   { title: "FRG Special", date: "2026-06-01T20:00:00" }
@@ -124,14 +119,14 @@ function initCountdown() {
   const wrapper = document.querySelector(".countdown");
   if (!wrapper) return;
 
+  if (countdownInterval) clearInterval(countdownInterval);
+
   const next = frgEvents.find(e => new Date(e.date) > Date.now());
   if (!next) return;
 
   const target = new Date(next.date);
 
-  clearInterval(window._frgCountdown);
-
-  window._frgCountdown = setInterval(() => {
+  countdownInterval = setInterval(() => {
     const diff = target - Date.now();
     if (diff <= 0) return;
 
@@ -154,9 +149,36 @@ function initCountdown() {
 }
 
 /* =========================
-RADIO PLAYER (GLOBAL FIX)
+COOKIE BANNER (FIXED)
 ========================= */
+function initCookieBanner() {
+  const banner = document.getElementById("cookie-banner");
+  const btn = document.getElementById("cookie-accept");
 
+  if (!banner || !btn) return;
+
+  const accepted = localStorage.getItem("frg_cookie");
+
+  if (accepted === "1") {
+    banner.style.display = "none";
+    return;
+  }
+
+  banner.style.display = "flex";
+
+  btn.onclick = () => {
+    localStorage.setItem("frg_cookie", "1");
+    banner.style.opacity = "0";
+
+    setTimeout(() => {
+      banner.style.display = "none";
+    }, 300);
+  };
+}
+
+/* =========================
+RADIO PLAYER
+========================= */
 function initRadioPlayer() {
   const audio = document.getElementById("audioPlayer");
   const playBtn = document.getElementById("playBtn");
@@ -183,9 +205,7 @@ function initRadioPlayer() {
   let current = localStorage.getItem("frg_station") || "rhywaelle";
   let isPlaying = localStorage.getItem("frg_playing") === "true";
 
-  let songTimer;
-
-  function syncUI() {
+  function updateUI() {
     stations.forEach(b => {
       b.classList.toggle("active", b.dataset.station === current);
     });
@@ -195,18 +215,16 @@ function initRadioPlayer() {
 
   async function fetchSong() {
     try {
-      const res = await fetch(`https://api.laut.fm/station/${streams[current].api}/current_song`);
-      const data = await res.json();
+      const res = await fetch(
+        `https://api.laut.fm/station/${streams[current].api}/current_song`
+      );
 
+      const data = await res.json();
       const text = `${data.title || ""} - ${data.artist?.name || ""}`;
 
-      clearTimeout(songTimer);
-
-      songTimer = setTimeout(() => {
-        if (isPlaying && nowPlaying) {
-          nowPlaying.textContent = "🎵 " + text;
-        }
-      }, 5000);
+      if (nowPlaying && isPlaying) {
+        nowPlaying.textContent = "🎵 " + text;
+      }
 
     } catch (e) {}
   }
@@ -220,7 +238,7 @@ function initRadioPlayer() {
     localStorage.setItem("frg_playing", "true");
     localStorage.setItem("frg_station", current);
 
-    syncUI();
+    updateUI();
     fetchSong();
   }
 
@@ -229,7 +247,8 @@ function initRadioPlayer() {
     isPlaying = false;
 
     localStorage.setItem("frg_playing", "false");
-    syncUI();
+
+    updateUI();
   }
 
   stations.forEach(btn => {
@@ -249,12 +268,11 @@ function initRadioPlayer() {
     play();
   };
 
-  syncUI();
+  updateUI();
 
-  // Auto-resume
-  setTimeout(() => {
-    if (isPlaying) play();
-  }, 300);
+  if (isPlaying) {
+    setTimeout(play, 300);
+  }
 
   setInterval(() => {
     if (isPlaying) fetchSong();
@@ -264,14 +282,12 @@ function initRadioPlayer() {
 /* =========================
 BOOT
 ========================= */
-
 window.addEventListener("DOMContentLoaded", async () => {
-  initLoader();
-
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
   initMenu();
+  initCookieBanner();
   initCountdown();
   initRadioPlayer();
 
