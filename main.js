@@ -26,10 +26,10 @@ async function loadPartial(slotId, url) {
 
   try {
     const res = await fetch(url);
-    if (!res.ok) return console.error("Partial Fehler:", url);
+    if (!res.ok) throw new Error(url);
     slot.innerHTML = await res.text();
   } catch (err) {
-    console.error(err);
+    console.error("Partial Fehler:", err);
   }
 }
 
@@ -41,11 +41,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
-  // sicherstellen dass DOM wirklich drin ist
-  setTimeout(() => {
-    initMenu();
-  }, 50);
-
+  // WICHTIG: Kein setTimeout mehr nötig
+  initMenu();
   initCookies();
   initFilter();
   initCountdown();
@@ -67,6 +64,11 @@ function initMenu() {
     nav.classList.remove("open");
     btn.textContent = "☰";
     overlay?.classList.remove("active");
+
+    // alle Dropdowns schliessen
+    nav.querySelectorAll(".nav-dropdown").forEach(d => {
+      d.classList.remove("open");
+    });
   }
 
   function openMenu() {
@@ -88,22 +90,22 @@ function initMenu() {
     }
   });
 
-  // DROPDOWNS FIX
-  nav.addEventListener("click", (e) => {
-    const toggle = e.target.closest(".dropdown-toggle");
-    if (!toggle) return;
+  // DROPDOWN FIX
+  nav.querySelectorAll(".dropdown-toggle").forEach(toggle => {
+    toggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-    e.preventDefault();
-    e.stopPropagation();
+      const dropdown = toggle.closest(".nav-dropdown");
+      if (!dropdown) return;
 
-    const dropdown = toggle.closest(".nav-dropdown");
-    if (!dropdown) return;
+      // andere schliessen
+      nav.querySelectorAll(".nav-dropdown").forEach(d => {
+        if (d !== dropdown) d.classList.remove("open");
+      });
 
-    nav.querySelectorAll(".nav-dropdown").forEach(d => {
-      if (d !== dropdown) d.classList.remove("open");
+      dropdown.classList.toggle("open");
     });
-
-    dropdown.classList.toggle("open");
   });
 }
 
@@ -157,15 +159,15 @@ function initFilter() {
 
 
 /* =========================
-COUNTDOWN (7 TAGE LOGIK)
+COUNTDOWN (FIXED)
 ========================= */
 
 const frgEvents = [
   { title: "FRG Showcase Week", date: "2026-03-23T00:00:00" },
   { title: "Labirinth Premiere", date: "2026-03-24T12:30:00" },
   { title: "Oldies Special", date: "2026-03-30T15:00:00" },
-  { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" }
-  { title: "FRG Showcase Week", date: "2026-04-26T15:00:00" },
+  { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
+  { title: "FRG Showcase Week", date: "2026-04-26T15:00:00" }
 ];
 
 const isHome = document.body.dataset.page === "home";
@@ -180,11 +182,9 @@ function getNextEvent() {
 }
 
 function shouldShowCountdown(event) {
-  if (!event) return false;
-  if (!isHome) return false;
+  if (!event || !isHome) return false;
 
   const diff = event.dateObj.getTime() - Date.now();
-
   return diff <= 7 * 24 * 60 * 60 * 1000;
 }
 
@@ -231,9 +231,8 @@ function initCountdown() {
 
 
 /* =========================
-RADIO PLAYER (JINGLE → STREAM)
+RADIO PLAYER
 ========================= */
-
 function initRadioPlayer() {
   const audio = document.getElementById("audioPlayer");
   const playBtn = document.getElementById("playBtn");
