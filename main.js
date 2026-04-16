@@ -393,3 +393,71 @@ window.addEventListener("load", function () {
     }
   }
 });
+
+
+<script>
+const audio = document.getElementById("audioPlayer");
+const playBtn = document.getElementById("playBtn");
+const nowPlaying = document.getElementById("nowPlaying");
+const stations = document.querySelectorAll(".station");
+
+const streams = {
+  rhywaelle: {
+    name: "Radio Rhywälle",
+    url: "https://dein-stream-link/rhywaelle.mp3"
+  },
+  winterlord: {
+    name: "Winterlord FM",
+    url: "https://dein-stream-link/winterlord.mp3"
+  },
+  rhyrock: {
+    name: "RhyRock Radio",
+    url: "https://dein-stream-link/rhyrock.mp3"
+  }
+};
+
+let currentStation = "rhywaelle";
+let isPlaying = false;
+
+// 🎛 Station wechseln
+stations.forEach(btn => {
+  btn.addEventListener("click", () => {
+
+    stations.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    currentStation = btn.dataset.station;
+
+    audio.src = streams[currentStation].url;
+    nowPlaying.textContent = "Bereit: " + streams[currentStation].name;
+
+    if (isPlaying) {
+      audio.play();
+    }
+  });
+});
+
+// ▶ Play / Pause
+playBtn.addEventListener("click", async () => {
+
+  if (!audio.src) {
+    audio.src = streams[currentStation].url;
+  }
+
+  if (isPlaying) {
+    audio.pause();
+    playBtn.textContent = "▶";
+    nowPlaying.textContent = "Pause: " + streams[currentStation].name;
+  } else {
+    try {
+      await audio.play();
+      playBtn.textContent = "⏸";
+      nowPlaying.textContent = "Live: " + streams[currentStation].name;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  isPlaying = !isPlaying;
+});
+</script>
