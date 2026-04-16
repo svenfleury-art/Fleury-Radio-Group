@@ -136,15 +136,15 @@ function initRadioPlayer() {
   const streams = {
     rhywaelle: {
       name: "Radio Rhywälle",
-      url: "https://dein-stream-link/rhywaelle.mp3"
+      url: "https://stream.laut.fm/rhywaelle"
     },
     winterlord: {
       name: "Winterlord FM",
-      url: "https://dein-stream-link/winterlord.mp3"
+      url: "https://stream.laut.fm/winterlord-fm"
     },
     rhyrock: {
       name: "RhyRock Radio",
-      url: "https://dein-stream-link/rhyrock.mp3"
+      url: "https://stream.laut.fm/rhyrock-radio"
     }
   };
 
