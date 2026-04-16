@@ -270,26 +270,18 @@ function initRadioPlayer() {
   let songTimeout = null;
 
   /* =========================
-  UI UPDATE
+  STREAM START
   ========================= */
-  function updateUI() {
-    stations.forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.station === current);
-    });
-
-    playBtn.textContent = isPlaying ? "⏸" : "▶";
-
-    if (!isPlaying) {
-      nowPlaying.textContent = "Pause";
-    }
-  }
-
-  /* =========================
-  STREAM CONTROL
-  ========================= */
-  function playStream() {
+  function startStream() {
     audio.src = streams[current].url;
-    audio.play().catch(console.log);
+
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+      playPromise.catch(err => {
+        console.warn("Autoplay blockiert:", err);
+      });
+    }
 
     isPlaying = true;
     localStorage.setItem("frgPlaying", "true");
@@ -302,38 +294,46 @@ function initRadioPlayer() {
   function pauseStream() {
     audio.pause();
     isPlaying = false;
-    localStorage.setItem("frgPlaying", "false");
 
+    localStorage.setItem("frgPlaying", "false");
     updateUI();
   }
 
   /* =========================
-  NOW PLAYING (LAUT.FM)
+  UI
+  ========================= */
+  function updateUI() {
+    stations.forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.station === current);
+    });
+
+    playBtn.textContent = isPlaying ? "⏸" : "▶";
+    nowPlaying.textContent = isPlaying ? "Live Radio" : "Pause";
+  }
+
+  /* =========================
+  NOW PLAYING
   ========================= */
   async function fetchNowPlaying() {
-    const station = streams[current].api;
-
     try {
-      const res = await fetch(`https://api.laut.fm/station/${station}/current_song`);
+      const res = await fetch(`https://api.laut.fm/station/${streams[current].api}/current_song`);
       const data = await res.json();
 
-      const artist = data.artist?.name || "Unbekannt";
-      const title = data.title || "Kein Titel";
+      const artist = data.artist?.name || "";
+      const title = data.title || "";
 
       const text = `🎵 ${title} – ${artist}`;
 
-      // alten Timer stoppen
       clearTimeout(songTimeout);
 
-      // dein Delay (10s)
       songTimeout = setTimeout(() => {
         if (isPlaying) {
           nowPlaying.textContent = text;
         }
-      }, 10000);
+      }, 8000);
 
-    } catch (err) {
-      console.error("NowPlaying Fehler:", err);
+    } catch (e) {
+      console.error(e);
     }
   }
 
@@ -343,38 +343,40 @@ function initRadioPlayer() {
   stations.forEach(btn => {
     btn.addEventListener("click", () => {
       current = btn.dataset.station;
-      playStream();
+      startStream();
     });
   });
 
   playBtn.addEventListener("click", () => {
-    isPlaying ? pauseStream() : playStream();
+    isPlaying ? pauseStream() : startStream();
   });
 
-  /* =========================
-  GLOBAL BUTTON (SEITEN)
-  ========================= */
   window.setStation = function(station) {
     if (!streams[station]) return;
     current = station;
-    playStream();
+    startStream();
   };
 
   /* =========================
-  AUTO UPDATE SONG
+  🔥 AUTO-RESUME FIX (WICHTIG!)
   ========================= */
-  setInterval(() => {
-    if (isPlaying) {
-      fetchNowPlaying();
-    }
-  }, 10000);
+  function autoResume() {
+    updateUI();
+
+    // WICHTIG: kleiner Delay damit DOM + Audio ready ist
+    setTimeout(() => {
+      if (isPlaying) {
+        startStream();
+      }
+    }, 300);
+  }
+
+  autoResume();
 
   /* =========================
-  INIT
+  INTERVAL SONG UPDATE
   ========================= */
-  updateUI();
-
-  if (isPlaying) {
-    playStream();
-  }
+  setInterval(() => {
+    if (isPlaying) fetchNowPlaying();
+  }, 10000);
 }
