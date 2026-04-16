@@ -540,22 +540,28 @@ section,
   box-shadow: 0 15px 40px rgba(255, 215, 0, 0.25);
 }
 
-/* TEAM PHOTO */
+/* TEAM PHOTO – OVAL & MODERN */
 .team-photo {
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 160px; /* höher als breit = oval */
   object-fit: cover;
-  border-radius: 50%;
+
+  border-radius: 50% / 60%; /* echtes Oval statt Kreis */
   margin-bottom: 15px;
+
   border: 3px solid #eee;
-  transition: transform 0.3s ease, border 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+
+  transition: all 0.3s ease;
 }
 
-/* PHOTO HOVER */
+/* HOVER EFFECT */
 .card:hover .team-photo {
-  transform: scale(1.08);
+  transform: scale(1.05);
   border: 3px solid gold;
+  box-shadow: 0 12px 30px rgba(255, 215, 0, 0.3);
 }
+
 
 /* NAME */
 .card h3 {
