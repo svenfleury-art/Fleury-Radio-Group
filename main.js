@@ -248,7 +248,7 @@ function initRadioPlayer() {
   if (!audio || !playBtn) return;
 
   const streams = {
-    rhywaelle: {
+    rhywälle: {
       name: "Radio Rhywälle",
       url: "https://stream.laut.fm/rhywaelle"
     },
@@ -262,62 +262,64 @@ function initRadioPlayer() {
     }
   };
 
-  let current = "rhywaelle";
-  let isPlaying = false;
-  let jinglePlayed = false;
+  let current = localStorage.getItem("frgStation") || "rhywaelle";
+  let isPlaying = localStorage.getItem("frgPlaying") === "true";
+  let jinglePlayed = true;
+
+  function updateUI() {
+    stations.forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.station === current);
+    });
+
+    if (nowPlaying) {
+      nowPlaying.textContent = isPlaying
+        ? "Live: " + streams[current].name
+        : "Pause";
+    }
+
+    playBtn.textContent = isPlaying ? "⏸" : "▶";
+  }
 
   function playStream() {
     audio.src = streams[current].url;
     audio.play().catch(console.log);
 
-    if (nowPlaying) {
-      nowPlaying.textContent = "Live: " + streams[current].name;
-    }
+    isPlaying = true;
+    localStorage.setItem("frgPlaying", "true");
+    localStorage.setItem("frgStation", current);
+
+    updateUI();
   }
 
-  function playJingleThenStream() {
-    audio.src = "frg-jingle.mp3";
-
-    audio.play().catch(() => {
-      playStream();
-      return;
-    });
-
-    audio.onended = () => {
-      playStream();
-      audio.onended = null;
-    };
+  function pauseStream() {
+    audio.pause();
+    isPlaying = false;
+    localStorage.setItem("frgPlaying", "false");
+    updateUI();
   }
 
+  // Header Buttons
   stations.forEach(btn => {
     btn.addEventListener("click", () => {
-      stations.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
       current = btn.dataset.station;
-
-      if (isPlaying) playStream();
+      playStream();
     });
   });
 
   playBtn.addEventListener("click", () => {
-    if (!isPlaying) {
-      if (!jinglePlayed) {
-        jinglePlayed = true;
-        playJingleThenStream();
-      } else {
-        playStream();
-      }
-
-      playBtn.textContent = "⏸";
-      isPlaying = true;
-
-    } else {
-      audio.pause();
-      playBtn.textContent = "▶";
-      isPlaying = false;
-
-      if (nowPlaying) nowPlaying.textContent = "Pause";
-    }
+    isPlaying ? pauseStream() : playStream();
   });
+
+  // GLOBAL FUNCTION für Seiten
+  window.setStation = function(station) {
+    if (!streams[station]) return;
+    current = station;
+    playStream();
+  };
+
+  // Restore Zustand beim Seitenwechsel
+  updateUI();
+  if (isPlaying) {
+    playStream();
+  }
 }
