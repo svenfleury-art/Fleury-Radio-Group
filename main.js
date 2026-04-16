@@ -396,69 +396,89 @@ window.addEventListener("load", function () {
 
 
 
-<script>
-const audio = document.getElementById("audioPlayer");
-const playBtn = document.getElementById("playBtn");
-const nowPlaying = document.getElementById("nowPlaying");
-const stations = document.querySelectorAll(".station");
+<function initRadioPlayer() {
+  const audio = document.getElementById("audioPlayer");
+  const playBtn = document.getElementById("playBtn");
+  const nowPlaying = document.getElementById("nowPlaying");
+  const stations = document.querySelectorAll(".station");
 
-const streams = {
-  rhywaelle: {
-    name: "Radio Rhywälle",
-    url: "https://stream.laut.fm/rhywaelle"
-  },
-  winterlord: {
-    name: "Winterlord FM",
-    url: "https://stream.laut.fm/winterlord-fm"
-  },
-  rhyrock: {
-    name: "RhyRock Radio",
-    url: "https://stream.laut.fm/rhyrock-radio"
+  if (!audio || !playBtn || !stations.length) return;
+
+  const streams = {
+    rhywaelle: {
+      name: "Radio Rhywälle",
+      url: "https://stream.laut.fm/rhywaelle"
+    },
+    winterlord: {
+      name: "Winterlord FM",
+      url: "https://stream.laut.fm/winterlord-fm"
+    },
+    rhyrock: {
+      name: "RhyRock Radio",
+      url: "https://stream.laut.fm/rhyrock-radio"
+    }
+  };
+
+  let currentStation = "rhywaelle";
+  let isPlaying = false;
+  let hasPlayedJingle = false;
+
+  function setStation(id) {
+    currentStation = id;
+    nowPlaying.textContent = "Bereit: " + streams[id].name;
   }
-};
 
-let currentStation = "rhywaelle";
-let isPlaying = false;
+  stations.forEach(btn => {
+    btn.addEventListener("click", () => {
+      stations.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
 
-// 🎛 Station wechseln
-stations.forEach(btn => {
-  btn.addEventListener("click", () => {
+      setStation(btn.dataset.station);
 
-    stations.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
+      if (isPlaying) playStream(); // wenn schon läuft
+    });
+  });
 
-    currentStation = btn.dataset.station;
-
+  function playStream() {
     audio.src = streams[currentStation].url;
-    nowPlaying.textContent = "Bereit: " + streams[currentStation].name;
+    audio.play().catch(console.log);
+  }
 
-    if (isPlaying) {
-      audio.play();
+  async function playWithJingle() {
+    try {
+      audio.src = "frg-jingle.mp3";
+      await audio.play();
+
+      audio.onended = () => {
+        playStream();
+        audio.onended = null;
+      };
+
+    } catch (e) {
+      console.log("Jingle Fehler:", e);
+      playStream();
+    }
+  }
+
+  playBtn.addEventListener("click", async () => {
+    if (!isPlaying) {
+      nowPlaying.textContent = "Starte...";
+
+      if (!hasPlayedJingle) {
+        hasPlayedJingle = true;
+        await playWithJingle();
+      } else {
+        playStream();
+      }
+
+      playBtn.textContent = "⏸";
+      isPlaying = true;
+
+    } else {
+      audio.pause();
+      playBtn.textContent = "▶";
+      nowPlaying.textContent = "Pause: " + streams[currentStation].name;
+      isPlaying = false;
     }
   });
-});
-
-// ▶ Play / Pause
-playBtn.addEventListener("click", async () => {
-
-  if (!audio.src) {
-    audio.src = streams[currentStation].url;
-  }
-
-  if (isPlaying) {
-    audio.pause();
-    playBtn.textContent = "▶";
-    nowPlaying.textContent = "Pause: " + streams[currentStation].name;
-  } else {
-    try {
-      await audio.play();
-      playBtn.textContent = "⏸";
-      nowPlaying.textContent = "Live: " + streams[currentStation].name;
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  isPlaying = !isPlaying;
-});
-</script>
+}
