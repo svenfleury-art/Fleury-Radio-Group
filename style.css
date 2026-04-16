@@ -433,67 +433,114 @@ section,
 /* =========================
    FRG PLAYER (FIXED + SAFE)
 ========================= */
+/* =========================
+FRG PLAYER (ZENTRIERT)
+========================= */
 .frg-player{
   display:flex;
   align-items:center;
-  gap:12px;
+  justify-content:center;   /* zentriert horizontal */
+  gap:14px;
 
-  margin:10px 0 5px 0;
-  padding:8px 12px;
-
-  background:rgba(0,0,0,0.25);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:12px;
+  margin:20px auto;         /* zentriert im Layout */
+  padding:12px 18px;
 
   width:fit-content;
-  max-width:100%;
+  max-width:95%;
+
+  background:rgba(10, 20, 60, 0.6); /* FRG Blau Glas */
+  backdrop-filter: blur(12px);
+
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:18px;
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
 
-/* NUR IM PLAYER */
+/* =========================
+PLAY BUTTON
+========================= */
 .frg-player .play-btn{
-  width:38px;
-  height:38px;
+  width:42px;
+  height:42px;
   border-radius:50%;
   border:none;
   cursor:pointer;
 
-  background:linear-gradient(135deg,var(--bg1),var(--bg2));
-  color:var(--text);
+  background:linear-gradient(135deg, #1e3a8a, #2563eb); /* Royal Blue */
+  color:#fff;
+  font-size:16px;
+
+  box-shadow:0 5px 15px rgba(0,0,0,0.4);
+
+  transition:all 0.25s ease;
 }
 
+.frg-player .play-btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 8px 20px rgba(0,0,0,0.6);
+}
+
+/* =========================
+STATION BUTTONS
+========================= */
 .station-switch{
   display:flex;
-  gap:6px;
+  gap:8px;
   flex-wrap:wrap;
+  justify-content:center;
 }
 
 .station{
   background:transparent;
   border:1px solid rgba(255,255,255,0.25);
-  color:var(--text);
-  padding:4px 10px;
+  color:#fff;
+
+  padding:5px 12px;
   border-radius:20px;
   font-size:12px;
+  cursor:pointer;
+
+  transition:all 0.2s ease;
 }
 
+.station:hover{
+  background:rgba(255,255,255,0.1);
+}
+
+/* ACTIVE = GOLD */
 .station.active{
-  background:var(--text);
-  color:var(--dark);
+  background:#d4af37;
+  color:#000;
+  border-color:#d4af37;
+  font-weight:600;
 }
 
+/* =========================
+NOW PLAYING
+========================= */
 .now-playing{
   font-size:12px;
-  opacity:0.75;
-  min-width:120px;
+  opacity:0.85;
+  min-width:160px;
+
+  text-align:center;
 }
 
+/* =========================
+MOBILE
+========================= */
 @media (max-width:768px){
   .frg-player{
     flex-direction:column;
-    align-items:flex-start;
+    align-items:center;
+    text-align:center;
+  }
+
+  .now-playing{
+    min-width:auto;
   }
 }
-
 
 
 /* =========================
