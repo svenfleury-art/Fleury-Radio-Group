@@ -1,20 +1,7 @@
-async function loadPartial(id, file) {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  try {
-    const res = await fetch(file);
-    const html = await res.text();
-    el.innerHTML = html;
-  } catch (err) {
-    console.error("Partial Fehler:", file, err);
-  }
-}
-
-
 /* =========================
-ROUTES
+CONFIG
 ========================= */
+
 const routes = {
   "/": "/pages/home.html",
   "/rhywälle": "/pages/rhywaelle.html",
@@ -27,23 +14,29 @@ const routes = {
 };
 
 /* =========================
-LOADER
+PARTIAL LOADER (NAV / FOOTER)
 ========================= */
-function initLoader() {
-  const loader = document.getElementById("loader");
-  if (!loader) return;
 
-  setTimeout(() => {
-    loader.style.opacity = "0";
-    setTimeout(() => loader.remove(), 400);
-  }, 500);
+async function loadPartial(id, file) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  try {
+    const res = await fetch(file);
+    if (!res.ok) throw new Error(file);
+    el.innerHTML = await res.text();
+  } catch (err) {
+    console.error("Partial Fehler:", file, err);
+  }
 }
 
 /* =========================
 PAGE LOADER (SPA)
 ========================= */
+
 async function loadPage(path) {
   const app = document.getElementById("app");
+  if (!app) return;
 
   const file = routes[path] || "/pages/404.html";
 
@@ -53,25 +46,29 @@ async function loadPage(path) {
 
     app.innerHTML = html;
 
-    reInitPage();
     window.scrollTo(0, 0);
+
+    // WICHTIG: nur Page-spezifische Dinge neu starten
+    initCountdown();
 
   } catch (err) {
     console.error(err);
-    app.innerHTML = "<h2 style='color:white;text-align:center;'>Fehler beim Laden</h2>";
+    app.innerHTML = "<h2 style='color:white'>Fehler beim Laden</h2>";
   }
 }
 
 /* =========================
 NAVIGATION (SPA LINKS)
 ========================= */
+
 document.addEventListener("click", (e) => {
   const link = e.target.closest("a");
   if (!link) return;
 
   const href = link.getAttribute("href");
 
-  if (href && href.startsWith("/")) {
+  // nur interne SPA routes
+  if (href && href.startsWith("/") && routes[href]) {
     e.preventDefault();
     history.pushState({}, "", href);
     loadPage(href);
@@ -83,16 +80,23 @@ window.addEventListener("popstate", () => {
 });
 
 /* =========================
-REINIT AFTER PAGE CHANGE
+LOADER
 ========================= */
-function reInitPage() {
-  initMenu();
-  initCountdown();
+
+function initLoader() {
+  const loader = document.getElementById("loader");
+  if (!loader) return;
+
+  setTimeout(() => {
+    loader.style.opacity = "0";
+    setTimeout(() => loader.remove(), 400);
+  }, 600);
 }
 
 /* =========================
-MENU
+MENU (STATIC HEADER)
 ========================= */
+
 function initMenu() {
   const btn = document.getElementById("hamburgerBtn");
   const nav = document.getElementById("mainNav");
@@ -100,9 +104,7 @@ function initMenu() {
 
   if (!btn || !nav) return;
 
-  btn.onclick = () => {
-    nav.classList.toggle("open");
-  };
+  btn.onclick = () => nav.classList.toggle("open");
 
   overlay?.addEventListener("click", () => {
     nav.classList.remove("open");
@@ -110,8 +112,9 @@ function initMenu() {
 }
 
 /* =========================
-COUNTDOWN (MINI FIXED)
+COUNTDOWN
 ========================= */
+
 const frgEvents = [
   { title: "FRG Showcase", date: "2026-04-25T20:00:00" },
   { title: "FRG Special", date: "2026-06-01T20:00:00" }
@@ -126,9 +129,10 @@ function initCountdown() {
 
   const target = new Date(next.date);
 
-  setInterval(() => {
-    const diff = target - Date.now();
+  clearInterval(window._frgCountdown);
 
+  window._frgCountdown = setInterval(() => {
+    const diff = target - Date.now();
     if (diff <= 0) return;
 
     const d = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -150,10 +154,10 @@ function initCountdown() {
 }
 
 /* =========================
-GLOBAL RADIO PLAYER
+RADIO PLAYER (GLOBAL FIX)
 ========================= */
-function initRadioPlayer() {
 
+function initRadioPlayer() {
   const audio = document.getElementById("audioPlayer");
   const playBtn = document.getElementById("playBtn");
   const nowPlaying = document.getElementById("nowPlaying");
@@ -178,28 +182,10 @@ function initRadioPlayer() {
 
   let current = localStorage.getItem("frg_station") || "rhywaelle";
   let isPlaying = localStorage.getItem("frg_playing") === "true";
-  let songTimer = null;
 
-  function play() {
-    audio.src = streams[current].url;
-    audio.play();
+  let songTimer;
 
-    isPlaying = true;
-    localStorage.setItem("frg_playing", "true");
-    localStorage.setItem("frg_station", current);
-
-    updateUI();
-    fetchSong();
-  }
-
-  function pause() {
-    audio.pause();
-    isPlaying = false;
-    localStorage.setItem("frg_playing", "false");
-    updateUI();
-  }
-
-  function updateUI() {
+  function syncUI() {
     stations.forEach(b => {
       b.classList.toggle("active", b.dataset.station === current);
     });
@@ -220,9 +206,30 @@ function initRadioPlayer() {
         if (isPlaying && nowPlaying) {
           nowPlaying.textContent = "🎵 " + text;
         }
-      }, 6000);
+      }, 5000);
 
     } catch (e) {}
+  }
+
+  function play() {
+    audio.src = streams[current].url;
+    audio.play().catch(() => {});
+
+    isPlaying = true;
+
+    localStorage.setItem("frg_playing", "true");
+    localStorage.setItem("frg_station", current);
+
+    syncUI();
+    fetchSong();
+  }
+
+  function pause() {
+    audio.pause();
+    isPlaying = false;
+
+    localStorage.setItem("frg_playing", "false");
+    syncUI();
   }
 
   stations.forEach(btn => {
@@ -237,18 +244,17 @@ function initRadioPlayer() {
   });
 
   window.setStation = (s) => {
+    if (!streams[s]) return;
     current = s;
     play();
   };
 
-  function autoResume() {
-    updateUI();
-    setTimeout(() => {
-      if (isPlaying) play();
-    }, 300);
-  }
+  syncUI();
 
-  autoResume();
+  // Auto-resume
+  setTimeout(() => {
+    if (isPlaying) play();
+  }, 300);
 
   setInterval(() => {
     if (isPlaying) fetchSong();
@@ -256,10 +262,18 @@ function initRadioPlayer() {
 }
 
 /* =========================
-INIT SYSTEM
+BOOT
 ========================= */
-window.addEventListener("DOMContentLoaded", () => {
+
+window.addEventListener("DOMContentLoaded", async () => {
   initLoader();
-  loadPage(location.pathname);
+
+  await loadPartial("nav-slot", "partials/nav.html");
+  await loadPartial("footer-slot", "partials/footer.html");
+
+  initMenu();
+  initCountdown();
   initRadioPlayer();
+
+  loadPage(location.pathname);
 });
