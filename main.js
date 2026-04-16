@@ -248,38 +248,45 @@ function initRadioPlayer() {
   if (!audio || !playBtn) return;
 
   const streams = {
-    rhywälle: {
+    rhywaelle: {
       name: "Radio Rhywälle",
-      url: "https://stream.laut.fm/rhywaelle"
+      url: "https://stream.laut.fm/rhywaelle",
+      api: "rhywaelle"
     },
     winterlord: {
       name: "Winterlord FM",
-      url: "https://stream.laut.fm/winterlord-fm"
+      url: "https://stream.laut.fm/winterlord-fm",
+      api: "winterlord-fm"
     },
     rhyrock: {
       name: "RhyRock Radio",
-      url: "https://stream.laut.fm/rhyrock-radio"
+      url: "https://stream.laut.fm/rhyrock-radio",
+      api: "rhyrock-radio"
     }
   };
 
   let current = localStorage.getItem("frgStation") || "rhywaelle";
   let isPlaying = localStorage.getItem("frgPlaying") === "true";
-  let jinglePlayed = true;
+  let songTimeout = null;
 
+  /* =========================
+  UI UPDATE
+  ========================= */
   function updateUI() {
     stations.forEach(btn => {
       btn.classList.toggle("active", btn.dataset.station === current);
     });
 
-    if (nowPlaying) {
-      nowPlaying.textContent = isPlaying
-        ? "Live: " + streams[current].name
-        : "Pause";
-    }
-
     playBtn.textContent = isPlaying ? "⏸" : "▶";
+
+    if (!isPlaying) {
+      nowPlaying.textContent = "Pause";
+    }
   }
 
+  /* =========================
+  STREAM CONTROL
+  ========================= */
   function playStream() {
     audio.src = streams[current].url;
     audio.play().catch(console.log);
@@ -289,16 +296,50 @@ function initRadioPlayer() {
     localStorage.setItem("frgStation", current);
 
     updateUI();
+    fetchNowPlaying();
   }
 
   function pauseStream() {
     audio.pause();
     isPlaying = false;
     localStorage.setItem("frgPlaying", "false");
+
     updateUI();
   }
 
-  // Header Buttons
+  /* =========================
+  NOW PLAYING (LAUT.FM)
+  ========================= */
+  async function fetchNowPlaying() {
+    const station = streams[current].api;
+
+    try {
+      const res = await fetch(`https://api.laut.fm/station/${station}/current_song`);
+      const data = await res.json();
+
+      const artist = data.artist?.name || "Unbekannt";
+      const title = data.title || "Kein Titel";
+
+      const text = `🎵 ${title} – ${artist}`;
+
+      // alten Timer stoppen
+      clearTimeout(songTimeout);
+
+      // dein Delay (10s)
+      songTimeout = setTimeout(() => {
+        if (isPlaying) {
+          nowPlaying.textContent = text;
+        }
+      }, 10000);
+
+    } catch (err) {
+      console.error("NowPlaying Fehler:", err);
+    }
+  }
+
+  /* =========================
+  EVENTS
+  ========================= */
   stations.forEach(btn => {
     btn.addEventListener("click", () => {
       current = btn.dataset.station;
@@ -310,15 +351,29 @@ function initRadioPlayer() {
     isPlaying ? pauseStream() : playStream();
   });
 
-  // GLOBAL FUNCTION für Seiten
+  /* =========================
+  GLOBAL BUTTON (SEITEN)
+  ========================= */
   window.setStation = function(station) {
     if (!streams[station]) return;
     current = station;
     playStream();
   };
 
-  // Restore Zustand beim Seitenwechsel
+  /* =========================
+  AUTO UPDATE SONG
+  ========================= */
+  setInterval(() => {
+    if (isPlaying) {
+      fetchNowPlaying();
+    }
+  }, 10000);
+
+  /* =========================
+  INIT
+  ========================= */
   updateUI();
+
   if (isPlaying) {
     playStream();
   }
