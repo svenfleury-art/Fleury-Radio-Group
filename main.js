@@ -27,10 +27,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   initMenu();
   initCookies();
   initFilter();
-  initCountdown();
-  initRadioPlayer(); // 🔥 EINZIGER PLAYER
 
+  updateCountdown();
   setInterval(updateCountdown, 1000);
+
+  initRadioPlayer(); // 🔥 NUR EIN PLAYER
 });
 
 
@@ -152,28 +153,20 @@ function pad(n) {
 }
 
 function updateCountdown() {
-  const wrapper = document.querySelector(".countdown");
-  if (!wrapper) return;
-
   const event = getNextEvent();
   if (!event) return;
 
   const diff = event.dateObj - Date.now();
-
-  const days = diff / (1000 * 60 * 60 * 24);
-  const hours = (diff / (1000 * 60 * 60)) % 24;
-  const minutes = (diff / (1000 * 60)) % 60;
-  const seconds = (diff / 1000) % 60;
 
   const set = (id, val) => {
     const el = document.getElementById(id);
     if (el) el.textContent = pad(val);
   };
 
-  set("days", days);
-  set("hours", hours);
-  set("minutes", minutes);
-  set("seconds", seconds);
+  set("days", diff / (1000 * 60 * 60 * 24));
+  set("hours", (diff / (1000 * 60 * 60)) % 24);
+  set("minutes", (diff / (1000 * 60)) % 60);
+  set("seconds", (diff / 1000) % 60);
 }
 
 
@@ -209,7 +202,7 @@ function initRadioPlayer() {
 
   function setStation(id) {
     current = id;
-    nowPlaying.textContent = "Bereit: " + streams[id].name;
+    if (nowPlaying) nowPlaying.textContent = "Bereit: " + streams[id].name;
   }
 
   stations.forEach(btn => {
@@ -237,7 +230,6 @@ function initRadioPlayer() {
         playStream();
         audio.onended = null;
       };
-
     } catch (e) {
       console.log("Jingle Fehler:", e);
       playStream();
