@@ -3,7 +3,7 @@ ROUTES
 ========================= */
 const routes = {
   "/": "/pages/home.html",
-  "/rhywaelle": "/pages/rhywaelle.html",
+  "/rhywälle": "/pages/rhywaelle.html",
   "/winterlord": "/pages/winterlord.html",
   "/rhyrock": "/pages/rhyrock.html",
   "/radios": "/pages/radios.html",
@@ -13,99 +13,239 @@ const routes = {
 };
 
 /* =========================
-GET APP CONTAINER
+LOADER
 ========================= */
-function getApp(){
-  return document.getElementById("app");
+function initLoader() {
+  const loader = document.getElementById("loader");
+  if (!loader) return;
+
+  setTimeout(() => {
+    loader.style.opacity = "0";
+    setTimeout(() => loader.remove(), 400);
+  }, 500);
 }
 
 /* =========================
-LOAD PAGE (CORE SPA ENGINE)
+PAGE LOADER (SPA)
 ========================= */
-async function loadPage(path = "/") {
-  const app = getApp();
-  if (!app) return;
-
-  // Normalisierung
-  if (path === "/index.html") path = "/";
-  if (!routes[path]) path = "/";
+async function loadPage(path) {
+  const app = document.getElementById("app");
 
   const file = routes[path] || "/pages/404.html";
 
   try {
     const res = await fetch(file);
-
-    if (!res.ok) {
-      app.innerHTML = "<h2>404 - Seite nicht gefunden</h2>";
-      return;
-    }
-
     const html = await res.text();
+
     app.innerHTML = html;
 
-    // Page re-init hook (Player etc.)
     reInitPage();
+    window.scrollTo(0, 0);
 
   } catch (err) {
-    console.error("LoadPage Error:", err);
-    app.innerHTML = "<h2>Ladefehler</h2>";
+    console.error(err);
+    app.innerHTML = "<h2 style='color:white;text-align:center;'>Fehler beim Laden</h2>";
   }
 }
 
 /* =========================
-NAVIGATION (SPA LINK HANDLER)
+NAVIGATION (SPA LINKS)
 ========================= */
 document.addEventListener("click", (e) => {
-  const link = e.target.closest("a[href]");
+  const link = e.target.closest("a");
   if (!link) return;
 
   const href = link.getAttribute("href");
 
-  // nur interne SPA links
-  if (!href.startsWith("/")) return;
-
-  e.preventDefault();
-
-  history.pushState({}, "", href);
-  loadPage(href);
+  if (href && href.startsWith("/")) {
+    e.preventDefault();
+    history.pushState({}, "", href);
+    loadPage(href);
+  }
 });
 
-/* =========================
-BACK / FORWARD BUTTON
-========================= */
 window.addEventListener("popstate", () => {
   loadPage(location.pathname);
 });
 
 /* =========================
-INIT APP
+REINIT AFTER PAGE CHANGE
 ========================= */
-window.addEventListener("DOMContentLoaded", () => {
-  loadPage(location.pathname || "/");
-});
+function reInitPage() {
+  initMenu();
+  initCountdown();
+}
 
 /* =========================
-REINIT HOOK (WICHTIG)
+MENU
 ========================= */
-function reInitPage(){
+function initMenu() {
+  const btn = document.getElementById("hamburgerBtn");
+  const nav = document.getElementById("mainNav");
+  const overlay = document.getElementById("menu-overlay");
 
-  // Falls Player existiert → neu verbinden
-  if (typeof initRadioPlayer === "function") {
-    initRadioPlayer();
-  }
+  if (!btn || !nav) return;
 
-  // Menu sicher neu aktivieren
-  if (typeof initMenu === "function") {
-    initMenu();
-  }
+  btn.onclick = () => {
+    nav.classList.toggle("open");
+  };
 
-  // Countdown
-  if (typeof initCountdown === "function") {
-    initCountdown();
-  }
-
-  // Filter
-  if (typeof initFilter === "function") {
-    initFilter();
-  }
+  overlay?.addEventListener("click", () => {
+    nav.classList.remove("open");
+  });
 }
+
+/* =========================
+COUNTDOWN (MINI FIXED)
+========================= */
+const frgEvents = [
+  { title: "FRG Showcase", date: "2026-04-25T20:00:00" },
+  { title: "FRG Special", date: "2026-06-01T20:00:00" }
+];
+
+function initCountdown() {
+  const wrapper = document.querySelector(".countdown");
+  if (!wrapper) return;
+
+  const next = frgEvents.find(e => new Date(e.date) > Date.now());
+  if (!next) return;
+
+  const target = new Date(next.date);
+
+  setInterval(() => {
+    const diff = target - Date.now();
+
+    if (diff <= 0) return;
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    const set = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = String(val).padStart(2, "0");
+    };
+
+    set("days", d);
+    set("hours", h);
+    set("minutes", m);
+    set("seconds", s);
+
+  }, 1000);
+}
+
+/* =========================
+GLOBAL RADIO PLAYER
+========================= */
+function initRadioPlayer() {
+
+  const audio = document.getElementById("audioPlayer");
+  const playBtn = document.getElementById("playBtn");
+  const nowPlaying = document.getElementById("nowPlaying");
+  const stations = document.querySelectorAll(".station");
+
+  if (!audio || !playBtn) return;
+
+  const streams = {
+    rhywaelle: {
+      url: "https://stream.laut.fm/rhywaelle",
+      api: "rhywaelle"
+    },
+    winterlord: {
+      url: "https://stream.laut.fm/winterlord-fm",
+      api: "winterlord-fm"
+    },
+    rhyrock: {
+      url: "https://stream.laut.fm/rhyrock-radio",
+      api: "rhyrock-radio"
+    }
+  };
+
+  let current = localStorage.getItem("frg_station") || "rhywaelle";
+  let isPlaying = localStorage.getItem("frg_playing") === "true";
+  let songTimer = null;
+
+  function play() {
+    audio.src = streams[current].url;
+    audio.play();
+
+    isPlaying = true;
+    localStorage.setItem("frg_playing", "true");
+    localStorage.setItem("frg_station", current);
+
+    updateUI();
+    fetchSong();
+  }
+
+  function pause() {
+    audio.pause();
+    isPlaying = false;
+    localStorage.setItem("frg_playing", "false");
+    updateUI();
+  }
+
+  function updateUI() {
+    stations.forEach(b => {
+      b.classList.toggle("active", b.dataset.station === current);
+    });
+
+    playBtn.textContent = isPlaying ? "⏸" : "▶";
+  }
+
+  async function fetchSong() {
+    try {
+      const res = await fetch(`https://api.laut.fm/station/${streams[current].api}/current_song`);
+      const data = await res.json();
+
+      const text = `${data.title || ""} - ${data.artist?.name || ""}`;
+
+      clearTimeout(songTimer);
+
+      songTimer = setTimeout(() => {
+        if (isPlaying && nowPlaying) {
+          nowPlaying.textContent = "🎵 " + text;
+        }
+      }, 6000);
+
+    } catch (e) {}
+  }
+
+  stations.forEach(btn => {
+    btn.addEventListener("click", () => {
+      current = btn.dataset.station;
+      play();
+    });
+  });
+
+  playBtn.addEventListener("click", () => {
+    isPlaying ? pause() : play();
+  });
+
+  window.setStation = (s) => {
+    current = s;
+    play();
+  };
+
+  function autoResume() {
+    updateUI();
+    setTimeout(() => {
+      if (isPlaying) play();
+    }, 300);
+  }
+
+  autoResume();
+
+  setInterval(() => {
+    if (isPlaying) fetchSong();
+  }, 10000);
+}
+
+/* =========================
+INIT SYSTEM
+========================= */
+window.addEventListener("DOMContentLoaded", () => {
+  initLoader();
+  loadPage(location.pathname);
+  initRadioPlayer();
+});
