@@ -431,6 +431,39 @@ section,
 }
 
 /* =========================
+TEAM FOTOS (OVAL + SAUBER)
+========================= */
+.team-photo {
+  width: 120px;          /* Größe kontrollieren */
+  height: 150px;         /* leicht höher → oval */
+  object-fit: cover;     /* Bild sauber zuschneiden */
+
+  border-radius: 50% / 60%;  /* OVAL statt Kreis */
+
+  display: block;
+  margin: 0 auto 12px;   /* zentriert + Abstand */
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+
+  transition: transform 0.25s ease;
+}
+
+/* Hover Effekt */
+.team-photo:hover {
+  transform: scale(1.05);
+}
+
+/* =========================
+MOBILE FIX
+========================= */
+@media (max-width: 600px) {
+  .team-photo {
+    width: 90px;
+    height: 120px;
+  }
+}
+
+/* =========================
    FRG PLAYER (FIXED + SAFE)
 ========================= */
 /* =========================
