@@ -24,7 +24,7 @@ const routes = {
   "/werbung": "/pages/werbung.html"
 };
 
-const file = routes[path] || "/pages/404.html";
+
 
 let countdownInterval = null;
 
