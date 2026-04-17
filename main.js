@@ -22,6 +22,9 @@ const routes = {
   "/spezial-programm": "/pages/spezial-programm.html",
   "/artists": "/pages/Artists.html",
   "/werbung": "/pages/werbung.html"
+  "/agb": "/pages/agb.html"
+"/datenschutz": "/pages/datenschutz.html"
+"/impressum": "/pages/impressum.html"
 };
 
 
