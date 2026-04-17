@@ -20,7 +20,7 @@ const routes = {
 
   // 📻 Extras
   "/spezial-programm": "/pages/spezial-programm.html",
-  "/artists": "/pages/artists.html",
+  "/artists": "/pages/Artists.html",
   "/werbung": "/pages/werbung.html"
 };
 
