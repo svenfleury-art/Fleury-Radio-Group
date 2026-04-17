@@ -4,14 +4,27 @@ CONFIG
 
 const routes = {
   "/": "/pages/home.html",
+
+  // 🎧 Radios
+  "/radios": "/pages/radios.html",
   "/rhywälle": "/pages/rhywaelle.html",
   "/winterlord": "/pages/winterlord.html",
   "/rhyrock": "/pages/rhyrock.html",
-  "/radios": "/pages/radios.html",
+
+  // 📘 Infos
+  "/frg-inside": "/pages/frg-inside.html",
+  "/team": "/pages/team.html",
   "/geschichte": "/pages/geschichte.html",
+  "/about": "/pages/about.html",
+  "/mitmachen": "/pages/mitmachen.html",
+
+  // 📻 Extras
+  "/spezial-programm": "/pages/spezial-programm.html",
   "/artists": "/pages/artists.html",
-  "/team": "/pages/team.html"
+  "/werbung": "/pages/werbung.html"
 };
+
+const file = routes[path] || "/pages/404.html";
 
 let countdownInterval = null;
 
