@@ -381,3 +381,43 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   loadPage(location.pathname);
 });
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const buttons = document.querySelectorAll(".filter-btn");
+  const cards = document.querySelectorAll(".event-card");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+      // Active Button wechseln
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const filter = btn.getAttribute("data-filter");
+
+      cards.forEach(card => {
+
+        // Hinweis-Karten IMMER anzeigen
+        if (card.classList.contains("hinweis")) {
+          card.style.display = "block";
+          return;
+        }
+
+        // Filter Logik
+        if (filter === "all") {
+          card.style.display = "block";
+        } else if (card.classList.contains(filter)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+
+      });
+
+    });
+  });
+
+});
