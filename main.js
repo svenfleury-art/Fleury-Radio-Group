@@ -23,13 +23,37 @@ const routes = {
   "/artists": "/pages/Artists.html",
   "/werbung": "/pages/werbung.html",
   "/agb": "/pages/agb.html",
-"/datenschutz": "/pages/datenschutz.html",
-"/impressum": "/pages/impressum.html"
+  "/datenschutz": "/pages/datenschutz.html",
+  "/impressum": "/pages/impressum.html",
+
+  "/404": "/pages/404.html"
 };
 
-
-
 let countdownInterval = null;
+
+/* =========================
+HELPERS (SPA CORE)
+========================= */
+
+function normalizePath(path) {
+  if (!path) return "/";
+  const clean = path.replace(/\/+$/, "");
+  return clean === "" ? "/" : clean;
+}
+
+function navigate(path) {
+  if (!path) return;
+  history.pushState({}, "", path);
+  loadPage(path);
+}
+
+function handleRedirect() {
+  const redirect = sessionStorage.getItem("spa_redirect");
+  if (redirect) {
+    sessionStorage.removeItem("spa_redirect");
+    navigate(redirect);
+  }
+}
 
 /* =========================
 PARTIAL LOADER
@@ -55,7 +79,8 @@ async function loadPage(path) {
   const app = document.getElementById("app");
   if (!app) return;
 
-  const file = routes[path] || "/pages/404.html";
+  const cleanPath = normalizePath(path);
+  const file = routes[cleanPath] || routes["/404"];
 
   try {
     const res = await fetch(file);
@@ -80,7 +105,7 @@ function reInitPage() {
 }
 
 /* =========================
-SPA NAVIGATION (NUR data-link)
+SPA NAVIGATION (data-link)
 ========================= */
 document.addEventListener("click", (e) => {
   const link = e.target.closest("a[data-link]");
@@ -88,11 +113,10 @@ document.addEventListener("click", (e) => {
 
   const href = link.getAttribute("href");
 
-  if (href && routes[href]) {
-    e.preventDefault();
-    history.pushState({}, "", href);
-    loadPage(href);
-  }
+  if (!href || href.startsWith("http")) return;
+
+  e.preventDefault();
+  navigate(href);
 });
 
 window.addEventListener("popstate", () => {
@@ -122,20 +146,17 @@ function initMenu() {
 
   if (!btn || !nav) return;
 
-  // HAMBURGER
   btn.onclick = (e) => {
     e.stopPropagation();
     nav.classList.toggle("open");
     overlay?.classList.toggle("active");
   };
 
-  // OVERLAY
   overlay?.addEventListener("click", () => {
     nav.classList.remove("open");
     overlay.classList.remove("active");
   });
 
-  // OUTSIDE CLICK
   document.addEventListener("click", (e) => {
     if (!nav.contains(e.target) && !btn.contains(e.target)) {
       nav.classList.remove("open");
@@ -143,7 +164,6 @@ function initMenu() {
     }
   });
 
-  // DROPDOWNS 🔥
   nav.querySelectorAll(".dropdown-toggle").forEach(toggle => {
     toggle.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -160,7 +180,7 @@ function initMenu() {
 }
 
 /* =========================
-COOKIE BANNER (FIXED)
+COOKIE BANNER
 ========================= */
 function initCookieBanner() {
   const banner = document.getElementById("cookie-banner");
@@ -311,7 +331,9 @@ function initRadioPlayer() {
   }, 10000);
 }
 
-
+/* =========================
+FORMS
+========================= */
 document.addEventListener("DOMContentLoaded", () => {
 
   function initForm(formId, checkboxId, buttonId, msgId) {
@@ -322,12 +344,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!form) return;
 
-    // Button nur aktiv wenn AGB akzeptiert
     checkbox.addEventListener("change", () => {
       button.disabled = !checkbox.checked;
     });
 
-    // Submit via Fetch (ohne Weiterleitung)
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -339,31 +359,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const response = await fetch(form.action, {
           method: "POST",
           body: new FormData(form),
-          headers: {
-            "Accept": "application/json"
-          }
+          headers: { "Accept": "application/json" }
         });
 
         if (response.ok) {
           msg.textContent = "✅ Erfolgreich gesendet!";
           form.reset();
-          button.disabled = true;
         } else {
-          msg.textContent = "❌ Fehler beim Senden. Bitte später erneut versuchen.";
+          msg.textContent = "❌ Fehler beim Senden.";
         }
-
-      } catch (error) {
+      } catch {
         msg.textContent = "❌ Netzwerkfehler.";
       }
     });
   }
 
-  // Beide Formulare initialisieren
   initForm("artist-form-1", "agb-1", "submitBtn-1", "form-msg-1");
   initForm("artist-form-2", "agb-2", "submitBtn-2", "form-msg-2");
-
 });
-
 
 /* =========================
 BOOT
@@ -379,11 +392,13 @@ window.addEventListener("DOMContentLoaded", async () => {
   initCountdown();
   initRadioPlayer();
 
+  handleRedirect();
   loadPage(location.pathname);
 });
 
-
-
+/* =========================
+EVENT FILTER
+========================= */
 document.addEventListener("DOMContentLoaded", () => {
 
   const buttons = document.querySelectorAll(".filter-btn");
@@ -392,7 +407,6 @@ document.addEventListener("DOMContentLoaded", () => {
   buttons.forEach(btn => {
     btn.addEventListener("click", () => {
 
-      // Active Button wechseln
       buttons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
 
@@ -400,13 +414,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       cards.forEach(card => {
 
-        // Hinweis-Karten IMMER anzeigen
         if (card.classList.contains("hinweis")) {
           card.style.display = "block";
           return;
         }
 
-        // Filter Logik
         if (filter === "all") {
           card.style.display = "block";
         } else if (card.classList.contains(filter)) {
@@ -419,5 +431,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
   });
-
 });
