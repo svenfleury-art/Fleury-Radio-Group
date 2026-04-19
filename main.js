@@ -311,6 +311,60 @@ function initRadioPlayer() {
   }, 10000);
 }
 
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  function initForm(formId, checkboxId, buttonId, msgId) {
+    const form = document.getElementById(formId);
+    const checkbox = document.getElementById(checkboxId);
+    const button = document.getElementById(buttonId);
+    const msg = document.getElementById(msgId);
+
+    if (!form) return;
+
+    // Button nur aktiv wenn AGB akzeptiert
+    checkbox.addEventListener("change", () => {
+      button.disabled = !checkbox.checked;
+    });
+
+    // Submit via Fetch (ohne Weiterleitung)
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      button.disabled = true;
+      msg.style.display = "block";
+      msg.textContent = "Wird gesendet...";
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: {
+            "Accept": "application/json"
+          }
+        });
+
+        if (response.ok) {
+          msg.textContent = "✅ Erfolgreich gesendet!";
+          form.reset();
+          button.disabled = true;
+        } else {
+          msg.textContent = "❌ Fehler beim Senden. Bitte später erneut versuchen.";
+        }
+
+      } catch (error) {
+        msg.textContent = "❌ Netzwerkfehler.";
+      }
+    });
+  }
+
+  // Beide Formulare initialisieren
+  initForm("artist-form-1", "agb-1", "submitBtn-1", "form-msg-1");
+  initForm("artist-form-2", "agb-2", "submitBtn-2", "form-msg-2");
+
+});
+
+
 /* =========================
 BOOT
 ========================= */
