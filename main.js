@@ -17,7 +17,8 @@ const routes = {
   "/mitmachen": "/pages/mitmachen.html",
 
   "/spezial-programm": "/pages/spezial-programm.html",
-  "/artists": "/pages/Artists.html",
+  "/artists": "/pages/Artists.html", // ✔️ bleibt GROSS wie bei dir
+
   "/werbung": "/pages/werbung.html",
 
   "/agb": "/pages/agb.html",
@@ -73,7 +74,7 @@ function animateOut(el) {
   return new Promise(resolve => {
     el.style.opacity = "0";
     el.style.transform = "translateY(10px)";
-    setTimeout(resolve, 200);
+    setTimeout(resolve, 180);
   });
 }
 
@@ -81,7 +82,7 @@ function animateIn(el) {
   return new Promise(resolve => {
     el.style.opacity = "1";
     el.style.transform = "translateY(0)";
-    setTimeout(resolve, 200);
+    setTimeout(resolve, 180);
   });
 }
 
@@ -93,8 +94,12 @@ async function loadPartial(id, file) {
   const el = document.getElementById(id);
   if (!el) return;
 
-  const res = await fetch(file);
-  el.innerHTML = await res.text();
+  try {
+    const res = await fetch(file);
+    el.innerHTML = await res.text();
+  } catch (err) {
+    console.error("Partial Fehler:", err);
+  }
 }
 
 /* =========================
@@ -133,7 +138,8 @@ async function loadPage(path) {
 
     window.scrollTo(0, 0);
 
-  } catch {
+  } catch (err) {
+    console.error(err);
     app.innerHTML = "<h2 style='color:white'>Fehler beim Laden</h2>";
   }
 
@@ -171,6 +177,10 @@ function initMenu() {
 
   if (!btn || !nav) return;
 
+  // ✔️ verhindert doppelte Listener
+  if (btn.dataset.init) return;
+  btn.dataset.init = "1";
+
   btn.addEventListener("click", (e) => {
     e.stopPropagation();
     nav.classList.toggle("open");
@@ -207,7 +217,7 @@ function initCookieBanner() {
 }
 
 /* =========================
-COUNTDOWN (FIXED + SORTED)
+COUNTDOWN
 ========================= */
 
 const frgEvents = [
@@ -223,6 +233,10 @@ const frgEvents = [
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
+const futureEvents = frgEvents
+  .map(e => ({ ...e, time: new Date(e.date).getTime() }))
+  .sort((a, b) => a.time - b.time);
+
 function initCountdown() {
   const wrapper = document.querySelector(".countdown");
   if (!wrapper) return;
@@ -231,20 +245,16 @@ function initCountdown() {
 
   const now = Date.now();
 
-  const next = frgEvents
-    .map(e => ({ ...e, time: new Date(e.date).getTime() }))
-    .filter(e => e.time > now)
-    .sort((a, b) => a.time - b.time)[0];
+  const next = futureEvents.find(e => e.time > now);
 
   if (!next) {
     wrapper.style.display = "none";
     return;
   }
 
-  const diffStart = next.time - now;
   const sevenDays = 7 * 24 * 60 * 60 * 1000;
 
-  if (diffStart > sevenDays) {
+  if (next.time - now > sevenDays) {
     wrapper.style.display = "none";
     return;
   }
@@ -252,7 +262,6 @@ function initCountdown() {
   wrapper.style.display = "block";
 
   countdownInterval = setInterval(() => {
-
     const diff = next.time - Date.now();
 
     if (diff <= 0) {
@@ -267,16 +276,15 @@ function initCountdown() {
     const s = Math.floor((diff / 1000) % 60);
 
     ["days","hours","minutes","seconds"].forEach((id, i) => {
-      const val = [d,h,m,s][i];
       const el = document.getElementById(id);
-      if (el) el.textContent = String(val).padStart(2,"0");
+      if (el) el.textContent = String([d,h,m,s][i]).padStart(2,"0");
     });
 
   }, 1000);
 }
 
 /* =========================
-RADIO PLAYER
+RADIO
 ========================= */
 
 function initRadioPlayer() {
@@ -341,6 +349,8 @@ function initForms() {
         form.reset();
         btn.disabled = true;
 
+        setTimeout(() => msg.style.display = "none", 4000);
+
       } catch {
         msg.textContent = "❌ Netzwerkfehler";
       }
@@ -352,38 +362,7 @@ function initForms() {
 }
 
 /* =========================
-EVENT FILTER
-========================= */
-
-function initEventFilter() {
-  const btns = document.querySelectorAll(".filter-btn");
-  const cards = document.querySelectorAll(".event-card");
-
-  if (!btns.length) return;
-
-  btns.forEach(btn => {
-    btn.onclick = () => {
-
-      btns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      const f = btn.dataset.filter;
-
-      cards.forEach(c => {
-        if (c.classList.contains("hinweis")) return;
-
-        c.style.display =
-          (f === "all" || c.classList.contains(f))
-          ? ""
-          : "none";
-      });
-
-    };
-  });
-}
-
-/* =========================
-PAGE SCRIPTS
+BOOT
 ========================= */
 
 function runPageScripts() {
@@ -392,19 +371,12 @@ function runPageScripts() {
   initCountdown();
   initRadioPlayer();
   initForms();
-  initEventFilter();
 }
 
-/* =========================
-BOOT
-========================= */
-
 window.addEventListener("DOMContentLoaded", async () => {
-
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
   initMenu();
-
   loadPage(location.pathname);
 });
