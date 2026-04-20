@@ -1,3 +1,4 @@
+
 /* =========================
 CONFIG
 ========================= */
@@ -29,6 +30,7 @@ const routes = {
 };
 
 const cache = new Map();
+let countdownInterval = null;
 
 /* =========================
 UTILS
@@ -47,47 +49,31 @@ SAFE FETCH
 async function safeFetch(file) {
   try {
     const res = await fetch(file);
-
-    if (!res.ok) {
-      console.error("Fetch failed:", file);
-      return "<h2 style='color:white;text-align:center'>Seite nicht gefunden</h2>";
-    }
-
+    if (!res.ok) return "<h2 style='color:white;text-align:center'>Seite nicht gefunden</h2>";
     return await res.text();
-  } catch (e) {
-    console.error("Network error:", e);
-    return "<h2 style='color:white;text-align:center'>Ladefehler (Server?)</h2>";
+  } catch {
+    return "<h2 style='color:white;text-align:center'>Fehler beim Laden</h2>";
   }
 }
 
 /* =========================
-PAGE LOADER (CORE FIX)
+PAGE LOADER
 ========================= */
 
 async function loadPage(path) {
   const app = document.getElementById("app");
-
-  if (!app) {
-    console.error("❌ #app fehlt im HTML!");
-    return;
-  }
+  if (!app) return;
 
   const clean = normalizePath(path);
   const file = routes[clean] || routes["/404"];
 
-  console.log("Loading:", clean, "->", file);
+  let html;
 
-  let html = "";
-
-  try {
-    if (cache.has(file)) {
-      html = cache.get(file);
-    } else {
-      html = await safeFetch(file);
-      cache.set(file, html);
-    }
-  } catch (e) {
-    html = "<h2 style='color:white'>Fehler beim Laden</h2>";
+  if (cache.has(file)) {
+    html = cache.get(file);
+  } else {
+    html = await safeFetch(file);
+    cache.set(file, html);
   }
 
   app.innerHTML = html;
@@ -98,7 +84,7 @@ async function loadPage(path) {
 }
 
 /* =========================
-NAVIGATION FIX
+NAVIGATION
 ========================= */
 
 document.addEventListener("click", (e) => {
@@ -106,11 +92,9 @@ document.addEventListener("click", (e) => {
   if (!link) return;
 
   const href = link.getAttribute("href");
-
   if (!href || href.startsWith("http")) return;
 
   e.preventDefault();
-
   history.pushState({}, "", href);
   loadPage(href);
 });
@@ -120,21 +104,7 @@ window.addEventListener("popstate", () => {
 });
 
 /* =========================
-SAFE INIT (WICHTIG)
-========================= */
-
-function runPageScriptsSafe() {
-  try {
-    initMenu();
-    initEventFilter();
-    initRadioPlayer();
-  } catch (e) {
-    console.warn("Script init error:", e);
-  }
-}
-
-/* =========================
-MENU SAFE
+MENU
 ========================= */
 
 function initMenu() {
@@ -156,7 +126,7 @@ function initMenu() {
 }
 
 /* =========================
-EVENT FILTER SAFE
+EVENT FILTER
 ========================= */
 
 function initEventFilter() {
@@ -167,6 +137,7 @@ function initEventFilter() {
 
   btns.forEach(btn => {
     btn.onclick = () => {
+
       btns.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
 
@@ -175,17 +146,16 @@ function initEventFilter() {
       cards.forEach(card => {
         if (card.classList.contains("hinweis")) return;
 
-        const show =
-          filter === "all" || card.classList.contains(filter);
-
+        const show = filter === "all" || card.classList.contains(filter);
         card.style.display = show ? "block" : "none";
       });
+
     };
   });
 }
 
 /* =========================
-RADIO SAFE
+RADIO
 ========================= */
 
 function initRadioPlayer() {
@@ -234,25 +204,92 @@ function initRadioPlayer() {
 }
 
 /* =========================
-BOOT (CRITICAL FIX)
+COUNTDOWN (SAFE + FIXED)
 ========================= */
 
-window.addEventListener("DOMContentLoaded", () => {
-  console.log("FRG JS START");
+const frgEvents = [
+  { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
+  { title: "FRG Simulcast", date: "2026-05-30T19:00:00" },
+  { title: "FRG Crossover Night", date: "2026-06-27T19:00:00" },
+  { title: "FRG Schweiz Special", date: "2026-08-01T12:00:00" },
+  { title: "FRG Crossover Night", date: "2026-09-26T19:00:00" },
+  { title: "1 Jahr Fleury Radio Group", date: "2026-10-28T12:00:00" },
+  { title: "FRG Halloween Special", date: "2026-10-31T12:00:00" },
+  { title: "FRG Crossover Night", date: "2026-11-28T20:00:00" },
+  { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
+  { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
+];
 
-  const app = document.getElementById("app");
+function initCountdown() {
+  const wrapper = document.querySelector(".countdown");
+  if (!wrapper) return;
 
-  if (!app) {
-    document.body.innerHTML =
-      "<h1 style='color:white;text-align:center'>FEHLER: #app fehlt</h1>";
+  if (countdownInterval) clearInterval(countdownInterval);
+
+  const now = Date.now();
+
+  const next = frgEvents
+    .map(e => ({ ...e, time: new Date(e.date).getTime() }))
+    .filter(e => e.time > now)
+    .sort((a, b) => a.time - b.time)[0];
+
+  if (!next) {
+    wrapper.style.display = "none";
     return;
   }
 
-  let path = normalizePath(location.pathname);
+  const sevenDays = 7 * 24 * 60 * 60 * 1000;
 
-  if (!routes[path]) {
-    path = "/404";
+  if (next.time - now > sevenDays) {
+    wrapper.style.display = "none";
+    return;
   }
 
-  loadPage(path);
+  wrapper.style.display = "block";
+
+  countdownInterval = setInterval(() => {
+    const diff = next.time - Date.now();
+
+    if (diff <= 0) {
+      wrapper.style.display = "none";
+      clearInterval(countdownInterval);
+      return;
+    }
+
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+
+    ["days","hours","minutes","seconds"].forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = String([d,h,m,s][i]).padStart(2,"0");
+    });
+
+  }, 1000);
+}
+
+/* =========================
+BOOT SAFE
+========================= */
+
+function runPageScriptsSafe() {
+  try {
+    initMenu();
+    initEventFilter();
+    initRadioPlayer();
+    initCountdown();
+  } catch (e) {
+    console.warn("Init error:", e);
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const path = normalizePath(location.pathname);
+
+  if (routes[path]) {
+    loadPage(path);
+  } else {
+    loadPage("/404");
+  }
 });
