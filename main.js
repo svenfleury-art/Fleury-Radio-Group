@@ -171,16 +171,16 @@ function initMenu() {
 
   if (!btn || !nav) return;
 
-  btn.onclick = (e) => {
+  btn.addEventListener("click", (e) => {
     e.stopPropagation();
     nav.classList.toggle("open");
     overlay?.classList.toggle("active");
-  };
+  });
 
-  overlay?.onclick = () => {
+  overlay?.addEventListener("click", () => {
     nav.classList.remove("open");
     overlay.classList.remove("active");
-  };
+  });
 }
 
 /* =========================
@@ -207,7 +207,7 @@ function initCookieBanner() {
 }
 
 /* =========================
-COUNTDOWN (7 TAGE LOGIK)
+COUNTDOWN (FIXED + SORTED)
 ========================= */
 
 const frgEvents = [
@@ -222,7 +222,6 @@ const frgEvents = [
   { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
-];
 
 function initCountdown() {
   const wrapper = document.querySelector(".countdown");
@@ -231,18 +230,20 @@ function initCountdown() {
   if (countdownInterval) clearInterval(countdownInterval);
 
   const now = Date.now();
-  const next = frgEvents.find(e => new Date(e.date) > now);
+
+  const next = frgEvents
+    .map(e => ({ ...e, time: new Date(e.date).getTime() }))
+    .filter(e => e.time > now)
+    .sort((a, b) => a.time - b.time)[0];
 
   if (!next) {
     wrapper.style.display = "none";
     return;
   }
 
-  const target = new Date(next.date).getTime();
-  const diffStart = target - now;
+  const diffStart = next.time - now;
   const sevenDays = 7 * 24 * 60 * 60 * 1000;
 
-  // Nur anzeigen wenn ≤ 7 Tage
   if (diffStart > sevenDays) {
     wrapper.style.display = "none";
     return;
@@ -252,7 +253,7 @@ function initCountdown() {
 
   countdownInterval = setInterval(() => {
 
-    const diff = target - Date.now();
+    const diff = next.time - Date.now();
 
     if (diff <= 0) {
       wrapper.style.display = "none";
@@ -373,7 +374,7 @@ function initEventFilter() {
 
         c.style.display =
           (f === "all" || c.classList.contains(f))
-          ? "block"
+          ? ""
           : "none";
       });
 
