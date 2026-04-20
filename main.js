@@ -1,3 +1,4 @@
+
 /* =========================
 CONFIG
 ========================= */
@@ -29,7 +30,6 @@ const routes = {
 };
 
 const cache = new Map();
-let currentPage = null;
 let countdownInterval = null;
 
 /* =========================
@@ -63,9 +63,7 @@ function hideLoader() {
   if (!loader) return;
 
   loader.style.opacity = "0";
-  setTimeout(() => {
-    loader.style.display = "none";
-  }, 250);
+  setTimeout(() => loader.style.display = "none", 250);
 }
 
 /* =========================
@@ -73,37 +71,21 @@ ANIMATION
 ========================= */
 
 function animateOut(el) {
-  return new Promise(resolve => {
-    if (!el) return resolve();
+  return new Promise(res => {
+    if (!el) return res();
     el.style.opacity = "0";
     el.style.transform = "translateY(10px)";
-    setTimeout(resolve, 150);
+    setTimeout(res, 150);
   });
 }
 
 function animateIn(el) {
-  return new Promise(resolve => {
-    if (!el) return resolve();
+  return new Promise(res => {
+    if (!el) return res();
     el.style.opacity = "1";
     el.style.transform = "translateY(0)";
-    setTimeout(resolve, 150);
+    setTimeout(res, 150);
   });
-}
-
-/* =========================
-PARTIALS
-========================= */
-
-async function loadPartial(id, file) {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  try {
-    const res = await fetch(file);
-    el.innerHTML = await res.text();
-  } catch (err) {
-    console.error("Partial Fehler:", err);
-  }
 }
 
 /* =========================
@@ -126,7 +108,7 @@ async function loadPage(path) {
       html = cache.get(file);
     } else {
       const res = await fetch(file);
-      if (!res.ok) throw new Error("Page not found: " + file);
+      if (!res.ok) throw new Error("Page not found");
       html = await res.text();
       cache.set(file, html);
     }
@@ -137,26 +119,20 @@ async function loadPage(path) {
 
     await animateIn(app);
 
-    currentPage = clean;
-
-    runPageScripts();
-
     window.scrollTo(0, 0);
+
+    runPageScripts(); // 🔥 WICHTIG: nach DOM Injection
 
   } catch (err) {
     console.error(err);
-    app.innerHTML = `
-      <div style="color:white;text-align:center;padding:40px">
-        <h2>Fehler beim Laden der Seite</h2>
-      </div>
-    `;
+    app.innerHTML = "<h2 style='color:white;text-align:center'>Fehler beim Laden</h2>";
   }
 
   hideLoader();
 }
 
 /* =========================
-NAVIGATION
+NAVIGATION (FIXED)
 ========================= */
 
 document.addEventListener("click", (e) => {
@@ -186,42 +162,18 @@ function initMenu() {
 
   if (!btn || !nav) return;
 
-  if (btn.dataset.init === "1") return;
+  if (btn.dataset.init) return;
   btn.dataset.init = "1";
 
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation();
+  btn.addEventListener("click", () => {
     nav.classList.toggle("open");
     overlay?.classList.toggle("active");
   });
 
   overlay?.addEventListener("click", () => {
     nav.classList.remove("open");
-    overlay?.classList.remove("active");
+    overlay.classList.remove("active");
   });
-}
-
-/* =========================
-COOKIE
-========================= */
-
-function initCookieBanner() {
-  const banner = document.getElementById("cookie-banner");
-  const btn = document.getElementById("cookie-accept");
-
-  if (!banner || !btn) return;
-
-  if (localStorage.getItem("frg_cookie")) {
-    banner.style.display = "none";
-    return;
-  }
-
-  banner.style.display = "flex";
-
-  btn.onclick = () => {
-    localStorage.setItem("frg_cookie", "1");
-    banner.style.display = "none";
-  };
 }
 
 /* =========================
@@ -231,19 +183,9 @@ COUNTDOWN
 const frgEvents = [
   { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
   { title: "FRG Simulcast", date: "2026-05-30T19:00:00" },
-  { title: "FRG Crossover Night", date: "2026-06-27T19:00:00" },
   { title: "FRG Schweiz Special", date: "2026-08-01T12:00:00" },
-  { title: "FRG Crossover Night", date: "2026-09-26T19:00:00" },
-  { title: "1 Jahr Fleury Radio Group", date: "2026-10-28T12:00:00" },
-  { title: "FRG Halloween Special", date: "2026-10-31T12:00:00" },
-  { title: "FRG Crossover Night", date: "2026-11-28T20:00:00" },
-  { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
-  { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
+  { title: "1 Jahr FRG", date: "2026-10-28T12:00:00" }
 ];
-
-const futureEvents = frgEvents
-  .map(e => ({ ...e, time: new Date(e.date).getTime() }))
-  .sort((a, b) => a.time - b.time);
 
 function initCountdown() {
   const wrapper = document.querySelector(".countdown");
@@ -252,7 +194,11 @@ function initCountdown() {
   if (countdownInterval) clearInterval(countdownInterval);
 
   const now = Date.now();
-  const next = futureEvents.find(e => e.time > now);
+
+  const next = frgEvents
+    .map(e => ({ ...e, time: new Date(e.date).getTime() }))
+    .filter(e => e.time > now)
+    .sort((a,b) => a.time - b.time)[0];
 
   if (!next) {
     wrapper.style.display = "none";
@@ -277,14 +223,14 @@ function initCountdown() {
       return;
     }
 
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const m = Math.floor((diff / (1000 * 60)) % 60);
-    const s = Math.floor((diff / 1000) % 60);
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
 
     ["days","hours","minutes","seconds"].forEach((id, i) => {
       const el = document.getElementById(id);
-      if (el) el.textContent = String([d,h,m,s][i]).padStart(2, "0");
+      if (el) el.textContent = String([d,h,m,s][i]).padStart(2,"0");
     });
 
   }, 1000);
@@ -340,6 +286,35 @@ function initRadioPlayer() {
 }
 
 /* =========================
+EVENT FILTER (FIXED)
+========================= */
+
+function initEventFilter() {
+  const btns = document.querySelectorAll(".filter-btn");
+  const cards = document.querySelectorAll(".event-card");
+
+  if (!btns.length || !cards.length) return;
+
+  btns.forEach(btn => {
+    btn.onclick = () => {
+
+      btns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const filter = btn.dataset.filter;
+
+      cards.forEach(card => {
+        if (card.classList.contains("hinweis")) return;
+
+        const show = filter === "all" || card.classList.contains(filter);
+        card.style.display = show ? "block" : "none";
+      });
+
+    };
+  });
+}
+
+/* =========================
 FORMS
 ========================= */
 
@@ -385,20 +360,25 @@ function initForms() {
 }
 
 /* =========================
-BOOT (FIXED DEEP LINKING)
+PAGE SCRIPTS
 ========================= */
 
 function runPageScripts() {
   initMenu();
-  initCookieBanner();
   initCountdown();
   initRadioPlayer();
   initForms();
+  initEventFilter();
 }
 
-window.addEventListener("DOMContentLoaded", async () => {
-  await loadPartial("nav-slot", "partials/nav.html");
-  await loadPartial("footer-slot", "partials/footer.html");
+/* =========================
+BOOT (FINAL FIX)
+========================= */
+
+window.addEventListener("DOMContentLoaded", () => {
+
+  loadPartial("nav-slot", "partials/nav.html");
+  loadPartial("footer-slot", "partials/footer.html");
 
   const path = normalizePath(location.pathname);
 
