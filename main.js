@@ -41,7 +41,7 @@ function normalizePath(path) {
 }
 
 /* =========================
-LOADER (FIXED ID)
+LOADER
 ========================= */
 
 function showLoader() {
@@ -75,7 +75,6 @@ ANIMATION
 function animateOut(el) {
   return new Promise(resolve => {
     if (!el) return resolve();
-
     el.style.opacity = "0";
     el.style.transform = "translateY(10px)";
     setTimeout(resolve, 150);
@@ -85,7 +84,6 @@ function animateOut(el) {
 function animateIn(el) {
   return new Promise(resolve => {
     if (!el) return resolve();
-
     el.style.opacity = "1";
     el.style.transform = "translateY(0)";
     setTimeout(resolve, 150);
@@ -128,6 +126,7 @@ async function loadPage(path) {
       html = cache.get(file);
     } else {
       const res = await fetch(file);
+      if (!res.ok) throw new Error("Page not found: " + file);
       html = await res.text();
       cache.set(file, html);
     }
@@ -146,7 +145,11 @@ async function loadPage(path) {
 
   } catch (err) {
     console.error(err);
-    app.innerHTML = "<h2 style='color:white'>Fehler beim Laden</h2>";
+    app.innerHTML = `
+      <div style="color:white;text-align:center;padding:40px">
+        <h2>Fehler beim Laden der Seite</h2>
+      </div>
+    `;
   }
 
   hideLoader();
@@ -173,7 +176,7 @@ window.addEventListener("popstate", () => {
 });
 
 /* =========================
-MENU (SAFE INIT)
+MENU
 ========================= */
 
 function initMenu() {
@@ -194,7 +197,7 @@ function initMenu() {
 
   overlay?.addEventListener("click", () => {
     nav.classList.remove("open");
-    overlay.classList.remove("active");
+    overlay?.classList.remove("active");
   });
 }
 
@@ -222,7 +225,7 @@ function initCookieBanner() {
 }
 
 /* =========================
-COUNTDOWN (SAFE)
+COUNTDOWN
 ========================= */
 
 const frgEvents = [
@@ -282,7 +285,7 @@ function initCountdown() {
 }
 
 /* =========================
-RADIO (FIXED SWITCH)
+RADIO
 ========================= */
 
 function initRadioPlayer() {
@@ -300,7 +303,6 @@ function initRadioPlayer() {
   let current = "rhywaelle";
   let playing = false;
 
-  // SWITCH BUTTONS FIX
   document.querySelectorAll(".station").forEach(btn => {
     btn.addEventListener("click", () => {
       current = btn.dataset.station;
@@ -377,7 +379,7 @@ function initForms() {
 }
 
 /* =========================
-BOOT (FIXED ORDER)
+BOOT (FIXED DEEP LINKING)
 ========================= */
 
 function runPageScripts() {
@@ -392,5 +394,11 @@ window.addEventListener("DOMContentLoaded", async () => {
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
-  loadPage(location.pathname);
+  const path = normalizePath(location.pathname);
+
+  if (routes[path]) {
+    loadPage(path);
+  } else {
+    loadPage("/404");
+  }
 });
