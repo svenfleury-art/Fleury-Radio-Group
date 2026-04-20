@@ -5,23 +5,21 @@ CONFIG
 const routes = {
   "/": "/pages/home.html",
 
-  // 🎧 Radios
   "/radios": "/pages/radios.html",
   "/rhywälle": "/pages/rhywaelle.html",
   "/winterlord": "/pages/winterlord.html",
   "/rhyrock": "/pages/rhyrock.html",
 
-  // 📘 Infos
   "/frg-inside": "/pages/frg-inside.html",
   "/team": "/pages/team.html",
   "/geschichte": "/pages/geschichte.html",
   "/about": "/pages/about.html",
   "/mitmachen": "/pages/mitmachen.html",
 
-  // 📻 Extras
   "/spezial-programm": "/pages/spezial-programm.html",
   "/artists": "/pages/Artists.html",
   "/werbung": "/pages/werbung.html",
+
   "/agb": "/pages/agb.html",
   "/datenschutz": "/pages/datenschutz.html",
   "/impressum": "/pages/impressum.html",
@@ -29,94 +27,133 @@ const routes = {
   "/404": "/pages/404.html"
 };
 
+const cache = new Map();
+let currentPage = null;
 let countdownInterval = null;
 
 /* =========================
-HELPERS (SPA CORE)
+UTILS
 ========================= */
 
 function normalizePath(path) {
-  if (!path) return "/";
-  const clean = path.replace(/\/+$/, "");
-  return clean === "" ? "/" : clean;
-}
-
-function navigate(path) {
-  if (!path) return;
-  history.pushState({}, "", path);
-  loadPage(path);
-}
-
-function handleRedirect() {
-  const redirect = sessionStorage.getItem("spa_redirect");
-  if (redirect) {
-    sessionStorage.removeItem("spa_redirect");
-    navigate(redirect);
-  }
+  return path.replace(/\/+$/, "") || "/";
 }
 
 /* =========================
-PARTIAL LOADER
+LOADER
 ========================= */
+
+function showLoader() {
+  let loader = document.getElementById("global-loader");
+
+  if (!loader) {
+    loader = document.createElement("div");
+    loader.id = "global-loader";
+    loader.innerHTML = "📻";
+    document.body.appendChild(loader);
+  }
+
+  loader.style.display = "flex";
+  loader.style.opacity = "1";
+}
+
+function hideLoader() {
+  const loader = document.getElementById("global-loader");
+  if (!loader) return;
+
+  loader.style.opacity = "0";
+  setTimeout(() => loader.style.display = "none", 300);
+}
+
+/* =========================
+ANIMATION
+========================= */
+
+function animateOut(el) {
+  return new Promise(resolve => {
+    el.style.opacity = "0";
+    el.style.transform = "translateY(10px)";
+    setTimeout(resolve, 200);
+  });
+}
+
+function animateIn(el) {
+  return new Promise(resolve => {
+    el.style.opacity = "1";
+    el.style.transform = "translateY(0)";
+    setTimeout(resolve, 200);
+  });
+}
+
+/* =========================
+PARTIALS
+========================= */
+
 async function loadPartial(id, file) {
   const el = document.getElementById(id);
   if (!el) return;
 
-  try {
-    const res = await fetch(file);
-    if (!res.ok) throw new Error(file);
-
-    el.innerHTML = await res.text();
-  } catch (err) {
-    console.error("Partial Fehler:", file, err);
-  }
+  const res = await fetch(file);
+  el.innerHTML = await res.text();
 }
 
 /* =========================
-SPA PAGE LOADER
+PAGE LOADER
 ========================= */
+
 async function loadPage(path) {
   const app = document.getElementById("app");
   if (!app) return;
 
-  const cleanPath = normalizePath(path);
-  const file = routes[cleanPath] || routes["/404"];
+  const clean = normalizePath(path);
+  const file = routes[clean] || routes["/404"];
+
+  showLoader();
 
   try {
-    const res = await fetch(file);
-    app.innerHTML = await res.text();
+    let html;
+
+    if (cache.has(file)) {
+      html = cache.get(file);
+    } else {
+      const res = await fetch(file);
+      html = await res.text();
+      cache.set(file, html);
+    }
+
+    await animateOut(app);
+
+    app.innerHTML = html;
+
+    await animateIn(app);
+
+    currentPage = clean;
+
+    runPageScripts();
 
     window.scrollTo(0, 0);
 
-    reInitPage();
-
-  } catch (err) {
-    console.error(err);
-    app.innerHTML = "<h2 style='color:white;text-align:center;'>Fehler beim Laden</h2>";
+  } catch {
+    app.innerHTML = "<h2 style='color:white'>Fehler beim Laden</h2>";
   }
+
+  hideLoader();
 }
 
 /* =========================
-REINIT (nach Seitenwechsel)
+NAVIGATION
 ========================= */
-function reInitPage() {
-  initCountdown();
-  initCookieBanner();
-}
 
-/* =========================
-SPA NAVIGATION (data-link)
-========================= */
 document.addEventListener("click", (e) => {
   const link = e.target.closest("a[data-link]");
   if (!link) return;
 
   const href = link.getAttribute("href");
-
   if (!href || href.startsWith("http")) return;
 
   e.preventDefault();
-  navigate(href);
+  history.pushState({}, "", href);
+  loadPage(href);
 });
 
 window.addEventListener("popstate", () => {
@@ -124,21 +161,9 @@ window.addEventListener("popstate", () => {
 });
 
 /* =========================
-LOADER
+MENU
 ========================= */
-function initLoader() {
-  const loader = document.getElementById("loader");
-  if (!loader) return;
 
-  setTimeout(() => {
-    loader.style.opacity = "0";
-    setTimeout(() => loader.remove(), 400);
-  }, 500);
-}
-
-/* =========================
-MENU + DROPDOWN (FIXED)
-========================= */
 function initMenu() {
   const btn = document.getElementById("hamburgerBtn");
   const nav = document.getElementById("mainNav");
@@ -152,43 +177,23 @@ function initMenu() {
     overlay?.classList.toggle("active");
   };
 
-  overlay?.addEventListener("click", () => {
+  overlay?.onclick = () => {
     nav.classList.remove("open");
     overlay.classList.remove("active");
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!nav.contains(e.target) && !btn.contains(e.target)) {
-      nav.classList.remove("open");
-      overlay?.classList.remove("active");
-    }
-  });
-
-  nav.querySelectorAll(".dropdown-toggle").forEach(toggle => {
-    toggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-
-      const dropdown = toggle.closest(".nav-dropdown");
-
-      nav.querySelectorAll(".nav-dropdown").forEach(d => {
-        if (d !== dropdown) d.classList.remove("open");
-      });
-
-      dropdown.classList.toggle("open");
-    });
-  });
+  };
 }
 
 /* =========================
-COOKIE BANNER
+COOKIE
 ========================= */
+
 function initCookieBanner() {
   const banner = document.getElementById("cookie-banner");
   const btn = document.getElementById("cookie-accept");
 
   if (!banner || !btn) return;
 
-  if (localStorage.getItem("frg_cookie") === "1") {
+  if (localStorage.getItem("frg_cookie")) {
     banner.style.display = "none";
     return;
   }
@@ -197,25 +202,22 @@ function initCookieBanner() {
 
   btn.onclick = () => {
     localStorage.setItem("frg_cookie", "1");
-
-    banner.style.opacity = "0";
-    setTimeout(() => {
-      banner.style.display = "none";
-    }, 300);
+    banner.style.display = "none";
   };
 }
 
 /* =========================
 COUNTDOWN
 ========================= */
+
 const frgEvents = [
-  { title: "FRG Showcase", date: "2026-04-25T20:00:00" },
-  { title: "FRG Special", date: "2026-06-01T20:00:00" }
+  { date: "2026-04-25T20:00:00" },
+  { date: "2026-06-01T20:00:00" }
 ];
 
 function initCountdown() {
-  const wrapper = document.querySelector(".countdown");
-  if (!wrapper) return;
+  const el = document.querySelector(".countdown");
+  if (!el) return;
 
   if (countdownInterval) clearInterval(countdownInterval);
 
@@ -226,22 +228,17 @@ function initCountdown() {
 
   countdownInterval = setInterval(() => {
     const diff = target - Date.now();
-    if (diff <= 0) return;
 
     const d = Math.floor(diff / (1000 * 60 * 60 * 24));
     const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const m = Math.floor((diff / (1000 * 60)) % 60);
     const s = Math.floor((diff / 1000) % 60);
 
-    const set = (id, val) => {
+    ["days","hours","minutes","seconds"].forEach((id, i) => {
+      const val = [d,h,m,s][i];
       const el = document.getElementById(id);
-      if (el) el.textContent = String(val).padStart(2, "0");
-    };
-
-    set("days", d);
-    set("hours", h);
-    set("minutes", m);
-    set("seconds", s);
+      if (el) el.textContent = String(val).padStart(2,"0");
+    });
 
   }, 1000);
 }
@@ -249,186 +246,128 @@ function initCountdown() {
 /* =========================
 RADIO PLAYER
 ========================= */
+
 function initRadioPlayer() {
   const audio = document.getElementById("audioPlayer");
   const playBtn = document.getElementById("playBtn");
-  const nowPlaying = document.getElementById("nowPlaying");
-  const stations = document.querySelectorAll(".station");
 
   if (!audio || !playBtn) return;
 
   const streams = {
-    rhywaelle: { url: "https://stream.laut.fm/rhywaelle", api: "rhywaelle" },
-    winterlord: { url: "https://stream.laut.fm/winterlord-fm", api: "winterlord-fm" },
-    rhyrock: { url: "https://stream.laut.fm/rhyrock-radio", api: "rhyrock-radio" }
+    rhywaelle: "https://stream.laut.fm/rhywaelle",
+    winterlord: "https://stream.laut.fm/winterlord-fm",
+    rhyrock: "https://stream.laut.fm/rhyrock-radio"
   };
 
-  let current = localStorage.getItem("frg_station") || "rhywaelle";
-  let isPlaying = localStorage.getItem("frg_playing") === "true";
+  let current = "rhywaelle";
+  let playing = false;
 
-  function updateUI() {
-    stations.forEach(b => {
-      b.classList.toggle("active", b.dataset.station === current);
-    });
-    playBtn.textContent = isPlaying ? "⏸" : "▶";
-  }
-
-  async function fetchSong() {
-    try {
-      const res = await fetch(`https://api.laut.fm/station/${streams[current].api}/current_song`);
-      const data = await res.json();
-
-      if (nowPlaying && isPlaying) {
-        nowPlaying.textContent = `🎵 ${data.title || ""} - ${data.artist?.name || ""}`;
-      }
-    } catch {}
-  }
-
-  function play() {
-    audio.src = streams[current].url;
-    audio.play().catch(() => {});
-
-    isPlaying = true;
-    localStorage.setItem("frg_playing", "true");
-    localStorage.setItem("frg_station", current);
-
-    updateUI();
-    fetchSong();
-  }
-
-  function pause() {
-    audio.pause();
-    isPlaying = false;
-    localStorage.setItem("frg_playing", "false");
-    updateUI();
-  }
-
-  stations.forEach(btn => {
-    btn.addEventListener("click", () => {
-      current = btn.dataset.station;
-      play();
-    });
-  });
-
-  playBtn.addEventListener("click", () => {
-    isPlaying ? pause() : play();
-  });
-
-  window.setStation = (s) => {
-    if (!streams[s]) return;
-    current = s;
-    play();
+  playBtn.onclick = () => {
+    if (!playing) {
+      audio.src = streams[current];
+      audio.play();
+      playing = true;
+      playBtn.textContent = "⏸";
+    } else {
+      audio.pause();
+      playing = false;
+      playBtn.textContent = "▶";
+    }
   };
-
-  updateUI();
-
-  if (isPlaying) {
-    setTimeout(play, 300);
-  }
-
-  setInterval(() => {
-    if (isPlaying) fetchSong();
-  }, 10000);
 }
 
 /* =========================
 FORMS
 ========================= */
-document.addEventListener("DOMContentLoaded", () => {
 
-  function initForm(formId, checkboxId, buttonId, msgId) {
+function initForms() {
+
+  function setup(formId, checkboxId, btnId, msgId) {
     const form = document.getElementById(formId);
-    const checkbox = document.getElementById(checkboxId);
-    const button = document.getElementById(buttonId);
+    const check = document.getElementById(checkboxId);
+    const btn = document.getElementById(btnId);
     const msg = document.getElementById(msgId);
 
-    if (!form) return;
+    if (!form || !check || !btn || !msg) return;
 
-    checkbox.addEventListener("change", () => {
-      button.disabled = !checkbox.checked;
-    });
+    check.onchange = () => btn.disabled = !check.checked;
 
-    form.addEventListener("submit", async (e) => {
+    form.onsubmit = async (e) => {
       e.preventDefault();
 
-      button.disabled = true;
       msg.style.display = "block";
-      msg.textContent = "Wird gesendet...";
+      msg.textContent = "Senden...";
 
-      try {
-        const response = await fetch(form.action, {
-          method: "POST",
-          body: new FormData(form),
-          headers: { "Accept": "application/json" }
-        });
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "Accept": "application/json" }
+      });
 
-        if (response.ok) {
-          msg.textContent = "✅ Erfolgreich gesendet!";
-          form.reset();
-        } else {
-          msg.textContent = "❌ Fehler beim Senden.";
-        }
-      } catch {
-        msg.textContent = "❌ Netzwerkfehler.";
-      }
-    });
+      msg.textContent = res.ok ? "✅ Gesendet!" : "❌ Fehler";
+      form.reset();
+      btn.disabled = true;
+    };
   }
 
-  initForm("artist-form-1", "agb-1", "submitBtn-1", "form-msg-1");
-  initForm("artist-form-2", "agb-2", "submitBtn-2", "form-msg-2");
-});
+  setup("artist-form-1","agb-1","submitBtn-1","form-msg-1");
+  setup("artist-form-2","agb-2","submitBtn-2","form-msg-2");
+}
+
+/* =========================
+EVENT FILTER
+========================= */
+
+function initEventFilter() {
+  const btns = document.querySelectorAll(".filter-btn");
+  const cards = document.querySelectorAll(".event-card");
+
+  if (!btns.length) return;
+
+  btns.forEach(btn => {
+    btn.onclick = () => {
+
+      btns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const f = btn.dataset.filter;
+
+      cards.forEach(c => {
+        if (c.classList.contains("hinweis")) return;
+
+        c.style.display =
+          (f === "all" || c.classList.contains(f))
+          ? "block"
+          : "none";
+      });
+
+    };
+  });
+}
+
+/* =========================
+PAGE SCRIPTS
+========================= */
+
+function runPageScripts() {
+  initMenu();
+  initCookieBanner();
+  initCountdown();
+  initRadioPlayer();
+  initForms();
+  initEventFilter();
+}
 
 /* =========================
 BOOT
 ========================= */
+
 window.addEventListener("DOMContentLoaded", async () => {
-  initLoader();
 
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
   initMenu();
-  initCookieBanner();
-  initCountdown();
-  initRadioPlayer();
 
-  handleRedirect();
   loadPage(location.pathname);
-});
-
-/* =========================
-EVENT FILTER
-========================= */
-document.addEventListener("DOMContentLoaded", () => {
-
-  const buttons = document.querySelectorAll(".filter-btn");
-  const cards = document.querySelectorAll(".event-card");
-
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-
-      buttons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      const filter = btn.getAttribute("data-filter");
-
-      cards.forEach(card => {
-
-        if (card.classList.contains("hinweis")) {
-          card.style.display = "block";
-          return;
-        }
-
-        if (filter === "all") {
-          card.style.display = "block";
-        } else if (card.classList.contains(filter)) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
-
-      });
-
-    });
-  });
 });
