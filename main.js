@@ -1,4 +1,3 @@
-
 /* =========================
 CONFIG
 ========================= */
@@ -41,6 +40,21 @@ function normalizePath(path) {
 }
 
 /* =========================
+SAFE FETCH
+========================= */
+
+async function safeFetch(file) {
+  try {
+    const res = await fetch(file);
+    if (!res.ok) throw new Error("Fetch failed: " + file);
+    return await res.text();
+  } catch (err) {
+    console.error(err);
+    return "<h2 style='color:white;text-align:center'>Seite konnte nicht geladen werden</h2>";
+  }
+}
+
+/* =========================
 LOADER
 ========================= */
 
@@ -63,7 +77,7 @@ function hideLoader() {
   if (!loader) return;
 
   loader.style.opacity = "0";
-  setTimeout(() => loader.style.display = "none", 250);
+  setTimeout(() => (loader.style.display = "none"), 200);
 }
 
 /* =========================
@@ -71,20 +85,20 @@ ANIMATION
 ========================= */
 
 function animateOut(el) {
-  return new Promise(res => {
-    if (!el) return res();
+  return new Promise(r => {
+    if (!el) return r();
     el.style.opacity = "0";
     el.style.transform = "translateY(10px)";
-    setTimeout(res, 150);
+    setTimeout(r, 120);
   });
 }
 
 function animateIn(el) {
-  return new Promise(res => {
-    if (!el) return res();
+  return new Promise(r => {
+    if (!el) return r();
     el.style.opacity = "1";
     el.style.transform = "translateY(0)";
-    setTimeout(res, 150);
+    setTimeout(r, 120);
   });
 }
 
@@ -94,52 +108,49 @@ PAGE LOADER
 
 async function loadPage(path) {
   const app = document.getElementById("app");
-  if (!app) return;
+
+  if (!app) {
+    console.error("❌ #app fehlt im HTML");
+    return;
+  }
 
   const clean = normalizePath(path);
   const file = routes[clean] || routes["/404"];
 
   showLoader();
 
-  try {
-    let html;
+  let html;
 
-    if (cache.has(file)) {
-      html = cache.get(file);
-    } else {
-      const res = await fetch(file);
-      if (!res.ok) throw new Error("Page not found");
-      html = await res.text();
-      cache.set(file, html);
-    }
-
-    await animateOut(app);
-
-    app.innerHTML = html;
-
-    await animateIn(app);
-
-    window.scrollTo(0, 0);
-
-    runPageScripts(); // 🔥 WICHTIG: nach DOM Injection
-
-  } catch (err) {
-    console.error(err);
-    app.innerHTML = "<h2 style='color:white;text-align:center'>Fehler beim Laden</h2>";
+  if (cache.has(file)) {
+    html = cache.get(file);
+  } else {
+    html = await safeFetch(file);
+    cache.set(file, html);
   }
+
+  await animateOut(app);
+
+  app.innerHTML = html;
+
+  await animateIn(app);
+
+  window.scrollTo(0, 0);
+
+  runPageScripts();
 
   hideLoader();
 }
 
 /* =========================
-NAVIGATION (FIXED)
+NAVIGATION (SPA FIX)
 ========================= */
 
-document.addEventListener("click", (e) => {
+document.addEventListener("click", e => {
   const link = e.target.closest("a[data-link]");
   if (!link) return;
 
   const href = link.getAttribute("href");
+
   if (!href || href.startsWith("http")) return;
 
   e.preventDefault();
@@ -165,85 +176,48 @@ function initMenu() {
   if (btn.dataset.init) return;
   btn.dataset.init = "1";
 
-  btn.addEventListener("click", () => {
+  btn.onclick = () => {
     nav.classList.toggle("open");
     overlay?.classList.toggle("active");
-  });
+  };
 
-  overlay?.addEventListener("click", () => {
+  overlay?.onclick = () => {
     nav.classList.remove("open");
     overlay.classList.remove("active");
+  };
+}
+
+/* =========================
+EVENT FILTER (FIXED)
+========================= */
+
+function initEventFilter() {
+  const btns = document.querySelectorAll(".filter-btn");
+  const cards = document.querySelectorAll(".event-card");
+
+  if (!btns.length || !cards.length) return;
+
+  btns.forEach(btn => {
+    btn.onclick = () => {
+      btns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const filter = btn.dataset.filter;
+
+      cards.forEach(card => {
+        if (card.classList.contains("hinweis")) return;
+
+        card.style.display =
+          filter === "all" || card.classList.contains(filter)
+            ? "block"
+            : "none";
+      });
+    };
   });
 }
 
 /* =========================
-COUNTDOWN
-========================= */
-
-const frgEvents = [
- { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
-  { title: "FRG Simulcast", date: "2026-05-30T19:00:00" },
-  { title: "FRG Crossover Night", date: "2026-06-27T19:00:00" },
-  { title: "FRG Schweiz Special", date: "2026-08-01T12:00:00" },
-  { title: "FRG Crossover Night", date: "2026-09-26T19:00:00" },
-  { title: "1 Jahr Fleury Radio Group", date: "2026-10-28T12:00:00" },
-  { title: "FRG Halloween Special", date: "2026-10-31T12:00:00" },
-  { title: "FRG Crossover Night", date: "2026-11-28T20:00:00" },
-  { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
-  { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
-];
-
-function initCountdown() {
-  const wrapper = document.querySelector(".countdown");
-  if (!wrapper) return;
-
-  if (countdownInterval) clearInterval(countdownInterval);
-
-  const now = Date.now();
-
-  const next = frgEvents
-    .map(e => ({ ...e, time: new Date(e.date).getTime() }))
-    .filter(e => e.time > now)
-    .sort((a,b) => a.time - b.time)[0];
-
-  if (!next) {
-    wrapper.style.display = "none";
-    return;
-  }
-
-  const sevenDays = 7 * 24 * 60 * 60 * 1000;
-
-  if (next.time - now > sevenDays) {
-    wrapper.style.display = "none";
-    return;
-  }
-
-  wrapper.style.display = "block";
-
-  countdownInterval = setInterval(() => {
-    const diff = next.time - Date.now();
-
-    if (diff <= 0) {
-      wrapper.style.display = "none";
-      clearInterval(countdownInterval);
-      return;
-    }
-
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-
-    ["days","hours","minutes","seconds"].forEach((id, i) => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = String([d,h,m,s][i]).padStart(2,"0");
-    });
-
-  }, 1000);
-}
-
-/* =========================
-RADIO
+RADIO PLAYER
 ========================= */
 
 function initRadioPlayer() {
@@ -262,7 +236,7 @@ function initRadioPlayer() {
   let playing = false;
 
   document.querySelectorAll(".station").forEach(btn => {
-    btn.addEventListener("click", () => {
+    btn.onclick = () => {
       current = btn.dataset.station;
 
       document.querySelectorAll(".station")
@@ -274,7 +248,7 @@ function initRadioPlayer() {
         audio.src = streams[current];
         audio.play();
       }
-    });
+    };
   });
 
   playBtn.onclick = () => {
@@ -292,40 +266,10 @@ function initRadioPlayer() {
 }
 
 /* =========================
-EVENT FILTER (FIXED)
-========================= */
-
-function initEventFilter() {
-  const btns = document.querySelectorAll(".filter-btn");
-  const cards = document.querySelectorAll(".event-card");
-
-  if (!btns.length || !cards.length) return;
-
-  btns.forEach(btn => {
-    btn.onclick = () => {
-
-      btns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      const filter = btn.dataset.filter;
-
-      cards.forEach(card => {
-        if (card.classList.contains("hinweis")) return;
-
-        const show = filter === "all" || card.classList.contains(filter);
-        card.style.display = show ? "block" : "none";
-      });
-
-    };
-  });
-}
-
-/* =========================
 FORMS
 ========================= */
 
 function initForms() {
-
   function setup(formId, checkboxId, btnId, msgId) {
     const form = document.getElementById(formId);
     const check = document.getElementById(checkboxId);
@@ -334,9 +278,9 @@ function initForms() {
 
     if (!form || !check || !btn || !msg) return;
 
-    check.onchange = () => btn.disabled = !check.checked;
+    check.onchange = () => (btn.disabled = !check.checked);
 
-    form.onsubmit = async (e) => {
+    form.onsubmit = async e => {
       e.preventDefault();
 
       msg.style.display = "block";
@@ -346,45 +290,62 @@ function initForms() {
         const res = await fetch(form.action, {
           method: "POST",
           body: new FormData(form),
-          headers: { "Accept": "application/json" }
+          headers: { Accept: "application/json" }
         });
 
         msg.textContent = res.ok ? "✅ Gesendet!" : "❌ Fehler";
         form.reset();
         btn.disabled = true;
 
-        setTimeout(() => msg.style.display = "none", 3000);
-
+        setTimeout(() => (msg.style.display = "none"), 2500);
       } catch {
         msg.textContent = "❌ Netzwerkfehler";
       }
     };
   }
 
-  setup("artist-form-1","agb-1","submitBtn-1","form-msg-1");
-  setup("artist-form-2","agb-2","submitBtn-2","form-msg-2");
+  setup("artist-form-1", "agb-1", "submitBtn-1", "form-msg-1");
+  setup("artist-form-2", "agb-2", "submitBtn-2", "form-msg-2");
 }
 
 /* =========================
-PAGE SCRIPTS
+PAGE INIT
 ========================= */
 
 function runPageScripts() {
   initMenu();
-  initCountdown();
+  initEventFilter();
   initRadioPlayer();
   initForms();
-  initEventFilter();
+  initCountdown();
 }
 
 /* =========================
-BOOT (FINAL FIX)
+COUNTDOWN (SAFE)
+========================= */
+
+function initCountdown() {
+  const wrapper = document.querySelector(".countdown");
+  if (!wrapper) return;
+
+  if (countdownInterval) clearInterval(countdownInterval);
+
+  wrapper.style.display = "none";
+}
+
+/* =========================
+BOOT FIX (CRITICAL)
 ========================= */
 
 window.addEventListener("DOMContentLoaded", () => {
+  console.log("FRG JS READY");
 
-  loadPartial("nav-slot", "partials/nav.html");
-  loadPartial("footer-slot", "partials/footer.html");
+  const app = document.getElementById("app");
+
+  if (!app) {
+    console.error("❌ #app fehlt!");
+    return;
+  }
 
   const path = normalizePath(location.pathname);
 
