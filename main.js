@@ -207,27 +207,49 @@ function initCookieBanner() {
 }
 
 /* =========================
-COUNTDOWN
+COUNTDOWN (7 TAGE LOGIK)
 ========================= */
 
 const frgEvents = [
-  { date: "2026-04-25T20:00:00" },
-  { date: "2026-06-01T20:00:00" }
+  { title: "FRG Showcase", date: "2026-04-25T20:00:00" },
+  { title: "FRG Special", date: "2026-06-01T20:00:00" }
 ];
 
 function initCountdown() {
-  const el = document.querySelector(".countdown");
-  if (!el) return;
+  const wrapper = document.querySelector(".countdown");
+  if (!wrapper) return;
 
   if (countdownInterval) clearInterval(countdownInterval);
 
-  const next = frgEvents.find(e => new Date(e.date) > Date.now());
-  if (!next) return;
+  const now = Date.now();
+  const next = frgEvents.find(e => new Date(e.date) > now);
 
-  const target = new Date(next.date);
+  if (!next) {
+    wrapper.style.display = "none";
+    return;
+  }
+
+  const target = new Date(next.date).getTime();
+  const diffStart = target - now;
+  const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
+  // Nur anzeigen wenn ≤ 7 Tage
+  if (diffStart > sevenDays) {
+    wrapper.style.display = "none";
+    return;
+  }
+
+  wrapper.style.display = "block";
 
   countdownInterval = setInterval(() => {
+
     const diff = target - Date.now();
+
+    if (diff <= 0) {
+      wrapper.style.display = "none";
+      clearInterval(countdownInterval);
+      return;
+    }
 
     const d = Math.floor(diff / (1000 * 60 * 60 * 24));
     const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -298,15 +320,20 @@ function initForms() {
       msg.style.display = "block";
       msg.textContent = "Senden...";
 
-      const res = await fetch(form.action, {
-        method: "POST",
-        body: new FormData(form),
-        headers: { "Accept": "application/json" }
-      });
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { "Accept": "application/json" }
+        });
 
-      msg.textContent = res.ok ? "✅ Gesendet!" : "❌ Fehler";
-      form.reset();
-      btn.disabled = true;
+        msg.textContent = res.ok ? "✅ Gesendet!" : "❌ Fehler";
+        form.reset();
+        btn.disabled = true;
+
+      } catch {
+        msg.textContent = "❌ Netzwerkfehler";
+      }
     };
   }
 
