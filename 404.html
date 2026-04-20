@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>FRG – 404</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- DEIN CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <script>
+    // 🔥 WICHTIG: Route speichern
+    const path = window.location.pathname + window.location.search;
+    sessionStorage.setItem("spa_redirect", path);
+
+    // 👉 Zurück zur SPA (index.html)
+    window.location.replace("/");
+  </script>
+</head>
+
+<body>
+
+  <section class="page">
+
+    <section class="card highlight error-card">
+
+      <h1 class="error-code">404</h1>
+
+      <h2>Seite nicht gefunden</h2>
+
+      <p>
+        Ups… diese Seite sendet gerade nicht – vielleicht wurde sie verschoben oder ist ausgeklinkt.<br>
+        😅 Keine Sorge: ein Klick bringt dich sofort zurück auf die Airwaves.
+      </p>
+
+      <p>
+        🎧 Unsere Radios laufen weiter – du bist nicht off-air!
+      </p>
+
+      <div class="error-buttons">
+
+        <!-- KEIN data-link hier! -->
+        <a class="btn-primary" href="/">
+          🏠 Zur Startseite
+        </a>
+
+        <a class="btn-secondary" href="/rhywälle">
+          🎶 Radio Rhywälle
+        </a>
+
+        <a class="btn-secondary" href="/winterlord">
+          ❄️ Winterlord FM
+        </a>
+
+        <a class="btn-secondary" href="/rhyrock">
+          🎸 RhyRock Radio
+        </a>
+
+      </div>
+
+    </section>
+
+  </section>
+
+</body>
+</html>
