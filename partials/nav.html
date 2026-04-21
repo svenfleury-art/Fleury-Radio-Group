@@ -3,26 +3,31 @@
   <!-- KOMPAKTE LEISTE -->
   <div class="header-inner">
 
-    <!-- LINKS: Menü -->
-    <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen">☰</button>
+  <!-- LINKS -->
+  <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen">☰</button>
 
-    <!-- MITTE: Player -->
+  <!-- MITTE -->
   <div class="frg-player">
 
-  <button id="playBtn">▶</button>
+    <button id="playBtn">▶</button>
 
-  <div class="station-switch">
-    <button class="station active" data-station="rhywaelle">Rhywälle</button>
-    <button class="station" data-station="winterlord">Winterlord</button>
-    <button class="station" data-station="rhyrock">RhyRock</button>
+    <div class="station-switch">
+      <button class="station active" data-station="rhywaelle">Rhywälle</button>
+      <button class="station" data-station="winterlord">Winterlord</button>
+      <button class="station" data-station="rhyrock">RhyRock</button>
+    </div>
+
+    <div id="nowPlaying">Bereit</div>
+    <audio id="audioPlayer"></audio>
+
   </div>
 
-  <div id="nowPlaying">Bereit</div>
-
-  <audio id="audioPlayer"></audio>
+  <!-- RECHTS -->
+  <div class="logo-area">
+    <img src="/images/logo.png" alt="FRG Logo">
+  </div>
 
 </div>
-  </div>
 
   <!-- GROSSER HEADER -->
   <div class="header-full">
