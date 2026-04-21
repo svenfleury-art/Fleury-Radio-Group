@@ -841,7 +841,7 @@ RESPONSIVE
 /* LOGO */
 /* LOGO (START GROSS) */
 .logo-area img {
-  height: 70px;              /* 🔥 jetzt gross am Anfang */
+  height: 150px;              /* 🔥 jetzt gross am Anfang */
   transition: all 0.3s ease;
 }
 
