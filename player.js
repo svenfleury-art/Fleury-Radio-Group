@@ -1,7 +1,6 @@
 function initRadioPlayer(){
 
-  // 🚨 Schutz: nur 1x initialisieren
-  if (window.radioInitDone) return;
+  if(window.radioInitDone) return;
   window.radioInitDone = true;
 
   const audio = document.getElementById("audioPlayer");
@@ -12,59 +11,38 @@ function initRadioPlayer(){
   if(!audio || !playBtn) return;
 
   const streams = {
-    rhywaelle:{
-      url:"https://stream.laut.fm/rhywaelle",
-      api:"rhywaelle"
-    },
-    winterlord:{
-      url:"https://stream.laut.fm/winterlord-fm",
-      api:"winterlord-fm"
-    },
-    rhyrock:{
-      url:"https://stream.laut.fm/rhyrock-radio",
-      api:"rhyrock-radio"
-    }
+    rhywaelle:"https://stream.laut.fm/rhywaelle",
+    winterlord:"https://stream.laut.fm/winterlord-fm",
+    rhyrock:"https://stream.laut.fm/rhyrock-radio"
   };
 
   let current = localStorage.getItem("frgStation") || "rhywaelle";
-  let isPlaying = localStorage.getItem("frgPlaying") === "true";
+  let playing = false;
 
   function updateUI(){
-    stations.forEach(s =>
-      s.classList.toggle("active", s.dataset.station === current)
-    );
-
-    playBtn.textContent = isPlaying ? "⏸" : "▶";
+    stations.forEach(s=>{
+      s.classList.toggle("active", s.dataset.station === current);
+    });
+    playBtn.textContent = playing ? "⏸" : "▶";
   }
 
   function play(){
-    audio.src = streams[current].url;
+    audio.src = streams[current];
     audio.play().catch(()=>{});
 
-    isPlaying = true;
+    playing = true;
     localStorage.setItem("frgPlaying","true");
     localStorage.setItem("frgStation",current);
 
     updateUI();
-    fetchSong();
   }
 
   function pause(){
     audio.pause();
-    isPlaying = false;
+    playing = false;
     localStorage.setItem("frgPlaying","false");
+
     updateUI();
-  }
-
-  async function fetchSong(){
-    try{
-      const res = await fetch(`https://api.laut.fm/station/${streams[current].api}/current_song`);
-      const data = await res.json();
-
-      if(nowPlaying){
-        nowPlaying.textContent = `🎵 ${data.title} – ${data.artist?.name}`;
-      }
-    } catch(e){}
   }
 
   stations.forEach(btn=>{
@@ -75,29 +53,28 @@ function initRadioPlayer(){
   });
 
   playBtn.addEventListener("click",()=>{
-    isPlaying ? pause() : play();
+    playing ? pause() : play();
   });
 
-  window.setStation = function(station){
-    current = station;
-    play();
-  };
-
-  /* =========================
-  SAFE AUTO RESUME
-  ========================= */
   updateUI();
 
-  setTimeout(()=>{
-    if(isPlaying) play();
-  },200);
+  if(playing){
+    setTimeout(()=>play(),200);
+  }
 
-  /* =========================
-  SAFE INTERVAL (NO DUPLICATES)
-  ========================= */
-  if (window.radioInterval) clearInterval(window.radioInterval);
+  setInterval(()=>{
+    if(!playing) return;
 
-  window.radioInterval = setInterval(()=>{
-    if(isPlaying) fetchSong();
+    fetch(`https://api.laut.fm/station/${current}/current_song`)
+      .then(r=>r.json())
+      .then(d=>{
+        if(nowPlaying){
+          nowPlaying.textContent = `🎵 ${d.title} – ${d.artist?.name}`;
+        }
+      });
+
   },10000);
 }
+
+/* START */
+window.addEventListener("DOMContentLoaded",initRadioPlayer);
