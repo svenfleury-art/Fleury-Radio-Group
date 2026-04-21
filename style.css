@@ -967,3 +967,64 @@ body{
 main{
   margin-top: var(--header-height, 100px);
 }
+
+
+/* =========================
+   MOBILE HEADER FIX
+========================= */
+@media (max-width: 768px){
+
+  /* HEADER STRUKTUR */
+  .header-inner{
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  /* LOGO GANZ OBEN */
+  .logo-area{
+    order: -3;
+    text-align: center;
+  }
+
+  .logo-area img{
+    height: 90px;
+  }
+
+  /* PLAYER DARUNTER */
+  .frg-player{
+    order: -2;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* TEXT DARUNTER */
+  .header-full p{
+    order: -1;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 5px;
+  }
+
+  /* ❌ H1 AUSBLENDEN */
+  .logo-text{
+    display: none !important;
+  }
+
+  /* NAV UNTEN */
+  .nav-links{
+    width: 100%;
+    align-items: center;
+  }
+
+  .nav-links a,
+  .nav-button{
+    width: 90%;
+    max-width: 320px;
+  }
+
+  /* HAMBURGER ZENTRIEREN */
+  #hamburgerBtn{
+    align-self: center;
+  }
+}
