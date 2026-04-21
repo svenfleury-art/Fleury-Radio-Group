@@ -7,19 +7,21 @@
     <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen">☰</button>
 
     <!-- MITTE: Player -->
-    <div class="header-player">
-      <audio controls>
-        <source src="stream.mp3" type="audio/mpeg">
-      </audio>
-    </div>
+  <div class="frg-player">
 
-    <!-- RECHTS: Logo -->
-    <div class="logo-area">
-      <a href="/" class="logo-img" data-link>
-        <img src="img/logo.png" alt="Fleury Radio Group Logo">
-      </a>
-    </div>
+  <button id="playBtn">▶</button>
 
+  <div class="station-switch">
+    <button class="station active" data-station="rhywaelle">Rhywälle</button>
+    <button class="station" data-station="winterlord">Winterlord</button>
+    <button class="station" data-station="rhyrock">RhyRock</button>
+  </div>
+
+  <div id="nowPlaying">Bereit</div>
+
+  <audio id="audioPlayer"></audio>
+
+</div>
   </div>
 
   <!-- GROSSER HEADER -->
