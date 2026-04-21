@@ -7,25 +7,14 @@
   <title>Fleury Radio Group</title>
 
   <link rel="stylesheet" href="style.css">
-
-  <link rel="icon" href="img/Fleury Radio Group Logo.png">
-  <link rel="apple-touch-icon" href="img/Fleury Radio Group Logo.png">
-
-  <meta name="description" content="FRG – Dini Musik, dini Wälle">
 </head>
 
 <body>
 
-  <!-- LOADER -->
-  <div id="global-loader"></div>
-
-  <!-- NAV -->
-  <div id="nav-slot"></div>
-
-  <!-- 🔥 GLOBAL PLAYER (BLEIBT IMMER) -->
+  <!-- GLOBAL RADIO -->
   <div class="frg-player">
 
-    <button id="playBtn" class="play-btn">▶</button>
+    <button id="playBtn">▶</button>
 
     <div class="station-switch">
       <button class="station active" data-station="rhywaelle">Rhywälle</button>
@@ -33,18 +22,17 @@
       <button class="station" data-station="rhyrock">RhyRock</button>
     </div>
 
-    <div class="now-playing" id="nowPlaying">Bereit</div>
+    <div id="nowPlaying">Bereit</div>
 
     <audio id="audioPlayer"></audio>
   </div>
 
-  <!-- SPA CONTENT -->
+  <!-- SPA ROOT -->
   <main id="app"></main>
 
-  <!-- FOOTER -->
-  <div id="footer-slot"></div>
-
-  <script src="main.js"></script>
+  <!-- SCRIPTS -->
+  <script src="main.js" defer></script>
+  <script src="radio.js" defer></script>
 
 </body>
 </html>
