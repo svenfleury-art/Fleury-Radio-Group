@@ -1,4 +1,3 @@
-
 /* =========================
 CONFIG
 ========================= */
@@ -18,7 +17,7 @@ const routes = {
   "/mitmachen": "/pages/mitmachen.html",
 
   "/spezial-programm": "/pages/spezial-programm.html",
-  "/artists": "/pages/Artists.html",
+  "/artists": "/pages/artists.html", // 🔥 FIX (klein geschrieben)
 
   "/werbung": "/pages/werbung.html",
 
@@ -203,7 +202,7 @@ function initRadioPlayer() {
   };
 }
 
-/* =========================
+ /* =========================
 COUNTDOWN (SAFE + FIXED)
 ========================= */
 
@@ -233,17 +232,7 @@ function initCountdown() {
     .filter(e => e.time > now)
     .sort((a, b) => a.time - b.time)[0];
 
-  if (!next) {
-    wrapper.style.display = "none";
-    return;
-  }
-
-  const sevenDays = 7 * 24 * 60 * 60 * 1000;
-
-  if (next.time - now > sevenDays) {
-    wrapper.style.display = "none";
-    return;
-  }
+  if (!next) return;
 
   wrapper.style.display = "block";
 
@@ -270,7 +259,7 @@ function initCountdown() {
 }
 
 /* =========================
-BOOT SAFE
+BOOT (🔥 MIT GITHUB FIX)
 ========================= */
 
 function runPageScriptsSafe() {
@@ -285,6 +274,20 @@ function runPageScriptsSafe() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+
+  // 🔥 404 Redirect Fix (GitHub Pages)
+  const redirect = sessionStorage.getItem("spa_redirect");
+
+  if (redirect) {
+    sessionStorage.removeItem("spa_redirect");
+
+    const clean = normalizePath(redirect);
+    history.replaceState({}, "", clean);
+    loadPage(clean);
+    return;
+  }
+
+  // Normal Start
   const path = normalizePath(location.pathname);
 
   if (routes[path]) {
