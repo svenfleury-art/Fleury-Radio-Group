@@ -42,19 +42,22 @@ footer{
 
 /* HEADER FULL WIDTH + STICKY */
 #mainHeader{
-  position: sticky;
-  top: 10px;                     /* 🔥 wichtig: etwas Abstand nach oben */
-  width: calc(100% - 20px);      /* 🔥 damit Rundung sichtbar bleibt */
-  margin: 10px auto;
+  position: fixed;     /* 🔥 wichtig statt sticky */
+  top: 10px;
+  left: 0;
+  right: 0;
+
+  width: calc(100% - 20px);
+  margin: 0 auto;
 
   background: #0b1a3a;
+  z-index: 10000;
 
-  border-radius: 18px;           /* 🔥 IMMER rund – auch oben im Normalzustand */
+  border-radius: 18px;
   overflow: hidden;
 
-  z-index: 1000;
-
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+
   transition: all 0.3s ease;
 }
 /* ==========================================
