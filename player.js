@@ -1,5 +1,6 @@
 function initRadioPlayer(){
 
+  // 🚨 Schutz: nur 1x initialisieren
   if (window.radioInitDone) return;
   window.radioInitDone = true;
 
@@ -28,7 +29,14 @@ function initRadioPlayer(){
   let current = localStorage.getItem("frgStation") || "rhywaelle";
   let isPlaying = localStorage.getItem("frgPlaying") === "true";
 
-  /* ========================= */
+  function updateUI(){
+    stations.forEach(s =>
+      s.classList.toggle("active", s.dataset.station === current)
+    );
+
+    playBtn.textContent = isPlaying ? "⏸" : "▶";
+  }
+
   function play(){
     audio.src = streams[current].url;
     audio.play().catch(()=>{});
@@ -46,14 +54,6 @@ function initRadioPlayer(){
     isPlaying = false;
     localStorage.setItem("frgPlaying","false");
     updateUI();
-  }
-
-  function updateUI(){
-    stations.forEach(s =>
-      s.classList.toggle("active", s.dataset.station === current)
-    );
-
-    playBtn.textContent = isPlaying ? "⏸" : "▶";
   }
 
   async function fetchSong(){
@@ -84,20 +84,20 @@ function initRadioPlayer(){
   };
 
   /* =========================
-  SAFE AUTO RESUME (FIXED)
+  SAFE AUTO RESUME
   ========================= */
   updateUI();
 
-  if (isPlaying) {
-    setTimeout(() => play(), 200);
-  }
+  setTimeout(()=>{
+    if(isPlaying) play();
+  },200);
 
   /* =========================
-  INTERVAL GUARD (IMPORTANT)
+  SAFE INTERVAL (NO DUPLICATES)
   ========================= */
   if (window.radioInterval) clearInterval(window.radioInterval);
 
   window.radioInterval = setInterval(()=>{
-    if (isPlaying) fetchSong();
+    if(isPlaying) fetchSong();
   },10000);
 }
