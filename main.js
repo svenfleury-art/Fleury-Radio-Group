@@ -206,9 +206,24 @@ function initHeader() {
   const header = document.getElementById("mainHeader");
   if (!header) return;
 
+  let lastScroll = 0;
+
   window.addEventListener("scroll", () => {
-    header.classList.toggle("shrink", window.scrollY > 80);
-    updateHeaderSpacing(); // 🔥 wichtig
+    const scroll = window.scrollY;
+
+    // SHRINK TRIGGER
+    if (scroll > 80) {
+      header.classList.add("shrink");
+    } else {
+      header.classList.remove("shrink");
+    }
+
+    // 🔥 SMOOTH SCALE PROGRESS (0 → 1)
+    const progress = Math.min(scroll / 150, 1);
+
+    header.style.backdropFilter = `blur(${progress * 10}px)`;
+
+    updateHeaderSpacing();
   });
 }
 
