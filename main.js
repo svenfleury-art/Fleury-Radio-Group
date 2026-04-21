@@ -1,4 +1,3 @@
-
 /* =========================
 CONFIG
 ========================= */
@@ -52,7 +51,7 @@ function normalizePath(path) {
 }
 
 /* =========================
-PARTIALS
+PARTIALS (NAV + FOOTER)
 ========================= */
 
 async function loadPartial(id, file) {
@@ -95,7 +94,6 @@ async function loadPage(path) {
   }
 
   app.innerHTML = html;
-
   window.scrollTo(0, 0);
 
   if (countdownInterval) {
@@ -127,73 +125,78 @@ window.addEventListener("popstate", () => {
 });
 
 /* =========================
-GLOBAL EVENT SYSTEM (KEY FIX)
+GLOBAL UI SYSTEM (IMPORTANT FIX AREA)
 ========================= */
 
-function initGlobalEvents() {
+document.addEventListener("click", (e) => {
 
-  document.addEventListener("click", (e) => {
+  /* =========================
+  HAMBURGER MENU
+  ========================= */
+  const burger = e.target.closest("#hamburgerBtn");
+  const nav = document.getElementById("mainNav");
 
-    /* =========================
-    MENU TOGGLE
-    ========================= */
-    const hamburger = e.target.closest("#hamburgerBtn");
-    const nav = document.getElementById("mainNav");
-    const overlay = document.getElementById("menu-overlay");
+  if (burger && nav) {
+    nav.classList.toggle("open");
+    return;
+  }
 
-    if (hamburger && nav) {
-      nav.classList.toggle("open");
-      overlay?.classList.toggle("active");
-      return;
+  /* =========================
+  DROPDOWN (FIXED)
+  ========================= */
+  const dropdownBtn = e.target.closest(".dropdown-toggle");
+
+  if (dropdownBtn) {
+    const dropdown = dropdownBtn.closest(".nav-dropdown");
+
+    if (!dropdown) return;
+
+    const isOpen = dropdown.classList.contains("open");
+
+    document.querySelectorAll(".nav-dropdown.open")
+      .forEach(d => d.classList.remove("open"));
+
+    if (!isOpen) {
+      dropdown.classList.add("open");
     }
 
-    /* =========================
-    DROPDOWN TOGGLE
-    ========================= */
-    const dropdownBtn = e.target.closest(".dropdown-toggle");
+    return;
+  }
 
-    if (dropdownBtn) {
-      const dropdown = dropdownBtn.closest(".nav-dropdown");
-      const menu = dropdown?.querySelector(".dropdown-menu");
+  /* close dropdowns if clicked outside */
+  document.querySelectorAll(".nav-dropdown.open")
+    .forEach(d => d.classList.remove("open"));
 
-      if (menu) menu.classList.toggle("open");
-      return;
-    }
+  /* =========================
+  COOKIE BANNER
+  ========================= */
+  const cookieBtn = e.target.closest("#cookie-accept");
+  const cookieBanner = document.getElementById("cookie-banner");
 
-    document.querySelectorAll(".dropdown-menu.open")
-      .forEach(m => m.classList.remove("open"));
+  if (cookieBtn && cookieBanner) {
+    localStorage.setItem("frg_cookies", "true");
+    cookieBanner.style.display = "none";
+    return;
+  }
 
-    /* =========================
-    COOKIE ACCEPT
-    ========================= */
-    const cookieBtn = e.target.closest("#cookie-accept");
-    const cookieBanner = document.getElementById("cookie-banner");
+  /* =========================
+  RADIO PLAYER BUTTONS
+  ========================= */
+  const station = e.target.closest(".station");
+  if (station) {
+    window.setStation?.(station.dataset.station);
+    return;
+  }
 
-    if (cookieBtn && cookieBanner) {
-      localStorage.setItem("frg_cookies", "true");
-      cookieBanner.style.display = "none";
-      return;
-    }
-
-    /* =========================
-    PLAYER BUTTONS
-    ========================= */
-    const stationBtn = e.target.closest(".station");
-    if (stationBtn) {
-      window.setStation?.(stationBtn.dataset.station);
-      return;
-    }
-
-    const playBtn = e.target.closest("#playBtn");
-    if (playBtn) {
-      window.togglePlay?.();
-      return;
-    }
-  });
-}
+  const playBtn = e.target.closest("#playBtn");
+  if (playBtn) {
+    window.togglePlay?.();
+    return;
+  }
+});
 
 /* =========================
-RADIO PLAYER (GLOBAL API)
+RADIO PLAYER
 ========================= */
 
 function initRadioPlayer() {
@@ -251,6 +254,7 @@ const frgEvents = [
   { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
+
 
 function initCountdown() {
 
@@ -315,7 +319,6 @@ window.addEventListener("DOMContentLoaded", async () => {
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
-  initGlobalEvents();
   initRadioPlayer();
 
   loadPage(location.pathname);
