@@ -942,3 +942,37 @@ RESPONSIVE
 body{
   padding-top: 140px;
 }
+
+
+
+/* HEADER INNER FIX */
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+/* PLAYER MITTE FIX */
+.frg-player{
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+
+/* LOGO RECHTS */
+.logo-area{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+}
+
+.logo-area img{
+  height:50px;
+  transition:0.3s ease;
+}
+
+/* SHRINK */
+#mainHeader.shrink .logo-area img{
+  height:35px;
+}
