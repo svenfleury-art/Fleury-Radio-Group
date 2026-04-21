@@ -1028,3 +1028,47 @@ main{
     align-self: center;
   }
 }
+
+
+/* =========================
+SMOOTH HEADER SHRINK
+========================= */
+
+#mainHeader{
+  transition: 
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* LOGO smooth */
+.logo-area img{
+  transition: transform 0.3s ease, height 0.3s ease;
+}
+
+/* HEADER FULL smooth collapse */
+.header-full{
+  transition: 
+    max-height 0.4s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  overflow: hidden;
+}
+
+/* SHRINK STATE */
+#mainHeader.shrink .header-full{
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  padding: 0;
+}
+
+/* LOGO kleiner */
+#mainHeader.shrink .logo-area img{
+  transform: scale(0.6);
+}
+
+/* PLAYER leicht kleiner */
+#mainHeader.shrink .frg-player{
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
