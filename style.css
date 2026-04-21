@@ -44,11 +44,12 @@ footer{
 #mainHeader{
   position: fixed;
   top: 10px;
+
   left: 50%;
   transform: translateX(-50%);
 
   width: calc(100% - 20px);
-  max-width: 1100px;   /* gleich wie dein main */
+  max-width: 1100px;
 
   background: #0b1a3a;
   z-index: 10000;
@@ -906,21 +907,7 @@ RESPONSIVE
 }
 
 
-/* =========================
-🔧 HEADER FIX (OVERLAY PATCH)
-========================= */
 
-/* Header wirklich fixed + sauber sichtbar */
-#mainHeader{
-  position: fixed !important;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  z-index: 10000;
-
-  border-radius: 18px !important;
-  overflow: hidden;
-}
 
 /* auch im Shrink Zustand abgerundet lassen */
 #mainHeader.shrink{
