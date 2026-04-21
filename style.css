@@ -939,7 +939,7 @@ RESPONSIVE
 🔧 SAFETY: HEADER BLEIBT ÜBER CONTENT
 ========================= */
 body{
-  padding-top: 100px;
+  padding-top: 50px;
 }
 
 
@@ -965,7 +965,7 @@ body{
 
 
 main{
-  margin-top: var(--header-height, 100px);
+  margin-top: var(--header-height, 50px);
 }
 
 
