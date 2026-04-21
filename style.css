@@ -965,5 +965,5 @@ body{
 
 
 main{
-  margin-top: var(--header-height, 140px);
+  margin-top: var(--header-height, 100px);
 }
