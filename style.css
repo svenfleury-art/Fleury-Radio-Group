@@ -42,7 +42,7 @@ footer{
 
 /* HEADER FULL WIDTH + STICKY */
 #mainHeader{
-  position: fixed;     /* 🔥 wichtig statt sticky */
+  position: fixed;
   top: 10px;
   left: 0;
   right: 0;
@@ -57,8 +57,6 @@ footer{
   overflow: hidden;
 
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-
-  transition: all 0.3s ease;
 }
 /* ==========================================
    LOADER
