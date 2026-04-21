@@ -914,3 +914,54 @@ RESPONSIVE
   border-radius:16px;
   text-align:center;
 }
+
+
+/* =========================
+🔧 HEADER FIX (OVERLAY PATCH)
+========================= */
+
+/* Header wirklich fixed + sauber sichtbar */
+#mainHeader{
+  position: fixed !important;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 10000;
+
+  border-radius: 18px !important;
+  overflow: hidden;
+}
+
+/* auch im Shrink Zustand abgerundet lassen */
+#mainHeader.shrink{
+  border-radius: 18px !important;
+}
+
+/* =========================
+🔧 MOBILE LOGO FIX (NICHT ÄNDERN, NUR BESTÄTIGUNG)
+========================= */
+@media (max-width:768px){
+  .logo-area{
+    display:none !important;
+  }
+}
+
+/* =========================
+🔧 NAV STAY FIX (kein verschwinden beim scrollen)
+========================= */
+.nav-links{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.4s ease;
+}
+
+.nav-links.open{
+  max-height:900px;
+}
+
+/* =========================
+🔧 SAFETY: HEADER BLEIBT ÜBER CONTENT
+========================= */
+body{
+  padding-top: 140px;
+}
