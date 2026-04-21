@@ -1,4 +1,3 @@
-
 /* =========================
 CONFIG
 ========================= */
@@ -51,7 +50,7 @@ function normalizePath(path) {
 }
 
 /* =========================
-PARTIALS (NAV / FOOTER)
+PARTIALS
 ========================= */
 
 async function loadPartial(id, file) {
@@ -117,7 +116,6 @@ document.addEventListener("click", (e) => {
   const href = link.getAttribute("href");
   if (!href) return;
 
-  // EXTERNAL LINKS IGNORE
   const external =
     href.startsWith("http") ||
     href.startsWith("https") ||
@@ -126,11 +124,16 @@ document.addEventListener("click", (e) => {
 
   if (external) return;
 
-  // SPA LINKS
   e.preventDefault();
 
   history.pushState({}, "", href);
   loadPage(href);
+
+  // 🔥 MENU ZU BEI NAVIGATION
+  const nav = document.getElementById("mainNav");
+  const overlay = document.getElementById("menu-overlay");
+  if (nav) nav.classList.remove("open");
+  if (overlay) overlay.classList.remove("active");
 });
 
 window.addEventListener("popstate", () => {
@@ -143,18 +146,26 @@ GLOBAL UI (MENU + DROPDOWN + COOKIE)
 
 document.addEventListener("click", (e) => {
 
+  const nav = document.getElementById("mainNav");
+  const overlay = document.getElementById("menu-overlay");
+
   /* MENU */
   const burger = e.target.closest("#hamburgerBtn");
-  const nav = document.getElementById("mainNav");
-
   if (burger && nav) {
     nav.classList.toggle("open");
+    if (overlay) overlay.classList.toggle("active");
+    return;
+  }
+
+  /* OVERLAY CLICK */
+  if (e.target.id === "menu-overlay") {
+    nav?.classList.remove("open");
+    overlay?.classList.remove("active");
     return;
   }
 
   /* DROPDOWN */
   const dropdownBtn = e.target.closest(".dropdown-toggle");
-
   if (dropdownBtn) {
     const dropdown = dropdownBtn.closest(".nav-dropdown");
 
@@ -165,7 +176,6 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  /* CLOSE DROPDOWN OUTSIDE */
   document.querySelectorAll(".nav-dropdown.open")
     .forEach(d => d.classList.remove("open"));
 
@@ -180,7 +190,24 @@ document.addEventListener("click", (e) => {
 });
 
 /* =========================
-RADIO PLAYER (HOOK ONLY)
+🔥 HEADER SHRINK (NEU)
+========================= */
+
+function initHeader() {
+  const header = document.getElementById("mainHeader");
+  if (!header) return;
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 80) {
+      header.classList.add("shrink");
+    } else {
+      header.classList.remove("shrink");
+    }
+  });
+}
+
+/* =========================
+RADIO PLAYER
 ========================= */
 
 function initRadioPlayer() {
@@ -271,7 +298,6 @@ const frgEvents = [
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
-
 function initCountdown() {
   const box = document.querySelector(".countdown");
   if (!box) return;
@@ -325,7 +351,7 @@ function initPageScripts() {
 }
 
 /* =========================
-BOOT + 404 RESTORE FIX
+BOOT
 ========================= */
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -333,9 +359,9 @@ window.addEventListener("DOMContentLoaded", async () => {
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
+  initHeader(); // 🔥 HIER NEU
   initRadioPlayer();
 
-  // 🔥 404 REDIRECT RESTORE
   const redirect = sessionStorage.getItem("spa_redirect");
 
   if (redirect) {
@@ -344,6 +370,5 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 
   const path = normalizePath(location.pathname);
-
   loadPage(routes[path] ? path : "/404");
 });
