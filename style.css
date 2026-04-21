@@ -801,6 +801,87 @@ RESPONSIVE
 }
 
 
+/* HEADER BASIS */
+#mainHeader {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: #0b1a3a;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* OBERE LEISTE (immer sichtbar) */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+}
+
+/* PLAYER */
+.header-player {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.header-player audio {
+  height: 30px;
+}
+
+/* LOGO */
+.logo-area img {
+  height: 50px;
+  transition: 0.3s;
+}
+
+/* GROSSER BEREICH */
+.header-full {
+  text-align: center;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+/* NAV */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* SHRINK ZUSTAND */
+#mainHeader.shrink {
+  background: #08122a;
+}
+
+/* VERSTECKE GROSSEN TEIL */
+#mainHeader.shrink .header-full {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* LOGO KLEINER */
+#mainHeader.shrink .logo-area img {
+  height: 35px;
+}
+
+/* PLAYER KLEINER */
+#mainHeader.shrink .header-player audio {
+  height: 25px;
+}
+
+/* HAMBURGER */
+.hamburger {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+
 /* =========================
    FOOTER
 ========================= */
