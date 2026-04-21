@@ -219,6 +219,7 @@ RADIO PLAYER
 function initRadioPlayer() {
   const audio = document.getElementById("audioPlayer");
   const playBtn = document.getElementById("playBtn");
+  const stations = document.querySelectorAll(".station");
 
   if (!audio || !playBtn) return;
 
@@ -231,13 +232,25 @@ function initRadioPlayer() {
     rhyrock: "https://stream.laut.fm/rhyrock-radio"
   };
 
-  window.setStation = (s) => {
+  function setStation(s) {
     current = s;
+
+    // 🔥 ACTIVE BUTTON STYLE
+    stations.forEach(btn => btn.classList.remove("active"));
+    document.querySelector(`[data-station="${s}"]`)?.classList.add("active");
+
     if (playing) {
       audio.src = streams[current];
       audio.play();
     }
-  };
+  }
+
+  // 🔥 CLICK EVENTS
+  stations.forEach(btn => {
+    btn.addEventListener("click", () => {
+      setStation(btn.dataset.station);
+    });
+  });
 
   playBtn.addEventListener("click", () => {
     if (!playing) {
