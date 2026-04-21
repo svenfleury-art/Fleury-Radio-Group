@@ -40,9 +40,7 @@ footer{
   text-align:center;
 }
 
-/* =========================
-   HEADER (FIXED + ROUNDED)
-========================= */
+/* HEADER FULL WIDTH + STICKY */
 #mainHeader{
   position: fixed;
   top: 10px;
@@ -59,51 +57,143 @@ footer{
   overflow: hidden;
 
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+/* ==========================================
+   LOADER
+========================================== */
+#loader{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
 
-  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  z-index: 99999;
+
+  transition: opacity 0.4s ease;
 }
 
-/* SHRINK */
-#mainHeader.shrink{
-  background:#08122a;
-  transform:scale(0.98);
+#loader .radio{
+  font-size: 48px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse{
+  0%{ transform: scale(1); opacity: 0.7; }
+  50%{ transform: scale(1.2); opacity: 1; }
+  100%{ transform: scale(1); opacity: 0.7; }
+}
+
+/* ==========================================
+   COOKIE BANNER
+========================================== */
+.frg-banner{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 16px;
+  background: #0B2A6A;
+  color: #F9FAFB;
+
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+  z-index: 9999;
+}
+
+.frg-banner span{
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.frg-banner a{
+  color: var(--gold);
+  text-decoration: underline;
+}
+
+.frg-btn{
+  background: var(--gold);
+  color: #0B2A6A;
+
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.frg-btn:hover{
+  background: #eab308;
+}
+
+@media(min-width: 768px){
+  .frg-banner{
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+  }
+
+  .frg-banner span{
+    max-width: 75%;
+    font-size: 15px;
+  }
+
+  .frg-btn{
+    font-size: 15px;
+    padding: 12px 20px;
+  }
 }
 
 /* =========================
-   HEADER INNER
+   HEADER
 ========================= */
-.header-inner{
+.site-header{
+  background:#06152F;
+  padding:20px;
+  border-radius:16px;
+  border:1px solid rgba(250,204,21,0.15);
+
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:space-between;
-  padding:15px 20px;
-}
-
-/* =========================
-   LOGO
-========================= */
-.logo-area img{
-  height:150px;
-  transition:all 0.3s ease;
-}
-
-#mainHeader.shrink .logo-area img{
-  height:35px;
-}
-
-/* =========================
-   HEADER FULL
-========================= */
-.header-full{
   text-align:center;
-  padding:10px 20px;
-  transition:all 0.3s ease;
+  gap:10px;
 }
 
-#mainHeader.shrink .header-full{
-  max-height:0;
-  overflow:hidden;
-  padding:0;
+.logo-img img{
+  height:350px;
+}
+
+.logo-text{
+  font-size:50px;
+  font-weight:700;
+  color:var(--text);
+}
+
+@media (max-width:768px){
+  .logo-text{ display:none; }
+}
+
+/* =========================
+   LINKS
+========================= */
+a{
+  color:var(--gold);
+  text-decoration:none;
 }
 
 /* =========================
@@ -159,25 +249,26 @@ footer{
   display:flex;
 }
 
-/* =========================
-   PLAYER IM NAV
-========================= */
-.frg-player{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-
-  padding:10px;
-  flex-wrap:wrap;
+.dropdown-menu a{
+  background:rgba(12,37,82,.9);
+  padding:10px 12px;
+  border-radius:10px;
+  width:100%;
+  max-width:300px;
+  text-align:center;
 }
 
-/* =========================
-   LINKS
-========================= */
-a{
-  color:var(--gold);
-  text-decoration:none;
+.nav-button{
+  width:100%;
+  max-width:300px;
+  padding:12px;
+  border-radius:12px;
+
+  background:var(--surface-2);
+  border:1px solid rgba(250,204,21,.3);
+  color:var(--text);
+
+  cursor:pointer;
 }
 
 /* =========================
@@ -227,24 +318,77 @@ section,
 }
 
 /* =========================
-   COUNTDOWN
+   Countdown
 ========================= */
+
 .countdown-container{
   display:flex;
   justify-content:center;
   flex-wrap:wrap;
   gap:15px;
+
+  margin:20px auto;
+  text-align:center;
 }
 
+/* einzelne Box */
 .time-box{
   width:110px;
   height:120px;
+
   background:var(--surface-2);
   border-radius:16px;
+
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
+
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+  transition:0.2s;
+}
+
+/* Hover Effekt */
+.time-box:hover{
+  transform:translateY(-3px);
+}
+
+/* Zahl */
+.time-box span{
+  font-size:25px;
+  font-weight:700;
+  color:var(--gold);
+}
+
+/* Label (z.B. Days / Hours) */
+.time-box small{
+  font-size:50px;
+  opacity:0.8;
+  margin-top:20px;
+}
+
+/* MOBILE STACK */
+@media (max-width:600px){
+  .time-box{
+    width:45%;
+  }
+}
+
+/* =========================
+   ARTISTS
+========================= */
+.artist-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.artist-photo{
+  width:60px;
+  height:60px;
+  object-fit:cover;
+  border-radius:12px;
 }
 
 /* =========================
@@ -265,6 +409,28 @@ section,
   color:var(--text);
 }
 
+.artist-form button{
+  margin-top:12px;
+  padding:12px;
+  width:100%;
+  background:var(--gold);
+  border:none;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+/* =========================
+   PLAY BUTTON (OTHER USES)
+========================= */
+.playBtn{
+  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
 /* =========================
    TEAM
 ========================= */
@@ -281,22 +447,463 @@ section,
 }
 
 /* =========================
-   MOBILE
+TEAM FOTOS (OVAL + SAUBER)
 ========================= */
-@media (max-width:768px){
+.team-photo {
+  width: 120px;          /* Größe kontrollieren */
+  height: 150px;         /* leicht höher → oval */
+  object-fit: cover;     /* Bild sauber zuschneiden */
 
-  .logo-area img{
-    height:90px;
-  }
+  border-radius: 50% / 60%;  /* OVAL statt Kreis */
 
-  #mainHeader.shrink .logo-area img{
-    height:35px;
-  }
+  display: block;
+  margin: 0 auto 12px;   /* zentriert + Abstand */
 
-  .frg-player{
-    flex-direction:column;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+
+  transition: transform 0.25s ease;
+}
+
+/* Hover Effekt */
+.team-photo:hover {
+  transform: scale(1.05);
+}
+
+/* =========================
+MOBILE FIX
+========================= */
+@media (max-width: 600px) {
+  .team-photo {
+    width: 90px;
+    height: 120px;
   }
 }
+
+/* =========================
+   FRG PLAYER (FIXED + SAFE)
+========================= */
+/* =========================
+FRG PLAYER (ZENTRIERT)
+========================= */
+.frg-player{
+  display:flex;
+  align-items:center;
+  justify-content:center;   /* zentriert horizontal */
+  gap:14px;
+
+  margin:20px auto;         /* zentriert im Layout */
+  padding:12px 18px;
+
+  width:fit-content;
+  max-width:95%;
+
+  background:rgba(10, 20, 60, 0.6); /* FRG Blau Glas */
+  backdrop-filter: blur(12px);
+
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:18px;
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* =========================
+PLAY BUTTON
+========================= */
+.frg-player .play-btn{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+
+  background:linear-gradient(135deg, #1e3a8a, #2563eb); /* Royal Blue */
+  color:#fff;
+  font-size:16px;
+
+  box-shadow:0 5px 15px rgba(0,0,0,0.4);
+
+  transition:all 0.25s ease;
+}
+
+.frg-player .play-btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 8px 20px rgba(0,0,0,0.6);
+}
+
+/* =========================
+STATION BUTTONS
+========================= */
+.station-switch{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.station{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.25);
+  color:#fff;
+
+  padding:5px 12px;
+  border-radius:20px;
+  font-size:12px;
+  cursor:pointer;
+
+  transition:all 0.2s ease;
+}
+
+.station:hover{
+  background:rgba(255,255,255,0.1);
+}
+
+/* ACTIVE = GOLD */
+.station.active{
+  background:#d4af37;
+  color:#000;
+  border-color:#d4af37;
+  font-weight:600;
+}
+
+/* =========================
+NOW PLAYING
+========================= */
+.now-playing{
+  font-size:12px;
+  opacity:0.85;
+  min-width:160px;
+
+  text-align:center;
+}
+
+/* =========================
+MOBILE
+========================= */
+@media (max-width:768px){
+  .frg-player{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+
+  .now-playing{
+    min-width:auto;
+  }
+}
+
+
+/* =========================
+FULL WIDTH CARD
+========================= */
+.card.full-width {
+  width: 100%;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+/* =========================
+PLAYER LOGO (BILD)
+========================= */
+.player-logo {
+  width: 100%;
+  max-width: 320px;        /* maximale Größe */
+  height: auto;
+  margin: 25px auto 0;
+  display: block;
+
+  border-radius: 20px;     /* moderne abgerundete Ecken */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover Effekt */
+.player-logo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================
+LINK STYLE
+========================= */
+.card.full-width a {
+  color: #d4af37; /* Gold */
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.card.full-width a:hover {
+  opacity: 0.7;
+}
+
+
+/* =========================
+FRG EVENT SECTION
+========================= */
+
+.frg-events {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #0a1f44, #0d2c63);
+  color: #fff;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: #cbd5e1;
+  margin-bottom: 40px;
+}
+
+/* =========================
+FILTER BUTTONS
+========================= */
+
+.event-filter {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.filter-btn {
+  padding: 10px 18px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: #fff;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.filter-btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #d4af37, #f5d76e);
+  color: #0a1f44;
+  border: none;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+}
+
+/* =========================
+GRID
+========================= */
+
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* =========================
+EVENT CARDS
+========================= */
+
+.event-card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.event-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* Gold Glow Effekt */
+.event-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(212,175,55,0.2), transparent);
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.event-card:hover::before {
+  opacity: 1;
+}
+
+/* =========================
+CONTENT
+========================= */
+
+.event-date {
+  font-size: 0.9rem;
+  color: #f5d76e;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.event-card h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.event-card p {
+  font-size: 0.95rem;
+  color: #e2e8f0;
+}
+
+/* =========================
+CATEGORY COLORS (Subtle)
+========================= */
+
+.event-card.crossover {
+  border-left: 4px solid #38bdf8;
+}
+
+.event-card.simulcast {
+  border-left: 4px solid #22c55e;
+}
+
+.event-card.special {
+  border-left: 4px solid #d4af37;
+}
+
+/* =========================
+HINWEIS CARDS
+========================= */
+
+.event-card.hinweis {
+  background: rgba(255,255,255,0.08);
+  border: 1px dashed rgba(255,255,255,0.2);
+  text-align: center;
+}
+
+.event-card.hinweis h3 {
+  color: #f5d76e;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .event-card {
+    padding: 16px;
+  }
+}
+
+
+#global-loader {
+  position: fixed;
+  inset: 0;
+  background: #0a1f44;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  z-index: 9999;
+  transition: opacity 0.3s;
+}
+
+
+/* HEADER BASIS */
+#mainHeader {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: #0b1a3a;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* OBERE LEISTE (immer sichtbar) */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+}
+
+/* PLAYER */
+.header-player {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.header-player audio {
+  height: 30px;
+}
+
+/* LOGO */
+/* LOGO (START GROSS) */
+.logo-area img {
+  height: 150px;              /* 🔥 jetzt gross am Anfang */
+  transition: all 0.3s ease;
+}
+
+/* SHRINK → LOGO KLEIN */
+#mainHeader.shrink .logo-area img {
+  height: 35px;              /* 🔥 wird kleiner beim Scrollen */
+  transform: scale(0.95);
+}
+
+/* GROSSER BEREICH */
+.header-full {
+  text-align: center;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+/* NAV */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* SHRINK ZUSTAND */
+#mainHeader.shrink {
+  background: #08122a;
+}
+
+/* VERSTECKE GROSSEN TEIL */
+#mainHeader.shrink .header-full {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* LOGO KLEINER */
+#mainHeader.shrink .logo-area img {
+  height: 35px;
+}
+
+/* PLAYER KLEINER */
+#mainHeader.shrink .header-player audio {
+  height: 25px;
+}
+
+/* HAMBURGER */
+.hamburger {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
 
 /* =========================
    FOOTER
@@ -306,4 +913,55 @@ section,
   padding:30px;
   border-radius:16px;
   text-align:center;
+}
+
+
+/* =========================
+🔧 HEADER FIX (OVERLAY PATCH)
+========================= */
+
+/* Header wirklich fixed + sauber sichtbar */
+#mainHeader{
+  position: fixed !important;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 10000;
+
+  border-radius: 18px !important;
+  overflow: hidden;
+}
+
+/* auch im Shrink Zustand abgerundet lassen */
+#mainHeader.shrink{
+  border-radius: 18px !important;
+}
+
+/* =========================
+🔧 MOBILE LOGO FIX (NICHT ÄNDERN, NUR BESTÄTIGUNG)
+========================= */
+@media (max-width:768px){
+  .logo-area{
+    display:none !important;
+  }
+}
+
+/* =========================
+🔧 NAV STAY FIX (kein verschwinden beim scrollen)
+========================= */
+.nav-links{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.4s ease;
+}
+
+.nav-links.open{
+  max-height:900px;
+}
+
+/* =========================
+🔧 SAFETY: HEADER BLEIBT ÜBER CONTENT
+========================= */
+body{
+  padding-top: 140px;
 }
