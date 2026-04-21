@@ -1,3 +1,4 @@
+
 /* =========================
 CONFIG
 ========================= */
@@ -51,7 +52,7 @@ function normalizePath(path) {
 }
 
 /* =========================
-PARTIALS
+PARTIAL LOADER
 ========================= */
 
 async function loadPartial(id, file) {
@@ -63,12 +64,12 @@ async function loadPartial(id, file) {
     if (!res.ok) return;
     el.innerHTML = await res.text();
   } catch (e) {
-    console.warn("Partial error:", file);
+    console.warn("Partial error:", file, e);
   }
 }
 
 /* =========================
-PAGE LOADER
+PAGE FETCH
 ========================= */
 
 async function loadFile(file) {
@@ -80,6 +81,10 @@ async function loadFile(file) {
     return "<h2>Fehler beim Laden</h2>";
   }
 }
+
+/* =========================
+ROUTER
+========================= */
 
 async function loadPage(path) {
   const app = document.getElementById("app");
@@ -128,12 +133,13 @@ window.addEventListener("popstate", () => {
 });
 
 /* =========================
-GLOBAL UI (MENU + PLAYER)
+GLOBAL UI (MENU + PLAYER + DROPDOWNS)
 ========================= */
 
 function initGlobalUI() {
   initMenu();
   initRadioPlayer();
+  initDropdowns();
 }
 
 /* =========================
@@ -170,7 +176,6 @@ function initRadioPlayer() {
   const audio = document.getElementById("audioPlayer");
   const playBtn = document.getElementById("playBtn");
   const stations = document.querySelectorAll(".station");
-  const nowPlaying = document.getElementById("nowPlaying");
 
   if (!audio || !playBtn) return;
 
@@ -213,6 +218,51 @@ function initRadioPlayer() {
       playBtn.textContent = "▶";
     }
   });
+}
+
+/* =========================
+DROPDOWNS
+========================= */
+
+function initDropdowns() {
+
+  document.querySelectorAll(".dropdown").forEach(drop => {
+
+    const btn = drop.querySelector(".dropdown-btn");
+    const menu = drop.querySelector(".dropdown-menu");
+
+    if (!btn || !menu) return;
+
+    btn.onclick = () => {
+      menu.classList.toggle("open");
+    };
+  });
+}
+
+/* =========================
+COOKIE BANNER
+========================= */
+
+function initCookieBanner() {
+
+  const banner = document.getElementById("cookie-banner");
+  const btn = document.getElementById("cookie-accept");
+
+  if (!banner || !btn) return;
+
+  const KEY = "frg_cookies";
+
+  if (localStorage.getItem(KEY) === "true") {
+    banner.style.display = "none";
+    return;
+  }
+
+  banner.style.display = "flex";
+
+  btn.onclick = () => {
+    localStorage.setItem(KEY, "true");
+    banner.style.display = "none";
+  };
 }
 
 /* =========================
@@ -278,6 +328,7 @@ PAGE INIT
 
 function initPageScripts() {
   initCountdown();
+  initCookieBanner();
 }
 
 /* =========================
