@@ -1,3 +1,4 @@
+
 /* =========================
 CONFIG
 ========================= */
@@ -51,7 +52,7 @@ function normalizePath(path) {
 }
 
 /* =========================
-PARTIALS (NAV + FOOTER)
+PARTIALS
 ========================= */
 
 async function loadPartial(id, file) {
@@ -66,7 +67,7 @@ async function loadPartial(id, file) {
 }
 
 /* =========================
-PAGE LOADER
+PAGE LOADER (SPA)
 ========================= */
 
 async function loadFile(file) {
@@ -94,6 +95,7 @@ async function loadPage(path) {
   }
 
   app.innerHTML = html;
+
   window.scrollTo(0, 0);
 
   if (countdownInterval) {
@@ -125,13 +127,13 @@ window.addEventListener("popstate", () => {
 });
 
 /* =========================
-GLOBAL UI SYSTEM (IMPORTANT FIX AREA)
+GLOBAL UI SYSTEM
 ========================= */
 
 document.addEventListener("click", (e) => {
 
   /* =========================
-  HAMBURGER MENU
+  MENU
   ========================= */
   const burger = e.target.closest("#hamburgerBtn");
   const nav = document.getElementById("mainNav");
@@ -163,7 +165,6 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  /* close dropdowns if clicked outside */
   document.querySelectorAll(".nav-dropdown.open")
     .forEach(d => d.classList.remove("open"));
 
@@ -180,7 +181,7 @@ document.addEventListener("click", (e) => {
   }
 
   /* =========================
-  RADIO PLAYER BUTTONS
+  RADIO PLAYER
   ========================= */
   const station = e.target.closest(".station");
   if (station) {
@@ -236,6 +237,44 @@ function initRadioPlayer() {
       playBtn.textContent = "▶";
     }
   };
+}
+
+/* =========================
+EVENT FILTER (FIXED)
+========================= */
+
+function initEventFilter() {
+
+  const buttons = document.querySelectorAll(".filter-btn");
+  const cards = document.querySelectorAll(".event-card");
+
+  if (!buttons.length || !cards.length) return;
+
+  buttons.forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+      const filter = btn.dataset.filter;
+
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      cards.forEach(card => {
+
+        if (card.classList.contains("hinweis")) {
+          card.style.display = "block";
+          return;
+        }
+
+        card.style.display =
+          filter === "all" || card.classList.contains(filter)
+            ? "block"
+            : "none";
+      });
+
+    });
+
+  });
 }
 
 /* =========================
@@ -300,7 +339,9 @@ PAGE INIT
 ========================= */
 
 function initPageScripts() {
+
   initCountdown();
+  initEventFilter();
 
   const banner = document.getElementById("cookie-banner");
   if (banner && localStorage.getItem("frg_cookies") === "true") {
