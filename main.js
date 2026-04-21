@@ -1,3 +1,4 @@
+
 /* =========================
 CONFIG
 ========================= */
@@ -39,9 +40,7 @@ function normalizePath(path) {
     const url = new URL(path, location.origin);
     let clean = url.pathname;
 
-    if (clean.length > 1) {
-      clean = clean.replace(/\/+$/, "");
-    }
+    if (clean.length > 1) clean = clean.replace(/\/+$/, "");
 
     return clean || "/";
   } catch {
@@ -129,11 +128,11 @@ document.addEventListener("click", (e) => {
   history.pushState({}, "", href);
   loadPage(href);
 
-  // 🔥 MENU ZU BEI NAVIGATION
+  // MENU SCHLIESSEN BEI NAVIGATION
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
-  if (nav) nav.classList.remove("open");
-  if (overlay) overlay.classList.remove("active");
+  nav?.classList.remove("open");
+  overlay?.classList.remove("active");
 });
 
 window.addEventListener("popstate", () => {
@@ -149,33 +148,44 @@ document.addEventListener("click", (e) => {
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
 
-  /* MENU */
+  /* =========================
+     HAMBURGER MENU
+  ========================= */
   const burger = e.target.closest("#hamburgerBtn");
   if (burger && nav) {
     nav.classList.toggle("open");
-    if (overlay) overlay.classList.toggle("active");
+    overlay?.classList.toggle("active");
     return;
   }
 
-  /* OVERLAY CLICK */
+  /* OVERLAY CLOSE */
   if (e.target.id === "menu-overlay") {
     nav?.classList.remove("open");
     overlay?.classList.remove("active");
     return;
   }
 
-  /* DROPDOWN */
+  /* =========================
+     🔥 DROPDOWN FIX (TOGGLE)
+  ========================= */
   const dropdownBtn = e.target.closest(".dropdown-toggle");
+
   if (dropdownBtn) {
     const dropdown = dropdownBtn.closest(".nav-dropdown");
+
+    const isOpen = dropdown.classList.contains("open");
 
     document.querySelectorAll(".nav-dropdown.open")
       .forEach(d => d.classList.remove("open"));
 
-    dropdown.classList.toggle("open");
+    if (!isOpen) {
+      dropdown.classList.add("open");
+    }
+
     return;
   }
 
+  /* CLOSE ON OUTSIDE CLICK */
   document.querySelectorAll(".nav-dropdown.open")
     .forEach(d => d.classList.remove("open"));
 
@@ -190,7 +200,7 @@ document.addEventListener("click", (e) => {
 });
 
 /* =========================
-🔥 HEADER SHRINK (NEU)
+HEADER SHRINK
 ========================= */
 
 function initHeader() {
@@ -198,11 +208,7 @@ function initHeader() {
   if (!header) return;
 
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 80) {
-      header.classList.add("shrink");
-    } else {
-      header.classList.remove("shrink");
-    }
+    header.classList.toggle("shrink", window.scrollY > 80);
   });
 }
 
@@ -359,11 +365,10 @@ window.addEventListener("DOMContentLoaded", async () => {
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
-  initHeader(); // 🔥 HIER NEU
+  initHeader();
   initRadioPlayer();
 
   const redirect = sessionStorage.getItem("spa_redirect");
-
   if (redirect) {
     sessionStorage.removeItem("spa_redirect");
     history.replaceState({}, "", redirect);
