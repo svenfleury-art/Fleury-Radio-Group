@@ -199,23 +199,6 @@ a{
 /* =========================
    NAV
 ========================= */
-.nav-links{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-
-  max-height:0;
-  overflow:hidden;
-  transition:max-height .4s ease;
-
-  width:100%;
-  align-items:center;
-}
-
-.nav-links.open{
-  max-height:900px;
-  padding-top:10px;
-}
 
 .nav-links a{
   background:var(--surface-2);
@@ -950,9 +933,14 @@ RESPONSIVE
 🔧 NAV STAY FIX (kein verschwinden beim scrollen)
 ========================= */
 .nav-links{
-  max-height:0;
-  overflow:hidden;
-  transition:max-height 0.4s ease;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+
+  max-width:1000px;
+  margin:0 auto;
+
+  flex-wrap:wrap;
 }
 
 .nav-links.open{
@@ -964,4 +952,15 @@ RESPONSIVE
 ========================= */
 body{
   padding-top: 140px;
+}
+
+
+main {
+  margin-top: 220px; /* Höhe vom Header anpassen */
+}
+
+@media (max-width: 768px){
+  main {
+    margin-top: 180px;
+  }
 }
