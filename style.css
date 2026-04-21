@@ -44,11 +44,11 @@ footer{
 #mainHeader{
   position: fixed;
   top: 10px;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
 
   width: calc(100% - 20px);
-  margin: 0 auto;
+  max-width: 1100px;   /* gleich wie dein main */
 
   background: #0b1a3a;
   z-index: 10000;
@@ -199,6 +199,23 @@ a{
 /* =========================
    NAV
 ========================= */
+.nav-links{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .4s ease;
+
+  width:100%;
+  align-items:center;
+}
+
+.nav-links.open{
+  max-height:900px;
+  padding-top:10px;
+}
 
 .nav-links a{
   background:var(--surface-2);
@@ -800,16 +817,6 @@ RESPONSIVE
 }
 
 
-/* HEADER BASIS */
-#mainHeader {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  background: #0b1a3a;
-  z-index: 1000;
-  transition: all 0.3s ease;
-}
-
 /* OBERE LEISTE (immer sichtbar) */
 .header-inner {
   display: flex;
@@ -933,14 +940,9 @@ RESPONSIVE
 🔧 NAV STAY FIX (kein verschwinden beim scrollen)
 ========================= */
 .nav-links{
-  display:flex;
-  justify-content:center;
-  gap:20px;
-
-  max-width:1000px;
-  margin:0 auto;
-
-  flex-wrap:wrap;
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.4s ease;
 }
 
 .nav-links.open{
@@ -952,15 +954,4 @@ RESPONSIVE
 ========================= */
 body{
   padding-top: 140px;
-}
-
-
-main {
-  margin-top: 220px; /* Höhe vom Header anpassen */
-}
-
-@media (max-width: 768px){
-  main {
-    margin-top: 180px;
-  }
 }
