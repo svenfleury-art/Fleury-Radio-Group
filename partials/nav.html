@@ -1,54 +1,68 @@
-<header>
+<header id="mainHeader">
 
-  <div class="logo-area">
-    <a href="/" class="logo-img" data-link>
-      <img src="img/logo.png" alt="Fleury Radio Group Logo">
-    </a>
+  <!-- KOMPAKTE LEISTE -->
+  <div class="header-inner">
+
+    <!-- LINKS: Menü -->
+    <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen">☰</button>
+
+    <!-- MITTE: Player -->
+    <div class="header-player">
+      <audio controls>
+        <source src="stream.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <!-- RECHTS: Logo -->
+    <div class="logo-area">
+      <a href="/" class="logo-img" data-link>
+        <img src="img/logo.png" alt="Fleury Radio Group Logo">
+      </a>
+    </div>
+
+  </div>
+
+  <!-- GROSSER HEADER -->
+  <div class="header-full">
 
     <h1 class="logo-text">
       <a href="/" data-link>Fleury Radio Group</a>
     </h1>
+
+    <p>Dini Musik, dini Wälle – direkt vom Rhy.</p>
+
+    <nav id="mainNav" class="nav-links">
+
+      <a href="/" data-link>Home</a>
+
+      <div class="nav-dropdown">
+        <button class="nav-button dropdown-toggle">Radios</button>
+        <div class="dropdown-menu">
+          <a href="/radios" data-link>Radio Auswahl</a>
+          <a href="/rhywälle" data-link>Radio Rhywälle</a>
+          <a href="/winterlord" data-link>Winterlord FM</a>
+          <a href="/rhyrock" data-link>RhyRock Radio</a>
+        </div>
+      </div>
+
+      <div class="nav-dropdown">
+        <button class="nav-button dropdown-toggle">Infos über die FRG</button>
+        <div class="dropdown-menu">
+          <a href="/frg-inside" data-link>Inside</a>
+          <a href="/team" data-link>Team</a>
+          <a href="/geschichte" data-link>Geschichte</a>
+          <a href="/about" data-link>Über uns</a>
+          <a href="/mitmachen" data-link>Mitmachen</a>
+        </div>
+      </div>
+
+      <a href="/spezial-programm" data-link>Spezial-Programm</a>
+      <a href="/artists" data-link>Für Künstler & Labels</a>
+      <a href="/werbung" data-link>Werbung machen</a>
+
+    </nav>
+
   </div>
-
-  <p>Dini Musik, dini Wälle – direkt vom Rhy.</p>
-
-  
-  
-
-  <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen">☰</button>
-
-  <nav id="mainNav" class="nav-links">
-
-    <a href="/" data-link>Home</a>
-
-    <div class="nav-dropdown">
-      <button class="nav-button dropdown-toggle">Radios</button>
-
-      <div class="dropdown-menu">
-        <a href="/radios" data-link>Radio Auswahl</a>
-        <a href="/rhywälle" data-link>Radio Rhywälle</a>
-        <a href="/winterlord" data-link>Winterlord FM</a>
-        <a href="/rhyrock" data-link>RhyRock Radio</a>
-      </div>
-    </div>
-
-    <div class="nav-dropdown">
-      <button class="nav-button dropdown-toggle">Infos über die FRG</button>
-
-      <div class="dropdown-menu">
-        <a href="/frg-inside" data-link>Inside</a>
-        <a href="/team" data-link>Team</a>
-        <a href="/geschichte" data-link>Geschichte</a>
-        <a href="/about" data-link>Über uns</a>
-        <a href="/mitmachen" data-link>Mitmachen</a>
-      </div>
-    </div>
-
-    <a href="/spezial-programm" data-link>Spezial-Programm</a>
-    <a href="/artists" data-link>Für Künstler & Labels</a>
-    <a href="/werbung" data-link>Werbung machen</a>
-
-  </nav>
 
 </header>
 
