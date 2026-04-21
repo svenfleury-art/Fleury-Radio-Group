@@ -954,13 +954,13 @@ body{
 }
 
 .logo-area img{
-  height:50px;
+  height:150px;
   transition:0.3s ease;
 }
 
 /* SHRINK */
 #mainHeader.shrink .logo-area img{
-  height:35px;
+  height:75px;
 }
 
 
