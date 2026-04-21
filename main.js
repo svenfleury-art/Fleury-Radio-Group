@@ -1,3 +1,4 @@
+
 /* =========================
 CONFIG
 ========================= */
@@ -126,7 +127,7 @@ window.addEventListener("popstate", () => {
 });
 
 /* =========================
-GLOBAL EVENT SYSTEM (KEY PART)
+GLOBAL EVENT SYSTEM (KEY FIX)
 ========================= */
 
 function initGlobalEvents() {
@@ -134,7 +135,7 @@ function initGlobalEvents() {
   document.addEventListener("click", (e) => {
 
     /* =========================
-    HAMBURGER MENU
+    MENU TOGGLE
     ========================= */
     const hamburger = e.target.closest("#hamburgerBtn");
     const nav = document.getElementById("mainNav");
@@ -147,24 +148,23 @@ function initGlobalEvents() {
     }
 
     /* =========================
-    DROPDOWNS
+    DROPDOWN TOGGLE
     ========================= */
-    const toggle = e.target.closest(".dropdown-toggle");
+    const dropdownBtn = e.target.closest(".dropdown-toggle");
 
-    if (toggle) {
-      const dropdown = toggle.closest(".nav-dropdown");
+    if (dropdownBtn) {
+      const dropdown = dropdownBtn.closest(".nav-dropdown");
       const menu = dropdown?.querySelector(".dropdown-menu");
 
       if (menu) menu.classList.toggle("open");
       return;
     }
 
-    /* CLOSE DROPDOWNS */
     document.querySelectorAll(".dropdown-menu.open")
       .forEach(m => m.classList.remove("open"));
 
     /* =========================
-    COOKIE BANNER
+    COOKIE ACCEPT
     ========================= */
     const cookieBtn = e.target.closest("#cookie-accept");
     const cookieBanner = document.getElementById("cookie-banner");
@@ -172,29 +172,28 @@ function initGlobalEvents() {
     if (cookieBtn && cookieBanner) {
       localStorage.setItem("frg_cookies", "true");
       cookieBanner.style.display = "none";
-    }
-
-    /* =========================
-    PLAYER STATIONS
-    ========================= */
-    const station = e.target.closest(".station");
-    if (station) {
-      window.setStation?.(station.dataset.station);
       return;
     }
 
     /* =========================
-    PLAY BUTTON
+    PLAYER BUTTONS
     ========================= */
+    const stationBtn = e.target.closest(".station");
+    if (stationBtn) {
+      window.setStation?.(stationBtn.dataset.station);
+      return;
+    }
+
     const playBtn = e.target.closest("#playBtn");
     if (playBtn) {
       window.togglePlay?.();
+      return;
     }
   });
 }
 
 /* =========================
-RADIO PLAYER (GLOBAL STATE)
+RADIO PLAYER (GLOBAL API)
 ========================= */
 
 function initRadioPlayer() {
@@ -215,6 +214,7 @@ function initRadioPlayer() {
 
   window.setStation = (station) => {
     current = station;
+
     if (playing) {
       audio.src = streams[current];
       audio.play();
@@ -240,10 +240,16 @@ COUNTDOWN
 ========================= */
 
 const frgEvents = [
-  { title: "Crossover Night", date: "2026-04-25T20:00:00" },
-  { title: "Simulcast", date: "2026-05-30T19:00:00" },
-  { title: "Schweiz Special", date: "2026-08-01T12:00:00" },
-  { title: "1 Jahr FRG", date: "2026-10-28T12:00:00" }
+  { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
+  { title: "FRG Simulcast", date: "2026-05-30T19:00:00" },
+  { title: "FRG Crossover Night", date: "2026-06-27T19:00:00" },
+  { title: "FRG Schweiz Special", date: "2026-08-01T12:00:00" },
+  { title: "FRG Crossover Night", date: "2026-09-26T19:00:00" },
+  { title: "1 Jahr Fleury Radio Group", date: "2026-10-28T12:00:00" },
+  { title: "FRG Halloween Special", date: "2026-10-31T12:00:00" },
+  { title: "FRG Crossover Night", date: "2026-11-28T20:00:00" },
+  { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
+  { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
 function initCountdown() {
