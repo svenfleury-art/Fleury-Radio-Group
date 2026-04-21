@@ -1,5 +1,7 @@
-
 function initRadioPlayer(){
+
+  if (window.radioInitDone) return;
+  window.radioInitDone = true;
 
   const audio = document.getElementById("audioPlayer");
   const playBtn = document.getElementById("playBtn");
@@ -26,9 +28,7 @@ function initRadioPlayer(){
   let current = localStorage.getItem("frgStation") || "rhywaelle";
   let isPlaying = localStorage.getItem("frgPlaying") === "true";
 
-  /* =========================
-  PLAY
-  ========================= */
+  /* ========================= */
   function play(){
     audio.src = streams[current].url;
     audio.play().catch(()=>{});
@@ -41,9 +41,6 @@ function initRadioPlayer(){
     fetchSong();
   }
 
-  /* =========================
-  PAUSE
-  ========================= */
   function pause(){
     audio.pause();
     isPlaying = false;
@@ -51,9 +48,6 @@ function initRadioPlayer(){
     updateUI();
   }
 
-  /* =========================
-  UI
-  ========================= */
   function updateUI(){
     stations.forEach(s =>
       s.classList.toggle("active", s.dataset.station === current)
@@ -62,9 +56,6 @@ function initRadioPlayer(){
     playBtn.textContent = isPlaying ? "⏸" : "▶";
   }
 
-  /* =========================
-  LAUT.FM SONG
-  ========================= */
   async function fetchSong(){
     try{
       const res = await fetch(`https://api.laut.fm/station/${streams[current].api}/current_song`);
@@ -76,9 +67,6 @@ function initRadioPlayer(){
     } catch(e){}
   }
 
-  /* =========================
-  EVENTS
-  ========================= */
   stations.forEach(btn=>{
     btn.addEventListener("click",()=>{
       current = btn.dataset.station;
@@ -96,15 +84,20 @@ function initRadioPlayer(){
   };
 
   /* =========================
-  AUTO RESUME
+  SAFE AUTO RESUME (FIXED)
   ========================= */
-  setTimeout(()=>{
-    updateUI();
-    if(isPlaying) play();
-  },300);
+  updateUI();
 
-  setInterval(()=>{
-    if(isPlaying) fetchSong();
+  if (isPlaying) {
+    setTimeout(() => play(), 200);
+  }
+
+  /* =========================
+  INTERVAL GUARD (IMPORTANT)
+  ========================= */
+  if (window.radioInterval) clearInterval(window.radioInterval);
+
+  window.radioInterval = setInterval(()=>{
+    if (isPlaying) fetchSong();
   },10000);
-
 }
