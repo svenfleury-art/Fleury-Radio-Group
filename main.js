@@ -1,4 +1,3 @@
-
 /* =========================
 CONFIG
 ========================= */
@@ -35,6 +34,7 @@ STATE
 ========================= */
 
 let countdownInterval = null;
+let eventInit = false;
 
 /* =========================
 UTILS
@@ -44,11 +44,7 @@ function normalizePath(path) {
   try {
     const url = new URL(path, location.origin);
     let clean = url.pathname;
-
-    if (clean.length > 1) {
-      clean = clean.replace(/\/+$/, "");
-    }
-
+    if (clean.length > 1) clean = clean.replace(/\/+$/, "");
     return clean || "/";
   } catch {
     return "/";
@@ -56,7 +52,7 @@ function normalizePath(path) {
 }
 
 /* =========================
-PARTIAL LOADER (HEADER / FOOTER)
+PARTIAL LOADER
 ========================= */
 
 async function loadPartial(id, file) {
@@ -65,35 +61,24 @@ async function loadPartial(id, file) {
 
   try {
     const res = await fetch(file);
-
-    if (!res.ok) {
-      console.warn("Partial not found:", file);
-      return;
-    }
-
+    if (!res.ok) return;
     el.innerHTML = await res.text();
-
   } catch (e) {
-    console.warn("Partial error:", file, e);
+    console.warn("Partial error:", file);
   }
 }
 
 /* =========================
-PAGE FETCH
+FETCH PAGE
 ========================= */
 
 async function loadFile(file) {
   try {
     const res = await fetch(file);
-
-    if (!res.ok) {
-      return "<h2 style='color:white;text-align:center'>Seite nicht gefunden</h2>";
-    }
-
+    if (!res.ok) return "<h2>Seite nicht gefunden</h2>";
     return await res.text();
-
   } catch {
-    return "<h2 style='color:white;text-align:center'>Fehler beim Laden</h2>";
+    return "<h2>Fehler beim Laden</h2>";
   }
 }
 
@@ -103,11 +88,7 @@ ROUTER
 
 async function loadPage(path) {
   const app = document.getElementById("app");
-
-  if (!app) {
-    console.error("❌ #app fehlt im DOM");
-    return;
-  }
+  if (!app) return;
 
   const clean = normalizePath(path);
   const file = routes[clean] || routes["/404"];
@@ -123,7 +104,6 @@ async function loadPage(path) {
 
   window.scrollTo(0, 0);
 
-  // reset countdown
   if (countdownInterval) {
     clearInterval(countdownInterval);
     countdownInterval = null;
@@ -133,7 +113,7 @@ async function loadPage(path) {
 }
 
 /* =========================
-NAVIGATION (SPA)
+NAVIGATION
 ========================= */
 
 document.addEventListener("click", (e) => {
@@ -144,7 +124,6 @@ document.addEventListener("click", (e) => {
   if (!href) return;
 
   e.preventDefault();
-
   history.pushState({}, "", href);
   loadPage(href);
 });
@@ -158,26 +137,17 @@ COUNTDOWN
 ========================= */
 
 const frgEvents = [
-  { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
-  { title: "FRG Simulcast", date: "2026-05-30T19:00:00" },
-  { title: "FRG Crossover Night", date: "2026-06-27T19:00:00" },
-  { title: "FRG Schweiz Special", date: "2026-08-01T12:00:00" },
-  { title: "FRG Crossover Night", date: "2026-09-26T19:00:00" },
-  { title: "1 Jahr Fleury Radio Group", date: "2026-10-28T12:00:00" },
-  { title: "FRG Halloween Special", date: "2026-10-31T12:00:00" },
-  { title: "FRG Crossover Night", date: "2026-11-28T20:00:00" },
-  { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
-  { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
+  { title: "Crossover Night", date: "2026-04-25T20:00:00" },
+  { title: "Simulcast", date: "2026-05-30T19:00:00" },
+  { title: "Schweiz Special", date: "2026-08-01T12:00:00" },
+  { title: "1 Jahr FRG", date: "2026-10-28T12:00:00" }
 ];
 
 function initCountdown() {
   const box = document.querySelector(".countdown");
-
   if (!box) return;
 
-  if (countdownInterval) {
-    clearInterval(countdownInterval);
-  }
+  if (countdownInterval) clearInterval(countdownInterval);
 
   const next = frgEvents
     .map(e => ({ ...e, time: new Date(e.date).getTime() }))
@@ -195,7 +165,6 @@ function initCountdown() {
     if (diff <= 0) {
       box.style.display = "none";
       clearInterval(countdownInterval);
-      countdownInterval = null;
       return;
     }
 
@@ -204,14 +173,45 @@ function initCountdown() {
     const m = Math.floor((diff % 3600000) / 60000);
     const s = Math.floor((diff % 60000) / 1000);
 
-    const values = [d, h, m, s];
-
-    ["days", "hours", "minutes", "seconds"].forEach((id, i) => {
+    ["days","hours","minutes","seconds"].forEach((id, i) => {
       const el = document.getElementById(id);
-      if (el) el.textContent = String(values[i]).padStart(2, "0");
+      if (el) el.textContent = [d,h,m,s][i];
     });
 
   }, 1000);
+}
+
+/* =========================
+EVENT FILTER (DEIN HTML)
+========================= */
+
+function initEventFilter() {
+
+  if (eventInit) return;
+  eventInit = true;
+
+  const btns = document.querySelectorAll(".filter-btn");
+  const cards = document.querySelectorAll(".event-card");
+
+  if (!btns.length || !cards.length) return;
+
+  btns.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+      btns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const filter = btn.dataset.filter;
+
+      cards.forEach(card => {
+
+        if (card.classList.contains("hinweis")) return;
+
+        const show = filter === "all" || card.classList.contains(filter);
+        card.style.display = show ? "block" : "none";
+      });
+    });
+  });
 }
 
 /* =========================
@@ -220,20 +220,19 @@ PAGE INIT
 
 function initPageScripts() {
   initCountdown();
+  initEventFilter();
 }
 
 /* =========================
-BOOT SYSTEM
+BOOT
 ========================= */
 
 window.addEventListener("DOMContentLoaded", async () => {
 
   console.log("🚀 FRG SYSTEM START");
 
-  // 🔥 HEADER + FOOTER (WICHTIG: ohne führenden Slash!)
-  await loadPartial("nav-slot", "partials/header.html");
+  await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
-  // START PAGE
   loadPage(location.pathname);
 });
