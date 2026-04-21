@@ -29,11 +29,6 @@ const routes = {
 };
 
 const cache = new Map();
-
-/* =========================
-STATE
-========================= */
-
 let countdownInterval = null;
 
 /* =========================
@@ -44,7 +39,11 @@ function normalizePath(path) {
   try {
     const url = new URL(path, location.origin);
     let clean = url.pathname;
-    if (clean.length > 1) clean = clean.replace(/\/+$/, "");
+
+    if (clean.length > 1) {
+      clean = clean.replace(/\/+$/, "");
+    }
+
     return clean || "/";
   } catch {
     return "/";
@@ -52,7 +51,7 @@ function normalizePath(path) {
 }
 
 /* =========================
-PARTIALS
+PARTIALS (NAV / FOOTER)
 ========================= */
 
 async function loadPartial(id, file) {
@@ -67,7 +66,7 @@ async function loadPartial(id, file) {
 }
 
 /* =========================
-PAGE LOADER (SPA)
+PAGE LOADER
 ========================= */
 
 async function loadFile(file) {
@@ -111,13 +110,25 @@ SPA NAVIGATION
 ========================= */
 
 document.addEventListener("click", (e) => {
-  const link = e.target.closest("a[data-link]");
+
+  const link = e.target.closest("a");
   if (!link) return;
 
   const href = link.getAttribute("href");
-  if (!href || href.startsWith("http")) return;
+  if (!href) return;
 
+  // EXTERNAL LINKS IGNORE
+  const external =
+    href.startsWith("http") ||
+    href.startsWith("https") ||
+    href.startsWith("mailto:") ||
+    href.startsWith("tel:");
+
+  if (external) return;
+
+  // SPA LINKS
   e.preventDefault();
+
   history.pushState({}, "", href);
   loadPage(href);
 });
@@ -127,14 +138,12 @@ window.addEventListener("popstate", () => {
 });
 
 /* =========================
-GLOBAL UI SYSTEM
+GLOBAL UI (MENU + DROPDOWN + COOKIE)
 ========================= */
 
 document.addEventListener("click", (e) => {
 
-  /* =========================
-  MENU
-  ========================= */
+  /* MENU */
   const burger = e.target.closest("#hamburgerBtn");
   const nav = document.getElementById("mainNav");
 
@@ -143,69 +152,45 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  /* =========================
-  DROPDOWN (FIXED)
-  ========================= */
+  /* DROPDOWN */
   const dropdownBtn = e.target.closest(".dropdown-toggle");
 
   if (dropdownBtn) {
     const dropdown = dropdownBtn.closest(".nav-dropdown");
 
-    if (!dropdown) return;
-
-    const isOpen = dropdown.classList.contains("open");
-
     document.querySelectorAll(".nav-dropdown.open")
       .forEach(d => d.classList.remove("open"));
 
-    if (!isOpen) {
-      dropdown.classList.add("open");
-    }
-
+    dropdown.classList.toggle("open");
     return;
   }
 
+  /* CLOSE DROPDOWN OUTSIDE */
   document.querySelectorAll(".nav-dropdown.open")
     .forEach(d => d.classList.remove("open"));
 
-  /* =========================
-  COOKIE BANNER
-  ========================= */
+  /* COOKIE */
   const cookieBtn = e.target.closest("#cookie-accept");
-  const cookieBanner = document.getElementById("cookie-banner");
+  const cookie = document.getElementById("cookie-banner");
 
-  if (cookieBtn && cookieBanner) {
+  if (cookieBtn && cookie) {
     localStorage.setItem("frg_cookies", "true");
-    cookieBanner.style.display = "none";
-    return;
-  }
-
-  /* =========================
-  RADIO PLAYER
-  ========================= */
-  const station = e.target.closest(".station");
-  if (station) {
-    window.setStation?.(station.dataset.station);
-    return;
-  }
-
-  const playBtn = e.target.closest("#playBtn");
-  if (playBtn) {
-    window.togglePlay?.();
-    return;
+    cookie.style.display = "none";
   }
 });
 
 /* =========================
-RADIO PLAYER
+RADIO PLAYER (HOOK ONLY)
 ========================= */
 
 function initRadioPlayer() {
-
   const audio = document.getElementById("audioPlayer");
   const playBtn = document.getElementById("playBtn");
 
   if (!audio || !playBtn) return;
+
+  let current = "rhywaelle";
+  let playing = false;
 
   const streams = {
     rhywaelle: "https://stream.laut.fm/rhywaelle",
@@ -213,19 +198,15 @@ function initRadioPlayer() {
     rhyrock: "https://stream.laut.fm/rhyrock-radio"
   };
 
-  let current = "rhywaelle";
-  let playing = false;
-
-  window.setStation = (station) => {
-    current = station;
-
+  window.setStation = (s) => {
+    current = s;
     if (playing) {
       audio.src = streams[current];
       audio.play();
     }
   };
 
-  window.togglePlay = () => {
+  playBtn.addEventListener("click", () => {
     if (!playing) {
       audio.src = streams[current];
       audio.play();
@@ -236,22 +217,20 @@ function initRadioPlayer() {
       playing = false;
       playBtn.textContent = "▶";
     }
-  };
+  });
 }
 
 /* =========================
-EVENT FILTER (FIXED)
+EVENT FILTER
 ========================= */
 
 function initEventFilter() {
-
   const buttons = document.querySelectorAll(".filter-btn");
   const cards = document.querySelectorAll(".event-card");
 
   if (!buttons.length || !cards.length) return;
 
   buttons.forEach(btn => {
-
     btn.addEventListener("click", () => {
 
       const filter = btn.dataset.filter;
@@ -271,9 +250,7 @@ function initEventFilter() {
             ? "block"
             : "none";
       });
-
     });
-
   });
 }
 
@@ -296,7 +273,6 @@ const frgEvents = [
 
 
 function initCountdown() {
-
   const box = document.querySelector(".countdown");
   if (!box) return;
 
@@ -339,28 +315,35 @@ PAGE INIT
 ========================= */
 
 function initPageScripts() {
-
   initCountdown();
   initEventFilter();
 
-  const banner = document.getElementById("cookie-banner");
-  if (banner && localStorage.getItem("frg_cookies") === "true") {
-    banner.style.display = "none";
+  const cookie = document.getElementById("cookie-banner");
+  if (cookie && localStorage.getItem("frg_cookies") === "true") {
+    cookie.style.display = "none";
   }
 }
 
 /* =========================
-BOOT
+BOOT + 404 RESTORE FIX
 ========================= */
 
 window.addEventListener("DOMContentLoaded", async () => {
-
-  console.log("🚀 FRG SYSTEM START");
 
   await loadPartial("nav-slot", "partials/nav.html");
   await loadPartial("footer-slot", "partials/footer.html");
 
   initRadioPlayer();
 
-  loadPage(location.pathname);
+  // 🔥 404 REDIRECT RESTORE
+  const redirect = sessionStorage.getItem("spa_redirect");
+
+  if (redirect) {
+    sessionStorage.removeItem("spa_redirect");
+    history.replaceState({}, "", redirect);
+  }
+
+  const path = normalizePath(location.pathname);
+
+  loadPage(routes[path] ? path : "/404");
 });
