@@ -1017,10 +1017,6 @@ main{
     margin-top: 5px;
   }
 
-  /* ❌ H1 AUSBLENDEN */
-  .logo-text{
-    display: none !important;
-  }
 
   /* NAV UNTEN */
   .nav-links{
