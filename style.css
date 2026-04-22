@@ -1155,3 +1155,40 @@ FIX: MENU IM SHRINK SICHTBAR
 #menu-overlay.active{
   display: block;
 }
+
+/* =========================
+🔥 MOBILE SHRINK = NUR PLAYER
+========================= */
+@media (max-width: 768px){
+
+  /* ❌ Hamburger komplett ausblenden */
+  #mainHeader.shrink #hamburgerBtn{
+    display: none !important;
+  }
+
+  /* ❌ Navigation komplett ausblenden */
+  #mainHeader.shrink .nav-links{
+    display: none !important;
+  }
+
+  /* ❌ Logo ausblenden */
+  #mainHeader.shrink .logo-area{
+    display: none !important;
+  }
+
+  /* ❌ Header Text / grosser Bereich weg */
+  #mainHeader.shrink .header-full{
+    display: none !important;
+  }
+
+  /* ✅ Player zentriert & clean */
+  #mainHeader.shrink .header-inner{
+    justify-content: center;
+  }
+
+  #mainHeader.shrink .frg-player{
+    width: 100%;
+    justify-content: center;
+  }
+
+}
