@@ -230,21 +230,28 @@ function initHeader() {
 /* =========================
 RADIO PLAYER
 ========================= */
-
 function initRadioPlayer() {
   const audio = document.getElementById("audioPlayer");
   const playBtn = document.getElementById("playBtn");
   const stations = document.querySelectorAll(".station");
+  const nowPlaying = document.getElementById("nowPlaying");
 
   if (!audio || !playBtn) return;
 
   let current = "rhywaelle";
   let playing = false;
+  let songInterval = null;
 
   const streams = {
     rhywaelle: "https://stream.laut.fm/rhywaelle",
     winterlord: "https://stream.laut.fm/winterlord-fm",
     rhyrock: "https://stream.laut.fm/rhyrock-radio"
+  };
+
+  const apis = {
+    rhywaelle: "https://api.laut.fm/station/rhywaelle/current_song",
+    winterlord: "https://api.laut.fm/station/winterlord-fm/current_song",
+    rhyrock: "https://api.laut.fm/station/rhyrock/current_song"
   };
 
   function setStation(s) {
@@ -257,6 +264,8 @@ function initRadioPlayer() {
       audio.src = streams[current];
       audio.play();
     }
+
+    updateNowPlaying(); // sofort neuer Song
   }
 
   stations.forEach(btn => {
@@ -271,12 +280,60 @@ function initRadioPlayer() {
       audio.play();
       playing = true;
       playBtn.textContent = "⏸";
+
+      startSongUpdates(); // 🔥 wichtig
     } else {
       audio.pause();
       playing = false;
       playBtn.textContent = "▶";
+
+      stopSongUpdates();
     }
   });
+
+  async function updateNowPlaying() {
+    try {
+      const res = await fetch(apis[current]);
+      const data = await res.json();
+
+      const title = data.title || "Unbekannt";
+      const artist = data.artist?.name || "";
+      const cover = data.album?.image || "/img/default-cover.png";
+
+      const text = artist ? `${artist} - ${title}` : title;
+      if (nowPlaying) nowPlaying.textContent = text;
+
+      // 🔥 iPhone / Sperrbildschirm
+      if ("mediaSession" in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: title,
+          artist: artist,
+          album: current,
+          artwork: [
+            { src: cover, sizes: "512x512", type: "image/png" }
+          ]
+        });
+      }
+
+    } catch (err) {
+      if (nowPlaying) nowPlaying.textContent = "Live Stream";
+      console.error(err);
+    }
+  }
+
+  function startSongUpdates() {
+    updateNowPlaying();
+
+    if (songInterval) clearInterval(songInterval);
+    songInterval = setInterval(updateNowPlaying, 10000);
+  }
+
+  function stopSongUpdates() {
+    if (songInterval) {
+      clearInterval(songInterval);
+      songInterval = null;
+    }
+  }
 }
 
 /* =========================
