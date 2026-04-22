@@ -6,7 +6,7 @@ const routes = {
   "/": "/pages/home.html",
 
   "/radios": "/pages/radios.html",
-  "/rhywälle": "/pages/rhywaelle.html",
+  "/rhywaelle": "/pages/rhywaelle.html",
   "/winterlord": "/pages/winterlord.html",
   "/rhyrock": "/pages/rhyrock.html",
 
