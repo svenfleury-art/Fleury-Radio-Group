@@ -246,7 +246,7 @@ function initRadioPlayer() {
   const apis = {
     rhywaelle: "https://api.laut.fm/station/rhywaelle/current_song",
     winterlord: "https://api.laut.fm/station/winterlord-fm/current_song",
-    rhyrock: "https://api.laut.fm/station/rhyrock/current_song"
+    rhyrock: "https://api.laut.fm/station/rhyrock-radio/current_song"
   };
 
   function setStation(s) {
