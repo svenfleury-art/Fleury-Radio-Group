@@ -185,7 +185,18 @@ footer{
 }
 
 @media (max-width:768px){
-  .logo-text{ display:none; }
+
+  /* ✅ Logo Text wieder sichtbar */
+  .logo-text{
+    display:block;
+    font-size:28px;
+  }
+
+  /* ❌ im Shrink wieder ausblenden */
+  #mainHeader.shrink .logo-text{
+    display:none !important;
+  }
+
 }
 
 /* =========================
