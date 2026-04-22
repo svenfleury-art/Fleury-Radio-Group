@@ -1074,84 +1074,10 @@ SMOOTH HEADER SHRINK
 }
 
 
-/* =========================
-FIX: MENU IM SHRINK
-========================= */
-
-/* NAV wird unabhängig vom header-full */
-.nav-links{
-  position: relative;
-  z-index: 9999;
-}
-
-/* WICHTIG: im shrink nav sichtbar machen */
-#mainHeader.shrink .nav-links.open{
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-
-  background: #0b1a3a;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 20px 0;
-}
-
 /* verhindert blockieren */
 #mainHeader.shrink .header-full{
   pointer-events: none;
 }
 
-#mainHeader.shrink .nav-links.open{
-  pointer-events: auto;
-}
 
-/* =========================
-FIX: MENU IM SHRINK SICHTBAR
-========================= */
 
-/* Header darf nichts abschneiden */
-#mainHeader{
-  overflow: visible !important;
-}
-
-/* NAV STANDARD (geschlossen) */
-.nav-links{
-  position: relative;
-  z-index: 1000;
-}
-
-/* 🔥 NAV OPEN IM SHRINK */
-#mainHeader.shrink .nav-links.open{
-  position: fixed;          /* 🔥 WICHTIG */
-  top: 80px;                /* unter Header */
-  left: 0;
-  width: 100%;
-
-  background: #0b1a3a;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 20px 0;
-  gap: 10px;
-
-  z-index: 99999;           /* über alles */
-}
-
-/* overlay korrekt */
-#menu-overlay{
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 9990;
-  display: none;
-}
-
-#menu-overlay.active{
-  display: block;
-}
