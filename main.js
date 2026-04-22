@@ -112,7 +112,7 @@ async function loadPage(path) {
   }
 
   initPageScripts();
-  updateHeaderSpacing(); // 🔥 wichtig nach Page Load
+  updateHeaderSpacing();
 }
 
 /* =========================
@@ -206,21 +206,16 @@ function initHeader() {
   const header = document.getElementById("mainHeader");
   if (!header) return;
 
-  let lastScroll = 0;
-
   window.addEventListener("scroll", () => {
     const scroll = window.scrollY;
 
-    // SHRINK TRIGGER
     if (scroll > 80) {
       header.classList.add("shrink");
     } else {
       header.classList.remove("shrink");
     }
 
-    // 🔥 SMOOTH SCALE PROGRESS (0 → 1)
     const progress = Math.min(scroll / 150, 1);
-
     header.style.backdropFilter = `blur(${progress * 10}px)`;
 
     updateHeaderSpacing();
@@ -265,7 +260,7 @@ function initRadioPlayer() {
       audio.play();
     }
 
-    updateNowPlaying(); // sofort neuer Song
+    updateNowPlaying();
   }
 
   stations.forEach(btn => {
@@ -281,7 +276,7 @@ function initRadioPlayer() {
       playing = true;
       playBtn.textContent = "⏸";
 
-      startSongUpdates(); // 🔥 wichtig
+      startSongUpdates();
     } else {
       audio.pause();
       playing = false;
@@ -298,17 +293,18 @@ function initRadioPlayer() {
 
       const title = data.title || "Unbekannt";
       const artist = data.artist?.name || "";
-      const cover = data.album?.image || "/img/default-cover.png";
+
+      // 👉 IMMER FRG LOGO
+      const cover = "/img/Fleury Radio Group Logo.png";
 
       const text = artist ? `${artist} - ${title}` : title;
       if (nowPlaying) nowPlaying.textContent = text;
 
-      // 🔥 iPhone / Sperrbildschirm
       if ("mediaSession" in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
           title: title,
           artist: artist,
-          album: current,
+          album: "Fleury Radio Group",
           artwork: [
             { src: cover, sizes: "512x512", type: "image/png" }
           ]
@@ -386,7 +382,6 @@ const frgEvents = [
   { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
-
 
 function initCountdown() {
   const box = document.querySelector(".countdown");
