@@ -459,3 +459,27 @@ window.addEventListener("DOMContentLoaded", async () => {
   const path = normalizePath(location.pathname);
   loadPage(routes[path] ? path : "/404");
 });
+
+
+/* =========================
+FORM HANDLING (AGB CHECKBOX)
+========================= */
+
+document.addEventListener("change", (e) => {
+
+  // FORM 1
+  if (e.target.id === "agb-1") {
+    const btn = document.getElementById("submitBtn-1");
+    if (!btn) return;
+
+    btn.disabled = !e.target.checked;
+  }
+
+  // FORM 2
+  if (e.target.id === "agb-2") {
+    const btn = document.getElementById("submitBtn-2");
+    if (!btn) return;
+
+    btn.disabled = !e.target.checked;
+  }
+});
