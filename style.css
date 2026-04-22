@@ -1075,27 +1075,36 @@ SMOOTH HEADER SHRINK
 
 
 /* =========================
-NAV FIX IM SHRINK
+FIX: MENU IM SHRINK
 ========================= */
 
-/* NAV darf im SHRINK trotzdem aufgehen */
-#mainHeader.shrink .nav-links.open{
-  max-height: 1000px;
-  opacity: 1;
-  visibility: visible;
+/* NAV wird unabhängig vom header-full */
+.nav-links{
+  position: relative;
+  z-index: 9999;
 }
 
-/* wichtig: header-full darf NAV nicht killen */
+/* WICHTIG: im shrink nav sichtbar machen */
+#mainHeader.shrink .nav-links.open{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+
+  background: #0b1a3a;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 20px 0;
+}
+
+/* verhindert blockieren */
 #mainHeader.shrink .header-full{
   pointer-events: none;
 }
 
 #mainHeader.shrink .nav-links.open{
   pointer-events: auto;
-}
-
-/* NAV über alles legen wenn offen */
-.nav-links{
-  position: relative;
-  z-index: 2000;
 }
