@@ -48,7 +48,7 @@ function normalizePath(path) {
 }
 
 /* =========================
-HEADER SPACING FIX (🔥 NEU)
+HEADER SPACING
 ========================= */
 
 function updateHeaderSpacing() {
@@ -112,7 +112,7 @@ async function loadPage(path) {
   }
 
   initPageScripts();
-  updateHeaderSpacing(); // 🔥 wichtig nach Page Load
+  updateHeaderSpacing();
 }
 
 /* =========================
@@ -151,32 +151,49 @@ window.addEventListener("popstate", () => {
 });
 
 /* =========================
-GLOBAL UI
+GLOBAL UI (FIXED MENU BUG)
 ========================= */
 
 document.addEventListener("click", (e) => {
 
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
+  const header = document.getElementById("mainHeader");
 
+  /* HAMBURGER */
   const burger = e.target.closest("#hamburgerBtn");
   if (burger && nav) {
+
     nav.classList.toggle("open");
     overlay?.classList.toggle("active");
+
+    // 🔥 FIX: Menu IMMER sichtbar (auch im shrink)
+    if (nav.classList.contains("open")) {
+      nav.style.position = "fixed";
+      nav.style.top = header.offsetHeight + "px";
+      nav.style.left = "0";
+      nav.style.right = "0";
+      nav.style.zIndex = "9999";
+    } else {
+      nav.style.position = "";
+    }
+
     return;
   }
 
+  /* OVERLAY CLOSE */
   if (e.target.id === "menu-overlay") {
     nav?.classList.remove("open");
     overlay?.classList.remove("active");
+    nav.style.position = "";
     return;
   }
 
+  /* DROPDOWN */
   const dropdownBtn = e.target.closest(".dropdown-toggle");
 
   if (dropdownBtn) {
     const dropdown = dropdownBtn.closest(".nav-dropdown");
-
     const isOpen = dropdown.classList.contains("open");
 
     document.querySelectorAll(".nav-dropdown.open")
@@ -189,6 +206,7 @@ document.addEventListener("click", (e) => {
   document.querySelectorAll(".nav-dropdown.open")
     .forEach(d => d.classList.remove("open"));
 
+  /* COOKIE */
   const cookieBtn = e.target.closest("#cookie-accept");
   const cookie = document.getElementById("cookie-banner");
 
@@ -198,9 +216,8 @@ document.addEventListener("click", (e) => {
   }
 });
 
-
 /* =========================
-LOGO FIX (HOME NAV)
+LOGO → HOME (FIX)
 ========================= */
 
 document.addEventListener("click", (e) => {
@@ -208,34 +225,24 @@ document.addEventListener("click", (e) => {
   if (!logo) return;
 
   e.preventDefault();
-
   history.pushState({}, "", "/");
   loadPage("/");
 });
 
 /* =========================
-HEADER SHRINK
+HEADER SHRINK SMOOTH
 ========================= */
 
 function initHeader() {
   const header = document.getElementById("mainHeader");
   if (!header) return;
 
-  let lastScroll = 0;
-
   window.addEventListener("scroll", () => {
     const scroll = window.scrollY;
 
-    // SHRINK TRIGGER
-    if (scroll > 80) {
-      header.classList.add("shrink");
-    } else {
-      header.classList.remove("shrink");
-    }
+    header.classList.toggle("shrink", scroll > 80);
 
-    // 🔥 SMOOTH SCALE PROGRESS (0 → 1)
     const progress = Math.min(scroll / 150, 1);
-
     header.style.backdropFilter = `blur(${progress * 10}px)`;
 
     updateHeaderSpacing();
@@ -313,7 +320,6 @@ function initEventFilter() {
       btn.classList.add("active");
 
       cards.forEach(card => {
-
         if (card.classList.contains("hinweis")) {
           card.style.display = "block";
           return;
@@ -344,7 +350,6 @@ const frgEvents = [
   { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
   { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
-
 
 function initCountdown() {
   const box = document.querySelector(".countdown");
@@ -412,12 +417,6 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   updateHeaderSpacing();
   window.addEventListener("resize", updateHeaderSpacing);
-
-  const redirect = sessionStorage.getItem("spa_redirect");
-  if (redirect) {
-    sessionStorage.removeItem("spa_redirect");
-    history.replaceState({}, "", redirect);
-  }
 
   const path = normalizePath(location.pathname);
   loadPage(routes[path] ? path : "/404");
