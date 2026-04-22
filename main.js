@@ -198,6 +198,21 @@ document.addEventListener("click", (e) => {
   }
 });
 
+
+/* =========================
+LOGO FIX (HOME NAV)
+========================= */
+
+document.addEventListener("click", (e) => {
+  const logo = e.target.closest(".logo-link");
+  if (!logo) return;
+
+  e.preventDefault();
+
+  history.pushState({}, "", "/");
+  loadPage("/");
+});
+
 /* =========================
 HEADER SHRINK
 ========================= */
