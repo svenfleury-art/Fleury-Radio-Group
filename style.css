@@ -27,18 +27,7 @@ body {
   color: var(--text);
   background: linear-gradient(160deg, var(--bg1), var(--bg2));
   line-height: 1.5;
-  padding-top: 70px;
-}
-
-/* =========================
-   CENTER LAYOUT
-========================= */
-main,
-footer {
-  max-width: 1100px;
-  margin: 20px auto;
-  padding: 20px;
-  text-align: center;
+  padding-top: 80px;
 }
 
 /* =========================
@@ -56,84 +45,133 @@ footer {
   z-index: 10000;
 
   border-radius: 18px;
-  overflow: hidden;
-
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-  transition: all 0.3s ease;
-}
 
-/* =========================
-   LINKS
-========================= */
-a {
-  color: var(--gold);
-  text-decoration: none;
-}
-
-/* =========================
-   NAVIGATION
-========================= */
-.nav-links {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
 
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease;
+  padding: 10px 20px;
+}
 
-  width: 100%;
+/* =========================
+   LOGO (FIXED SIZE)
+========================= */
+.logo-area {
+  display: flex;
   align-items: center;
 }
 
-.nav-links.open {
-  max-height: 900px;
-  padding-top: 10px;
+.logo-area img {
+  height: 85px;
+  width: auto;
+  transition: 0.3s ease;
+}
+
+#mainHeader.shrink .logo-area img {
+  height: 50px;
+}
+
+/* =========================
+   MENU LINKS (CENTER LEFT LOOK)
+========================= */
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .nav-links a {
   background: var(--surface-2);
-  padding: 12px 14px;
+  padding: 10px 14px;
   border-radius: 12px;
-  width: 100%;
-  max-width: 300px;
-  text-align: center;
+
+  color: var(--text);
+  font-size: 14px;
+
+  transition: 0.2s ease;
 }
 
+.nav-links a:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* =========================
+   HAMBURGER
+========================= */
 #hamburgerBtn {
   background: var(--surface-2);
   border: none;
   color: var(--text);
-  padding: 12px 16px;
-  border-radius: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
   cursor: pointer;
 }
 
 /* =========================
-   LOGO (FIXED — NICHT ZU GROSS)
+   PLAYER
 ========================= */
-.logo-img img {
-  height: 120px;
-  max-height: 120px;
-  width: auto;
-  transition: all 0.3s ease;
-}
+.frg-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px auto;
 
-/* SHRINK HEADER */
-#mainHeader.shrink .logo-img img {
-  height: 55px;
+  padding: 10px 16px;
+  background: rgba(10,20,60,0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
 }
 
 /* =========================
-   TEXT LOGO
+   STATION BUTTONS
 ========================= */
-.logo-text {
-  font-size: 50px;
+.station-switch {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.station {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: var(--text);
+
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* hover */
+.station:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* =========================
+   🔥 ACTIVE STATION (HIGHLIGHT)
+========================= */
+.station.active {
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
+
   font-weight: 700;
+  box-shadow: 0 0 12px rgba(250,204,21,0.6);
 }
 
 /* =========================
-   SECTIONS / CARDS
+   SECTIONS
 ========================= */
 section,
 .cards,
@@ -149,7 +187,7 @@ section,
 }
 
 /* =========================
-   CARD GRID
+   GRID
 ========================= */
 .cards,
 .event-grid {
@@ -173,12 +211,12 @@ section,
   justify-content: center;
   flex-wrap: wrap;
   gap: 15px;
-  margin: 20px auto;
 }
 
 .time-box {
   width: 110px;
   height: 120px;
+
   background: var(--surface-2);
   border-radius: 16px;
 
@@ -187,7 +225,6 @@ section,
   justify-content: center;
   align-items: center;
 
-  box-shadow: 0 10px 25px rgba(0,0,0,.25);
   transition: 0.2s;
 }
 
@@ -204,37 +241,6 @@ section,
 .time-box small {
   font-size: 12px;
   opacity: 0.8;
-  margin-top: 10px;
-}
-
-/* =========================
-   TEAM
-========================= */
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 25px;
-}
-
-/* =========================
-   PLAYER
-========================= */
-.frg-player {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
-
-  margin: 20px auto;
-  padding: 12px 18px;
-  width: fit-content;
-  max-width: 95%;
-
-  background: rgba(10,20,60,0.6);
-  backdrop-filter: blur(12px);
-
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
 /* =========================
@@ -252,20 +258,18 @@ section,
 ========================= */
 @media (max-width: 768px) {
 
-  .team-grid {
-    grid-template-columns: 1fr;
+  #mainHeader {
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .logo-text {
-    display: none;
+  .nav-links {
+    position: static;
+    transform: none;
+    flex-direction: column;
   }
 
-  .nav-links a,
-  .nav-button {
-    width: 90%;
-  }
-
-  .logo-img img {
-    height: 90px;
+  .logo-area img {
+    height: 70px;
   }
 }
