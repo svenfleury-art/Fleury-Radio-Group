@@ -483,3 +483,73 @@ document.addEventListener("change", (e) => {
     btn.disabled = !e.target.checked;
   }
 });
+
+
+/* =========================
+CUSTOM THANK YOU MESSAGE (FRG)
+========================= */
+
+document.addEventListener("submit", async (e) => {
+
+  const form = e.target;
+
+  // FORM 1 (Track einreichen)
+  if (form.id === "artist-form-1") {
+    e.preventDefault();
+
+    const msg = document.getElementById("form-msg-1");
+
+    try {
+      await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "Accept": "application/json" }
+      });
+
+      form.reset();
+
+      if (msg) {
+        msg.style.display = "block";
+        msg.textContent = "🎉 Danke! Dein Track wurde erfolgreich eingereicht. Wir prüfen ihn und melden uns bei dir.";
+      }
+
+    } catch (err) {
+      if (msg) {
+        msg.style.display = "block";
+        msg.textContent = "❌ Fehler beim Senden. Bitte versuch es erneut.";
+      }
+    }
+
+    return;
+  }
+
+  // FORM 2 (Kontakt)
+  if (form.id === "artist-form-2") {
+    e.preventDefault();
+
+    const msg = document.getElementById("form-msg-2");
+
+    try {
+      await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "Accept": "application/json" }
+      });
+
+      form.reset();
+
+      if (msg) {
+        msg.style.display = "block";
+        msg.textContent = "✅ Nachricht gesendet! Danke für deine Anfrage – wir melden uns so schnell wie möglich.";
+      }
+
+    } catch (err) {
+      if (msg) {
+        msg.style.display = "block";
+        msg.textContent = "❌ Fehler beim Senden. Bitte versuch es erneut.";
+      }
+    }
+
+    return;
+  }
+});
