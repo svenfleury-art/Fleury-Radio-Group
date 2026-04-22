@@ -17,7 +17,7 @@ const routes = {
   "/mitmachen": "/pages/mitmachen.html",
 
   "/spezial-programm": "/pages/spezial-programm.html",
-  "/artists": "/pages/artists.html",
+  "/artists": "/pages/Artists.html",
 
   "/werbung": "/pages/werbung.html",
   "/agb": "/pages/agb.html",
