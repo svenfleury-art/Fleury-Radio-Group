@@ -365,6 +365,7 @@ COUNTDOWN (UPDATED)
 ========================= */
 
 const frgEvents = [
+  { title: "FRG Test", date: "2026-04-27T19:00:00" },
   { title: "FRG Simulcast", date: "2026-05-30T19:00:00" },
   { title: "FRG Crossover Night", date: "2026-06-27T19:00:00" },
   { title: "FRG Schweiz Special", date: "2026-08-01T12:00:00" },
