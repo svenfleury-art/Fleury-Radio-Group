@@ -162,31 +162,115 @@ footer{
    HEADER
 ========================= */
 /* =========================
-   NAV BASE
+   HEADER WRAPPER
+========================= */
+
+#mainHeader{
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: calc(100% - 20px);
+  max-width: 1200px;
+
+  background: #0b1a3a;
+  z-index: 10000;
+
+  border-radius: 18px;
+  overflow: visible;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* SHRINK */
+#mainHeader.shrink{
+  background:#08122a;
+}
+
+/* =========================
+   HEADER LAYOUT
+========================= */
+
+.site-header{
+  background:#06152F;
+  padding:20px;
+  border-radius:16px;
+  border:1px solid rgba(250,204,21,0.15);
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:10px;
+}
+
+.logo-img img{
+  height:170px;
+  transition:0.3s ease;
+}
+
+.logo-text{
+  font-size:45px;
+  font-weight:700;
+  color:var(--text);
+}
+
+/* =========================
+   NAV BASE (DESKTOP DEFAULT)
 ========================= */
 
 .nav-links{
   display:flex;
-  gap:12px;
+  flex-direction:row;
+  gap:14px;
   align-items:center;
+  justify-content:center;
+
+  position:relative;
+  z-index:1000;
 }
 
-/* LINKS (DESKTOP) */
-.nav-links > a,
-.nav-links > .nav-dropdown > .nav-button{
+/* LINKS */
+.nav-links a,
+.nav-links .nav-button{
   background:var(--surface-2);
-  color:var(--text);
+
+  color:var(--gold); /* 🔥 FIX: Gold wieder */
+  text-decoration:none;
 
   padding:10px 14px;
   border-radius:12px;
 
-  text-align:center;
   font-size:14px;
+  font-weight:500;
 
-  border:1px solid rgba(250,204,21,.2);
+  border:1px solid rgba(250,204,21,.25);
   cursor:pointer;
 
+  transition:0.2s ease;
   white-space:nowrap;
+}
+
+.nav-links a:hover{
+  background:rgba(255,255,255,0.08);
+}
+
+/* =========================
+   HAMBURGER
+========================= */
+
+#hamburgerBtn{
+  display:none;
+  background:var(--surface-2);
+  border:none;
+  color:var(--text);
+
+  padding:10px 14px;
+  border-radius:12px;
+  cursor:pointer;
 }
 
 /* =========================
@@ -207,15 +291,14 @@ footer{
   gap:8px;
 
   padding-top:10px;
-  min-width:100%;
-  z-index:999;
+  min-width:180px;
+  z-index:9999;
 }
 
 .nav-dropdown.open .dropdown-menu{
   display:flex;
 }
 
-/* Dropdown Items */
 .dropdown-menu a{
   background:rgba(12,37,82,.95);
   color:var(--text);
@@ -230,34 +313,20 @@ footer{
 }
 
 /* =========================
-   HAMBURGER (MOBILE)
-========================= */
-
-#hamburgerBtn{
-  display:none;
-}
-
-/* =========================
-   MOBILE VERSION
+   MOBILE
 ========================= */
 
 @media (max-width:768px){
 
+  /* HAMBURGER sichtbar */
   #hamburgerBtn{
     display:block;
-    background:var(--surface-2);
-    border:none;
-    color:var(--text);
-
-    padding:10px 12px;
-    border-radius:12px;
-    cursor:pointer;
-
     width:85%;
     max-width:300px;
     margin:0 auto;
   }
 
+  /* NAV MOBILE (collapsed) */
   .nav-links{
     flex-direction:column;
     align-items:center;
@@ -267,6 +336,7 @@ footer{
     transition:max-height .4s ease;
 
     width:100%;
+    gap:10px;
   }
 
   .nav-links.open{
@@ -274,14 +344,14 @@ footer{
     padding-top:10px;
   }
 
-  /* Links untereinander */
-  .nav-links > a,
-  .nav-links > .nav-dropdown > .nav-button{
+  /* LINKS untereinander */
+  .nav-links a,
+  .nav-links .nav-button{
     width:85%;
     max-width:300px;
   }
 
-  /* Dropdown wird im Mobile NICHT absolut */
+  /* DROPDOWN MOBILE NORMAL (kein absolute!) */
   .nav-dropdown .dropdown-menu{
     position:static;
     width:100%;
@@ -291,6 +361,22 @@ footer{
   .dropdown-menu a{
     width:85%;
     max-width:300px;
+  }
+}
+
+/* =========================
+   DESKTOP SAFETY FIX
+========================= */
+
+@media (min-width:769px){
+
+  .nav-links{
+    max-height:none !important;
+    overflow:visible;
+  }
+
+  #hamburgerBtn{
+    display:none !important;
   }
 }
 
