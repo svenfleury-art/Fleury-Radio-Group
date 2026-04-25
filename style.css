@@ -158,9 +158,7 @@ footer{
   }
 }
 
-/* =========================
-   HEADER
-========================= */
+
 /* =========================
    HEADER WRAPPER
 ========================= */
@@ -181,8 +179,6 @@ footer{
   overflow: visible;
 
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-
-  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* SHRINK */
@@ -191,86 +187,62 @@ footer{
 }
 
 /* =========================
-   HEADER LAYOUT
+   GLOBAL LINK STYLE (🔥 ALLES GOLD)
 ========================= */
 
-.site-header{
-  background:#06152F;
-  padding:20px;
-  border-radius:16px;
-  border:1px solid rgba(250,204,21,0.15);
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
-  gap:10px;
-}
-
-.logo-img img{
-  height:170px;
-  transition:0.3s ease;
-}
-
-.logo-text{
-  font-size:45px;
-  font-weight:700;
-  color:var(--text);
+a{
+  color: var(--gold);
+  text-decoration: none;
 }
 
 /* =========================
-   NAV BASE (DESKTOP DEFAULT)
+   NAV CONTAINER
 ========================= */
 
 .nav-links{
   display:flex;
   flex-direction:row;
-  gap:14px;
   align-items:center;
   justify-content:center;
+  gap:12px;
 
   position:relative;
   z-index:1000;
 }
 
-/* LINKS */
+/* LINKS / BUTTONS (ALLES EINHEITLICH) */
 .nav-links a,
-.nav-links .nav-button{
+.nav-links .nav-button,
+#hamburgerBtn{
   background:var(--surface-2);
-
-  color:var(--gold); /* 🔥 FIX: Gold wieder */
-  text-decoration:none;
+  color:var(--gold);
 
   padding:10px 14px;
   border-radius:12px;
-
-  font-size:14px;
-  font-weight:500;
 
   border:1px solid rgba(250,204,21,.25);
   cursor:pointer;
 
+  font-size:14px;
+  font-weight:500;
+
   transition:0.2s ease;
-  white-space:nowrap;
+  text-align:center;
 }
 
-.nav-links a:hover{
+/* HOVER */
+.nav-links a:hover,
+.nav-links .nav-button:hover,
+#hamburgerBtn:hover{
   background:rgba(255,255,255,0.08);
 }
 
 /* =========================
-   HAMBURGER
+   HAMBURGER (ALWAYS AVAILABLE)
 ========================= */
 
 #hamburgerBtn{
-  display:none;
-  background:var(--surface-2);
-  border:none;
-  color:var(--text);
-
-  padding:10px 14px;
-  border-radius:12px;
-  cursor:pointer;
+  display:block;
 }
 
 /* =========================
@@ -291,7 +263,8 @@ footer{
   gap:8px;
 
   padding-top:10px;
-  min-width:180px;
+  min-width:200px;
+
   z-index:9999;
 }
 
@@ -299,59 +272,79 @@ footer{
   display:flex;
 }
 
+/* Dropdown Items */
 .dropdown-menu a{
   background:rgba(12,37,82,.95);
-  color:var(--text);
+  color:var(--gold);
 
   padding:10px 12px;
   border-radius:10px;
 
+  border:1px solid rgba(250,204,21,.2);
   text-align:center;
-  font-size:14px;
-
-  border:1px solid rgba(250,204,21,.15);
 }
 
 /* =========================
-   MOBILE
+   MOBILE + DESKTOP TOGGLE LOGIC
 ========================= */
 
-@media (max-width:768px){
+.nav-links{
+  max-height:0;
+  overflow:hidden;
+  flex-direction:column;
+  width:100%;
+  align-items:center;
+  transition:max-height .4s ease;
+}
 
-  /* HAMBURGER sichtbar */
+.nav-links.open{
+  max-height:900px;
+  padding-top:10px;
+}
+
+/* =========================
+   DESKTOP FIX
+========================= */
+
+@media (min-width: 769px){
+
+  /* Menü bleibt horizontal wenn offen */
+  .nav-links{
+    flex-direction:row;
+    max-height:none;
+    overflow:visible;
+    padding-top:0;
+  }
+
+  /* Dropdown bleibt float */
+  .nav-dropdown .dropdown-menu{
+    position:absolute;
+  }
+
+  /* Hamburger bleibt sichtbar (DEIN WUNSCH) */
   #hamburgerBtn{
     display:block;
-    width:85%;
-    max-width:300px;
-    margin:0 auto;
   }
+}
 
-  /* NAV MOBILE (collapsed) */
+/* =========================
+   MOBILE FIX
+========================= */
+
+@media (max-width: 768px){
+
   .nav-links{
     flex-direction:column;
-    align-items:center;
-
-    max-height:0;
-    overflow:hidden;
-    transition:max-height .4s ease;
-
     width:100%;
-    gap:10px;
   }
 
-  .nav-links.open{
-    max-height:900px;
-    padding-top:10px;
-  }
-
-  /* LINKS untereinander */
   .nav-links a,
-  .nav-links .nav-button{
+  .nav-links .nav-button,
+  #hamburgerBtn{
     width:85%;
-    max-width:300px;
+    max-width:320px;
   }
 
-  /* DROPDOWN MOBILE NORMAL (kein absolute!) */
   .nav-dropdown .dropdown-menu{
     position:static;
     width:100%;
@@ -360,23 +353,7 @@ footer{
 
   .dropdown-menu a{
     width:85%;
-    max-width:300px;
-  }
-}
-
-/* =========================
-   DESKTOP SAFETY FIX
-========================= */
-
-@media (min-width:769px){
-
-  .nav-links{
-    max-height:none !important;
-    overflow:visible;
-  }
-
-  #hamburgerBtn{
-    display:none !important;
+    max-width:320px;
   }
 }
 
