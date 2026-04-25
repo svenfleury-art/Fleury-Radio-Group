@@ -175,7 +175,7 @@ footer{
 }
 
 .logo-img img{
-  height:250px;
+  height:170px;
 }
 
 .logo-text{
@@ -217,7 +217,7 @@ a{
 .nav-links{
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:5px;
 
   max-height:0;
   overflow:hidden;
