@@ -199,7 +199,7 @@ document.addEventListener("click", (e) => {
 });
 
 /* =========================
-HEADER SHRINK
+HEADER SHRINK (FIXED)
 ========================= */
 
 function initHeader() {
@@ -207,6 +207,12 @@ function initHeader() {
   if (!header) return;
 
   window.addEventListener("scroll", () => {
+
+    const nav = document.getElementById("mainNav");
+
+    // 👉 Wenn Menü offen → KEINE Änderungen
+    if (nav && nav.classList.contains("open")) return;
+
     const scroll = window.scrollY;
 
     if (scroll > 80) {
