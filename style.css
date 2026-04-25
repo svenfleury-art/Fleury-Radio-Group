@@ -187,16 +187,16 @@ footer{
 }
 
 /* =========================
-   GLOBAL LINK STYLE (🔥 ALLES GOLD)
+   GLOBAL LINK STYLE (ALLES GOLD)
 ========================= */
 
 a{
-  color: var(--gold);
+  color: var(--gold) !important;
   text-decoration: none;
 }
 
 /* =========================
-   NAV CONTAINER
+   NAV BASE
 ========================= */
 
 .nav-links{
@@ -210,7 +210,7 @@ a{
   z-index:1000;
 }
 
-/* LINKS / BUTTONS (ALLES EINHEITLICH) */
+/* BUTTON STYLE (ALLE ELEMENTE EINHEITLICH) */
 .nav-links a,
 .nav-links .nav-button,
 #hamburgerBtn{
@@ -238,7 +238,7 @@ a{
 }
 
 /* =========================
-   HAMBURGER (ALWAYS AVAILABLE)
+   HAMBURGER
 ========================= */
 
 #hamburgerBtn{
@@ -251,35 +251,12 @@ a{
 
 .nav-dropdown{
   position:relative;
-}
-
-.nav-dropdown .dropdown-menu{
-  display:none;
-  position:absolute;
-  top:100%;
-  left:0;
-
-  flex-direction:column;
-  gap:8px;
-
-  padding-top:10px;
-  min-width:200px;
-
-  z-index:9999;
-}
-
-/* =========================
-   DROPDOWN BASE (STABLE)
-========================= */
-
-.nav-dropdown{
-  position:relative;
   display:flex;
   flex-direction:column;
   align-items:center;
 }
 
-/* BUTTON */
+/* Button */
 .nav-dropdown .nav-button{
   background:var(--surface-2);
   color:var(--gold);
@@ -294,14 +271,15 @@ a{
   text-align:center;
 }
 
-/* DROPDOWN HIDDEN */
+/* Dropdown hidden */
 .nav-dropdown .dropdown-menu{
+  display:none;
+
   position:absolute;
   top:100%;
   left:50%;
   transform:translateX(-50%);
 
-  display:none;
   flex-direction:column;
   gap:8px;
 
@@ -311,12 +289,12 @@ a{
   z-index:9999;
 }
 
-/* OPEN STATE */
+/* OPEN */
 .nav-dropdown.open .dropdown-menu{
   display:flex;
 }
 
-/* ITEMS */
+/* Items */
 .dropdown-menu a{
   background:rgba(12,37,82,.95);
   color:var(--gold);
@@ -329,15 +307,17 @@ a{
 }
 
 /* =========================
-   MOBILE + DESKTOP TOGGLE LOGIC
+   MOBILE MENU (TOGGLE)
 ========================= */
 
 .nav-links{
   max-height:0;
   overflow:hidden;
+
   flex-direction:column;
   width:100%;
   align-items:center;
+
   transition:max-height .4s ease;
 }
 
@@ -352,7 +332,6 @@ a{
 
 @media (min-width: 769px){
 
-  /* Menü bleibt horizontal wenn offen */
   .nav-links{
     flex-direction:row;
     max-height:none;
@@ -360,12 +339,10 @@ a{
     padding-top:0;
   }
 
-  /* Dropdown bleibt float */
   .nav-dropdown .dropdown-menu{
     position:absolute;
   }
 
-  /* Hamburger bleibt sichtbar (DEIN WUNSCH) */
   #hamburgerBtn{
     display:block;
   }
@@ -389,16 +366,11 @@ a{
     max-width:320px;
   }
 
-  
-/* =========================
-   MOBILE FIX
-========================= */
-
-@media (max-width:768px){
-
+  /* Dropdown wird normal im Flow */
   .nav-dropdown .dropdown-menu{
     position:static;
     transform:none;
+
     width:100%;
     align-items:center;
   }
