@@ -159,6 +159,9 @@ document.addEventListener("click", (e) => {
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
 
+  /* =====================
+     BURGER
+  ===================== */
   const burger = e.target.closest("#hamburgerBtn");
   if (burger && nav) {
     nav.classList.toggle("open");
@@ -166,28 +169,42 @@ document.addEventListener("click", (e) => {
     return;
   }
 
+  /* =====================
+     OVERLAY CLOSE
+  ===================== */
   if (e.target.id === "menu-overlay") {
     nav?.classList.remove("open");
     overlay?.classList.remove("active");
     return;
   }
 
+  /* =====================
+     DROPDOWN LOGIC (FIXED)
+  ===================== */
   const dropdownBtn = e.target.closest(".dropdown-toggle");
 
   if (dropdownBtn) {
-    const dropdown = dropdownBtn.closest(".nav-dropdown");
+    e.stopPropagation(); // 🔥 WICHTIG
 
+    const dropdown = dropdownBtn.closest(".nav-dropdown");
     const isOpen = dropdown.classList.contains("open");
 
     document.querySelectorAll(".nav-dropdown.open")
       .forEach(d => d.classList.remove("open"));
 
     if (!isOpen) dropdown.classList.add("open");
+
     return;
   }
 
-  document.querySelectorAll(".nav-dropdown.open")
-    .forEach(d => d.classList.remove("open"));
+  /* =====================
+     CLOSE ONLY WHEN OUTSIDE
+  ===================== */
+  if (!e.target.closest(".nav-dropdown")) {
+    document.querySelectorAll(".nav-dropdown.open")
+      .forEach(d => d.classList.remove("open"));
+  }
+});
 
   const cookieBtn = e.target.closest("#cookie-accept");
   const cookie = document.getElementById("cookie-banner");
