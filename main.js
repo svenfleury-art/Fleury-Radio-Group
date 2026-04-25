@@ -48,7 +48,7 @@ function normalizePath(path) {
 }
 
 /* =========================
-HEADER SPACING FIX (🔥 NEU)
+HEADER SPACING FIX
 ========================= */
 
 function updateHeaderSpacing() {
@@ -225,6 +225,7 @@ function initHeader() {
 /* =========================
 RADIO PLAYER
 ========================= */
+
 function initRadioPlayer() {
   const audio = document.getElementById("audioPlayer");
   const playBtn = document.getElementById("playBtn");
@@ -275,13 +276,11 @@ function initRadioPlayer() {
       audio.play();
       playing = true;
       playBtn.textContent = "⏸";
-
       startSongUpdates();
     } else {
       audio.pause();
       playing = false;
       playBtn.textContent = "▶";
-
       stopSongUpdates();
     }
   });
@@ -294,32 +293,27 @@ function initRadioPlayer() {
       const title = data.title || "Unbekannt";
       const artist = data.artist?.name || "";
 
-      // 👉 IMMER FRG LOGO
       const cover = "/img/Fleury Radio Group Logo.png";
-
       const text = artist ? `${artist} - ${title}` : title;
+
       if (nowPlaying) nowPlaying.textContent = text;
 
       if ("mediaSession" in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
-          title: title,
-          artist: artist,
+          title,
+          artist,
           album: "Fleury Radio Group",
-          artwork: [
-            { src: cover, sizes: "512x512", type: "image/png" }
-          ]
+          artwork: [{ src: cover, sizes: "512x512", type: "image/png" }]
         });
       }
 
     } catch (err) {
       if (nowPlaying) nowPlaying.textContent = "Live Stream";
-      console.error(err);
     }
   }
 
   function startSongUpdates() {
     updateNowPlaying();
-
     if (songInterval) clearInterval(songInterval);
     songInterval = setInterval(updateNowPlaying, 10000);
   }
@@ -367,11 +361,10 @@ function initEventFilter() {
 }
 
 /* =========================
-COUNTDOWN
+COUNTDOWN (UPDATED)
 ========================= */
 
 const frgEvents = [
-  { title: "FRG Crossover Night", date: "2026-04-25T20:00:00" },
   { title: "FRG Simulcast", date: "2026-05-30T19:00:00" },
   { title: "FRG Crossover Night", date: "2026-06-27T19:00:00" },
   { title: "FRG Schweiz Special", date: "2026-08-01T12:00:00" },
@@ -387,25 +380,32 @@ function initCountdown() {
   const box = document.querySelector(".countdown");
   if (!box) return;
 
+  const titleEl = document.getElementById("countdown-title");
+
   if (countdownInterval) clearInterval(countdownInterval);
-
-  const next = frgEvents
-    .map(e => ({ ...e, time: new Date(e.date).getTime() }))
-    .filter(e => e.time > Date.now())
-    .sort((a, b) => a.time - b.time)[0];
-
-  if (!next) return;
-
-  box.style.display = "block";
 
   countdownInterval = setInterval(() => {
 
-    const diff = next.time - Date.now();
+    const now = Date.now();
 
-    if (diff <= 0) {
+    const next = frgEvents
+      .map(e => ({ ...e, time: new Date(e.date).getTime() }))
+      .filter(e => e.time > now)
+      .sort((a, b) => a.time - b.time)[0];
+
+    if (!next) {
       box.style.display = "none";
       clearInterval(countdownInterval);
       return;
+    }
+
+    const diff = next.time - now;
+    const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
+    box.style.display = diff <= sevenDays ? "block" : "none";
+
+    if (titleEl) {
+      titleEl.textContent = next.title;
     }
 
     const d = Math.floor(diff / 86400000);
@@ -417,6 +417,10 @@ function initCountdown() {
       const el = document.getElementById(id);
       if (el) el.textContent = [d,h,m,s][i];
     });
+
+    if (diff <= 0) {
+      box.style.display = "none";
+    }
 
   }, 1000);
 }
@@ -460,43 +464,32 @@ window.addEventListener("DOMContentLoaded", async () => {
   loadPage(routes[path] ? path : "/404");
 });
 
-
 /* =========================
-FORM HANDLING (AGB CHECKBOX)
+FORM HANDLING
 ========================= */
 
 document.addEventListener("change", (e) => {
-
-  // FORM 1
   if (e.target.id === "agb-1") {
     const btn = document.getElementById("submitBtn-1");
-    if (!btn) return;
-
-    btn.disabled = !e.target.checked;
+    if (btn) btn.disabled = !e.target.checked;
   }
 
-  // FORM 2
   if (e.target.id === "agb-2") {
     const btn = document.getElementById("submitBtn-2");
-    if (!btn) return;
-
-    btn.disabled = !e.target.checked;
+    if (btn) btn.disabled = !e.target.checked;
   }
 });
 
-
 /* =========================
-CUSTOM THANK YOU MESSAGE (FRG)
+FORM SUBMIT
 ========================= */
 
 document.addEventListener("submit", async (e) => {
 
   const form = e.target;
 
-  // FORM 1 (Track einreichen)
   if (form.id === "artist-form-1") {
     e.preventDefault();
-
     const msg = document.getElementById("form-msg-1");
 
     try {
@@ -513,20 +506,17 @@ document.addEventListener("submit", async (e) => {
         msg.textContent = "🎉 Danke! Dein Track wurde erfolgreich eingereicht. Wir prüfen ihn und melden uns bei dir.";
       }
 
-    } catch (err) {
+    } catch {
       if (msg) {
         msg.style.display = "block";
         msg.textContent = "❌ Fehler beim Senden. Bitte versuch es erneut.";
       }
     }
-
     return;
   }
 
-  // FORM 2 (Kontakt)
   if (form.id === "artist-form-2") {
     e.preventDefault();
-
     const msg = document.getElementById("form-msg-2");
 
     try {
@@ -543,13 +533,12 @@ document.addEventListener("submit", async (e) => {
         msg.textContent = "✅ Nachricht gesendet! Danke für deine Anfrage – wir melden uns so schnell wie möglich.";
       }
 
-    } catch (err) {
+    } catch {
       if (msg) {
         msg.style.display = "block";
         msg.textContent = "❌ Fehler beim Senden. Bitte versuch es erneut.";
       }
     }
-
     return;
   }
 });
