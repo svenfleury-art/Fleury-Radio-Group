@@ -142,12 +142,8 @@ document.addEventListener("click", (e) => {
 
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
-
   nav?.classList.remove("open");
   overlay?.classList.remove("active");
-
-  document.querySelectorAll(".nav-dropdown.open")
-    .forEach(d => d.classList.remove("open"));
 });
 
 window.addEventListener("popstate", () => {
@@ -155,7 +151,7 @@ window.addEventListener("popstate", () => {
 });
 
 /* =========================
-GLOBAL HEADER UI (FIXED DROPDOWN)
+GLOBAL UI
 ========================= */
 
 document.addEventListener("click", (e) => {
@@ -163,66 +159,43 @@ document.addEventListener("click", (e) => {
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
 
-  /* =========================
-  HAMBURGER
-  ========================= */
-  if (e.target.closest("#hamburgerBtn")) {
-
-    nav?.classList.toggle("open");
+  const burger = e.target.closest("#hamburgerBtn");
+  if (burger && nav) {
+    nav.classList.toggle("open");
     overlay?.classList.toggle("active");
-
-    if (!nav?.classList.contains("open")) {
-      document.querySelectorAll(".nav-dropdown.open")
-        .forEach(d => d.classList.remove("open"));
-    }
-
     return;
   }
 
-  /* =========================
-  OVERLAY CLOSE
-  ========================= */
   if (e.target.id === "menu-overlay") {
-
     nav?.classList.remove("open");
     overlay?.classList.remove("active");
-
-    document.querySelectorAll(".nav-dropdown.open")
-      .forEach(d => d.classList.remove("open"));
-
     return;
   }
 
-  /* =========================
-  DROPDOWN TOGGLE (FIXED)
-  ========================= */
   const dropdownBtn = e.target.closest(".dropdown-toggle");
 
   if (dropdownBtn) {
-
     const dropdown = dropdownBtn.closest(".nav-dropdown");
-    if (!dropdown) return;
 
     const isOpen = dropdown.classList.contains("open");
 
     document.querySelectorAll(".nav-dropdown.open")
-      .forEach(d => {
-        if (d !== dropdown) d.classList.remove("open");
-      });
+      .forEach(d => d.classList.remove("open"));
 
-    dropdown.classList.toggle("open", !isOpen);
-
+    if (!isOpen) dropdown.classList.add("open");
     return;
   }
 
-  /* =========================
-  CLICK OUTSIDE CLOSE
-  ========================= */
-  if (!e.target.closest("#mainNav")) {
-    document.querySelectorAll(".nav-dropdown.open")
-      .forEach(d => d.classList.remove("open"));
-  }
+  document.querySelectorAll(".nav-dropdown.open")
+    .forEach(d => d.classList.remove("open"));
 
+  const cookieBtn = e.target.closest("#cookie-accept");
+  const cookie = document.getElementById("cookie-banner");
+
+  if (cookieBtn && cookie) {
+    localStorage.setItem("frg_cookies", "true");
+    cookie.style.display = "none";
+  }
 });
 
 /* =========================
@@ -234,15 +207,16 @@ function initHeader() {
   if (!header) return;
 
   window.addEventListener("scroll", () => {
+    const scroll = window.scrollY;
 
-    const nav = document.getElementById("mainNav");
-    if (nav?.classList.contains("open")) return;
-
-    if (window.scrollY > 80) {
+    if (scroll > 80) {
       header.classList.add("shrink");
     } else {
       header.classList.remove("shrink");
     }
+
+    const progress = Math.min(scroll / 150, 1);
+    header.style.backdropFilter = `blur(${progress * 10}px)`;
 
     updateHeaderSpacing();
   });
@@ -291,7 +265,9 @@ function initRadioPlayer() {
   }
 
   stations.forEach(btn => {
-    btn.addEventListener("click", () => setStation(btn.dataset.station));
+    btn.addEventListener("click", () => {
+      setStation(btn.dataset.station);
+    });
   });
 
   playBtn.addEventListener("click", () => {
@@ -317,11 +293,21 @@ function initRadioPlayer() {
       const title = data.title || "Unbekannt";
       const artist = data.artist?.name || "";
 
+      const cover = "/img/Fleury Radio Group Logo.png";
       const text = artist ? `${artist} - ${title}` : title;
 
       if (nowPlaying) nowPlaying.textContent = text;
 
-    } catch {
+      if ("mediaSession" in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title,
+          artist,
+          album: "Fleury Radio Group",
+          artwork: [{ src: cover, sizes: "512x512", type: "image/png" }]
+        });
+      }
+
+    } catch (err) {
       if (nowPlaying) nowPlaying.textContent = "Live Stream";
     }
   }
@@ -375,7 +361,7 @@ function initEventFilter() {
 }
 
 /* =========================
-COUNTDOWN
+COUNTDOWN (UPDATED)
 ========================= */
 
 const frgEvents = [
@@ -385,7 +371,9 @@ const frgEvents = [
   { title: "FRG Crossover Night", date: "2026-09-26T19:00:00" },
   { title: "1 Jahr Fleury Radio Group", date: "2026-10-28T12:00:00" },
   { title: "FRG Halloween Special", date: "2026-10-31T12:00:00" },
-  { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" }
+  { title: "FRG Crossover Night", date: "2026-11-28T20:00:00" },
+  { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
+  { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00" }
 ];
 
 function initCountdown() {
@@ -405,11 +393,20 @@ function initCountdown() {
       .filter(e => e.time > now)
       .sort((a, b) => a.time - b.time)[0];
 
-    if (!next) return;
+    if (!next) {
+      box.style.display = "none";
+      clearInterval(countdownInterval);
+      return;
+    }
 
     const diff = next.time - now;
+    const sevenDays = 7 * 24 * 60 * 60 * 1000;
 
-    if (titleEl) titleEl.textContent = next.title;
+    box.style.display = diff <= sevenDays ? "block" : "none";
+
+    if (titleEl) {
+      titleEl.textContent = next.title;
+    }
 
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff % 86400000) / 3600000);
@@ -421,6 +418,10 @@ function initCountdown() {
       if (el) el.textContent = [d,h,m,s][i];
     });
 
+    if (diff <= 0) {
+      box.style.display = "none";
+    }
+
   }, 1000);
 }
 
@@ -431,6 +432,11 @@ PAGE INIT
 function initPageScripts() {
   initCountdown();
   initEventFilter();
+
+  const cookie = document.getElementById("cookie-banner");
+  if (cookie && localStorage.getItem("frg_cookies") === "true") {
+    cookie.style.display = "none";
+  }
 }
 
 /* =========================
@@ -448,6 +454,91 @@ window.addEventListener("DOMContentLoaded", async () => {
   updateHeaderSpacing();
   window.addEventListener("resize", updateHeaderSpacing);
 
+  const redirect = sessionStorage.getItem("spa_redirect");
+  if (redirect) {
+    sessionStorage.removeItem("spa_redirect");
+    history.replaceState({}, "", redirect);
+  }
+
   const path = normalizePath(location.pathname);
   loadPage(routes[path] ? path : "/404");
+});
+
+/* =========================
+FORM HANDLING
+========================= */
+
+document.addEventListener("change", (e) => {
+  if (e.target.id === "agb-1") {
+    const btn = document.getElementById("submitBtn-1");
+    if (btn) btn.disabled = !e.target.checked;
+  }
+
+  if (e.target.id === "agb-2") {
+    const btn = document.getElementById("submitBtn-2");
+    if (btn) btn.disabled = !e.target.checked;
+  }
+});
+
+/* =========================
+FORM SUBMIT
+========================= */
+
+document.addEventListener("submit", async (e) => {
+
+  const form = e.target;
+
+  if (form.id === "artist-form-1") {
+    e.preventDefault();
+    const msg = document.getElementById("form-msg-1");
+
+    try {
+      await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "Accept": "application/json" }
+      });
+
+      form.reset();
+
+      if (msg) {
+        msg.style.display = "block";
+        msg.textContent = "🎉 Danke! Dein Track wurde erfolgreich eingereicht. Wir prüfen ihn und melden uns bei dir.";
+      }
+
+    } catch {
+      if (msg) {
+        msg.style.display = "block";
+        msg.textContent = "❌ Fehler beim Senden. Bitte versuch es erneut.";
+      }
+    }
+    return;
+  }
+
+  if (form.id === "artist-form-2") {
+    e.preventDefault();
+    const msg = document.getElementById("form-msg-2");
+
+    try {
+      await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "Accept": "application/json" }
+      });
+
+      form.reset();
+
+      if (msg) {
+        msg.style.display = "block";
+        msg.textContent = "✅ Nachricht gesendet! Danke für deine Anfrage – wir melden uns so schnell wie möglich.";
+      }
+
+    } catch {
+      if (msg) {
+        msg.style.display = "block";
+        msg.textContent = "❌ Fehler beim Senden. Bitte versuch es erneut.";
+      }
+    }
+    return;
+  }
 });
