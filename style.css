@@ -43,7 +43,7 @@ footer{
 /* HEADER FULL WIDTH + STICKY */
 #mainHeader{
   position: fixed;
-  top: 10px;
+  top: 6px;
   left: 50%;
   transform: translateX(-50%);
 
@@ -163,7 +163,7 @@ footer{
 ========================= */
 .site-header{
   background:#06152F;
-  padding:20px;
+  padding:15px;
   border-radius:16px;
   border:1px solid rgba(250,204,21,0.15);
 
