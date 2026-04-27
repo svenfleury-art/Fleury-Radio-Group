@@ -175,11 +175,11 @@ footer{
 }
 
 .logo-img img{
-  height:350px;
+  height:300px;
 }
 
 .logo-text{
-  font-size:50px;
+  font-size:40px;
   font-weight:700;
   color:var(--text);
 }
@@ -213,7 +213,7 @@ a{
 .nav-links{
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:4px;
 
   max-height:0;
   overflow:hidden;
@@ -230,7 +230,7 @@ a{
 
 .nav-links a{
   background:var(--surface-2);
-  padding:12px 14px;
+  padding:10px 12px;
   border-radius:12px;
   width:100%;
   max-width:300px;
@@ -241,7 +241,7 @@ a{
   background:var(--surface-2);
   border:none;
   color:var(--text);
-  padding:12px 16px;
+  padding:10px 14px;
   border-radius:12px;
   cursor:pointer;
 }
@@ -272,7 +272,7 @@ a{
 .nav-button{
   width:100%;
   max-width:300px;
-  padding:12px;
+  padding:10px;
   border-radius:12px;
 
   background:var(--surface-2);
@@ -490,9 +490,7 @@ MOBILE FIX
   }
 }
 
-/* =========================
-   FRG PLAYER (FIXED + SAFE)
-========================= */
+
 /* =========================
 FRG PLAYER (ZENTRIERT)
 ========================= */
@@ -833,7 +831,7 @@ RESPONSIVE
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 20px;
+  padding: 14px 18px;
 }
 
 /* PLAYER */
@@ -856,7 +854,7 @@ RESPONSIVE
 
 /* SHRINK → LOGO KLEIN */
 #mainHeader.shrink .logo-area img {
-  height: 35px;              /* 🔥 wird kleiner beim Scrollen */
+  height: 40px;              /* 🔥 wird kleiner beim Scrollen */
   transform: scale(0.95);
 }
 
@@ -871,7 +869,7 @@ RESPONSIVE
 .nav-links {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 /* SHRINK ZUSTAND */
@@ -888,7 +886,7 @@ RESPONSIVE
 
 /* LOGO KLEINER */
 #mainHeader.shrink .logo-area img {
-  height: 35px;
+  height: 40px;
 }
 
 /* PLAYER KLEINER */
