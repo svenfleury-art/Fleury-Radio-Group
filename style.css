@@ -230,7 +230,7 @@ a{
 
 .nav-links a{
   background:var(--surface-2);
-  padding:10px 12px;
+  padding:8px 10px;
   border-radius:12px;
   width:100%;
   max-width:300px;
@@ -241,7 +241,7 @@ a{
   background:var(--surface-2);
   border:none;
   color:var(--text);
-  padding:10px 14px;
+  padding:8px 12px;
   border-radius:12px;
   cursor:pointer;
 }
@@ -262,7 +262,7 @@ a{
 
 .dropdown-menu a{
   background:rgba(12,37,82,.9);
-  padding:10px 12px;
+  padding:8px 10px;
   border-radius:10px;
   width:100%;
   max-width:300px;
@@ -271,8 +271,8 @@ a{
 
 .nav-button{
   width:100%;
-  max-width:300px;
-  padding:10px;
+  max-width:400px;
+  padding:15px;
   border-radius:12px;
 
   background:var(--surface-2);
