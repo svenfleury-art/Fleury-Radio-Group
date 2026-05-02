@@ -163,7 +163,7 @@ footer{
 ========================= */
 .site-header{
   background:#06152F;
-  padding:15px;
+  padding: 8px 15px;
   border-radius:16px;
   border:1px solid rgba(250,204,21,0.15);
 
@@ -171,7 +171,7 @@ footer{
   flex-direction:column;
   align-items:center;
   text-align:center;
-  gap:8px;
+  gap:5px;
 }
 
 .logo-img img{
@@ -189,7 +189,7 @@ footer{
   /* ✅ Logo Text wieder sichtbar */
   .logo-text{
     display:block;
-    font-size:28px;
+    font-size:20px;
   }
 
   /* ❌ im Shrink wieder ausblenden */
