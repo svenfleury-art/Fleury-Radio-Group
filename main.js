@@ -11,7 +11,6 @@ const routes = {
   "/rhyrock": "/pages/rhyrock.html",
 
   "/frg-inside": "/pages/frg-inside.html",
-  "/team": "/pages/team.html",
   "/geschichte": "/pages/geschichte.html",
   "/about": "/pages/about.html",
   "/mitmachen": "/pages/mitmachen.html",
