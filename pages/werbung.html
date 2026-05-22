@@ -3,897 +3,910 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Radiowerbung – Fleury Radio Group™</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-
 <style>
-:root{
-  --bg:#09090d;
-  --surface:#12121a;
-  --surface2:#1a1a26;
-  --border:rgba(255,255,255,.08);
-
-  --text:#f2f2f7;
-  --muted:#9b9bb3;
-
-  --accent:#e8ff47;
-  --accent2:#ff6b35;
-
-  --radius:18px;
-  --shadow:0 10px 30px rgba(0,0,0,.25);
-}
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'DM Sans',sans-serif;
-  line-height:1.6;
-}
-
-/* ===== BACKGROUND ===== */
-
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at top left, rgba(232,255,71,.07), transparent 30%),
-    radial-gradient(circle at bottom right, rgba(255,107,53,.06), transparent 30%);
-  pointer-events:none;
-  z-index:-1;
-}
-
-/* ===== GENERAL ===== */
-
-.container{
-  width:min(1150px, calc(100% - 40px));
-  margin:auto;
-}
-
-.section{
-  padding:80px 0;
-}
-
-.section-title{
-  font-family:'Syne',sans-serif;
-  font-size:1rem;
-  text-transform:uppercase;
-  letter-spacing:.12em;
-  color:var(--muted);
-
-  display:flex;
-  align-items:center;
-  gap:14px;
-
-  margin-bottom:35px;
-}
-
-.section-title::after{
-  content:"";
-  flex:1;
-  height:1px;
-  background:var(--border);
-}
-
-.divider{
-  border:none;
-  border-top:1px solid var(--border);
-}
-
-/* ===== HERO ===== */
-
-.hero{
-  padding:120px 20px 90px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-
-.hero-badge{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-
-  background:rgba(232,255,71,.1);
-  border:1px solid rgba(232,255,71,.25);
-
-  color:var(--accent);
-
-  padding:8px 18px;
-  border-radius:999px;
-
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-
-  margin-bottom:30px;
-}
-
-.hero h1{
-  font-family:'Syne',sans-serif;
-  font-size:clamp(2.6rem,7vw,5rem);
-  line-height:1;
-  letter-spacing:-0.04em;
-  margin-bottom:24px;
-}
-
-.hero h1 span{
-  color:var(--accent);
-}
-
-.hero p{
-  max-width:700px;
-  margin:auto;
-  color:var(--muted);
-  font-size:1.1rem;
-}
-
-.hero-special{
-  margin-top:35px;
-
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
-
-  background:rgba(255,107,53,.08);
-  border:1px solid rgba(255,107,53,.18);
-
-  padding:15px 24px;
-  border-radius:14px;
-
-  color:#fff;
-}
-
-.hero-special strong{
-  color:var(--accent2);
-}
-
-/* ===== INFO ===== */
-
-.info-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:20px;
-}
-
-.info-card{
-  background:var(--surface);
-  border:1px solid var(--border);
-
-  border-radius:var(--radius);
-
-  padding:28px;
-
-  box-shadow:var(--shadow);
-}
-
-.info-card h3{
-  font-family:'Syne',sans-serif;
-  margin-bottom:18px;
-}
-
-.info-card ul{
-  list-style:none;
-}
-
-.info-card li{
-  padding:10px 0;
-  border-bottom:1px solid var(--border);
-  color:var(--muted);
-}
-
-.info-card li:last-child{
-  border-bottom:none;
-}
-
-.info-card strong{
-  color:var(--text);
-}
-
-/* ===== PACKAGE SECTION ===== */
-
-.pkg-section-label{
-  font-family:'Syne',sans-serif;
-  color:var(--accent);
-
-  font-size:.85rem;
-  font-weight:800;
-
-  letter-spacing:.12em;
-  text-transform:uppercase;
-
-  margin-bottom:20px;
-  margin-top:60px;
-}
-
-.packages-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:20px;
-}
-
-/* ===== PACKAGE CARD ===== */
-
-.pkg-card{
-  background:linear-gradient(180deg, var(--surface), #0e0e15);
-
-  border:1px solid var(--border);
-
-  border-radius:var(--radius);
-
-  padding:28px;
-
-  position:relative;
-
-  display:flex;
-  flex-direction:column;
-
-  transition:.25s ease;
-
-  overflow:hidden;
-
-  box-shadow:var(--shadow);
-}
-
-.pkg-card:hover{
-  transform:translateY(-6px);
-  border-color:rgba(232,255,71,.2);
-}
-
-.pkg-card.featured{
-  border-color:rgba(232,255,71,.35);
-}
-
-.pkg-card.featured::before{
-  content:"Beliebt";
-
-  position:absolute;
-  top:15px;
-  right:15px;
-
-  background:var(--accent);
-  color:#000;
-
-  font-size:11px;
-  font-weight:800;
-
-  padding:5px 12px;
-  border-radius:999px;
-}
-
-.pkg-icon{
-  font-size:2rem;
-  margin-bottom:14px;
-}
-
-.pkg-name{
-  font-family:'Syne',sans-serif;
-  font-size:1.3rem;
-  font-weight:700;
-
-  margin-bottom:8px;
-}
-
-.pkg-desc{
-  color:var(--muted);
-  margin-bottom:20px;
-  font-size:.95rem;
-}
-
-.pkg-price-row{
-  display:flex;
-  align-items:flex-end;
-  gap:8px;
-
-  margin-bottom:20px;
-}
-
-.pkg-price{
-  font-family:'Syne',sans-serif;
-  font-size:2.4rem;
-  font-weight:800;
-}
-
-.pkg-price-unit{
-  color:var(--muted);
-  margin-bottom:6px;
-}
-
-.pkg-features{
-  list-style:none;
-
-  border-top:1px solid var(--border);
-
-  padding-top:18px;
-  margin-bottom:24px;
-}
-
-.pkg-features li{
-  display:flex;
-  gap:10px;
-
-  color:var(--muted);
-
-  padding:6px 0;
-  font-size:.95rem;
-}
-
-.pkg-features li::before{
-  content:"✓";
-  color:var(--accent);
-  font-weight:700;
-}
-
-.stripe-slot{
-  margin-top:auto;
-}
-
-/* ===== HINTS ===== */
-
-.hints-list{
-  list-style:none;
-}
-
-.hints-list li{
-  padding:14px 0;
-  border-bottom:1px solid var(--border);
-  color:var(--muted);
-}
-
-.hints-list li:last-child{
-  border-bottom:none;
-}
-
-/* ===== FORM ===== */
-
-.form-card{
-  background:var(--surface);
-
-  border:1px solid var(--border);
-
-  border-radius:var(--radius);
-
-  padding:35px;
-
-  max-width:700px;
-
-  box-shadow:var(--shadow);
-}
-
-.form-card label{
-  display:block;
-
-  margin-bottom:8px;
-  margin-top:18px;
-
-  color:var(--muted);
-
-  font-size:.8rem;
-  font-weight:700;
-
-  text-transform:uppercase;
-  letter-spacing:.08em;
-}
-
-.form-card input,
-.form-card textarea{
-  width:100%;
-
-  background:#0b0b12;
-
-  border:1px solid var(--border);
-
-  border-radius:12px;
-
-  color:var(--text);
-
-  padding:14px;
-
-  font-family:inherit;
-  font-size:1rem;
-
-  transition:.2s;
-}
-
-.form-card input:focus,
-.form-card textarea:focus{
-  outline:none;
-  border-color:rgba(232,255,71,.45);
-}
-
-.form-card textarea{
-  min-height:140px;
-  resize:vertical;
-}
-
-.form-checkbox{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:20px;
-}
-
-.form-checkbox label{
-  margin:0;
-  text-transform:none;
-  letter-spacing:0;
-}
-
-.form-checkbox a{
-  color:var(--accent);
-}
-
-.submit-btn{
-  margin-top:25px;
-
-  background:var(--accent);
-  color:#000;
-
-  border:none;
-
-  padding:14px 32px;
-
-  border-radius:12px;
-
-  font-family:'Syne',sans-serif;
-  font-weight:700;
-
-  cursor:pointer;
-
-  transition:.2s;
-}
-
-.submit-btn:hover{
-  opacity:.85;
-}
-
-.submit-btn:disabled{
-  opacity:.4;
-  cursor:not-allowed;
-}
-
-/* ===== CONTACT ===== */
-
-.contact-bar{
-  background:var(--surface);
-
-  border:1px solid var(--border);
-
-  border-radius:var(--radius);
-
-  padding:30px;
-
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  flex-wrap:wrap;
-
-  box-shadow:var(--shadow);
-}
-
-.contact-bar p{
-  color:var(--muted);
-}
-
-.contact-bar a{
-  color:var(--accent);
-  text-decoration:none;
-}
-
-.contact-bar a:hover{
-  text-decoration:underline;
-}
-
-/* ===== MOBILE ===== */
-
-@media(max-width:700px){
-
-  .hero{
-    padding-top:90px;
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: rgba(255,255,255,0.07);
+    --accent: #e8ff47;
+    --accent2: #ff6b35;
+    --text: #e8e8f0;
+    --muted: #7070a0;
+    --radius: 14px;
+    --pk: "pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp";
   }
 
-  .section{
-    padding:60px 0;
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
   }
 
-  .form-card{
-    padding:25px;
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 80px 24px 64px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,255,71,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p.lead {
+    max-width: 560px;
+    margin: 0 auto 28px;
+    color: var(--muted);
+    font-size: 16px;
+  }
+  .hero-special {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,107,53,0.12);
+    border: 1px solid rgba(255,107,53,0.3);
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .hero-special strong { color: var(--accent2); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 56px 0; }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
   }
 
-}
+  /* ── HOW IT WORKS ── */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .info-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .info-card ul { list-style: none; }
+  .info-card ul li {
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .info-card ul li:last-child { border-bottom: none; }
+  .info-card ul li strong { color: var(--text); }
+
+  /* ── SECTION LABEL ── */
+  .pkg-section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    margin-top: 40px;
+  }
+  .pkg-section-label:first-child { margin-top: 0; }
+
+  /* ── PACKAGES GRID ── */
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .pkg-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .pkg-card:hover {
+    border-color: rgba(232,255,71,0.2);
+    transform: translateY(-2px);
+  }
+  .pkg-card.featured {
+    border-color: rgba(232,255,71,0.35);
+    background: linear-gradient(135deg, #12121a 60%, rgba(232,255,71,0.04));
+  }
+  .pkg-card.featured::after {
+    content: 'Beliebt';
+    position: absolute;
+    top: 14px; right: 14px;
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+
+  .pkg-icon { font-size: 1.5rem; margin-bottom: 10px; display: block; }
+  .pkg-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .pkg-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    flex: 1;
+  }
+  .pkg-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .pkg-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+  .pkg-price-unit { font-size: 13px; color: var(--muted); }
+  .pkg-features {
+    list-style: none;
+    margin-bottom: 22px;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    margin-top: 12px;
+  }
+  .pkg-features li {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 3px 0;
+    display: flex;
+    gap: 8px;
+  }
+  .pkg-features li::before { content: '✓'; color: var(--accent); flex-shrink: 0; }
+
+  /* ── STRIPE WRAPPER ── */
+  .stripe-slot {
+    margin-top: auto;
+    /* Stripe's buy button renders its own iframe here */
+  }
+
+  /* ── ADDONS ── */
+  .addons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .addon-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .addon-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .addon-name { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; }
+  .addon-price { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 800; color: var(--accent); white-space: nowrap; }
+  .addon-desc { font-size: 12.5px; color: var(--muted); flex: 1; }
+
+  /* ── FORM ── */
+  .form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px;
+    max-width: 600px;
+  }
+  .form-card label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+    margin-top: 18px;
+  }
+  .form-card label:first-of-type { margin-top: 0; }
+  .form-card input, .form-card textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-card input:focus, .form-card textarea:focus { border-color: rgba(232,255,71,0.4); }
+  .form-card textarea { min-height: 120px; resize: vertical; }
+  .form-checkbox { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
+  .form-checkbox input[type=checkbox] { accent-color: var(--accent); width: 16px; height: 16px; }
+  .form-checkbox label { text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--muted); margin: 0; }
+  .form-checkbox a { color: var(--accent); }
+  .submit-btn {
+    margin-top: 22px;
+    display: inline-block;
+    padding: 13px 32px;
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: opacity 0.15s;
+  }
+  .submit-btn:hover { opacity: 0.85; }
+  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ── CONTACT ── */
+  .contact-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .contact-bar p { color: var(--muted); font-size: 14px; }
+  .contact-bar a { color: var(--accent); text-decoration: none; }
+  .contact-bar a:hover { text-decoration: underline; }
+
+  /* ── HINTS ── */
+  .hints-list { list-style: none; }
+  .hints-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    gap: 10px;
+  }
+  .hints-list li::before { content: '—'; color: var(--accent); flex-shrink: 0; }
+  .hints-list li:last-child { border-bottom: none; }
+
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 </style>
 </head>
 <body>
 
 <!-- HERO -->
-
-<section class="hero">
-
-  <div class="hero-badge">
-    📻 Fleury Radio Group™
-  </div>
-
-  <h1>
-    Radio&shy;werbung,<br>
-    die <span>wirkt.</span>
-  </h1>
-
-  <p>
-    Erreichen Sie Ihre Zielgruppe über Radio Rhywälle™, Winterlord FM™ und RhyRock Radio™ –
-    modern, günstig und effektiv.
-  </p>
-
+<div class="hero">
+  <div class="hero-badge">📻 Fleury Radio Group™</div>
+  <h1>Radio&shy;werbung,<br>die <span>wirkt.</span></h1>
+  <p class="lead">Erreichen Sie Ihre Zielgruppe über Radio Rhywälle™, Winterlord FM™ und RhyRock Radio™ – einfach, günstig, effektiv.</p>
   <div class="hero-special">
-    🔥 Jetzt buchen &amp;
-    <strong>lebenslang 15% Rabatt</strong>
-    sichern
-    <span style="color:var(--muted)">
-      (exkl. Premium, Business &amp; Abomodelle)
-    </span>
+    🔥&nbsp; Jetzt buchen &amp; <strong>lebenslang 15 % Rabatt</strong> auf alle zukünftigen Buchungen sichern&nbsp;<em style="color:var(--muted)">(exkl. Premium &amp; Business &amp;alle Abomodelle)</em>
   </div>
-
-</section>
+</div>
 
 <hr class="divider">
 
-<!-- INFO -->
-
-<section class="section">
+<!-- SO FUNKTIONIERT'S -->
 <div class="container">
-
-  <div class="section-title">
-    🔊 So funktioniert's
-  </div>
-
-  <div class="info-grid">
-
-    <div class="info-card">
-      <h3>Das Shuffle-System</h3>
-
-      <ul>
-        <li><strong>Integration in unsere Playlist</strong></li>
-        <li><strong>Zufällige Ausstrahlung</strong></li>
-        <li><strong>Keine festen Sendezeiten</strong></li>
-        <li><strong>Garantierte Anzahl Ausstrahlungen</strong></li>
-        <li><strong>2 Monate gratis bei Jahresabos</strong></li>
-      </ul>
+  <div class="section">
+    <div class="section-title">🔊 So funktioniert's</div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Das Shuffle-System</h3>
+        <ul>
+          <li><strong>Integration in unsere Playlist</strong></li>
+          <li><strong>Zufällige Ausstrahlung</strong></li>
+          <li><strong>Keine festen Sendezeiten</strong></li>
+          <li><strong>Garantierte Anzahl Ausstrahlungen</strong></li>
+          <li><strong>Bei allen Abomodellen sind 2 Monate Kostenlos</strong></li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>💡 Tipp</h3>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:12px;">Für maximale Reichweite empfehlen wir die Zeitfenster <strong style="color:var(--text)">06–10 Uhr</strong> und <strong style="color:var(--text)">15–18 Uhr</strong>.</p>
+        <p style="color:var(--muted);font-size:13px;">Die genaue Uhrzeit kann variieren – die gebuchte Anzahl Spots wird jedoch vollständig ausgestrahlt.</p>
+      </div>
     </div>
-
-    <div class="info-card">
-      <h3>💡 Empfehlung</h3>
-
-      <p style="color:var(--muted)">
-        Für maximale Reichweite empfehlen wir die Zeitfenster
-        <strong style="color:var(--text)">06–10 Uhr</strong>
-        und
-        <strong style="color:var(--text)">15–18 Uhr</strong>.
-      </p>
-
-    </div>
-
   </div>
-
 </div>
-</section>
 
 <hr class="divider">
 
-<!-- PAKETE -->
-
-<section class="section">
+<!-- EINMALIGE PAKETE -->
 <div class="container">
+  <div class="section">
+    <div class="section-title">📦 Werbepakete</div>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:32px;">Wählen Sie ein Paket/Abo – Ausstrahlungen flexibel einteilbar, wann immer Sie möchten!</p>
 
-  <div class="section-title">
-    📦 Werbepakete
+    <div class="pkg-section-label">Einmalige Pakete</div>
+    <div class="packages-grid">
+
+      <!-- ═══ MINI ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">💸</span>
+        <div class="pkg-name">Mini</div>
+        <div class="pkg-desc">30s Spot · 10 Ausstrahlungen</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">20</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>30 Sekunden Spot</li>
+          <li>10 garantierte Ausstrahlungen</li>
+          <li>Shuffle-System</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Mini -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmgQKGayq29RmUA0ffZdtT"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+      </div>
+
+      <!-- ═══ STARTER ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🎧</span>
+        <div class="pkg-name">Starter</div>
+        <div class="pkg-desc">30s Spot · 20 Ausstrahlungen</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">30</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>30 Sekunden Spot</li>
+          <li>20 garantierte Ausstrahlungen</li>
+          <li>Shuffle-System</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Starter -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmjOKGayq29RmUWOly4148"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+        
+    <!-- ═══ BASIC ═══ -->
+      <div class="pkg-card featured">
+        <span class="pkg-icon">📻</span>
+        <div class="pkg-name">Basic</div>
+        <div class="pkg-desc">30s Spot · 50 Ausstrahlungen</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">75</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>30 Sekunden Spot</li>
+          <li>50 garantierte Ausstrahlungen</li>
+           <li>Shuffle-System</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Basic -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmkRKGayq29RmUVvJFiItv"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+        
+      <!-- ═══ BUISSNES ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🚀</span>
+        <div class="pkg-name">Buissnes</div>
+        <div class="pkg-desc">30s Spot · 100 Ausstrahlungen frei einteilbar</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">150</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>30 Sekunden Spot</li>
+          <li>100 Ausstrahlungen</li>
+          <li>Shuffle-System</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Buissnes -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmk4KGayq29RmUaua6PIIW"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+  
+
+      <!-- ═══ PREMIUM ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🔥</span>
+        <div class="pkg-name">Premium</div>
+        <div class="pkg-desc">30s Spot · 200 Ausstrahlungen frei einteilbar</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">290</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>30 Sekunden Spot</li>
+          <li>200 Ausstrahlungen</li>
+           <li>Shuffle-System</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Premium -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZml7KGayq29RmUOnlbOcU6"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ BASEL LOCAL ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🏙️</span>
+        <div class="pkg-name">Basel Local</div>
+        <div class="pkg-desc">30s Spot · 40 Ausstrahlungen + 1 Instagram Post</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">95</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>30 Sekunden Spot</li>
+          <li>40 Ausstrahlungen</li>
+          <li>1 Instagram Post inklusive</li>
+          <li>Ideal für lokale Unternehmen</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Basel Local -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmlcKGayq29RmUrSkDgG4L"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ SPONSORING ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🎙️</span>
+        <div class="pkg-name">Sponsoring</div>
+        <div class="pkg-desc">Ihr Unternehmen aktiv ins Programm integriert</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">30</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Erwähnung zu Beginn / Ende von Sendungen</li>
+          <li>„Diese Stunde präsentiert von …"</li>
+          <li>Mehrfache Nennung pro Woche</li>
+          <li>Natürlich ins Programm eingebunden</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Sponsoring -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmlwKGayq29RmUvXD6J7wS"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ABO MONATLICH -->
+    <div class="pkg-section-label" style="margin-top:56px;">Abo – Monatlich</div>
+    <div class="packages-grid">
+
+      <!-- ═══ BASIC ABO MONAT ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">📻</span>
+        <div class="pkg-name">Basic Abo / Monat</div>
+        <div class="pkg-desc">Monatliches Werbepaket · automatisch verlängerbar</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">60</span>
+          <span class="pkg-price-unit">CHF / Monat</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Monatliche Ausstrahlung</li>
+          <li>Jederzeit kündbar</li>
+          <li>20 Ausstrahlungen</li>
+          <li>2 Instagram posts</li>
+          <li>4 Instagram Storys</li>
+          <li>Kostenlose designs von uns</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Basic Abo/ Monat -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmmHKGayq29RmU0Bef0MGs"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ STANDARD ABO MONAT ═══ -->
+      <div class="pkg-card featured">
+        <span class="pkg-icon">⭐</span>
+        <div class="pkg-name">Standard Abo / Monat</div>
+        <div class="pkg-desc">Monatliches Werbepaket · automatisch verlängerbar</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">100</span>
+          <span class="pkg-price-unit">CHF / Monat</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Monatliche Ausstrahlung</li>
+          <li>Jederzeit kündbar</li>
+          <li>50 Ausstrahlungen</li>
+          <li>4 Instagram posts</li>
+          <li>8 Instagram Storys</li>
+          <li>Kostenlose designs von uns</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Standard Abo/ Monat -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmmmKGayq29RmU9c7L9nvX"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ BUISSNES ABO MONAT ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🚀</span>
+        <div class="pkg-name">Buissnes Abo / Monat</div>
+        <div class="pkg-desc">Monatliches Werbepaket · automatisch verlängerbar</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">190</span>
+          <span class="pkg-price-unit">CHF / Monat</span>
+        </div>
+        <ul class="pkg-features">
+         <li>Monatliche Ausstrahlung</li>
+          <li>Jederzeit kündbar</li>
+          <li>100 Ausstrahlungen</li>
+          <li>6 Instagram posts</li>
+          <li>12 Instagram Storys</li>
+          <li>1 Sponsoring</li>
+          <li>Kostenlose designs von uns</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Buissnes Abo/ Monat -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmn8KGayq29RmUkSy7tH8M"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ PREMIUM ABO MONAT ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🔥</span>
+        <div class="pkg-name">Premium Abo / Monat</div>
+        <div class="pkg-desc">Monatliches Werbepaket · automatisch verlängerbar</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">350</span>
+          <span class="pkg-price-unit">CHF / Monat</span>
+        </div>
+        <ul class="pkg-features">
+            <li>Monatliche Ausstrahlung</li>
+          <li>Jederzeit kündbar</li>
+          <li>200 Ausstrahlungen</li>
+          <li>10 Instagram posts</li>
+          <li>20 Instagram Storys</li>
+          <li>2 Sponsoring</li>
+          <li>Kostenlose designs von uns</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Premium Abo/ Monat -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmnZKGayq29RmUy0tYCoIu"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ABO JÄHRLICH -->
+    <div class="pkg-section-label" style="margin-top:56px;">Abo – Jährlich <span style="font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0;text-transform:none;margin-left:8px;">· Günstiger als monatlich</span></div>
+    <div class="packages-grid">
+
+      <!-- ═══ BASIC ABO JAHR ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">📻</span>
+        <div class="pkg-name">Basic Abo / Jahr</div>
+        <div class="pkg-desc">Jährliches Werbepaket · einmalige Zahlung</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">680</span>
+          <span class="pkg-price-unit">CHF / Jahr</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Ganzjährige Ausstrahlung</li>
+          <li>Günstiger als monatlich</li>
+          <li>Jederzeit kündbar</li>
+          <li>20 Ausstrahlungen/mt</li>
+          <li>2 Instagram posts/mt</li>
+          <li>4 Instagram Storys/mt</li>
+          <li>Kostenlose designs von uns</li>
+          <li>die ersten 2 Monate Kostenlos</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Basic Abo/ Jahr -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZcvRKGayq29RmU6heWnvFo"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ STANDARD ABO JAHR ═══ -->
+      <div class="pkg-card featured">
+        <span class="pkg-icon">⭐</span>
+        <div class="pkg-name">Standard Abo / Jahr</div>
+        <div class="pkg-desc">Jährliches Werbepaket · einmalige Zahlung</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">1'100</span>
+          <span class="pkg-price-unit">CHF / Jahr</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Ganzjährige Ausstrahlung</li>
+          <li>Günstiger als monatlich</li>
+          <li>Jederzeit kündbar</li>
+          <li>50 Ausstrahlungen/mt</li>
+          <li>4 Instagram posts/mt</li>
+          <li>8 Instagram Storys/mt</li>
+          <li>Kostenlose designs von uns</li>
+          <li>die ersten 2 Monate Kostenlos</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Standard Abo/ Jahr -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmmeKGayq29RmUsSSjYoe2"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ BUISSNES ABO JAHR ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🚀</span>
+        <div class="pkg-name">Buissnes Abo / Jahr</div>
+        <div class="pkg-desc">Jährliches Werbepaket · einmalige Zahlung</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">2'000</span>
+          <span class="pkg-price-unit">CHF / Jahr</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Ganzjährige Ausstrahlung</li>
+          <li>Günstiger als monatlich</li>
+          <li>Jederzeit kündbar</li>
+          <li>100 Ausstrahlungen/mt</li>
+          <li>6 Instagram posts/mt</li>
+          <li>12 Instagram Storys/mt</li>
+          <li>1 Sponsoring/mt</li>
+          <li>Kostenlose designs von uns</li>
+          <li>die ersten 2 Monate Kostenlos</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Buissnes Abo/ Jahr -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmotKGayq29RmUdkktZ013"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ PREMIUM ABO JAHR ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🔥</span>
+        <div class="pkg-name">Premium Abo / Jahr</div>
+        <div class="pkg-desc">Jährliches Werbepaket · einmalige Zahlung</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">3'800</span>
+          <span class="pkg-price-unit">CHF / Jahr</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Ganzjährige Ausstrahlung</li>
+          <li>Günstiger als monatlich</li>
+          <li>Jederzeit kündbar</li>
+          <li>200 Ausstrahlungen/mt</li>
+          <li>10 Instagram posts/mt</li>
+          <li>20 Instagram Storys/mt</li>
+          <li>2 Sponsoring/mt</li>
+          <li>Kostenlose designs von uns</li>
+          <li>die ersten 2 Monate Kostenlos</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Premium Abo/ Jahr -->
+<stripe-buy-button
+  buy-button-id="buy_btn_1TZmOyKGayq29RmUDAraVU4b"
+  publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp"
+>
+</stripe-buy-button>
+        </div>
+      </div>
+
+    </div>
   </div>
-
-  <div class="packages-grid">
-
-    <!-- MINI -->
-
-    <div class="pkg-card">
-
-      <div class="pkg-icon">💸</div>
-
-      <div class="pkg-name">Mini</div>
-
-      <div class="pkg-desc">
-        30 Sekunden Spot · 10 Ausstrahlungen
-      </div>
-
-      <div class="pkg-price-row">
-        <div class="pkg-price">20</div>
-        <div class="pkg-price-unit">CHF</div>
-      </div>
-
-      <ul class="pkg-features">
-        <li>10 garantierte Ausstrahlungen</li>
-        <li>Shuffle-System</li>
-        <li>30 Sekunden Spot</li>
-      </ul>
-
-      <div class="stripe-slot">
-        <stripe-buy-button
-          buy-button-id="buy_btn_1TZmgQKGayq29RmUA0ffZdtT"
-          publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
-        </stripe-buy-button>
-      </div>
-
-    </div>
-
-    <!-- BASIC -->
-
-    <div class="pkg-card featured">
-
-      <div class="pkg-icon">📻</div>
-
-      <div class="pkg-name">Basic</div>
-
-      <div class="pkg-desc">
-        30 Sekunden Spot · 50 Ausstrahlungen
-      </div>
-
-      <div class="pkg-price-row">
-        <div class="pkg-price">75</div>
-        <div class="pkg-price-unit">CHF</div>
-      </div>
-
-      <ul class="pkg-features">
-        <li>50 garantierte Ausstrahlungen</li>
-        <li>Shuffle-System</li>
-        <li>Ideal für lokale Werbung</li>
-      </ul>
-
-      <div class="stripe-slot">
-        <stripe-buy-button
-          buy-button-id="buy_btn_1TZmkRKGayq29RmUVvJFiItv"
-          publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
-        </stripe-buy-button>
-      </div>
-
-    </div>
-
-    <!-- BUSINESS -->
-
-    <div class="pkg-card">
-
-      <div class="pkg-icon">🚀</div>
-
-      <div class="pkg-name">Business</div>
-
-      <div class="pkg-desc">
-        100 Ausstrahlungen frei einteilbar
-      </div>
-
-      <div class="pkg-price-row">
-        <div class="pkg-price">150</div>
-        <div class="pkg-price-unit">CHF</div>
-      </div>
-
-      <ul class="pkg-features">
-        <li>100 Ausstrahlungen</li>
-        <li>Hohe Reichweite</li>
-        <li>Shuffle-System</li>
-      </ul>
-
-      <div class="stripe-slot">
-        <stripe-buy-button
-          buy-button-id="buy_btn_1TZmk4KGayq29RmUaua6PIIW"
-          publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
-        </stripe-buy-button>
-      </div>
-
-    </div>
-
-  </div>
-
 </div>
-</section>
 
 <hr class="divider">
 
 <!-- HINWEISE -->
-
-<section class="section">
 <div class="container">
-
-  <div class="section-title">
-    ℹ️ Hinweise
+  <div class="section">
+    <div class="section-title">ℹ️ Hinweise &amp; Bedingungen</div>
+    <ul class="hints-list">
+      <li>Alle Pakete basieren auf 30-Sekunden-Spots</li>
+      <li>Ausstrahlungen frei einteilbar – keine feste Laufzeit</li>
+      <li>Längere Spots auf Anfrage möglich</li>
+      <li>Preise exkl. MwSt.</li>
+      <li>Zahlung im Voraus</li>
+      <li>Änderungen während der Laufzeit nach Absprache möglich</li>
+      <li>Bei Allen Jahresabos sind die ersten 2 Monate Kostenlos</li>
+      <li>Wenn wir Post/Storys oder Spots selbermachen müssen erheben wir eine gebühr von 2CHF/Story, Post und Spot</li>
+    </ul>
   </div>
-
-  <ul class="hints-list">
-    <li>Alle Pakete basieren auf 30-Sekunden-Spots</li>
-    <li>Preise exkl. MwSt.</li>
-    <li>Zahlung im Voraus</li>
-    <li>Längere Spots auf Anfrage möglich</li>
-    <li>2 Monate gratis bei Jahresabos</li>
-  </ul>
-
 </div>
-</section>
 
 <hr class="divider">
 
-<!-- FORMULAR -->
-
-<section class="section">
+<!-- ANFRAGE FORMULAR -->
 <div class="container">
+  <div class="section">
+    <div class="section-title">📩 Werbeanfrage</div>
+    <div class="form-card">
+      <form id="artist-form-2" action="https://formspree.io/f/maqlopya" method="POST">
+        <label for="f-name">Name / Unternehmen</label>
+        <input type="text" id="f-name" name="name" placeholder="Name oder Unternehmen" required>
 
-  <div class="section-title">
-    📩 Werbeanfrage
+        <label for="f-email">E-Mail</label>
+        <input type="email" id="f-email" name="email" placeholder="E-Mail" required>
+
+        <label for="f-subject">Betreff</label>
+        <input type="text" id="f-subject" name="subject" placeholder="Betreff">
+
+        <label for="f-message">Nachricht</label>
+        <textarea id="f-message" name="message" placeholder="Ihre Nachricht" required></textarea>
+
+        <div class="form-checkbox">
+          <input type="checkbox" id="agb-2" name="agb">
+          <label for="agb-2">Ich akzeptiere die <a href="agb.html" target="_blank">AGBs</a></label>
+        </div>
+
+        <button type="submit" id="submitBtn-2" class="submit-btn" disabled>Absenden</button>
+        <p id="form-msg-2" style="display:none;margin-top:12px;font-size:14px;color:var(--accent)"></p>
+      </form>
+    </div>
   </div>
-
-  <div class="form-card">
-
-    <form
-      id="contactForm"
-      action="https://formspree.io/f/maqlopya"
-      method="POST">
-
-      <label for="name">Name / Unternehmen</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        required>
-
-      <label for="email">E-Mail</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        required>
-
-      <label for="message">Nachricht</label>
-      <textarea
-        id="message"
-        name="message"
-        required></textarea>
-
-      <div class="form-checkbox">
-        <input type="checkbox" id="agb">
-        <label for="agb">
-          Ich akzeptiere die
-          <a href="agb.html" target="_blank">AGBs</a>
-        </label>
-      </div>
-
-      <button
-        type="submit"
-        class="submit-btn"
-        id="submitBtn"
-        disabled>
-        Anfrage senden
-      </button>
-
-      <p
-        id="formMsg"
-        style="margin-top:15px;color:var(--accent);display:none;">
-      </p>
-
-    </form>
-
-  </div>
-
 </div>
-</section>
 
 <hr class="divider">
 
 <!-- KONTAKT -->
-
-<section class="section">
 <div class="container">
-
-  <div class="section-title">
-    📬 Kontakt
-  </div>
-
-  <div class="contact-bar">
-
-    <div>
-      <p>
-        Jetzt Werbung auf den FRG-Sendern schalten.
-      </p>
+  <div class="section">
+    <div class="section-title">📬 Kontakt</div>
+    <div class="contact-bar">
+      <div>
+        <p>Jetzt starten und lebenslangen Rabatt sichern!</p>
+      </div>
+      <div>
+        <p>📧 <a href="mailto:kontakt@frg-radio.ch">kontakt@frg-radio.ch</a></p>
+        <p>📱 Instagram: <a href="https://instagram.com/fleury_radio_group" target="_blank">@fleury_radio_group</a></p>
+      </div>
     </div>
-
-    <div>
-      <p>
-        📧
-        <a href="mailto:kontakt@frg-radio.ch">
-          kontakt@frg-radio.ch
-        </a>
-      </p>
-
-      <p>
-        📱
-        <a
-          href="https://instagram.com/fleury_radio_group"
-          target="_blank">
-          @fleury_radio_group
-        </a>
-      </p>
-    </div>
-
   </div>
-
 </div>
-</section>
 
 <script>
+  const agb = document.getElementById('agb-2');
+  const btn = document.getElementById('submitBtn-2');
+  agb.addEventListener('change', () => { btn.disabled = !agb.checked; });
 
-const agb = document.getElementById("agb");
-const btn = document.getElementById("submitBtn");
-
-agb.addEventListener("change", () => {
-  btn.disabled = !agb.checked;
-});
-
-const form = document.getElementById("contactForm");
-const msg = document.getElementById("formMsg");
-
-form.addEventListener("submit", async (e) => {
-
-  e.preventDefault();
-
-  btn.disabled = true;
-  btn.textContent = "Wird gesendet...";
-
-  try {
-
-    const response = await fetch(form.action, {
-      method: "POST",
-      body: new FormData(form),
-      headers:{
-        Accept:"application/json"
-      }
-    });
-
-    if(response.ok){
-
-      msg.style.display = "block";
-      msg.style.color = "var(--accent)";
-      msg.textContent = "✅ Nachricht erfolgreich gesendet.";
-
-      form.reset();
-
-      btn.textContent = "Anfrage senden";
+  const form = document.getElementById('artist-form-2');
+  const msg  = document.getElementById('form-msg-2');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Wird gesendet…';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      });
+      if (res.ok) {
+        msg.style.display = 'block';
+        msg.textContent = '✅ Nachricht gesendet! Wir melden uns bald.';
+        form.reset();
+        btn.disabled = false;
+        btn.textContent = 'Absenden';
+      } else { throw new Error(); }
+    } catch {
+      msg.style.display = 'block';
+      msg.style.color = 'var(--accent2)';
+      msg.textContent = '❌ Fehler beim Senden. Bitte per E-Mail kontaktieren.';
       btn.disabled = false;
-
-    } else {
-      throw new Error();
+      btn.textContent = 'Absenden';
     }
-
-  } catch(error){
-
-    msg.style.display = "block";
-    msg.style.color = "var(--accent2)";
-    msg.textContent = "❌ Fehler beim Senden.";
-
-    btn.textContent = "Anfrage senden";
-    btn.disabled = false;
-
-  }
-
-});
-
+  });
 </script>
 
 </body>
