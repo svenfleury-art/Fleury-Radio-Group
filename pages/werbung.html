@@ -1,241 +1,848 @@
-<section class="page">
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radiowerbung – Fleury Radio Group™</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<script async src="https://js.stripe.com/v3/buy-button.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: rgba(255,255,255,0.07);
+    --accent: #e8ff47;
+    --accent2: #ff6b35;
+    --text: #e8e8f0;
+    --muted: #7070a0;
+    --radius: 14px;
+    --pk: "pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp";
+  }
 
-    <!-- Header -->
-    <section class="card full-width">
-      <h2>📻 Radiowerbung bei der Fleury Radio Group™</h2>
-      <p><strong>Einfach. Günstig. Effektiv.</strong></p>
-      <p>
-        Erreichen Sie Ihre Zielgruppe über Radio Rhywälle™, Winterlord FM™ und RhyRock Radio™.
-        Perfekt für lokale Unternehmen, Events und kleine Budgets.
-      </p>
-      <p>
-        <strong>🔥 Special:</strong> Wer jetzt Werbung bucht, erhält <strong>lebenslang 15% Rabatt</strong> auf alle zukünftigen Buchungen 
-        <em>(ausgenommen Premium & Business Pakete)</em>.
-      </p>
-    </section>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <!-- Grundprinzip -->
-    <section class="card">
-      <h2>🔊 So funktioniert’s</h2>
-      <ul>
-        <li>Integration Ihres Spots in unsere Playlist</li>
-        <li>Zufällige Ausstrahlung (Shuffle-System)</li>
-        <li>Keine festen Sendezeiten</li>
-        <li>Garantierte Anzahl an Ausstrahlungen</li>
-      </ul>
-    </section>
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
 
-    <!-- Zeitfenster -->
-    <section class="card">
-      <h2>⏰ Wann läuft Ihre Werbung?</h2>
-      <p>
-        Ihre Werbung wird innerhalb des gewählten Zeitfensters automatisch in unser Programm integriert.
-        Die Ausstrahlung erfolgt flexibel nach Ihren Wünschen (Shuffle-System).
-      </p>
-      <p><strong>Verfügbare Zeitfenster:</strong></p>
-      <ul>
-        <li>06–10 Uhr – Morning (hohe Reichweite)</li>
-        <li>10–13 Uhr – Vormittag</li>
-        <li>13–15 Uhr – Mittag</li>
-        <li>15–18 Uhr – Nachmittag</li>
-        <li>18–22 Uhr – Abend</li>
-        <li>22–06 Uhr – Nacht (günstigster Tarif)</li>
-      </ul>
-      <p>
-        Die genaue Uhrzeit einzelner Ausstrahlungen kann variieren, 
-        die gebuchte Anzahl an Spots wird jedoch vollständig verfügbar sein.
-      </p>
-      <p><strong>💡 Tipp:</strong> Für maximale Reichweite empfehlen wir die Zeitfenster 06–10 Uhr und 15–18 Uhr.</p>
-    </section>
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 80px 24px 64px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,255,71,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p.lead {
+    max-width: 560px;
+    margin: 0 auto 28px;
+    color: var(--muted);
+    font-size: 16px;
+  }
+  .hero-special {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,107,53,0.12);
+    border: 1px solid rgba(255,107,53,0.3);
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .hero-special strong { color: var(--accent2); }
 
-    <!-- Preise -->
-    <section class="card">
-      <h2>💰 Preise pro Sekunde</h2>
-      <p><small>Ideal für lokale Unternehmen und kleine Budgets</small></p>
-      <ul>
-        <li>06–10 Uhr – 1.50 CHF</li>
-        <li>10–13 Uhr – 1.20 CHF</li>
-        <li>13–15 Uhr – 1.00 CHF</li>
-        <li>15–18 Uhr – 1.40 CHF</li>
-        <li>18–22 Uhr – 1.20 CHF</li>
-        <li>22–06 Uhr – 0.50 CHF</li>
-      </ul>
-    </section>
+  /* ── LAYOUT ── */
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 56px 0; }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
 
-    <!-- Werbepakete -->
-    <section class="card" id="werbepakete">
-      <h2>📦 Werbepakete</h2>
-      <p>Wählen Sie ein Paket und nutzen Sie Ihre Ausstrahlungen flexibel – wann immer Sie möchten!</p>
-    </section>
+  /* ── HOW IT WORKS ── */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .info-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .info-card ul { list-style: none; }
+  .info-card ul li {
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .info-card ul li:last-child { border-bottom: none; }
+  .info-card ul li strong { color: var(--text); }
 
-    <div class="card-grid">
+  /* ── SECTION LABEL ── */
+  .pkg-section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    margin-top: 40px;
+  }
+  .pkg-section-label:first-child { margin-top: 0; }
 
-      <section class="card">
-        <h3>💸 Mini Paket</h3>
-        <p><strong>Inhalt:</strong> 30s Spot, 10 Ausstrahlungen</p>
-        <p><strong>Preis:</strong> 25 CHF</p>
-      </section>
+  /* ── PACKAGES GRID ── */
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
 
-      <section class="card">
-        <h3>🎧 Starter Paket</h3>
-        <p><strong>Inhalt:</strong> 30s Spot, 20 Ausstrahlungen</p>
-        <p><strong>Preis:</strong> 80 CHF</p>
-        <p><strong>💸 mit Rabatt:</strong> 72 CHF</p>
-      </section>
+  .pkg-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .pkg-card:hover {
+    border-color: rgba(232,255,71,0.2);
+    transform: translateY(-2px);
+  }
+  .pkg-card.featured {
+    border-color: rgba(232,255,71,0.35);
+    background: linear-gradient(135deg, #12121a 60%, rgba(232,255,71,0.04));
+  }
+  .pkg-card.featured::after {
+    content: 'Beliebt';
+    position: absolute;
+    top: 14px; right: 14px;
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
 
-      <section class="card">
-        <h3>📻 Basic Paket</h3>
-        <p><strong>Inhalt:</strong> 30s Spot, 50 Ausstrahlungen</p>
-        <p><strong>Preis:</strong> 180 CHF</p>
-        <p><strong>💸 mit Rabatt:</strong> 162 CHF</p>
-      </section>
+  .pkg-icon { font-size: 1.5rem; margin-bottom: 10px; display: block; }
+  .pkg-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .pkg-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    flex: 1;
+  }
+  .pkg-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .pkg-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+  .pkg-price-unit { font-size: 13px; color: var(--muted); }
+  .pkg-features {
+    list-style: none;
+    margin-bottom: 22px;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    margin-top: 12px;
+  }
+  .pkg-features li {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 3px 0;
+    display: flex;
+    gap: 8px;
+  }
+  .pkg-features li::before { content: '✓'; color: var(--accent); flex-shrink: 0; }
 
-      
+  /* ── STRIPE WRAPPER ── */
+  .stripe-slot {
+    margin-top: auto;
+    /* Stripe's buy button renders its own iframe here */
+  }
 
-      <section class="card">
-        <h3>🚀 Business Paket</h3>
-        <p><strong>Inhalt:</strong> 30s Spot, 100 Ausstrahlungen frei einteilbar</p>
-        <p><strong>Preis:</strong> 320 CHF</p>
-        <p><strong>💸 mit Rabatt:</strong> 288 CHF</p>
-      </section>
+  /* ── ADDONS ── */
+  .addons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .addon-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .addon-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .addon-name { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; }
+  .addon-price { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 800; color: var(--accent); white-space: nowrap; }
+  .addon-desc { font-size: 12.5px; color: var(--muted); flex: 1; }
 
-      <section class="card">
-        <h3>🔥 Premium Paket</h3>
-        <p><strong>Inhalt:</strong> 30s Spot, 200 Ausstrahlungen frei einteilbar</p>
-        <p><strong>Preis:</strong> 550 CHF</p>
-        <p><strong>💸 mit Rabatt:</strong> 495 CHF</p>
-      </section>
+  /* ── FORM ── */
+  .form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px;
+    max-width: 600px;
+  }
+  .form-card label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+    margin-top: 18px;
+  }
+  .form-card label:first-of-type { margin-top: 0; }
+  .form-card input, .form-card textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-card input:focus, .form-card textarea:focus { border-color: rgba(232,255,71,0.4); }
+  .form-card textarea { min-height: 120px; resize: vertical; }
+  .form-checkbox { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
+  .form-checkbox input[type=checkbox] { accent-color: var(--accent); width: 16px; height: 16px; }
+  .form-checkbox label { text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--muted); margin: 0; }
+  .form-checkbox a { color: var(--accent); }
+  .submit-btn {
+    margin-top: 22px;
+    display: inline-block;
+    padding: 13px 32px;
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: opacity 0.15s;
+  }
+  .submit-btn:hover { opacity: 0.85; }
+  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-      <section class="card">
-        <h3>🌍 Multi-Sender Paket</h3>
-        <p><strong>Inhalt:</strong> 30s Spot, 50 Ausstrahlungen auf allen Sendern frei einteilbar</p>
-        <p><strong>Preis:</strong> 220 CHF</p>
-        <p><strong>💸 Vorteil:</strong> Mehr Reichweite zum Vorteilspreis</p>
-      </section>
+  /* ── CONTACT ── */
+  .contact-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .contact-bar p { color: var(--muted); font-size: 14px; }
+  .contact-bar a { color: var(--accent); text-decoration: none; }
+  .contact-bar a:hover { text-decoration: underline; }
 
-      <section class="card">
-        <h3>🏙️ Basel Local Paket</h3>
-        <p><strong>Inhalt:</strong> 30s Spot, 40 Ausstrahlungen + 1 Instagram Post</p>
-        <p><strong>Preis:</strong> 150 CHF</p>
-        <p><strong>💸 Perfekt für lokale Unternehmen</strong></p>
-      </section>
+  /* ── HINTS ── */
+  .hints-list { list-style: none; }
+  .hints-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    gap: 10px;
+  }
+  .hints-list li::before { content: '—'; color: var(--accent); flex-shrink: 0; }
+  .hints-list li:last-child { border-bottom: none; }
 
-      <!-- Upgrades & Optionen -->
-      <section class="card">
-        <h3>📡 Alle Sender Upgrade</h3>
-        <p><strong>Inhalt:</strong> Ausstrahlung auf allen FRG Sendern</p>
-        <p><strong>Preis:</strong> +50 CHF pro Paket</p>
-      </section>
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+</style>
+</head>
+<body>
 
-      <section class="card">
-        <h3>📱 Social Media Boost</h3>
-        <p><strong>Inhalt:</strong> 1 Instagram Post + 1 Story</p>
-        <p><strong>Preis:</strong> +15 CHF</p>
-      </section>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">📻 Fleury Radio Group™</div>
+  <h1>Radio&shy;werbung,<br>die <span>wirkt.</span></h1>
+  <p class="lead">Erreichen Sie Ihre Zielgruppe über Radio Rhywälle™, Winterlord FM™ und RhyRock Radio™ – einfach, günstig, effektiv.</p>
+  <div class="hero-special">
+    🔥&nbsp; Jetzt buchen &amp; <strong>lebenslang 15 % Rabatt</strong> auf alle zukünftigen Buchungen sichern&nbsp;<em style="color:var(--muted)">(exkl. Premium &amp; Business)</em>
+  </div>
+</div>
 
-      <section class="card">
-        <h3>📸 Instagram Post</h3>
-        <p><strong>Inhalt:</strong> Einzelner Feed-Post mit Bild/Video + Text + Verlinkung</p>
-        <p><strong>Preis:</strong> +10 CHF</p>
-      </section>
+<hr class="divider">
 
-      <section class="card">
-        <h3>📲 Instagram Story Paket</h3>
-        <p><strong>Inhalt:</strong> 3 Stories mit Verlinkung / Call-to-Action</p>
-        <p><strong>Preis:</strong> +12 CHF</p>
-      </section>
-
-      <section class="card">
-        <h3>🔥 Social Media Woche</h3>
-        <p><strong>Inhalt:</strong> 2 Posts + 5 Stories über eine Woche verteilt</p>
-        <p><strong>Preis:</strong> +30 CHF</p>
-        <p><strong>💸 Vorteil:</strong> Mehr Sichtbarkeit über mehrere Tage</p>
-      </section>
-
-      <section class="card">
-        <h3>🚀 Social Media Kampagne</h3>
-        <p><strong>Inhalt:</strong> 4 Posts + 10 Stories + Erwähnungen im Radio</p>
-        <p><strong>Preis:</strong> +60 CHF</p>
-        <p><strong>💸 Vorteil:</strong> Kombinierte Reichweite Radio + Social Media</p>
-      </section>
-
-      <section class="card">
-        <h3>🎙️ Sponsoring</h3>
-        <p><strong>Inhalt:</strong> Ihr Unternehmen wird aktiv ins Programm integriert</p>
+<!-- SO FUNKTIONIERT'S -->
+<div class="container">
+  <div class="section">
+    <div class="section-title">🔊 So funktioniert's</div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Das Shuffle-System</h3>
         <ul>
-          <li>Erwähnung zu Beginn oder Ende von Sendungen</li>
-          <li>Formulierungen wie: „Diese Stunde wird präsentiert von …“</li>
-          <li>Mehrfache Nennung über die Woche verteilt</li>
-          <li>Natürlich eingebunden ins Programm (kein klassischer Werbespot)</li>
+          <li><strong>Integration in unsere Playlist</strong></li>
+          <li><strong>Zufällige Ausstrahlung</strong></li>
+          <li><strong>Keine festen Sendezeiten</strong></li>
+          <li><strong>Garantierte Anzahl Ausstrahlungen</strong></li>
         </ul>
-        <p><strong>Preis:</strong> +10 CHF</p>
-        <p><strong>💸 Vorteil:</strong> Höhere Glaubwürdigkeit & stärkere Markenwirkung</p>
-      </section>
+      </div>
+      <div class="info-card">
+        <h3>💡 Tipp</h3>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:12px;">Für maximale Reichweite empfehlen wir die Zeitfenster <strong style="color:var(--text)">06–10 Uhr</strong> und <strong style="color:var(--text)">15–18 Uhr</strong>.</p>
+        <p style="color:var(--muted);font-size:13px;">Die genaue Uhrzeit kann variieren – die gebuchte Anzahl Spots wird jedoch vollständig ausgestrahlt.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-      <section class="card">
-        <h3>ℹ️ Hinweise & Bedingungen</h3>
-        <ul>
-          <li>Alle Pakete basieren auf 30 Sekunden Spots</li>
-          <li>Ausstrahlungen frei einteilbar – keine feste Laufzeit</li>
-          <li>Längere Spots auf Anfrage möglich</li>
-          <li>Zusatzoptionen nur in Kombination mit gebuchtem Werbespot</li>
-          <li>Preise exkl. MwSt.</li>
-          <li>Zahlung im Voraus</li>
-          <li>Änderungen während der Laufzeit nach Absprache möglich</li>
+<hr class="divider">
+
+<!-- EINMALIGE PAKETE -->
+<div class="container">
+  <div class="section">
+    <div class="section-title">📦 Werbepakete</div>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:32px;">Wählen Sie ein Paket – Ausstrahlungen flexibel einteilbar, wann immer Sie möchten!</p>
+
+    <div class="pkg-section-label">Einmalige Pakete</div>
+    <div class="packages-grid">
+
+      <!-- ═══ MINI ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">💸</span>
+        <div class="pkg-name">Mini</div>
+        <div class="pkg-desc">30s Spot · 10 Ausstrahlungen</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">20</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>30 Sekunden Spot</li>
+          <li>10 garantierte Ausstrahlungen</li>
+          <li>Shuffle-System</li>
         </ul>
-      </section>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Mini -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_Mini"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ STARTER ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🎧</span>
+        <div class="pkg-name">Starter</div>
+        <div class="pkg-desc">30s Spot · 20 Ausstrahlungen</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">30</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>30 Sekunden Spot</li>
+          <li>20 garantierte Ausstrahlungen</li>
+          <li>Shuffle-System</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Starter -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_Starter"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ BUISSNES ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🚀</span>
+        <div class="pkg-name">Buissnes</div>
+        <div class="pkg-desc">30s Spot · 100 Ausstrahlungen frei einteilbar</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">175</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>30 Sekunden Spot</li>
+          <li>100 Ausstrahlungen</li>
+          <li>Frei einteilbar</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Buissnes -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_Buissnes"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ BASIC ═══ -->
+      <div class="pkg-card featured">
+        <span class="pkg-icon">📻</span>
+        <div class="pkg-name">Basic</div>
+        <div class="pkg-desc">30s Spot · 50 Ausstrahlungen</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">75</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>30 Sekunden Spot</li>
+          <li>50 garantierte Ausstrahlungen</li>
+          <li>Frei einteilbar</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Basic -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_Basic"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ PREMIUM ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🔥</span>
+        <div class="pkg-name">Premium</div>
+        <div class="pkg-desc">30s Spot · 200 Ausstrahlungen frei einteilbar</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">290</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>30 Sekunden Spot</li>
+          <li>200 Ausstrahlungen</li>
+          <li>Frei einteilbar</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Premium -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_Premium"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ BASEL LOCAL ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🏙️</span>
+        <div class="pkg-name">Basel Local</div>
+        <div class="pkg-desc">30s Spot · 40 Ausstrahlungen + 1 Instagram Post</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">95</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>30 Sekunden Spot</li>
+          <li>40 Ausstrahlungen</li>
+          <li>1 Instagram Post inklusive</li>
+          <li>Ideal für lokale Unternehmen</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Basel Local -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_BaselLocal"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ SPONSORING ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🎙️</span>
+        <div class="pkg-name">Sponsoring</div>
+        <div class="pkg-desc">Ihr Unternehmen aktiv ins Programm integriert</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">30</span>
+          <span class="pkg-price-unit">CHF</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Erwähnung zu Beginn / Ende von Sendungen</li>
+          <li>„Diese Stunde präsentiert von …"</li>
+          <li>Mehrfache Nennung pro Woche</li>
+          <li>Natürlich ins Programm eingebunden</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Sponsoring -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_Sponsoring"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
 
     </div>
-      <!-- Werbeanfragen Formular -->
-      <!-- Werbeanfragen Formular -->
-<section class="card">
-  <h2>📩 Werbeanfrage</h2>
-  <form class="artist-form" id="artist-form-2" action="https://formspree.io/f/maqlopya" method="POST">
-    
-    <label>
-      Name / Unternehmen:
-      <input type="text" name="name" placeholder="Name oder Unternehmen" required>
-    </label>
 
-    <label>
-      E-Mail:
-      <input type="email" name="email" placeholder="E-Mail" required>
-    </label>
+    <!-- ABO MONATLICH -->
+    <div class="pkg-section-label" style="margin-top:56px;">Abo – Monatlich</div>
+    <div class="packages-grid">
 
-    <label>
-      Betreff:
-      <input type="text" name="subject" placeholder="Betreff">
-    </label>
+      <!-- ═══ BASIC ABO MONAT ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">📻</span>
+        <div class="pkg-name">Basic Abo / Monat</div>
+        <div class="pkg-desc">Monatliches Werbepaket · automatisch verlängerbar</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">60</span>
+          <span class="pkg-price-unit">CHF / Monat</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Monatliche Ausstrahlung</li>
+          <li>Jederzeit kündbar</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Basic Abo/ Monat -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_BasicAboMonat"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
 
-    <label>
-      Nachricht:
-      <textarea name="message" placeholder="Ihre Nachricht" required></textarea>
-    </label>
+      <!-- ═══ STANDARD ABO MONAT ═══ -->
+      <div class="pkg-card featured">
+        <span class="pkg-icon">⭐</span>
+        <div class="pkg-name">Standard Abo / Monat</div>
+        <div class="pkg-desc">Monatliches Werbepaket · automatisch verlängerbar</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">100</span>
+          <span class="pkg-price-unit">CHF / Monat</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Monatliche Ausstrahlung</li>
+          <li>Jederzeit kündbar</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Standard Abo/ Monat -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_StandardAboMonat"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
 
-    <!-- AGB Checkbox -->
-    <div class="checkbox-container">
-   <input type="checkbox" id="agb-2" name="agb">
-      <label for="agb-2">
-        Ich akzeptiere die <a href="agb.html" class="agb-link" target="_blank">AGBs</a>
-      </label>
+      <!-- ═══ BUISSNES ABO MONAT ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🚀</span>
+        <div class="pkg-name">Buissnes Abo / Monat</div>
+        <div class="pkg-desc">Monatliches Werbepaket · automatisch verlängerbar</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">190</span>
+          <span class="pkg-price-unit">CHF / Monat</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Monatliche Ausstrahlung</li>
+          <li>Jederzeit kündbar</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Buissnes Abo/ Monat -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_BuissnesAboMonat"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
+
+      <!-- ═══ PREMIUM ABO MONAT ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🔥</span>
+        <div class="pkg-name">Premium Abo / Monat</div>
+        <div class="pkg-desc">Monatliches Werbepaket · automatisch verlängerbar</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">350</span>
+          <span class="pkg-price-unit">CHF / Monat</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Monatliche Ausstrahlung</li>
+          <li>Jederzeit kündbar</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Premium Abo/ Monat -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_PremiumAboMonat"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
+
     </div>
 
-   <button type="submit" id="submitBtn-2" disabled>Absenden</button>
-<p id="form-msg-2" style="display:none;"></p>
-  </form>
-</section>
-  
+    <!-- ABO JÄHRLICH -->
+    <div class="pkg-section-label" style="margin-top:56px;">Abo – Jährlich <span style="font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0;text-transform:none;margin-left:8px;">· Günstiger als monatlich</span></div>
+    <div class="packages-grid">
 
-    <!-- Kontakt -->
-    <section class="card">
-      <h2>📩 Kontakt</h2>
-      <p>Jetzt starten und lebenslangen Rabatt sichern!</p>
-      <p>
-        📧 <a href="mailto:kontakt@frg-radio.ch">kontakt@frg-radio.ch</a><br>
-        📱 Instagram: @fleury_radio_group
-      </p>
-    </section>
+      <!-- ═══ BASIC ABO JAHR ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">📻</span>
+        <div class="pkg-name">Basic Abo / Jahr</div>
+        <div class="pkg-desc">Jährliches Werbepaket · einmalige Zahlung</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">680</span>
+          <span class="pkg-price-unit">CHF / Jahr</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Ganzjährige Ausstrahlung</li>
+          <li>Günstiger als monatlich</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Basic Abo/ Jahr -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_BasicAboJahr"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
 
-</section>
+      <!-- ═══ STANDARD ABO JAHR ═══ -->
+      <div class="pkg-card featured">
+        <span class="pkg-icon">⭐</span>
+        <div class="pkg-name">Standard Abo / Jahr</div>
+        <div class="pkg-desc">Jährliches Werbepaket · einmalige Zahlung</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">1'100</span>
+          <span class="pkg-price-unit">CHF / Jahr</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Ganzjährige Ausstrahlung</li>
+          <li>Günstiger als monatlich</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Standard Abo/ Jahr -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_StandardAboJahr"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
 
+      <!-- ═══ BUISSNES ABO JAHR ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🚀</span>
+        <div class="pkg-name">Buissnes Abo / Jahr</div>
+        <div class="pkg-desc">Jährliches Werbepaket · einmalige Zahlung</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">2'000</span>
+          <span class="pkg-price-unit">CHF / Jahr</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Ganzjährige Ausstrahlung</li>
+          <li>Günstiger als monatlich</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Buissnes Abo/ Jahr -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_BuissnesAboJahr"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
 
+      <!-- ═══ PREMIUM ABO JAHR ═══ -->
+      <div class="pkg-card">
+        <span class="pkg-icon">🔥</span>
+        <div class="pkg-name">Premium Abo / Jahr</div>
+        <div class="pkg-desc">Jährliches Werbepaket · einmalige Zahlung</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">3'800</span>
+          <span class="pkg-price-unit">CHF / Jahr</span>
+        </div>
+        <ul class="pkg-features">
+          <li>Ganzjährige Ausstrahlung</li>
+          <li>Günstiger als monatlich</li>
+        </ul>
+        <div class="stripe-slot">
+          <!-- buy-button-id: Premium Abo/ Jahr -->
+          <stripe-buy-button
+            buy-button-id="ERSETZEN_PremiumAboJahr"
+            publishable-key="pk_live_51TZXlrKGayq29RmUUT7WCPhvP9w6EVGp4sabIsVbsgHjVd5vfIDyXUNabMskY4snjNbFcUE7MN2kFwwyHuaFwZi000mXsD2Myp">
+          </stripe-buy-button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- HINWEISE -->
+<div class="container">
+  <div class="section">
+    <div class="section-title">ℹ️ Hinweise &amp; Bedingungen</div>
+    <ul class="hints-list">
+      <li>Alle Pakete basieren auf 30-Sekunden-Spots</li>
+      <li>Ausstrahlungen frei einteilbar – keine feste Laufzeit</li>
+      <li>Längere Spots auf Anfrage möglich</li>
+      <li>Preise exkl. MwSt.</li>
+      <li>Zahlung im Voraus</li>
+      <li>Änderungen während der Laufzeit nach Absprache möglich</li>
+    </ul>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ANFRAGE FORMULAR -->
+<div class="container">
+  <div class="section">
+    <div class="section-title">📩 Werbeanfrage</div>
+    <div class="form-card">
+      <form id="artist-form-2" action="https://formspree.io/f/maqlopya" method="POST">
+        <label for="f-name">Name / Unternehmen</label>
+        <input type="text" id="f-name" name="name" placeholder="Name oder Unternehmen" required>
+
+        <label for="f-email">E-Mail</label>
+        <input type="email" id="f-email" name="email" placeholder="E-Mail" required>
+
+        <label for="f-subject">Betreff</label>
+        <input type="text" id="f-subject" name="subject" placeholder="Betreff">
+
+        <label for="f-message">Nachricht</label>
+        <textarea id="f-message" name="message" placeholder="Ihre Nachricht" required></textarea>
+
+        <div class="form-checkbox">
+          <input type="checkbox" id="agb-2" name="agb">
+          <label for="agb-2">Ich akzeptiere die <a href="agb.html" target="_blank">AGBs</a></label>
+        </div>
+
+        <button type="submit" id="submitBtn-2" class="submit-btn" disabled>Absenden</button>
+        <p id="form-msg-2" style="display:none;margin-top:12px;font-size:14px;color:var(--accent)"></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- KONTAKT -->
+<div class="container">
+  <div class="section">
+    <div class="section-title">📬 Kontakt</div>
+    <div class="contact-bar">
+      <div>
+        <p>Jetzt starten und lebenslangen Rabatt sichern!</p>
+      </div>
+      <div>
+        <p>📧 <a href="mailto:kontakt@frg-radio.ch">kontakt@frg-radio.ch</a></p>
+        <p>📱 Instagram: <a href="https://instagram.com/fleury_radio_group" target="_blank">@fleury_radio_group</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const agb = document.getElementById('agb-2');
+  const btn = document.getElementById('submitBtn-2');
+  agb.addEventListener('change', () => { btn.disabled = !agb.checked; });
+
+  const form = document.getElementById('artist-form-2');
+  const msg  = document.getElementById('form-msg-2');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Wird gesendet…';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      });
+      if (res.ok) {
+        msg.style.display = 'block';
+        msg.textContent = '✅ Nachricht gesendet! Wir melden uns bald.';
+        form.reset();
+        btn.disabled = false;
+        btn.textContent = 'Absenden';
+      } else { throw new Error(); }
+    } catch {
+      msg.style.display = 'block';
+      msg.style.color = 'var(--accent2)';
+      msg.textContent = '❌ Fehler beim Senden. Bitte per E-Mail kontaktieren.';
+      btn.disabled = false;
+      btn.textContent = 'Absenden';
+    }
+  });
+</script>
+
+</body>
+</html>
