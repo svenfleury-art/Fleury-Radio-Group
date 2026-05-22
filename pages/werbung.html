@@ -484,19 +484,8 @@
 
   hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; position: relative; z-index: 1; }
 
-  /* ── SCROLLFADE ── */
-  @media (prefers-reduced-motion: no-preference) {
-    .pkg-card, .info-card, .addon-card {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s, box-shadow 0.25s;
-    }
-    .pkg-card.visible, .info-card.visible, .addon-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .pkg-card:hover { transform: translateY(-3px) !important; }
-  }
+  /* ── HOVER ONLY ── */
+  .pkg-card:hover { transform: translateY(-3px); }
 </style>
 </head>
 <body>
@@ -915,16 +904,7 @@
     }
   });
 
-  // Scroll reveal
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 60);
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.pkg-card, .info-card').forEach(el => obs.observe(el));
+
 </script>
 </body>
 </html>
