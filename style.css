@@ -61,6 +61,99 @@ body::before{
   opacity:0.6;
 }
 
+ /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 100px 24px 80px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% -10%, rgba(232,255,71,0.12) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(255,107,53,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  /* animated radio waves */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 30px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(232,255,71,0.04);
+    box-shadow:
+      0 0 0 60px rgba(232,255,71,0.025),
+      0 0 0 120px rgba(232,255,71,0.015),
+      0 0 0 200px rgba(232,255,71,0.008);
+    pointer-events: none;
+    animation: pulse 4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+  }
+
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(232,255,71,0.1);
+    border: 1px solid rgba(232,255,71,0.25);
+    color: var(--accent);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 28px;
+    animation: fadeDown 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+    animation: fadeDown 0.6s 0.1s ease both;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p.lead {
+    max-width: 520px;
+    margin: 0 auto 32px;
+    color: var(--muted2);
+    font-size: 16px;
+    font-weight: 300;
+    animation: fadeDown 0.6s 0.2s ease both;
+  }
+  .hero-special {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,107,53,0.1);
+    border: 1px solid rgba(255,107,53,0.28);
+    border-radius: 12px;
+    padding: 14px 22px;
+    font-size: 14px;
+    color: var(--text);
+    animation: fadeDown 0.6s 0.3s ease both;
+  }
+  .hero-special strong { color: var(--accent2); }
+  .hero-special em { color: var(--muted); font-style: normal; font-size: 12px; }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
 /* =========================
    CENTER LAYOUT
 ========================= */
