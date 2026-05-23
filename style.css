@@ -118,6 +118,247 @@ main{
 }
 
 /* =========================
+   HEADER INNER
+========================= */
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 18px;
+  gap:20px;
+}
+
+/* =========================
+   HEADER PLAYER
+========================= */
+.header-player{
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+
+.header-player audio{
+  height:30px;
+  filter:brightness(1.1);
+}
+
+/* =========================
+   LOGO AREA
+========================= */
+.logo-area{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+}
+
+.logo-area img{
+  height:150px;
+
+  transition:
+    transform 0.3s ease,
+    height 0.3s ease;
+}
+
+/* =========================
+   HEADER FULL
+========================= */
+.header-full{
+  text-align:center;
+  padding:10px 20px;
+
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease;
+
+  overflow:hidden;
+}
+
+/* =========================
+   SHRINK HEADER
+========================= */
+#mainHeader.shrink{
+  background:rgba(8,8,16,0.98);
+}
+
+#mainHeader.shrink .header-full{
+  max-height:0;
+  opacity:0;
+  transform:translateY(-10px);
+  padding:0;
+
+  pointer-events:none;
+}
+
+#mainHeader.shrink .logo-area img{
+  height:75px;
+  transform:scale(0.6);
+}
+
+#mainHeader.shrink .header-player audio{
+  height:25px;
+}
+
+#mainHeader.shrink .frg-player{
+  transform:scale(0.95);
+  transition:transform 0.3s ease;
+}
+
+/* =========================
+   HAMBURGER
+========================= */
+.hamburger{
+  font-size:24px;
+  background:none;
+  border:none;
+  color:var(--text);
+  cursor:pointer;
+}
+
+/* =========================
+   MENU SHRINK FIX
+========================= */
+#mainHeader.shrink .nav-links.open{
+  position:fixed;
+  top:80px;
+  left:0;
+
+  width:100%;
+
+  background:rgba(16,16,28,0.98);
+
+  backdrop-filter:blur(12px);
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  padding:20px 0;
+  gap:6px;
+
+  z-index:99999;
+
+  border-top:1px solid var(--border);
+}
+
+/* =========================
+   MENU OVERLAY
+========================= */
+#menu-overlay{
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,0.5);
+
+  backdrop-filter:blur(4px);
+
+  z-index:9990;
+
+  display:none;
+}
+
+#menu-overlay.active{
+  display:block;
+}
+
+/* =========================
+   MOBILE HEADER FIX
+========================= */
+@media (max-width:768px){
+
+  .header-inner{
+    flex-direction:column;
+    gap:10px;
+    align-items:center;
+  }
+
+  .logo-area{
+    order:-3;
+    text-align:center;
+  }
+
+  .logo-area img{
+    height:90px;
+  }
+
+  .frg-player{
+    order:-2;
+    width:100%;
+    justify-content:center;
+  }
+
+  .header-full p{
+    order:-1;
+    font-size:14px;
+    text-align:center;
+    margin-top:5px;
+  }
+
+  .nav-links{
+    width:100%;
+    align-items:center;
+  }
+
+  .nav-links a,
+  .nav-button{
+    width:90%;
+    max-width:320px;
+  }
+
+  #hamburgerBtn{
+    align-self:center;
+  }
+}
+
+/* =========================
+   MOBILE SHRINK MODE
+========================= */
+@media (max-width:768px){
+
+  #mainHeader.shrink #hamburgerBtn{
+    display:none !important;
+  }
+
+  #mainHeader.shrink .nav-links{
+    display:none !important;
+  }
+
+  #mainHeader.shrink .logo-area{
+    display:none !important;
+  }
+
+  #mainHeader.shrink .header-full{
+    display:none !important;
+  }
+
+  #mainHeader.shrink .header-inner{
+    justify-content:center;
+  }
+
+  #mainHeader.shrink .frg-player{
+    width:100%;
+    justify-content:center;
+  }
+}
+
+/* =========================
+   FOOTER
+========================= */
+.site-footer{
+  background:var(--surface);
+
+  border:1px solid var(--border);
+
+  padding:30px;
+
+  border-radius:16px;
+
+  text-align:center;
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.35);
+}
+
+/* =========================
    LOADER
 ========================= */
 #loader{
