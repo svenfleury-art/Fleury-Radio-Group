@@ -1142,4 +1142,9 @@ section,
   .now-playing{
     min-width:auto;
   }
+
+  .player-logo{
+    height:300px;
+  }
+  
 }
