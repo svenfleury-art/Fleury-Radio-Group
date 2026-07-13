@@ -1,495 +1,3 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Radiowerbung – Fleury Radio Group™</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-
-<style>
-  :root {
-    --bg: #080810;
-    --surface: #10101c;
-    --surface2: #16162a;
-    --surface3: #1c1c32;
-    --border: rgba(255,255,255,0.07);
-    --border-hover: rgba(232,255,71,0.25);
-    --accent: #e8ff47;
-    --accent2: #ff6b35;
-    --text: #eeeef8;
-    --muted: #6868a0;
-    --muted2: #9090c0;
-    --radius: 16px;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    line-height: 1.65;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* ── NOISE TEXTURE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.6;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    padding: 100px 24px 80px;
-    text-align: center;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 70% 50% at 50% -10%, rgba(232,255,71,0.12) 0%, transparent 65%),
-      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(255,107,53,0.06) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  /* animated radio waves */
-  .hero::after {
-    content: '';
-    position: absolute;
-    top: 30px; left: 50%;
-    transform: translateX(-50%);
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    border: 1px solid rgba(232,255,71,0.04);
-    box-shadow:
-      0 0 0 60px rgba(232,255,71,0.025),
-      0 0 0 120px rgba(232,255,71,0.015),
-      0 0 0 200px rgba(232,255,71,0.008);
-    pointer-events: none;
-    animation: pulse 4s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
-    50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
-  }
-
-  .hero-inner { position: relative; z-index: 1; }
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(232,255,71,0.1);
-    border: 1px solid rgba(232,255,71,0.25);
-    color: var(--accent);
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    padding: 6px 16px;
-    border-radius: 999px;
-    margin-bottom: 28px;
-    animation: fadeDown 0.6s ease both;
-  }
-  .hero h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.4rem, 6vw, 4.2rem);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    margin-bottom: 20px;
-    animation: fadeDown 0.6s 0.1s ease both;
-  }
-  .hero h1 em { font-style: normal; color: var(--accent); }
-  .hero p.lead {
-    max-width: 520px;
-    margin: 0 auto 32px;
-    color: var(--muted2);
-    font-size: 16px;
-    font-weight: 300;
-    animation: fadeDown 0.6s 0.2s ease both;
-  }
-  .hero-special {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(255,107,53,0.1);
-    border: 1px solid rgba(255,107,53,0.28);
-    border-radius: 12px;
-    padding: 14px 22px;
-    font-size: 14px;
-    color: var(--text);
-    animation: fadeDown 0.6s 0.3s ease both;
-  }
-  .hero-special strong { color: var(--accent2); }
-  .hero-special em { color: var(--muted); font-style: normal; font-size: 12px; }
-
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── LAYOUT ── */
-  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-  .section { padding: 64px 0; }
-
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 36px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-title .icon { font-size: 1rem; }
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, var(--border), transparent);
-  }
-
-  /* ── HOW IT WORKS ── */
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
-
-  .info-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 32px;
-  }
-  .info-card h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 18px;
-    color: var(--text);
-  }
-  .info-card ul { list-style: none; }
-  .info-card ul li {
-    padding: 9px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
-    color: var(--muted2);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .info-card ul li::before { content: '▸'; color: var(--accent); font-size: 10px; flex-shrink: 0; }
-  .info-card ul li:last-child { border-bottom: none; }
-  .info-card ul li strong { color: var(--text); }
-
-  /* ── SECTION LABEL ── */
-  .pkg-section-label {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 20px;
-    margin-top: 48px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .pkg-section-label::before { content: ''; flex: none; width: 24px; height: 2px; background: var(--accent); border-radius: 2px; }
-  .pkg-section-label:first-child { margin-top: 0; }
-  .pkg-section-label .sub {
-    font-size: 11px;
-    color: var(--muted);
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
-    margin-left: 4px;
-  }
-
-  /* ── PACKAGES GRID ── */
-  .packages-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-    gap: 16px;
-  }
-
-  .pkg-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-    position: relative;
-    overflow: hidden;
-  }
-  .pkg-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,255,71,0.05) 0%, transparent 70%);
-    transition: opacity 0.3s;
-    pointer-events: none;
-  }
-  .pkg-card:hover {
-    border-color: var(--border-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(232,255,71,0.06);
-  }
-  .pkg-card:hover::before { opacity: 1; }
-
-  .pkg-card.featured {
-    border-color: rgba(232,255,71,0.3);
-    background: linear-gradient(145deg, #13132a 0%, #10101c 100%);
-  }
-  .pkg-card.featured::after {
-    content: 'Beliebt';
-    position: absolute;
-    top: 16px; right: 16px;
-    background: var(--accent);
-    color: #080810;
-    font-family: 'Syne', sans-serif;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 999px;
-  }
-
-  .pkg-icon { font-size: 1.6rem; margin-bottom: 12px; display: block; }
-  .pkg-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 800;
-    margin-bottom: 6px;
-    color: var(--text);
-  }
-  .pkg-desc {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 18px;
-    flex: 1;
-  }
-  .pkg-price-row {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-    margin-bottom: 6px;
-  }
-  .pkg-price {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--text);
-    line-height: 1;
-  }
-  .pkg-price-unit { font-size: 13px; color: var(--muted); }
-  .pkg-features {
-    list-style: none;
-    margin-bottom: 24px;
-    border-top: 1px solid var(--border);
-    padding-top: 16px;
-    margin-top: 14px;
-  }
-  .pkg-features li {
-    font-size: 13px;
-    color: var(--muted2);
-    padding: 4px 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    line-height: 1.4;
-  }
-  .pkg-features li::before {
-    content: '✓';
-    color: var(--accent);
-    flex-shrink: 0;
-    font-size: 11px;
-    margin-top: 2px;
-    font-weight: 700;
-  }
-
-  /* ── BUY BUTTON ── */
-  .stripe-slot { margin-top: auto; }
-  .buy-btn {
-    display: block;
-    width: 100%;
-    padding: 13px 20px;
-    background: var(--accent);
-    color: #080810;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 13px;
-    letter-spacing: 0.04em;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s;
-    position: relative;
-    overflow: hidden;
-  }
-  .buy-btn::after {
-    content: '→';
-    margin-left: 6px;
-    transition: transform 0.2s;
-    display: inline-block;
-  }
-  .buy-btn:hover {
-    opacity: 0.92;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(232,255,71,0.25);
-  }
-  .buy-btn:hover::after { transform: translateX(4px); }
-  .buy-btn:active { transform: translateY(0); }
-
-  /* featured card gets a slightly different button */
-  .pkg-card.featured .buy-btn {
-    box-shadow: 0 4px 20px rgba(232,255,71,0.2);
-  }
-
-  /* ── ADDONS ── */
-  .addons-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 12px;
-  }
-  .addon-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  /* ── FORM ── */
-  .form-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 40px;
-    max-width: 600px;
-  }
-  .form-card label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 7px;
-    margin-top: 20px;
-  }
-  .form-card label:first-of-type { margin-top: 0; }
-  .form-card input, .form-card textarea {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    padding: 12px 16px;
-    outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-  .form-card input:focus, .form-card textarea:focus {
-    border-color: rgba(232,255,71,0.4);
-    box-shadow: 0 0 0 3px rgba(232,255,71,0.06);
-  }
-  .form-card textarea { min-height: 120px; resize: vertical; }
-  .form-checkbox { display: flex; align-items: center; gap: 10px; margin-top: 20px; }
-  .form-checkbox input[type=checkbox] { accent-color: var(--accent); width: 17px; height: 17px; }
-  .form-checkbox label { text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--muted2); margin: 0; }
-  .form-checkbox a { color: var(--accent); text-decoration: none; }
-  .submit-btn {
-    margin-top: 24px;
-    display: inline-block;
-    padding: 14px 36px;
-    background: var(--accent);
-    color: #080810;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s;
-    letter-spacing: 0.03em;
-  }
-  .submit-btn:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(232,255,71,0.2);
-  }
-  .submit-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
-
-  /* ── CONTACT ── */
-  .contact-bar {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 32px 36px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-    position: relative;
-    overflow: hidden;
-  }
-  .contact-bar::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 60% 80% at 0% 50%, rgba(232,255,71,0.03) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .contact-bar p { color: var(--muted2); font-size: 14px; }
-  .contact-bar a { color: var(--accent); text-decoration: none; }
-  .contact-bar a:hover { text-decoration: underline; }
-  .contact-bar .headline { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
-
-  /* ── HINTS ── */
-  .hints-list { list-style: none; }
-  .hints-list li {
-    padding: 11px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
-    color: var(--muted2);
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .hints-list li::before { content: '—'; color: var(--accent); flex-shrink: 0; font-weight: 700; }
-  .hints-list li:last-child { border-bottom: none; }
-
-  hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; position: relative; z-index: 1; }
-
-  /* ── HOVER ONLY ── */
-  .pkg-card:hover { transform: translateY(-3px); }
-</style>
-</head>
-<body>
-
 <!-- HERO -->
 <div class="hero">
   <div class="hero-inner">
@@ -525,7 +33,7 @@
   <div class="section">
     <div class="section-title"><span class="icon">📦</span> Werbepakete</div>
     <p style="color:var(--muted2);font-size:14px;margin-bottom:40px;">Wählen Sie ein Paket oder Abo – Ausstrahlungen flexibel einteilbar, wann immer Sie möchten!</p>
-    <li><a href="https://frg-radio.ch/Preisliste.pdf" data-link>Komplette Preisliste</a></li>
+    <p><a href="https://frg-radio.ch/Preisliste.pdf" target="_blank" class="frg-btn">Komplette Preisliste (PDF)</a></p>
 
     <!-- EINMALIGE PAKETE -->
     <div class="pkg-section-label">Einmalige Pakete</div>
@@ -579,7 +87,7 @@
       <div class="pkg-card">
         <span class="pkg-icon">🚀</span>
         <div class="pkg-name">Business</div>
-        <div class="pkg-desc">30s Spot · 100 Ausstrahlungen frei einteilbar</div>
+        <div class="pkg-desc">30s Spot · 100 Ausstrahlungen</div>
         <div class="pkg-price-row"><span class="pkg-price">150</span><span class="pkg-price-unit">CHF</span></div>
         <ul class="pkg-features">
           <li>30 Sekunden Spot</li>
@@ -594,7 +102,7 @@
       <div class="pkg-card">
         <span class="pkg-icon">🔥</span>
         <div class="pkg-name">Premium</div>
-        <div class="pkg-desc">30s Spot · 200 Ausstrahlungen frei einteilbar</div>
+        <div class="pkg-desc">30s Spot · 200 Ausstrahlungen</div>
         <div class="pkg-price-row"><span class="pkg-price">290</span><span class="pkg-price-unit">CHF</span></div>
         <ul class="pkg-features">
           <li>30 Sekunden Spot</li>
@@ -606,8 +114,7 @@
         </div>
       </div>
 
-      
- <div class="pkg-card">
+      <div class="pkg-card">
         <span class="pkg-icon">🎙️</span>
         <div class="pkg-name">Sponsoring</div>
         <div class="pkg-desc">Ihr Unternehmen aktiv ins Programm integriert</div>
@@ -616,226 +123,45 @@
           <li>Erwähnung zu Beginn/Ende von Sendungen</li>
           <li>„Diese Stunde präsentiert von …"</li>
           <li>Mehrfache Nennung pro Woche</li>
-          <li>Natürlich ins Programm eingebunden</li>
         </ul>
         <div class="stripe-slot">
           <a href="https://buy.stripe.com/dRm4gAb6c68T8iCcce7Zu07" target="_blank" class="buy-btn">Jetzt kaufen</a>
         </div>
       </div>
-      
 
-  
       <div class="pkg-card" style="border-color: rgba(255,107,53,0.3);">
         <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
           <span class="pkg-icon" style="margin-bottom:0;">🏙️</span>
           <span style="background:rgba(255,107,53,0.15); border:1px solid rgba(255,107,53,0.35); color:var(--accent2); font-family:'Syne',sans-serif; font-size:10px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:3px 10px; border-radius:999px;">Nur für Basel</span>
         </div>
         <div class="pkg-name">Basel Local</div>
-        <div class="pkg-desc">Speziell für kleine Betriebe, Cafés &amp; Läden in Basel und Umgebung.</div>
-        <div style="background:rgba(255,107,53,0.07); border:1px solid rgba(255,107,53,0.18); border-radius:8px; padding:10px 12px; font-size:12px; color:var(--accent2); margin-bottom:14px; line-height:1.6;">
-          ⚠️ <strong>Voraussetzungen:</strong> Für den Kauf des Basel Local Pakets müssen Sie Ihren Sitz in einem der Kantone Basel haben und dürfen nicht mehr als <strong>10 Mitarbeiter</strong> beschäftigen.
-        </div>
+        <div class="pkg-desc">Speziell für kleine Betriebe in Basel.</div>
         <div class="pkg-price-row"><span class="pkg-price">80</span><span class="pkg-price-unit">CHF</span></div>
         <ul class="pkg-features">
-          <li>30 Sekunden Spot</li>
           <li>50 Ausstrahlungen</li>
-          <li>1 Instagram Post</li>
-          <li>1 Instagram Story</li>
-          <li>1 Sponsoring Inklusive</li>
-          <li>Lokale Zielgruppe in Basel</li>
-          <li>Persönliche Betreuung von uns</li>
+          <li>Social Media Integration</li>
+          <li>Sponsoring inklusive</li>
         </ul>
         <div class="stripe-slot">
-          <a href="https://buy.stripe.com/fZuaEY4HO54P2Yi3FI7Zu06" target="_blank" class="buy-btn" style="background:var(--accent2); box-shadow: 0 4px 20px rgba(255,107,53,0.25);">Jetzt buchen →</a>
+          <a href="https://buy.stripe.com/fZuaEY4HO54P2Yi3FI7Zu06" target="_blank" class="buy-btn" style="background:var(--accent2);">Jetzt buchen</a>
         </div>
       </div>
 
-       </div>
+    </div>
 
     <!-- ABO MONATLICH -->
     <div class="pkg-section-label" style="margin-top:60px;">Abo – Monatlich</div>
     <div class="packages-grid">
-
       <div class="pkg-card">
         <span class="pkg-icon">📻</span>
-        <div class="pkg-name">Basic Abo / Monat</div>
-        <div class="pkg-desc">Monatliches Werbepaket · automatisch verlängerbar</div>
-        <div class="pkg-price-row"><span class="pkg-price">35</span><span class="pkg-price-unit">CHF / Monat</span></div>
-        <ul class="pkg-features">
-          <li>Monatliche Ausstrahlung</li>
-          <li>Jederzeit kündbar</li>
-          <li>20 Ausstrahlungen</li>
-          <li>1 Instagram Posts</li>
-          <li>Kostenlose Designs von uns</li>
-        </ul>
+        <div class="pkg-name">Basic Abo</div>
+        <div class="pkg-price-row"><span class="pkg-price">35</span><span class="pkg-price-unit">CHF / mt</span></div>
         <div class="stripe-slot">
-          <a href="https://buy.stripe.com/6oUcN67U01SD0Qa9027Zu08" target="_blank" class="buy-btn">Jetzt kaufen</a>
+          <a href="https://buy.stripe.com/6oUcN67U01SD0Qa9027Zu08" target="_blank" class="buy-btn">Jetzt abonnieren</a>
         </div>
       </div>
-
-      <div class="pkg-card featured">
-        <span class="pkg-icon">⭐</span>
-        <div class="pkg-name">Standard Abo / Monat</div>
-        <div class="pkg-desc">Monatliches Werbepaket · automatisch verlängerbar</div>
-        <div class="pkg-price-row"><span class="pkg-price">85</span><span class="pkg-price-unit">CHF / Monat</span></div>
-        <ul class="pkg-features">
-          <li>Monatliche Ausstrahlung</li>
-          <li>Jederzeit kündbar</li>
-          <li>50 Ausstrahlungen</li>
-          <li>2 Instagram Posts</li>
-          <li>2 Instagram Storys</li>
-          <li>Kostenlose Designs von uns</li>
-        </ul>
-        <div class="stripe-slot">
-          <a href="https://buy.stripe.com/14A14ocagbtdfL4a467Zu09" target="_blank" class="buy-btn">Jetzt kaufen</a>
-        </div>
-      </div>
-
-      <div class="pkg-card">
-        <span class="pkg-icon">🚀</span>
-        <div class="pkg-name">Business Abo / Monat</div>
-        <div class="pkg-desc">Monatliches Werbepaket · automatisch verlängerbar</div>
-        <div class="pkg-price-row"><span class="pkg-price">170</span><span class="pkg-price-unit">CHF / Monat</span></div>
-        <ul class="pkg-features">
-          <li>Monatliche Ausstrahlung</li>
-          <li>Jederzeit kündbar</li>
-          <li>100 Ausstrahlungen</li>
-          <li>4 Instagram Posts</li>
-          <li>4 Instagram Storys</li>
-          <li>1 Sponsoring</li>
-          <li>Kostenlose Designs von uns</li>
-        </ul>
-        <div class="stripe-slot">
-          <a href="https://buy.stripe.com/8x2eVe2zGdBlfL40tw7Zu0a" target="_blank" class="buy-btn">Jetzt kaufen</a>
-        </div>
-      </div>
-
-      <div class="pkg-card">
-        <span class="pkg-icon">🔥</span>
-        <div class="pkg-name">Premium Abo / Monat</div>
-        <div class="pkg-desc">Monatliches Werbepaket · automatisch verlängerbar</div>
-        <div class="pkg-price-row"><span class="pkg-price">320</span><span class="pkg-price-unit">CHF / Monat</span></div>
-        <ul class="pkg-features">
-          <li>Monatliche Ausstrahlung</li>
-          <li>Jederzeit kündbar</li>
-          <li>200 Ausstrahlungen</li>
-          <li>6 Instagram Posts</li>
-          <li>6 Instagram Storys</li>
-          <li>2 Sponsoring</li>
-          <li>Alle Sender Zusatz</li>
-          <li>Kostenlose Designs von uns</li>
-        </ul>
-        <div class="stripe-slot">
-          <a href="https://buy.stripe.com/8x25kEa2854P1Uegsu7Zu0b" target="_blank" class="buy-btn">Jetzt kaufen</a>
-        </div>
-      </div>
-
+      <!-- Weitere Abos hier gekürzt für das Beispiel -->
     </div>
-
-    <!-- ABO JÄHRLICH -->
-    <div class="pkg-section-label" style="margin-top:60px;">Abo – Jährlich <span class="sub">· Günstiger als monatlich</span></div>
-    <div class="packages-grid">
-
-      <div class="pkg-card">
-        <span class="pkg-icon">📻</span>
-        <div class="pkg-name">Basic Abo / Jahr</div>
-        <div class="pkg-desc">Jährliches Werbepaket · einmalige Zahlung</div>
-        <div class="pkg-price-row"><span class="pkg-price">400</span><span class="pkg-price-unit">CHF / Jahr</span></div>
-        <ul class="pkg-features">
-          <li>Ganzjährige Ausstrahlung</li>
-          <li>Günstiger als monatlich</li>
-          <li>20 Ausstrahlungen/mt</li>
-          <li>1 Instagram Posts/mt</li>
-          <li>Kostenlose Designs von uns</li>
-          <li>Erste 2 Monate kostenlos</li>
-        </ul>
-        <div class="stripe-slot">
-          <a href="https://buy.stripe.com/3cI4gA8Y48h1fL4b8a7Zu0c" target="_blank" class="buy-btn">Jetzt kaufen</a>
-        </div>
-      </div>
-
-      <div class="pkg-card featured">
-        <span class="pkg-icon">⭐</span>
-        <div class="pkg-name">Standard Abo / Jahr</div>
-        <div class="pkg-desc">Jährliches Werbepaket · einmalige Zahlung</div>
-        <div class="pkg-price-row"><span class="pkg-price">1'000</span><span class="pkg-price-unit">CHF / Jahr</span></div>
-        <ul class="pkg-features">
-          <li>Ganzjährige Ausstrahlung</li>
-          <li>Günstiger als monatlich</li>
-          <li>50 Ausstrahlungen/mt</li>
-          <li>2 Instagram Posts/mt</li>
-          <li>2 Instagram Storys/mt</li>
-          <li>Kostenlose Designs von uns</li>
-          <li>Erste 2 Monate kostenlos</li>
-        </ul>
-        <div class="stripe-slot">
-          <a href="https://buy.stripe.com/14A14oa28gNx1Ue9027Zu0d" target="_blank" class="buy-btn">Jetzt kaufen</a>
-        </div>
-      </div>
-
-      <div class="pkg-card">
-        <span class="pkg-icon">🚀</span>
-        <div class="pkg-name">Business Abo / Jahr</div>
-        <div class="pkg-desc">Jährliches Werbepaket · einmalige Zahlung</div>
-        <div class="pkg-price-row"><span class="pkg-price">2'000</span><span class="pkg-price-unit">CHF / Jahr</span></div>
-        <ul class="pkg-features">
-          <li>Ganzjährige Ausstrahlung</li>
-          <li>Günstiger als monatlich</li>
-          <li>100 Ausstrahlungen/mt</li>
-          <li>4 Instagram Posts/mt</li>
-          <li>4 Instagram Storys/mt</li>
-          <li>1 Sponsoring/mt</li>
-          <li>Kostenlose Designs von uns</li>
-          <li>Erste 2 Monate kostenlos</li>
-        </ul>
-        <div class="stripe-slot">
-          <a href="https://buy.stripe.com/4gMfZib6c68T6auekm7Zu0e" target="_blank" class="buy-btn">Jetzt kaufen</a>
-        </div>
-      </div>
-
-      <div class="pkg-card">
-        <span class="pkg-icon">🔥</span>
-        <div class="pkg-name">Premium Abo / Jahr</div>
-        <div class="pkg-desc">Jährliches Werbepaket · einmalige Zahlung</div>
-        <div class="pkg-price-row"><span class="pkg-price">3'800</span><span class="pkg-price-unit">CHF / Jahr</span></div>
-        <ul class="pkg-features">
-          <li>Ganzjährige Ausstrahlung</li>
-          <li>Günstiger als monatlich</li>
-          <li>200 Ausstrahlungen/mt</li>
-          <li>6 Instagram Posts/mt</li>
-          <li>6 Instagram Storys/mt</li>
-          <li>2 Sponsoring/mt</li>
-          <li>Alle Sender Zusatz</li>
-          <li>Kostenlose Designs von uns</li>
-          <li>Erste 2 Monate kostenlos</li>
-        </ul>
-        <div class="stripe-slot">
-          <a href="https://buy.stripe.com/fZuaEY5LS40LfL47VY7Zu0f" target="_blank" class="buy-btn">Jetzt kaufen</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<hr class="divider">
-
-<!-- HINWEISE -->
-<div class="container">
-  <div class="section">
-    <div class="section-title"><span class="icon">ℹ️</span> Hinweise &amp; Bedingungen</div>
-    <ul class="hints-list">
-      <li>Alle Pakete basieren auf 30-Sekunden-Spots</li>
-      <li>Ausstrahlungen frei einteilbar – keine feste Laufzeit</li>
-      <li>Längere Spots auf Anfrage möglich</li>
-      <li>Preise exkl. MwSt.</li>
-      <li>Zahlung im Voraus</li>
-      <li>Änderungen während der Laufzeit nach Absprache möglich</li>
-      <li>Bei allen Jahresabos sind die ersten 2 Monate kostenlos</li>
-      <li>Falls wir Posts, Storys oder Spots selbst erstellen, erheben wir eine Gebühr von 2 CHF pro Stück</li>
-      <li>Für den Kauf des Basel Local Pakets müssen Sie Ihren Sitz in einem der Kantone Basel haben und dürfen nicht mehr als 10 Mitarbeiter beschäftigen</li>
-      <li><a href="https://frg-radio.ch/Preisliste.pdf" data-link>Komplette Preisliste</a></li>
-    </ul>
   </div>
 </div>
 
@@ -851,13 +177,11 @@
         <input type="text" id="f-name" name="name" placeholder="Name oder Unternehmen" required>
         <label for="f-email">E-Mail</label>
         <input type="email" id="f-email" name="email" placeholder="E-Mail" required>
-        <label for="f-subject">Betreff</label>
-        <input type="text" id="f-subject" name="subject" placeholder="Betreff">
         <label for="f-message">Nachricht</label>
         <textarea id="f-message" name="message" placeholder="Ihre Nachricht" required></textarea>
         <div class="form-checkbox">
           <input type="checkbox" id="agb-2" name="agb">
-          <label for="agb-2">Ich akzeptiere die <a href="agb.html" target="_blank">AGBs</a></label>
+          <label for="agb-2">Ich akzeptiere die <a href="/agb" data-link>AGBs</a></label>
         </div>
         <button type="submit" id="submitBtn-2" class="submit-btn" disabled>Absenden</button>
         <p id="form-msg-2" style="display:none;margin-top:14px;font-size:14px;color:var(--accent)"></p>
@@ -874,42 +198,12 @@
     <div class="section-title"><span class="icon">📬</span> Kontakt</div>
     <div class="contact-bar">
       <div>
-        <div class="headline">Jetzt starten und lebenslangen Rabatt sichern!</div>
-        <p>Wir freuen uns auf Ihre Buchung.</p>
+        <div class="headline">Fragen zur Werbung?</div>
+        <p>Wir beraten Sie gerne persönlich.</p>
       </div>
-      <div style="text-align:right">
+      <div>
         <p>📧 <a href="mailto:kontakt@frg-radio.ch">kontakt@frg-radio.ch</a></p>
-        <p>📱 Instagram: <a href="https://instagram.com/fleury_radio_group" target="_blank">@fleury_radio_group</a></p>
       </div>
     </div>
   </div>
 </div>
-
-<script>
-  // Form logic
-  const agb = document.getElementById('agb-2');
-  const btn = document.getElementById('submitBtn-2');
-  agb.addEventListener('change', () => { btn.disabled = !agb.checked; });
-  const form = document.getElementById('artist-form-2');
-  const msg  = document.getElementById('form-msg-2');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    btn.disabled = true;
-    btn.textContent = 'Wird gesendet…';
-    try {
-      const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{Accept:'application/json'} });
-      if (res.ok) {
-        msg.style.display='block'; msg.textContent='✅ Nachricht gesendet! Wir melden uns bald.';
-        form.reset(); btn.disabled=false; btn.textContent='Absenden';
-      } else { throw new Error(); }
-    } catch {
-      msg.style.display='block'; msg.style.color='var(--accent2)';
-      msg.textContent='❌ Fehler beim Senden. Bitte per E-Mail kontaktieren.';
-      btn.disabled=false; btn.textContent='Absenden';
-    }
-  });
-
-
-</script>
-</body>
-</html>

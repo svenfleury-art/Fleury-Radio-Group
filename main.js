@@ -143,6 +143,7 @@ document.addEventListener("click", (e) => {
   const overlay = document.getElementById("menu-overlay");
   nav?.classList.remove("open");
   overlay?.classList.remove("active");
+  document.body.classList.remove("nav-open");
 });
 
 window.addEventListener("popstate", () => {
@@ -160,8 +161,9 @@ document.addEventListener("click", (e) => {
 
   const burger = e.target.closest("#hamburgerBtn");
   if (burger && nav) {
-    nav.classList.toggle("open");
+    const isOpen = nav.classList.toggle("open");
     overlay?.classList.toggle("active");
+    document.body.classList.toggle("nav-open", isOpen);
     return;
   }
 
