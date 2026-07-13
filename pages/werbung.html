@@ -226,19 +226,33 @@
   <div class="section">
     <div class="section-title"><span class="icon">📩</span> Werbeanfrage</div>
     <div class="form-card">
-      <form id="artist-form-2" action="https://formspree.io/f/maqlopya" method="POST">
-        <label for="f-name">Name / Unternehmen</label>
-        <input type="text" id="f-name" name="name" placeholder="Name oder Unternehmen" required>
-        <label for="f-email">E-Mail</label>
-        <input type="email" id="f-email" name="email" placeholder="E-Mail" required>
-        <label for="f-message">Nachricht</label>
-        <textarea id="f-message" name="message" placeholder="Ihre Nachricht" required></textarea>
-        <div class="form-checkbox">
-          <input type="checkbox" id="agb-2" name="agb">
-          <label for="agb-2">Ich akzeptiere die <a href="/agb" data-link>AGBs</a></label>
+      <form id="artist-form-2" action="https://formspree.io/f/maqlopya" method="POST" class="frg-form">
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-name">Name / Unternehmen</label>
+            <input type="text" id="f-name" name="name" placeholder="Name oder Unternehmen" required>
+          </div>
+          <div class="form-group">
+            <label for="f-email">E-Mail Adresse</label>
+            <input type="email" id="f-email" name="email" placeholder="ihre@email.ch" required>
+          </div>
         </div>
-        <button type="submit" id="submitBtn-2" class="submit-btn" disabled>Absenden</button>
-        <p id="form-msg-2" style="display:none;margin-top:14px;font-size:14px;color:var(--accent)"></p>
+
+        <div class="form-group">
+          <label for="f-message">Ihre Nachricht / Buchungswunsch</label>
+          <textarea id="f-message" name="message" placeholder="Welches Paket interessiert Sie? Haben Sie bereits einen Spot?" required></textarea>
+        </div>
+
+        <div class="form-footer">
+          <div class="form-checkbox">
+            <input type="checkbox" id="agb-2" name="agb">
+            <label for="agb-2">Ich akzeptiere die <a href="/agb" data-link>AGBs</a></label>
+          </div>
+          <button type="submit" id="submitBtn-2" class="submit-btn" disabled>Anfrage absenden</button>
+        </div>
+        
+        <p id="form-msg-2" class="form-status-msg"></p>
       </form>
     </div>
   </div>

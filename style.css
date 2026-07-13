@@ -1357,3 +1357,96 @@ section,
 .accordion-item.active .chevron {
   transform: rotate(180deg);
 }
+
+/* =========================
+   MODERN FORM STYLES
+========================= */
+.frg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: left;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted2);
+  margin-left: 4px;
+}
+
+.frg-form input, 
+.frg-form textarea {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.frg-form input:focus, 
+.frg-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface-3);
+  box-shadow: 0 0 0 4px rgba(232,255,71,0.05);
+}
+
+.frg-form textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.form-status-msg {
+  display: none;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.form-status-msg.success {
+  background: rgba(232,255,71,0.1);
+  color: var(--accent);
+  border: 1px solid rgba(232,255,71,0.2);
+}
+
+.form-status-msg.error {
+  background: rgba(255,107,53,0.1);
+  color: var(--accent2);
+  border: 1px solid rgba(255,107,53,0.2);
+}
