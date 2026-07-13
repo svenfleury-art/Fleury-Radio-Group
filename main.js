@@ -438,9 +438,28 @@ function initCountdown() {
 PAGE INIT
 ========================= */
 
+function initAccordion() {
+  document.querySelectorAll('.accordion-header').forEach(button => {
+    button.addEventListener('click', () => {
+      const accordionItem = button.parentElement;
+      const isOpen = accordionItem.classList.contains('active');
+      
+      // Schliesst andere Items für bessere Übersicht auf Mobile
+      document.querySelectorAll('.accordion-item').forEach(item => {
+        item.classList.remove('active');
+      });
+
+      if (!isOpen) {
+        accordionItem.classList.add('active');
+      }
+    });
+  });
+}
+
 function initPageScripts() {
   initCountdown();
   initEventFilter();
+  initAccordion(); // Neu hinzugefügt
 
   const cookie = document.getElementById("cookie-banner");
   if (cookie && localStorage.getItem("frg_cookies") === "true") {

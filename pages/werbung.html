@@ -262,26 +262,4 @@
   </div>
 </div>
 
-<script>
-  // Accordion Logic
-  document.querySelectorAll('.accordion-header').forEach(button => {
-    button.addEventListener('click', () => {
-      const accordionItem = button.parentElement;
-      const isOpen = accordionItem.classList.contains('active');
-      
-      // Close all other items (optional, but cleaner)
-      document.querySelectorAll('.accordion-item').forEach(item => {
-        item.classList.remove('active');
-      });
-
-      if (!isOpen) {
-        accordionItem.classList.add('active');
-      }
-    });
-  });
-
-  // Form Logic
-  const agb = document.getElementById('agb-2');
-  const btn = document.getElementById('submitBtn-2');
-  if(agb) agb.addEventListener('change', () => { btn.disabled = !agb.checked; });
-</script>
+<!-- Scripte werden jetzt global über main.js gesteuert -->
