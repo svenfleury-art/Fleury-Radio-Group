@@ -141,9 +141,12 @@ document.addEventListener("click", (e) => {
 
   const nav = document.getElementById("mainNav");
   const overlay = document.getElementById("menu-overlay");
+  const burger = document.getElementById("hamburgerBtn");
+  
   nav?.classList.remove("open");
   overlay?.classList.remove("active");
   document.body.classList.remove("nav-open");
+  if (burger) burger.textContent = "☰";
 });
 
 window.addEventListener("popstate", () => {
@@ -164,6 +167,11 @@ document.addEventListener("click", (e) => {
     const isOpen = nav.classList.toggle("open");
     overlay?.classList.toggle("active");
     document.body.classList.toggle("nav-open", isOpen);
+    
+    // Wechselt zwischen Hamburger (☰) und Schliesskreuz (✕)
+    if (burger) {
+      burger.textContent = isOpen ? "✕" : "☰";
+    }
     return;
   }
 
