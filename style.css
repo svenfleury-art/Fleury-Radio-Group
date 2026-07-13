@@ -326,7 +326,18 @@ main{
 /* Button über dem Menü fixieren */
 #hamburgerBtn {
   position: relative;
-  z-index: 10001; /* Immer ganz oben */
+  z-index: 10001;
+  transition: all 0.3s ease;
+}
+
+/* Wenn das Menü offen ist, Button oben rechts fixieren */
+.nav-links.open ~ #hamburgerBtn,
+body.nav-open #hamburgerBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--surface-3);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
 }
 
 /* Fix für das Verschwinden beim Scrollen */
