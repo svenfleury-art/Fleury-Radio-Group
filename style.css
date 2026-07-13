@@ -1291,3 +1291,69 @@ section,
     padding-bottom: 350px; /* Etwas mehr Platz auf Mobile */
   }
 }
+
+/* =========================
+   ACCORDION (WERBUNG)
+========================= */
+.frg-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.accordion-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.accordion-header {
+  width: 100%;
+  padding: 20px 24px;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.accordion-header:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.accordion-header .chevron {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+  color: var(--accent);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+  padding: 0 24px;
+}
+
+.accordion-item.active .accordion-content {
+  max-height: 5000px; /* Genug Platz für die Grids */
+  transition: max-height 1s ease-in;
+  padding-bottom: 30px;
+}
+
+.accordion-item.active .accordion-header {
+  border-bottom: 1px solid var(--border);
+  color: var(--accent);
+}
+
+.accordion-item.active .chevron {
+  transform: rotate(180deg);
+}
