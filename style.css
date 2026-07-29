@@ -264,13 +264,21 @@ main{
   background:rgba(8,8,16,0.98);
 }
 
-#mainHeader.shrink .header-full{
+#mainHeader.shrink .header-full:not(:has(.nav-links.open)){
   max-height:0;
   opacity:0;
   transform:translateY(-10px);
   padding:0;
 
   pointer-events:none;
+}
+
+/* Fallback für Browser ohne :has */
+body.nav-open #mainHeader .header-full {
+  max-height: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
 }
 
 #mainHeader.shrink .logo-area img{
@@ -303,24 +311,27 @@ main{
 ========================= */
 /* Hamburger Menü Verbesserungen */
 .nav-links.open {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(8,8,16,0.98);
-  backdrop-filter: blur(24px);
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
+  background: rgba(8,8,16,0.98) !important;
+  backdrop-filter: blur(24px) !important;
   display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 80px 20px;
-  gap: 15px;
-  z-index: 9998; /* Ein Layer unter dem Button */
-  overflow-y: auto;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 80px 20px !important;
+  gap: 15px !important;
+  z-index: 99999 !important; /* Über fast allem */
+  overflow-y: auto !important;
   max-height: 100vh !important;
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
 }
 
 /* Button über dem Menü fixieren */
@@ -331,11 +342,11 @@ main{
 }
 
 /* Wenn das Menü offen ist, Button oben rechts fixieren */
-.nav-links.open ~ #hamburgerBtn,
 body.nav-open #hamburgerBtn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  z-index: 100000 !important; /* Über dem Menü */
   background: var(--surface-3);
   box-shadow: 0 8px 24px rgba(0,0,0,0.5);
 }
@@ -419,11 +430,12 @@ body.nav-open {
 ========================= */
 @media (max-width:768px){
 
+  /* Hamburger-Button im Shrink-Modus behalten */
   #mainHeader.shrink #hamburgerBtn{
-    display:none !important;
+    display:block !important;
   }
 
-  #mainHeader.shrink .nav-links{
+  #mainHeader.shrink .nav-links:not(.open){
     display:none !important;
   }
 
@@ -431,7 +443,8 @@ body.nav-open {
     display:none !important;
   }
 
-  #mainHeader.shrink .header-full{
+  /* Header-Full nur verstecken, wenn Menü nicht offen ist */
+  #mainHeader.shrink .header-full:not(:has(.nav-links.open)){
     display:none !important;
   }
 
