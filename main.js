@@ -302,7 +302,7 @@ function initRadioPlayer() {
       const title = data.title || "Unbekannt";
       const artist = data.artist?.name || "";
 
-      const cover = "/img/Fleury Radio Group Logo.png";
+      const cover = "/img/Fleury Radio Group Logo.webp";
       const text = artist ? `${artist} - ${title}` : title;
 
       if (nowPlaying) nowPlaying.textContent = text;
