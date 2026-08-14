@@ -19,6 +19,7 @@ const routes = {
   "/artists": "/pages/Artists.html",
 
   "/werbung": "/pages/werbung.html",
+  "/kontakt": "/pages/kontakt.html",
   "/agb": "/pages/agb.html",
   "/datenschutz": "/pages/datenschutz.html",
   "/impressum": "/pages/impressum.html",
@@ -125,6 +126,11 @@ document.addEventListener("click", (e) => {
 
   const href = link.getAttribute("href");
   if (!href) return;
+
+  if (href.startsWith("#")) {
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    return;
+  }
 
   const external =
     href.startsWith("http") ||
