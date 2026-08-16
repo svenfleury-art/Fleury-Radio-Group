@@ -140,6 +140,9 @@ document.addEventListener("click", (e) => {
 
   if (external) return;
 
+  // Eigenständige SEO-Seiten sollen normale Dokument-Navigation verwenden.
+  if (document.documentElement.dataset.staticPage === "true") return;
+
   e.preventDefault();
 
   history.pushState({}, "", href);
@@ -479,14 +482,25 @@ BOOT
 
 window.addEventListener("DOMContentLoaded", async () => {
 
-  await loadPartial("nav-slot", "partials/nav.html");
-  await loadPartial("footer-slot", "partials/footer.html");
+  const isStaticPage = document.documentElement.dataset.staticPage === "true";
+
+  // Die Startseite bleibt eine SPA. Indexierbare Unterseiten enthalten Navigation,
+  // Footer und Hauptinhalt bereits direkt im ausgelieferten HTML.
+  if (!isStaticPage) {
+    await loadPartial("nav-slot", "partials/nav.html");
+    await loadPartial("footer-slot", "partials/footer.html");
+  }
 
   initHeader();
   initRadioPlayer();
 
   updateHeaderSpacing();
   window.addEventListener("resize", updateHeaderSpacing);
+
+  if (isStaticPage) {
+    initPageScripts();
+    return;
+  }
 
   const redirect = sessionStorage.getItem("spa_redirect");
   if (redirect) {

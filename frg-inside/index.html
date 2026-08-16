@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="de" data-static-page="true">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow">
+  <title>FRG Inside | Ein Blick hinter die Fleury Radio Group</title>
+  <meta name="description" content="Erfahre, wie die Fleury Radio Group arbeitet, wie ihre Streams entstehen und was die drei unabhängigen Sender aus der Region Basel verbindet.">
+  <link rel="canonical" href="https://frg-radio.ch/frg-inside/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_CH">
+  <meta property="og:site_name" content="Fleury Radio Group">
+  <meta property="og:title" content="FRG Inside | Ein Blick hinter die Fleury Radio Group">
+  <meta property="og:description" content="Erfahre, wie die Fleury Radio Group arbeitet, wie ihre Streams entstehen und was die drei unabhängigen Sender aus der Region Basel verbindet.">
+  <meta property="og:url" content="https://frg-radio.ch/frg-inside/">
+  <meta property="og:image" content="https://frg-radio.ch/img/FRG.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FRG Inside | Ein Blick hinter die Fleury Radio Group">
+  <meta name="twitter:description" content="Erfahre, wie die Fleury Radio Group arbeitet, wie ihre Streams entstehen und was die drei unabhängigen Sender aus der Region Basel verbindet.">
+  <meta name="twitter:image" content="https://frg-radio.ch/img/FRG.webp">
+  <link rel="icon" href="/img/FRG.webp">
+  <link rel="apple-touch-icon" href="/img/FRG.webp">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "FRG Inside | Ein Blick hinter die Fleury Radio Group",
+    "description": "Erfahre, wie die Fleury Radio Group arbeitet, wie ihre Streams entstehen und was die drei unabhängigen Sender aus der Region Basel verbindet.",
+    "url": "https://frg-radio.ch/frg-inside/",
+    "inLanguage": "de-CH",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Fleury Radio Group",
+      "url": "https://frg-radio.ch/"
+    },
+    "about": {
+      "@type": "Organization",
+      "name": "Fleury Radio Group",
+      "url": "https://frg-radio.ch/",
+      "areaServed": "Basel, Schweiz"
+    }
+  }</script>
+</head>
+<body>
+  <header id="mainHeader">
+  <div class="header-container">
+  <!-- KOMPAKTE LEISTE -->
+  <div class="header-inner">
+
+    <!-- LINKS -->
+    <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen">☰</button>
+
+    <!-- MITTE -->
+    <div class="frg-player">
+
+      <button id="playBtn">▶</button>
+
+      <div class="station-switch">
+        <button class="station active" data-station="rhywaelle">Rhywälle</button>
+        <button class="station" data-station="winterlord">Winterlord</button>
+        <button class="station" data-station="rhyrock">RhyRock</button>
+      </div>
+
+      <div id="nowPlaying">Bereit</div>
+      <audio id="audioPlayer"></audio>
+
+    </div>
+
+    <!-- RECHTS: LOGO (🔥 FIX) -->
+    <div class="logo-area">
+      <a href="/" data-link>
+        <img src="/img/Fleury Radio Group Logo.webp" alt="FRG Logo">
+      </a>
+    </div>
+
+  </div>
+
+  <!-- GROSSER HEADER -->
+  <div class="header-full">
+
+    <nav id="mainNav" class="nav-links">
+
+      <a href="/" data-link>Home</a>
+
+      <div class="nav-dropdown">
+        <button class="nav-button dropdown-toggle">Radios</button>
+        <div class="dropdown-menu">
+          <a href="/radios/" data-link>Radio Auswahl</a>
+          <a href="/rhywaelle/" data-link>Radio Rhywälle</a>
+          <a href="/winterlord/" data-link>Winterlord FM</a>
+          <a href="/rhyrock/" data-link>RhyRock Radio</a>
+        </div>
+      </div>
+
+      <div class="nav-dropdown">
+        <button class="nav-button dropdown-toggle">Infos über die FRG</button>
+        <div class="dropdown-menu">
+          <a href="/frg-inside/" data-link>Inside</a>
+          <a href="/geschichte/" data-link>Geschichte</a>
+          <a href="/about/" data-link>Über uns</a>
+          <a href="/mitmachen/" data-link>Mitmachen</a>
+        </div>
+      </div>
+
+      <a href="/spezial-programm/" data-link>Spezial-Programm</a>
+      <a href="/artists/" data-link>Für Künstler & Labels</a>
+      <a href="/werbung/" data-link>Werbung machen</a>
+      <a href="/kontakt/" data-link>Kontakt</a>
+
+    </nav>
+
+  </div>
+  </div>
+</header>
+
+<div id="menu-overlay"></div>
+  <main id="app">
+    <section class="page">
+
+   <div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">📻 Fleury Radio Group™</div>
+    <h1>FRG Insight,<br>Das wichtigste <em>hinter der FRG.</em></h1>
+    <p class="lead">Wie entstehen unsere Streams? Welche Idee steckt hinter unseren Sendern?
+        Und was macht die FRG eigentlich besonders?</p>
+    <div class="hero-special">
+      🔥&nbsp; Täglich die <strong>besten</strong> Songs hören.
+    </div>
+  </div>
+</div>
+   
+
+    <section class="card">
+      <h2>Was ist die FRG?</h2>
+      <p>
+        Die Fleury Radio Group™ (FRG) ist eine unabhängige Radiodachmarke aus der Region Basel.
+        Unter unserem Namen vereinen sich mehrere Online-Sender – jeder mit eigenem Charakter,
+        aber alle mit derselben Idee: Musik, die verbindet.
+      </p>
+      <p>
+        Die FRG ist kein anonymer Medienkonzern, sondern ein persönliches Projekt
+        mit klarer Vision: gute Musik, klare Senderprofile und ein sympathisches
+        Radioerlebnis ohne komplizierten Schnickschnack.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Die Sender der FRG</h2>
+
+      <p>
+        Unter dem Dach der FRG senden mehrere eigenständige Radiowellen,
+        jede mit ihrem eigenen musikalischen Schwerpunkt.
+      </p>
+
+      <ul>
+        <li><strong>Radio Rhywälle™</strong> – Pop, Rap und Oldies direkt vom Rhein.</li>
+        <li><strong>Winterlord FM™</strong> – epischer Power-Metal und melodischer Metal.</li>
+        <li><strong>RhyRock Radio™</strong> – Rock in vielen Facetten.</li>
+      </ul>
+
+      <p>
+        Statt alles in einen einzigen Radiosender zu packen,
+        setzt die FRG bewusst auf mehrere spezialisierte Wellen.
+        So bleibt jede Musikrichtung klar erkennbar.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Warum mehrere Sender?</h2>
+
+      <p>
+        Musik ist vielfältig – und genau das spiegelt sich in der Struktur der FRG wider.
+      </p>
+
+      <p>
+        Ein einzelner Radiosender muss oft viele verschiedene Musikrichtungen mischen.
+        Die Fleury Radio Group™ geht bewusst einen anderen Weg:
+        Jeder Sender konzentriert sich auf einen klaren Stil.
+      </p>
+
+      <p>
+        Dadurch entsteht ein klarer Sound – und du kannst einfach
+        den Sender wählen, der am besten zu deiner Stimmung passt.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Wie entsteht ein Radiostream?</h2>
+
+      <p>
+        Hinter jedem FRG-Sender steckt eine umfangreiche Musikbibliothek.
+        Die Titel werden sorgfältig ausgewählt, kategorisiert und in
+        Rotationen eingeplant.
+      </p>
+
+      <p>
+        Ein automatisiertes System stellt daraus ein abwechslungsreiches
+        Programm zusammen, das rund um die Uhr läuft.
+      </p>
+
+      <p>
+        Der technische Streamingbetrieb erfolgt über
+        <strong>laut.fm</strong>, wodurch stabile und zuverlässige
+        Streams gewährleistet sind.
+      </p>
+
+    </section>
+
+    <section class="card">
+      <h2>FRG in Zahlen</h2>
+
+      <ul>
+        <li>3 Radiosender unter einem Dach</li>
+        <li>24 Stunden Musik am Tag</li>
+        <li>ca. 1'000 Songs in der Musikbibliothek</li>
+      <li>ca. 50 Stunden Musik in der Bibliothek</li>
+      </ul>
+
+      <p>
+        Unsere Musikbibliothek wächst ständig weiter –
+        neue Songs werden regelmäßig ergänzt.
+      </p>
+
+    </section>
+
+    <section class="card">
+      <h2>Ehrenamtlich & unabhängig</h2>
+
+      <p>
+        Die FRG ist ein nicht-kommerzielles Projekt.
+        Alles entsteht aus Leidenschaft – ehrenamtlich und unabhängig.
+      </p>
+
+      <p>
+        Dadurch können wir uns voll auf Musik, Inhalte
+        und die Entwicklung unserer Sender konzentrieren.
+      </p>
+
+    </section>
+
+    <section class="card">
+      <h2>Regional verwurzelt</h2>
+
+      <p>
+        Basel und der Rhein sind mehr als ein Standort –
+        sie sind Teil unserer Identität.
+      </p>
+
+      <p>
+        Unsere Sender tragen dieses Gefühl nach außen:
+        direkt, lebendig und nahbar.
+      </p>
+
+      <p><strong>Dini Musik. Dini Wälle. Diräkt vom Rhy.</strong></p>
+
+    </section>
+
+    <section class="card">
+      <h2>Blick in die Zukunft</h2>
+
+      <p>
+        Die Fleury Radio Group™ entwickelt sich ständig weiter.
+        Neue Ideen, technische Verbesserungen und zusätzliche Inhalte
+        sind bereits in Planung.
+      </p>
+
+      <p>
+        Unser Ziel bleibt dabei klar:
+        Unabhängiges Radio mit Charakter, aus der Region Basel.
+      </p>
+
+    </section>
+
+</section>
+  </main>
+  <div id="cookie-banner" class="frg-banner">
+
+  <span>
+    Die Fleury Radio Group™ verwendet Cookies, um dir das beste Radio-Erlebnis zu bieten.
+    Mehr Infos in der <a href="/datenschutz/" data-link>Datenschutzerklärung</a>.
+  </span>
+
+  <button id="cookie-accept" class="frg-btn">
+    Akzeptieren
+  </button>
+
+</div>
+
+<footer class="site-footer">
+
+  <p>© 2026 - Fleury Radio Group™</p>
+
+  <p>Radio Rhywälle™ | Winterlord FM™ | RhyRock Radio™</p>
+
+  <p>Seit 2025 On-Air</p>
+
+  <iframe width="100%" height="38" style="border:0; max-width: 380px;" src="https://climate.stripe.com/badge/eUEVrN?theme=dark&size=small&locale=de-DE"></iframe>
+
+  <div class="footer-links">
+    <a href="/impressum/" data-link>Impressum</a> |
+    <a href="/agb/" data-link>AGB</a> |
+    <a href="/datenschutz/" data-link>Datenschutz</a>
+  </div>
+
+</footer>
+  <script src="/main.js" defer></script>
+</body>
+</html>
