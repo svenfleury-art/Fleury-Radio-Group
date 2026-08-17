@@ -61,6 +61,7 @@
         <button class="station" data-station="rhyrock">RhyRock</button>
       </div>
 
+      <div class="header-live-visual" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
       <div id="nowPlaying">Bereit</div>
       <audio id="audioPlayer"></audio>
 
@@ -117,7 +118,7 @@
   <main id="app">
     <section class="page">
 
-  <div class="hero">
+  <div class="hero station-hero station-hero-rhyrock">
   <div class="hero-inner">
     <div class="hero-badge">📻 Fleury Radio Group™</div>
     <h1>RhyRock Radio</h1>
@@ -138,9 +139,9 @@
   </section>
 
   <section class="card">
-    <h2>Jetzt live hören</h2>
+    <h2>Jetzt live hören – RhyRock Radio™</h2>
 
-    <button onclick="setStation('rhyrock')">
+    <button class="page-station-button" data-page-station="rhyrock" type="button">
       ▶ Jetzt hören
     </button>
 
