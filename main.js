@@ -160,7 +160,11 @@ document.addEventListener("click", (e) => {
   nav?.classList.remove("open");
   overlay?.classList.remove("active");
   document.body.classList.remove("nav-open");
-  if (burger) burger.textContent = "☰";
+  if (burger) {
+    burger.classList.remove("is-open");
+    burger.setAttribute("aria-expanded", "false");
+    burger.setAttribute("aria-label", "Menü öffnen");
+  }
 });
 
 window.addEventListener("popstate", () => {
@@ -182,16 +186,20 @@ document.addEventListener("click", (e) => {
     overlay?.classList.toggle("active");
     document.body.classList.toggle("nav-open", isOpen);
     
-    // Wechselt zwischen Hamburger (☰) und Schliesskreuz (✕)
-    if (burger) {
-      burger.textContent = isOpen ? "✕" : "☰";
-    }
+    burger.classList.toggle("is-open", isOpen);
+    burger.setAttribute("aria-expanded", String(isOpen));
+    burger.setAttribute("aria-label", isOpen ? "Menü schliessen" : "Menü öffnen");
     return;
   }
 
   if (e.target.id === "menu-overlay") {
     nav?.classList.remove("open");
     overlay?.classList.remove("active");
+    document.body.classList.remove("nav-open");
+    const burgerButton = document.getElementById("hamburgerBtn");
+    burgerButton?.classList.remove("is-open");
+    burgerButton?.setAttribute("aria-expanded", "false");
+    burgerButton?.setAttribute("aria-label", "Menü öffnen");
     return;
   }
 

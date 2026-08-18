@@ -2009,3 +2009,60 @@ input::placeholder, textarea::placeholder { color: rgba(144,144,192,.65); }
     font-size: 14px;
   }
 }
+
+
+/* Header-Update: kompakter Shrink-Modus und morphendes Menü */
+#mainHeader.shrink .station-switch,
+#mainHeader.shrink .header-live-visual { display: none; }
+#mainHeader.shrink .frg-player { gap: 10px; max-width: 360px; padding: 5px 9px; }
+#mainHeader.shrink #nowPlaying { display: block; flex: 1 1 auto; min-width: 0; max-width: 260px; font-size: .76rem; text-align: left; }
+#mainHeader.shrink #playBtn { flex: 0 0 32px; width: 32px; height: 32px; }
+
+.hamburger {
+  position: relative;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px;
+  background: rgba(20,20,37,.82);
+  color: var(--text);
+  cursor: pointer;
+  z-index: 1002;
+}
+.hamburger span {
+  position: absolute;
+  width: 19px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transition: transform .24s ease, opacity .18s ease, background .2s ease;
+}
+.hamburger span:nth-child(1) { transform: translateY(-6px); }
+.hamburger span:nth-child(3) { transform: translateY(6px); }
+.hamburger.is-open span:nth-child(1) { transform: rotate(45deg); }
+.hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(.2); }
+.hamburger.is-open span:nth-child(3) { transform: rotate(-45deg); }
+.hamburger:hover { border-color: var(--station-accent); color: var(--station-accent); }
+
+@media (min-width: 769px) {
+  #hamburgerBtn { display: none !important; }
+  #mainNav { display: flex; }
+  #mainHeader.shrink .header-inner { min-height: 54px; padding-block: 4px; }
+  #mainHeader.shrink .logo-area img { height: 50px; }
+}
+
+@media (max-width: 768px) {
+  #hamburgerBtn { display: inline-flex; }
+  #mainHeader.shrink .header-inner { min-height: 48px; padding-block: 3px; gap: 6px; }
+  #mainHeader.shrink .logo-area img { height: 42px; }
+  #mainHeader.shrink .frg-player { width: auto; max-width: min(76vw, 300px); padding: 3px 6px; border-radius: 12px; }
+  #mainHeader.shrink #nowPlaying { max-width: min(54vw, 190px); font-size: .68rem; }
+  #mainHeader.shrink #playBtn { width: 28px; height: 28px; flex-basis: 28px; font-size: .75rem; }
+  #mainHeader.shrink .hamburger { width: 36px; height: 36px; border-radius: 10px; }
+  #mainHeader.shrink .hamburger span { width: 17px; }
+  #mainHeader.shrink .header-full { padding-top: 4px; }
+}
