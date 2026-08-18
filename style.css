@@ -2066,3 +2066,41 @@ input::placeholder, textarea::placeholder { color: rgba(144,144,192,.65); }
   #mainHeader.shrink .hamburger span { width: 17px; }
   #mainHeader.shrink .header-full { padding-top: 4px; }
 }
+
+
+/* Audio-Visualisierung: fliessende, versetzte Balkenbewegung */
+@keyframes frg-audio-flow {
+  0%, 100% { transform: scaleY(.24); opacity: .42; }
+  28% { transform: scaleY(.72); opacity: .8; }
+  55% { transform: scaleY(1); opacity: 1; }
+  78% { transform: scaleY(.48); opacity: .66; }
+}
+.header-live-visual,
+.soundwave { align-items: flex-end; }
+.header-live-visual i,
+.soundwave i {
+  transform-origin: center bottom;
+  animation: frg-audio-flow 1.08s cubic-bezier(.35,.04,.28,1) infinite;
+  animation-play-state: paused;
+  will-change: transform, opacity;
+}
+.header-live-visual i { height: 18px; min-width: 3px; border-radius: 999px; }
+.soundwave i { height: 52px; min-width: 5px; border-radius: 999px; }
+.header-live-visual.is-playing i,
+.live-visual.is-playing .soundwave i { animation-play-state: running; }
+.header-live-visual i:nth-child(1), .soundwave i:nth-child(1) { animation-delay: -.86s; }
+.header-live-visual i:nth-child(2), .soundwave i:nth-child(2) { animation-delay: -.64s; }
+.header-live-visual i:nth-child(3), .soundwave i:nth-child(3) { animation-delay: -.42s; }
+.header-live-visual i:nth-child(4), .soundwave i:nth-child(4) { animation-delay: -.2s; }
+.header-live-visual i:nth-child(5), .soundwave i:nth-child(5) { animation-delay: -.74s; }
+.soundwave i:nth-child(6) { animation-delay: -.52s; }
+.soundwave i:nth-child(7) { animation-delay: -.3s; }
+.header-live-visual:not(.is-playing) i,
+.live-visual:not(.is-playing) .soundwave i { opacity: .48; transform: scaleY(.3); transition: opacity .3s ease, transform .3s ease; }
+@media (max-width: 768px) {
+  .header-live-visual i { height: 15px; min-width: 2px; }
+  .soundwave i { height: 42px; min-width: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-live-visual i, .soundwave i { animation: none !important; transition: none !important; }
+}
