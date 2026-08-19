@@ -1,73 +1,76 @@
-<header id="mainHeader">
-  <div class="header-container">
-  <!-- KOMPAKTE LEISTE -->
-  <div class="header-inner">
-
-    <!-- LINKS -->
-    <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
-
-    <!-- MITTE -->
-    <div class="frg-player">
-
-      <button id="playBtn">▶</button>
-
-      <div class="station-switch">
-        <button class="station active" data-station="rhywaelle">Rhywälle</button>
-        <button class="station" data-station="winterlord">Winterlord</button>
-        <button class="station" data-station="rhyrock">RhyRock</button>
-      </div>
-
-      <div class="header-live-visual" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-      <div id="nowPlaying">Bereit</div>
-      <audio id="audioPlayer"></audio>
-
-    </div>
-
-    <!-- RECHTS: LOGO (🔥 FIX) -->
-    <div class="logo-area">
-      <a href="/" data-link>
-        <img src="img/Fleury Radio Group Logo.webp" alt="FRG Logo">
+<header id="mainHeader" class="relaunch-header">
+  <div class="header-shell">
+    <div class="header-topline">
+      <a class="brand-lockup" href="/" data-link aria-label="Fleury Radio Group Startseite">
+        <span class="brand-mark"><img src="img/Fleury Radio Group Logo.webp" alt=""></span>
+        <span class="brand-copy">
+          <strong>Fleury Radio Group</strong>
+          <small>Deine Sender. Deine Welle.</small>
+        </span>
       </a>
+
+      <div class="relaunch-player" aria-label="Live-Player">
+        <button id="playBtn" class="player-play" aria-label="Radio starten">▶</button>
+        <div class="player-live-copy">
+          <span class="player-kicker"><i></i> LIVE RADIO</span>
+          <span id="nowPlaying">Bereit zum Hören</span>
+        </div>
+        <div class="header-live-visual" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="station-switch" aria-label="Sender auswählen">
+          <button class="station active" data-station="rhywaelle">Rhywälle</button>
+          <button class="station" data-station="winterlord">Winterlord</button>
+          <button class="station" data-station="rhyrock">RhyRock</button>
+        </div>
+        <audio id="audioPlayer"></audio>
+      </div>
+
+      <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
     </div>
 
-  </div>
-
-  <!-- GROSSER HEADER -->
-  <div class="header-full">
-
-    <nav id="mainNav" class="nav-links">
-
-      <a href="/" data-link>Home</a>
-
-      <div class="nav-dropdown">
-        <button class="nav-button dropdown-toggle">Radios</button>
-        <div class="dropdown-menu">
-          <a href="/radios" data-link>Radio Auswahl</a>
-          <a href="/rhywaelle" data-link>Radio Rhywälle</a>
-          <a href="/winterlord" data-link>Winterlord FM</a>
-          <a href="/rhyrock" data-link>RhyRock Radio</a>
+    <div class="header-navrow">
+      <span class="nav-intro">Entdecke die FRG</span>
+      <nav id="mainNav" class="nav-links" aria-label="Hauptnavigation">
+        <a href="/" data-link>Home</a>
+        <div class="nav-dropdown">
+          <button class="nav-button dropdown-toggle">Radios <span>⌄</span></button>
+          <div class="dropdown-menu">
+            <a href="/radios" data-link>Radio-Auswahl</a>
+            <a href="/rhywaelle" data-link>Radio Rhywälle</a>
+            <a href="/winterlord" data-link>Winterlord FM</a>
+            <a href="/rhyrock" data-link>RhyRock Radio</a>
+          </div>
         </div>
-      </div>
-
-      <div class="nav-dropdown">
-        <button class="nav-button dropdown-toggle">Infos über die FRG</button>
-        <div class="dropdown-menu">
-          <a href="/frg-inside" data-link>Inside</a>
-          <a href="/geschichte" data-link>Geschichte</a>
-          <a href="/about" data-link>Über uns</a>
-          <a href="/mitmachen" data-link>Mitmachen</a>
+        <div class="nav-dropdown">
+          <button class="nav-button dropdown-toggle">Über die FRG <span>⌄</span></button>
+          <div class="dropdown-menu">
+            <a href="/frg-inside" data-link>FRG Inside</a>
+            <a href="/geschichte" data-link>Geschichte</a>
+            <a href="/about" data-link>Über uns</a>
+            <a href="/mitmachen" data-link>Mitmachen</a>
+          </div>
         </div>
-      </div>
-
-      <a href="/spezial-programm" data-link>Spezial-Programm</a>
-      <a href="/artists" data-link>Für Künstler & Labels</a>
-      <a href="/werbung" data-link>Werbung machen</a>
-      <a href="/kontakt" data-link>Kontakt</a>
-
-    </nav>
-
-  </div>
+        <a href="/spezial-programm" data-link>Spezial-Programm</a>
+        <a href="/artists" data-link>Für Artists</a>
+        <a href="/werbung" data-link>Werbung</a>
+        <a class="nav-cta" href="/kontakt" data-link>Kontakt <span>↗</span></a>
+      </nav>
+    </div>
   </div>
 </header>
 
+<aside id="edgePlayer" class="edge-player" aria-label="Jetzt läuft">
+  <button id="edgeToggle" class="edge-toggle" type="button" aria-label="Jetzt-läuft-Player einklappen" aria-expanded="true">›</button>
+  <div class="edge-player-label"><i></i> JETZT LÄUFT</div>
+  <div class="edge-player-main">
+    <div class="edge-player-disc">FRG</div>
+    <div class="edge-player-copy">
+      <strong id="edgeNowPlayingTitle">Bereit zum Hören</strong>
+      <span id="edgeNowPlayingArtist">Wähle einen Sender</span>
+      <small id="edgeStation">Radio Rhywälle™</small>
+    </div>
+    <button id="edgePlayBtn" class="edge-play" type="button" aria-label="Radio starten">▶</button>
+  </div>
+</aside>
 <div id="menu-overlay"></div>

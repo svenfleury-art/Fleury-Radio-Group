@@ -42,78 +42,81 @@
   }</script>
 </head>
 <body>
-  <header id="mainHeader">
-  <div class="header-container">
-  <!-- KOMPAKTE LEISTE -->
-  <div class="header-inner">
-
-    <!-- LINKS -->
-    <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
-
-    <!-- MITTE -->
-    <div class="frg-player">
-
-      <button id="playBtn">▶</button>
-
-      <div class="station-switch">
-        <button class="station active" data-station="rhywaelle">Rhywälle</button>
-        <button class="station" data-station="winterlord">Winterlord</button>
-        <button class="station" data-station="rhyrock">RhyRock</button>
-      </div>
-
-      <div class="header-live-visual" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-      <div id="nowPlaying">Bereit</div>
-      <audio id="audioPlayer"></audio>
-
-    </div>
-
-    <!-- RECHTS: LOGO (🔥 FIX) -->
-    <div class="logo-area">
-      <a href="/" data-link>
-        <img src="/img/Fleury Radio Group Logo.webp" alt="FRG Logo">
+  <header id="mainHeader" class="relaunch-header">
+  <div class="header-shell">
+    <div class="header-topline">
+      <a class="brand-lockup" href="/" data-link aria-label="Fleury Radio Group Startseite">
+        <span class="brand-mark"><img src="/img/Fleury Radio Group Logo.webp" alt=""></span>
+        <span class="brand-copy">
+          <strong>Fleury Radio Group</strong>
+          <small>Deine Sender. Deine Welle.</small>
+        </span>
       </a>
+
+      <div class="relaunch-player" aria-label="Live-Player">
+        <button id="playBtn" class="player-play" aria-label="Radio starten">▶</button>
+        <div class="player-live-copy">
+          <span class="player-kicker"><i></i> LIVE RADIO</span>
+          <span id="nowPlaying">Bereit zum Hören</span>
+        </div>
+        <div class="header-live-visual" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="station-switch" aria-label="Sender auswählen">
+          <button class="station active" data-station="rhywaelle">Rhywälle</button>
+          <button class="station" data-station="winterlord">Winterlord</button>
+          <button class="station" data-station="rhyrock">RhyRock</button>
+        </div>
+        <audio id="audioPlayer"></audio>
+      </div>
+
+      <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
     </div>
 
-  </div>
-
-  <!-- GROSSER HEADER -->
-  <div class="header-full">
-
-    <nav id="mainNav" class="nav-links">
-
-      <a href="/" data-link>Home</a>
-
-      <div class="nav-dropdown">
-        <button class="nav-button dropdown-toggle">Radios</button>
-        <div class="dropdown-menu">
-          <a href="/radios/" data-link>Radio Auswahl</a>
-          <a href="/rhywaelle/" data-link>Radio Rhywälle</a>
-          <a href="/winterlord/" data-link>Winterlord FM</a>
-          <a href="/rhyrock/" data-link>RhyRock Radio</a>
+    <div class="header-navrow">
+      <span class="nav-intro">Entdecke die FRG</span>
+      <nav id="mainNav" class="nav-links" aria-label="Hauptnavigation">
+        <a href="/" data-link>Home</a>
+        <div class="nav-dropdown">
+          <button class="nav-button dropdown-toggle">Radios <span>⌄</span></button>
+          <div class="dropdown-menu">
+            <a href="/radios/" data-link>Radio-Auswahl</a>
+            <a href="/rhywaelle/" data-link>Radio Rhywälle</a>
+            <a href="/winterlord/" data-link>Winterlord FM</a>
+            <a href="/rhyrock/" data-link>RhyRock Radio</a>
+          </div>
         </div>
-      </div>
-
-      <div class="nav-dropdown">
-        <button class="nav-button dropdown-toggle">Infos über die FRG</button>
-        <div class="dropdown-menu">
-          <a href="/frg-inside/" data-link>Inside</a>
-          <a href="/geschichte/" data-link>Geschichte</a>
-          <a href="/about/" data-link>Über uns</a>
-          <a href="/mitmachen/" data-link>Mitmachen</a>
+        <div class="nav-dropdown">
+          <button class="nav-button dropdown-toggle">Über die FRG <span>⌄</span></button>
+          <div class="dropdown-menu">
+            <a href="/frg-inside/" data-link>FRG Inside</a>
+            <a href="/geschichte/" data-link>Geschichte</a>
+            <a href="/about/" data-link>Über uns</a>
+            <a href="/mitmachen/" data-link>Mitmachen</a>
+          </div>
         </div>
-      </div>
-
-      <a href="/spezial-programm/" data-link>Spezial-Programm</a>
-      <a href="/artists/" data-link>Für Künstler & Labels</a>
-      <a href="/werbung/" data-link>Werbung machen</a>
-      <a href="/kontakt/" data-link>Kontakt</a>
-
-    </nav>
-
-  </div>
+        <a href="/spezial-programm/" data-link>Spezial-Programm</a>
+        <a href="/artists/" data-link>Für Artists</a>
+        <a href="/werbung/" data-link>Werbung</a>
+        <a class="nav-cta" href="/kontakt/" data-link>Kontakt <span>↗</span></a>
+      </nav>
+    </div>
   </div>
 </header>
 
+<aside id="edgePlayer" class="edge-player" aria-label="Jetzt läuft">
+  <button id="edgeToggle" class="edge-toggle" type="button" aria-label="Jetzt-läuft-Player einklappen" aria-expanded="true">›</button>
+  <div class="edge-player-label"><i></i> JETZT LÄUFT</div>
+  <div class="edge-player-main">
+    <div class="edge-player-disc">FRG</div>
+    <div class="edge-player-copy">
+      <strong id="edgeNowPlayingTitle">Bereit zum Hören</strong>
+      <span id="edgeNowPlayingArtist">Wähle einen Sender</span>
+      <small id="edgeStation">Radio Rhywälle™</small>
+    </div>
+    <button id="edgePlayBtn" class="edge-play" type="button" aria-label="Radio starten">▶</button>
+  </div>
+</aside>
 <div id="menu-overlay"></div>
   <main id="app">
     <section class="page">
@@ -177,35 +180,48 @@
 </section>
   </main>
   <div id="cookie-banner" class="frg-banner">
-
-  <span>
-    Die Fleury Radio Group™ verwendet Cookies, um dir das beste Radio-Erlebnis zu bieten.
-    Mehr Infos in der <a href="/datenschutz/" data-link>Datenschutzerklärung</a>.
-  </span>
-
-  <button id="cookie-accept" class="frg-btn">
-    Akzeptieren
-  </button>
-
+  <span>Die FRG verwendet Cookies für ein besseres Radio-Erlebnis. <a href="/datenschutz/" data-link>Mehr erfahren</a>.</span>
+  <button id="cookie-accept" class="frg-btn">Verstanden</button>
 </div>
 
-<footer class="site-footer">
+<footer class="site-footer relaunch-footer">
+  <div class="footer-topline"><span><i></i> FLEURY RADIO GROUP</span><span>Independent online radio from Basel</span></div>
+  <div class="footer-shell">
+    <div class="footer-lead">
+      <a class="footer-brand" href="/" data-link aria-label="Fleury Radio Group Startseite">
+        <span class="footer-brand-mark"><img src="/img/Fleury Radio Group Logo.webp" alt=""></span>
+        <span><strong>Fleury Radio Group</strong><small>Deine Sender. Deine Welle.</small></span>
+      </a>
+      <p>Eine unabhängige Radiogruppe aus Basel. Drei Sender, unterschiedliche Sounds und eine gemeinsame Welle.</p>
+      <div class="footer-lead-actions"><a class="footer-contact-cta" href="/kontakt/" data-link>Kontakt aufnehmen <span>↗</span></a><span class="footer-location">Basel · Schweiz</span></div>
+    </div>
 
-  <p>© 2026 - Fleury Radio Group™</p>
+    <div class="footer-column footer-on-air">
+      <span class="footer-label">Jetzt hören</span>
+      <a href="/rhywaelle/" data-link><i class="footer-dot dot-rhywaelle"></i><span>Radio Rhywälle<small>Pop & Rap</small></span></a>
+      <a href="/winterlord/" data-link><i class="footer-dot dot-winterlord"></i><span>Winterlord FM<small>Power & Epic Metal</small></span></a>
+      <a href="/rhyrock/" data-link><i class="footer-dot dot-rhyrock"></i><span>RhyRock Radio<small>Rock & Alternative</small></span></a>
+    </div>
 
-  <p>Radio Rhywälle™ | Winterlord FM™ | RhyRock Radio™</p>
+    <div class="footer-column">
+      <span class="footer-label">FRG entdecken</span>
+      <a href="/frg-inside/" data-link>FRG Inside <span>↗</span></a>
+      <a href="/geschichte/" data-link>Unsere Geschichte <span>↗</span></a>
+      <a href="/mitmachen/" data-link>Mitmachen <span>↗</span></a>
+      <a href="/spezial-programm/" data-link>Spezial-Programm <span>↗</span></a>
+    </div>
 
-  <p>Seit 2025 On-Air</p>
-
-  <iframe width="100%" height="38" style="border:0; max-width: 380px;" src="https://climate.stripe.com/badge/eUEVrN?theme=dark&size=small&locale=de-DE"></iframe>
-
-  <div class="footer-links">
-    <a href="/impressum/" data-link>Impressum</a> |
-    <a href="/agb/" data-link>AGB</a> |
-    <a href="/datenschutz/" data-link>Datenschutz</a>
+    <div class="footer-column footer-scene">
+      <span class="footer-label">Für die Szene</span>
+      <a href="/artists/" data-link>Artists & Labels <span>↗</span></a>
+      <a href="/werbung/" data-link>Werbung & Partnerschaften <span>↗</span></a>
+      <a href="/kontakt/" data-link>Allgemeiner Kontakt <span>↗</span></a>
+      <a href="https://www.instagram.com/fleury_radio_group/" target="_blank" rel="noopener noreferrer">Instagram <span>↗</span></a>
+      <div class="footer-status"><i></i><span>Seit 2025 On-Air<small>Unabhängig. Lokal. FRG.</small></span></div>
+    </div>
   </div>
-
+  <div class="footer-bottom"><span>© 2026 Fleury Radio Group™</span><span class="footer-legal"><a href="/impressum/" data-link>Impressum</a><a href="/agb/" data-link>AGB</a><a href="/datenschutz/" data-link>Datenschutz</a></span><span>Basel, Schweiz</span></div>
 </footer>
-  <script src="/main.js" defer></script>
+  <script src="/main.js?relaunch-edge-v5" defer></script>
 </body>
 </html>

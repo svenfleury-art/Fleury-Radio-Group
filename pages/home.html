@@ -18,14 +18,21 @@
       <h2 id="live-focus-title">Dein Sound. Deine Welle.</h2>
       <p class="live-focus-intro">Wähle deinen Sender und hör direkt hinein, was gerade läuft.</p>
       <div class="live-meta"><span class="live-dot"></span><span id="heroStationLabel">Radio Rhywälle™</span><span class="live-separator">·</span><span>Online</span></div>
-      <div class="hero-now-playing" id="heroNowPlaying">Bereit zum Hören</div>
+      <div class="now-playing-card" aria-live="polite">
+        <div class="now-playing-cover"><span>FRG</span></div>
+        <div class="now-playing-copy">
+          <span class="now-playing-label">JETZT LÄUFT</span>
+          <strong id="heroNowPlayingTitle">Bereit zum Hören</strong>
+          <span id="heroNowPlayingArtist">Wähle einen Sender und starte den Stream.</span>
+        </div>
+        <button class="now-playing-button" id="heroPlayBtn" type="button" aria-label="Radio starten">▶</button>
+      </div>
       <div class="hero-station-switch" aria-label="Sender auswählen">
         <button class="hero-station active" data-hero-station="rhywaelle" type="button">Rhywälle</button>
         <button class="hero-station" data-hero-station="winterlord" type="button">Winterlord</button>
         <button class="hero-station" data-hero-station="rhyrock" type="button">RhyRock</button>
       </div>
       <div class="live-actions">
-        <button class="btn btn-primary" id="heroPlayBtn" type="button">▶ Jetzt hören</button>
         <a class="btn btn-secondary" href="/radios" data-link>Sender entdecken</a>
       </div>
     </div>

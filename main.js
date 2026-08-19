@@ -3,7 +3,7 @@ CONFIG
 ========================= */
 
 const routes = {
-  "/": "/pages/home.html",
+  "/": "/pages/home.html?relaunch-nowplaying-v2",
 
   "/radios": "/pages/radios.html",
   "/rhywaelle": "/pages/rhywaelle.html",
@@ -115,9 +115,6 @@ async function loadPage(path) {
   initPageScripts();
   updateHeaderSpacing();
 
-  const routeStations = { "/rhywaelle": "rhywaelle", "/winterlord": "winterlord", "/rhyrock": "rhyrock" };
-  const routeStation = routeStations[clean];
-  if (routeStation) document.querySelector(`[data-station="${routeStation}"]`)?.click();
 }
 
 /* =========================
@@ -145,8 +142,8 @@ document.addEventListener("click", (e) => {
 
   if (external) return;
 
-  // Eigenständige SEO-Seiten sollen normale Dokument-Navigation verwenden.
-  if (document.documentElement.dataset.staticPage === "true") return;
+  // Interne Seiten werden auch aus statischen Einstiegsseiten innerhalb der
+  // bestehenden Shell geladen, damit der Audio-Stream nicht neu startet.
 
   e.preventDefault();
 
@@ -235,15 +232,29 @@ HEADER SHRINK
 
 function initHeader() {
   const header = document.getElementById("mainHeader");
+  const edgePlayer = document.getElementById("edgePlayer");
+  const edgeToggle = document.getElementById("edgeToggle");
   if (!header) return;
+
+  edgeToggle?.addEventListener("click", () => {
+    const collapsed = edgePlayer?.classList.toggle("is-collapsed") || false;
+    edgeToggle.setAttribute("aria-expanded", String(!collapsed));
+    edgeToggle.setAttribute("aria-label", collapsed ? "Jetzt-läuft-Player ausklappen" : "Jetzt-läuft-Player einklappen");
+  });
 
   window.addEventListener("scroll", () => {
     const scroll = window.scrollY;
 
     if (scroll > 80) {
       header.classList.add("shrink");
+      edgePlayer?.classList.add("is-collapsed");
+      edgeToggle?.setAttribute("aria-expanded", "false");
+      edgeToggle?.setAttribute("aria-label", "Jetzt-läuft-Player ausklappen");
     } else {
       header.classList.remove("shrink");
+      edgePlayer?.classList.remove("is-collapsed");
+      edgeToggle?.setAttribute("aria-expanded", "true");
+      edgeToggle?.setAttribute("aria-label", "Jetzt-läuft-Player einklappen");
     }
 
     const progress = Math.min(scroll / 150, 1);
@@ -265,9 +276,30 @@ function initRadioPlayer() {
 
   if (!audio || !playBtn) return;
 
-  let current = "rhywaelle";
+  const validStations = ["rhywaelle", "winterlord", "rhyrock"];
+  const storedStation = localStorage.getItem("frg_selected_station");
+  let current = validStations.includes(storedStation) ? storedStation : "rhywaelle";
   let playing = false;
   let songInterval = null;
+  const heroPlayBtn = document.getElementById("heroPlayBtn");
+  const edgePlayBtn = document.getElementById("edgePlayBtn");
+  const edgeTitle = document.getElementById("edgeNowPlayingTitle");
+  const edgeArtist = document.getElementById("edgeNowPlayingArtist");
+  const edgeStation = document.getElementById("edgeStation");
+
+  function updateHeroPlayState() {
+    if (!heroPlayBtn) return;
+    heroPlayBtn.textContent = playing ? "⏸" : "▶";
+    heroPlayBtn.setAttribute("aria-label", playing ? "Radio pausieren" : "Radio starten");
+    heroPlayBtn.classList.toggle("is-playing", playing);
+  }
+
+  function updateEdgePlayState() {
+    if (!edgePlayBtn) return;
+    edgePlayBtn.textContent = playing ? "⏸" : "▶";
+    edgePlayBtn.setAttribute("aria-label", playing ? "Radio pausieren" : "Radio starten");
+    edgePlayBtn.classList.toggle("is-playing", playing);
+  }
 
   const streams = {
     rhywaelle: "https://stream.laut.fm/rhywaelle",
@@ -297,7 +329,9 @@ function initRadioPlayer() {
   }
 
   function setStation(s) {
+    if (!validStations.includes(s)) return;
     current = s;
+    localStorage.setItem("frg_selected_station", current);
     applyStationTheme(s);
 
     stations.forEach(btn => btn.classList.remove("active"));
@@ -318,6 +352,7 @@ function initRadioPlayer() {
     };
     const heroStation = document.getElementById("heroStationLabel");
     if (heroStation) heroStation.textContent = stationNames[current];
+    if (edgeStation) edgeStation.textContent = stationNames[current];
 
     updateNowPlaying();
   }
@@ -328,18 +363,24 @@ function initRadioPlayer() {
     });
   });
 
+  edgePlayBtn?.addEventListener("click", () => playBtn.click());
+
   playBtn.addEventListener("click", () => {
     if (!playing) {
       audio.src = streams[current];
       audio.play();
       playing = true;
       playBtn.textContent = "⏸";
+      updateHeroPlayState();
+      updateEdgePlayState();
       document.querySelectorAll(".header-live-visual, .live-visual").forEach(el => el.classList.add("is-playing"));
       startSongUpdates();
     } else {
       audio.pause();
       playing = false;
       playBtn.textContent = "▶";
+      updateHeroPlayState();
+      updateEdgePlayState();
       document.querySelectorAll(".header-live-visual, .live-visual").forEach(el => el.classList.remove("is-playing"));
       stopSongUpdates();
     }
@@ -357,8 +398,22 @@ function initRadioPlayer() {
       const text = artist ? `${artist} - ${title}` : title;
 
       if (nowPlaying) nowPlaying.textContent = text;
-      const heroNowPlaying = document.getElementById("heroNowPlaying");
-      if (heroNowPlaying) heroNowPlaying.textContent = text;
+      const heroTitle = document.getElementById("heroNowPlayingTitle");
+      const heroArtist = document.getElementById("heroNowPlayingArtist");
+      const legacyHeroNowPlaying = document.getElementById("heroNowPlaying");
+      if (heroTitle) heroTitle.textContent = title;
+      if (heroArtist) heroArtist.textContent = artist || "Fleury Radio Group™";
+      if (legacyHeroNowPlaying) legacyHeroNowPlaying.textContent = text;
+      if (edgeTitle) edgeTitle.textContent = title;
+      if (edgeArtist) edgeArtist.textContent = artist || "Fleury Radio Group™";
+      document.querySelectorAll("[data-station-now-playing]").forEach(card => {
+        const isCurrent = card.dataset.stationNowPlaying === current;
+        card.hidden = !isCurrent;
+        if (isCurrent) {
+          card.querySelector(".station-now-title")?.replaceChildren(document.createTextNode(title));
+          card.querySelector(".station-now-artist")?.replaceChildren(document.createTextNode(artist || "Fleury Radio Group™"));
+        }
+      });
 
       if ("mediaSession" in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
@@ -371,6 +426,19 @@ function initRadioPlayer() {
 
     } catch (err) {
       if (nowPlaying) nowPlaying.textContent = "Live Stream";
+      const heroTitle = document.getElementById("heroNowPlayingTitle");
+      const heroArtist = document.getElementById("heroNowPlayingArtist");
+      if (heroTitle) heroTitle.textContent = "Live Stream";
+      if (heroArtist) heroArtist.textContent = "Bereit zum Hören";
+      if (edgeTitle) edgeTitle.textContent = "Live Stream";
+      if (edgeArtist) edgeArtist.textContent = "Bereit zum Hören";
+      document.querySelectorAll("[data-station-now-playing]").forEach(card => {
+        card.hidden = card.dataset.stationNowPlaying !== current;
+        if (!card.hidden) {
+          card.querySelector(".station-now-title")?.replaceChildren(document.createTextNode("Live Stream"));
+          card.querySelector(".station-now-artist")?.replaceChildren(document.createTextNode("Bereit zum Hören"));
+        }
+      });
     }
   }
 
@@ -387,7 +455,8 @@ function initRadioPlayer() {
     }
   }
 
-  applyStationTheme(current);
+  setStation(current);
+  updateEdgePlayState();
 }
 
 /* =========================
@@ -528,8 +597,8 @@ BOOT
 
 window.addEventListener("DOMContentLoaded", async () => {
 
-  const isStaticPage = document.documentElement.dataset.staticPage === "true";
-  const initialPath = normalizePath(location.pathname);
+    const isStaticPage = document.documentElement.dataset.staticPage === "true";
+    const initialPath = normalizePath(location.pathname);
   document.body.dataset.currentRoute = initialPath.slice(1) || "home";
 
   // Die Startseite bleibt eine SPA. Indexierbare Unterseiten enthalten Navigation,
@@ -547,9 +616,8 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   if (isStaticPage) {
     initPageScripts();
-    const staticStationRoutes = { "/rhywaelle": "rhywaelle", "/winterlord": "winterlord", "/rhyrock": "rhyrock" };
-    const staticStation = staticStationRoutes[initialPath];
-    if (staticStation) document.querySelector(`[data-station="${staticStation}"]`)?.click();
+    // Die geöffnete Senderseite darf den bewusst gewählten Sender nicht überschreiben.
+    // Der Player bleibt auf dem zuletzt ausgewählten Sender, bis der Nutzer aktiv wechselt.
     return;
   }
 
@@ -582,6 +650,9 @@ document.addEventListener("click", (e) => {
   if (pageStation) {
     const headerStation = document.querySelector(`[data-station="${pageStation.dataset.pageStation}"]`);
     headerStation?.click();
+    if (pageStation.classList.contains("station-now-playing-button")) {
+      document.getElementById("playBtn")?.click();
+    }
   }
 });
 
