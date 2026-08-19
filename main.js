@@ -355,6 +355,7 @@ function initRadioPlayer() {
     if (edgeStation) edgeStation.textContent = stationNames[current];
 
     updateNowPlaying();
+    initSongHistory();
   }
 
   stations.forEach(btn => {
@@ -457,6 +458,77 @@ function initRadioPlayer() {
 
   setStation(current);
   updateEdgePlayState();
+}
+
+/* =========================
+SONG HISTORY & PROGRAM OVERVIEW
+========================= */
+
+const frgProgram = [
+  { title: "FRG Schweiz Special", date: "2026-08-01T12:00:00+02:00", end: "2026-08-02T00:00:00+02:00", description: "Alle Sender widmen sich der Schweiz zum Nationalfeiertag." },
+  { title: "FRG Crossover Night", date: "2026-09-26T19:00:00+02:00", end: "2026-09-26T22:00:00+02:00", description: "Genre-Öffnung zwischen den Sendern." },
+  { title: "1 Jahr FRG Jubiläum", date: "2026-10-28T12:00:00+01:00", end: "2026-10-29T00:00:00+01:00", description: "Ein Jahr Fleury Radio Group – mit einem besonderen Rückblick." },
+  { title: "FRG Halloween Special", date: "2026-10-31T16:00:00+01:00", end: "2026-10-31T23:59:00+01:00", description: "Spezialprogramm mit dunklen Sounds und besonderen Sets." },
+  { title: "FRG Crossover Night", date: "2026-11-28T19:00:00+01:00", end: "2026-11-28T22:00:00+01:00", description: "Die FRG-Sender öffnen ihre Genres füreinander." },
+  { title: "FRG Weihnachten", date: "2026-12-19T00:00:00+01:00", end: "2026-12-26T23:59:00+01:00", description: "Weihnachtsspecial auf allen Sendern." },
+  { title: "FRG Neujahres Special", date: "2026-12-31T13:00:00+01:00", end: "2027-01-01T01:00:00+01:00", description: "Jahresabschluss und Hits des Jahres." }
+];
+
+const frgStationConfig = {
+  rhywaelle: { name: "Radio Rhywälle", api: "https://api.laut.fm/station/rhywaelle/last_songs" },
+  winterlord: { name: "Winterlord FM", api: "https://api.laut.fm/station/winterlord-fm/last_songs" },
+  rhyrock: { name: "RhyRock Radio", api: "https://api.laut.fm/station/rhyrock-radio/last_songs" }
+};
+
+function formatSwissDate(value) {
+  return new Intl.DateTimeFormat("de-CH", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }).format(new Date(value));
+}
+
+function initSongHistory() {
+  const root = document.getElementById("song-history");
+  if (!root) return;
+  const current = localStorage.getItem("frg_selected_station") || "rhywaelle";
+  const station = frgStationConfig[current] || frgStationConfig.rhywaelle;
+  const title = root.querySelector("[data-history-station]");
+  if (title) title.textContent = station.name;
+  root.setAttribute("aria-busy", "true");
+
+  fetch(station.api)
+    .then(res => { if (!res.ok) throw new Error("History unavailable"); return res.json(); })
+    .then(songs => {
+      const list = root.querySelector("[data-history-list]");
+      if (!list) return;
+      const entries = songs.filter(item => item.type === "song").slice(0, 6);
+      list.innerHTML = entries.length ? entries.map((item, index) => `
+        <li class="history-item">
+          <span class="history-index">${String(index + 1).padStart(2, "0")}</span>
+          <span class="history-copy"><strong>${escapeHtml(item.title || "Unbekannter Titel")}</strong><small>${escapeHtml(item.artist?.name || "Unbekannter Interpret")}</small></span>
+          <time>${item.started_at ? formatSwissDate(item.started_at).split(", ")[1] : ""}</time>
+        </li>`).join("") : "<li class=\"history-empty\">Noch keine Titel verfügbar.</li>";
+    })
+    .catch(() => {
+      const list = root.querySelector("[data-history-list]");
+      if (list) list.innerHTML = "<li class=\"history-empty\">Die Song-History ist momentan nicht erreichbar.</li>";
+    })
+    .finally(() => root.setAttribute("aria-busy", "false"));
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>\"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\\\"": "&quot;", "'": "&#039;" }[char] || char));
+}
+
+function initProgramOverview() {
+  const root = document.getElementById("program-overview");
+  if (!root) return;
+  const list = root.querySelector("[data-program-list]");
+  if (!list) return;
+  const now = new Date();
+  const upcoming = frgProgram.filter(item => new Date(item.end) > now).slice(0, 5);
+  list.innerHTML = upcoming.length ? upcoming.map(item => `
+    <article class="program-item">
+      <time>${formatSwissDate(item.date)}</time>
+      <div><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.description)}</p></div>
+    </article>`).join("") : "<p class=\"history-empty\">Neue Spezialsendungen werden bald angekündigt.</p>";
 }
 
 /* =========================
@@ -584,6 +656,8 @@ function initPageScripts() {
   initCountdown();
   initEventFilter();
   initAccordion(); // Neu hinzugefügt
+  initSongHistory();
+  initProgramOverview();
 
   const cookie = document.getElementById("cookie-banner");
   if (cookie && localStorage.getItem("frg_cookies") === "true") {
