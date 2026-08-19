@@ -169,7 +169,7 @@ function createPage(route, navigation, footer) {
     ${body}
   </main>
   ${toDirectoryLinks(toRootRelative(footer))}
-  <script src="/main.js?relaunch-edge-v5" defer></script>
+  <script src="/main.js?relaunch-features-v1" defer></script>
 </body>
 </html>
 `;
