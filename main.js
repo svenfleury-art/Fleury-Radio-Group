@@ -14,6 +14,7 @@ const routes = {
   "/geschichte": "/pages/geschichte.html",
   "/about": "/pages/about.html",
   "/mitmachen": "/pages/mitmachen.html",
+  "/gewinnspiel": "/pages/gewinnspiel.html",
 
   "/spezial-programm": "/pages/spezial-programm.html",
   "/artists": "/pages/Artists.html",
