@@ -30,6 +30,7 @@ const routes = {
 
 const cache = new Map();
 let countdownInterval = null;
+let giveawayCountdownInterval = null;
 
 /* =========================
 UTILS
@@ -632,6 +633,53 @@ function initCountdown() {
 }
 
 /* =========================
+GEWINNSPIEL-COUNTDOWN
+========================= */
+function initGiveawayCountdown() {
+  if (giveawayCountdownInterval) {
+    clearInterval(giveawayCountdownInterval);
+    giveawayCountdownInterval = null;
+  }
+
+  const root = document.querySelector("[data-giveaway-countdown]");
+  if (!root) return;
+
+  const deadline = new Date("2026-09-26T20:00:00+02:00").getTime();
+  const days = root.querySelector("[data-giveaway-days]");
+  const hours = root.querySelector("[data-giveaway-hours]");
+  const minutes = root.querySelector("[data-giveaway-minutes]");
+  const seconds = root.querySelector("[data-giveaway-seconds]");
+  const status = root.querySelector(".giveaway-countdown-status");
+
+  function setValue(element, value) {
+    if (element) element.textContent = String(value).padStart(2, "0");
+  }
+
+  function update() {
+    const diff = deadline - Date.now();
+    if (diff <= 0) {
+      setValue(days, 0);
+      setValue(hours, 0);
+      setValue(minutes, 0);
+      setValue(seconds, 0);
+      root.dataset.expired = "true";
+      if (status) status.textContent = "Das Gewinnspiel ist beendet.";
+      clearInterval(giveawayCountdownInterval);
+      giveawayCountdownInterval = null;
+      return;
+    }
+
+    setValue(days, Math.floor(diff / 86400000));
+    setValue(hours, Math.floor((diff % 86400000) / 3600000));
+    setValue(minutes, Math.floor((diff % 3600000) / 60000));
+    setValue(seconds, Math.floor((diff % 60000) / 1000));
+  }
+
+  update();
+  giveawayCountdownInterval = setInterval(update, 1000);
+}
+
+/* =========================
 PAGE INIT
 ========================= */
 
@@ -655,6 +703,7 @@ function initAccordion() {
 
 function initPageScripts() {
   initCountdown();
+  initGiveawayCountdown();
   initEventFilter();
   initAccordion(); // Neu hinzugefügt
   initSongHistory();
