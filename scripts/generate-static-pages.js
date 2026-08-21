@@ -54,6 +54,12 @@ const routes = [
     description: "Werde Teil der Fleury Radio Group: Entdecke offene Möglichkeiten in Moderation, Musikredaktion, Technik und Social Media."
   },
   {
+    slug: "gewinnspiel",
+    source: "pages/gewinnspiel.html",
+    title: "FRG-Gewinnspiel 2026 | Fleury Radio Group",
+    description: "Vier Musikpreise gewinnen: IKAN-HYU-Tickets, JBL Go 4, USB-C-Kopfhörer oder House-of-Sound-Gutschein."
+  },
+  {
     slug: "spezial-programm",
     source: "pages/spezial-programm.html",
     title: "Spezialprogramm der Fleury Radio Group | FRG",
