@@ -31,6 +31,7 @@ const routes = {
 const cache = new Map();
 let countdownInterval = null;
 let giveawayCountdownInterval = null;
+const FRG_GIVEAWAY_POPUP_ENABLED = true;
 
 /* =========================
 UTILS
@@ -680,6 +681,40 @@ function initGiveawayCountdown() {
 }
 
 /* =========================
+GEWINNSPIEL-POPUP
+Setze FRG_GIVEAWAY_POPUP_ENABLED auf false, um das Popup ohne weiteren Umbau auszublenden.
+========================= */
+function initGiveawayPopup() {
+  const popup = document.getElementById("giveawayPopup");
+  if (!popup) return;
+
+  const closeButton = document.getElementById("giveawayPopupClose");
+  const deadline = new Date("2026-09-26T20:00:00+02:00").getTime();
+  const storageKey = "frg_giveaway_popup_closed_2026";
+
+  function hidePopup() {
+    popup.hidden = true;
+    popup.classList.remove("is-visible");
+  }
+
+  if (!FRG_GIVEAWAY_POPUP_ENABLED || Date.now() >= deadline || localStorage.getItem(storageKey) === "true") {
+    hidePopup();
+    return;
+  }
+
+  popup.hidden = false;
+  requestAnimationFrame(() => popup.classList.add("is-visible"));
+
+  if (popup.dataset.initialized === "true") return;
+  popup.dataset.initialized = "true";
+
+  closeButton?.addEventListener("click", () => {
+    localStorage.setItem(storageKey, "true");
+    hidePopup();
+  });
+}
+
+/* =========================
 PAGE INIT
 ========================= */
 
@@ -704,6 +739,7 @@ function initAccordion() {
 function initPageScripts() {
   initCountdown();
   initGiveawayCountdown();
+  initGiveawayPopup();
   initEventFilter();
   initAccordion(); // Neu hinzugefügt
   initSongHistory();
