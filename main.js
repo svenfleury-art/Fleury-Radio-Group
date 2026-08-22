@@ -690,7 +690,7 @@ function initGiveawayPopup() {
 
   const closeButton = document.getElementById("giveawayPopupClose");
   const deadline = new Date("2026-09-26T20:00:00+02:00").getTime();
-  const storageKey = "frg_giveaway_popup_closed_2026";
+  const storageKey = "frg_giveaway_popup_closed_2026_v2";
 
   function hidePopup() {
     popup.hidden = true;
