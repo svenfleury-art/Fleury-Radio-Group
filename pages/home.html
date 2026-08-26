@@ -11,43 +11,53 @@
   </div>
 </div>
 
-  <!-- 🎧 LIVE-ERLEBNIS -->
-  <section class="live-focus" aria-labelledby="live-focus-title">
+  <!-- 🎧 LIVE-ERLEBNIS: zentraler, senderbewusster Now-Playing-Player -->
+  <section class="live-focus live-command-center" aria-labelledby="live-focus-title">
     <div class="live-focus-copy">
-      <div class="eyebrow">JETZT LIVE</div>
+      <div class="eyebrow"><span class="broadcast-pulse"></span>JETZT LIVE · FRG</div>
       <h2 id="live-focus-title">Dein Sound. Deine Welle.</h2>
-      <p class="live-focus-intro">Wähle deinen Sender und hör direkt hinein, was gerade läuft.</p>
-      <div class="live-meta"><span class="live-dot"></span><span id="heroStationLabel">Radio Rhywälle™</span><span class="live-separator">·</span><span>Online</span></div>
-      <div class="now-playing-card" aria-live="polite">
-        <div class="now-playing-cover"><span>FRG</span></div>
+      <p class="live-focus-intro">Wähle deinen Sender. Titel, Logo und Song-History wechseln gemeinsam.</p>
+      <div class="live-meta"><span class="live-dot"></span><span id="heroStationLabel">Radio Rhywälle™</span><span class="live-separator">·</span><span id="heroStationGenre">Pop &amp; Rap</span></div>
+      <div class="now-playing-card now-playing-console" aria-live="polite">
+        <div class="now-playing-cover"><img id="heroNowPlayingCover" src="/img/Radio%20Rhywaelle.webp" alt="Logo von Radio Rhywälle"></div>
         <div class="now-playing-copy">
-          <span class="now-playing-label">JETZT LÄUFT</span>
+          <span class="now-playing-label"><i></i>JETZT LÄUFT</span>
           <strong id="heroNowPlayingTitle">Bereit zum Hören</strong>
           <span id="heroNowPlayingArtist">Wähle einen Sender und starte den Stream.</span>
+          <small id="heroNowPlayingTime">Live über laut.fm</small>
         </div>
         <button class="now-playing-button" id="heroPlayBtn" type="button" aria-label="Radio starten">▶</button>
       </div>
-      <div class="hero-station-switch" aria-label="Sender auswählen">
-        <button class="hero-station active" data-hero-station="rhywaelle" type="button">Rhywälle</button>
-        <button class="hero-station" data-hero-station="winterlord" type="button">Winterlord</button>
-        <button class="hero-station" data-hero-station="rhyrock" type="button">RhyRock</button>
+      <div class="player-signal-rail" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="hero-station-switch station-tuner" aria-label="Sender auswählen">
+        <button class="hero-station active" data-hero-station="rhywaelle" type="button"><img src="/img/Radio%20Rhywaelle.webp" alt="">Rhywälle</button>
+        <button class="hero-station" data-hero-station="winterlord" type="button"><img src="/img/Winterlord%20FM%20Logo.webp" alt="">Winterlord</button>
+        <button class="hero-station" data-hero-station="rhyrock" type="button"><img src="/img/RhyRock.webp" alt="">RhyRock</button>
       </div>
       <div class="live-actions">
-        <a class="btn btn-secondary" href="/radios" data-link>Sender entdecken</a>
+        <a class="btn btn-secondary" href="#song-history">Song-History öffnen</a>
+        <button class="text-link share-current-song" type="button" data-share-current>Aktuellen Titel teilen ↗</button>
       </div>
     </div>
-    <div class="live-visual" aria-hidden="true">
-      <div class="live-disc"><span>FRG</span></div>
+    <div class="live-visual player-monitor" aria-hidden="true">
+      <div class="station-logo-monitor"><img id="heroStationLogo" src="/img/Radio%20Rhywaelle.webp" alt=""></div>
       <div class="soundwave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <span class="live-visual-label">Fleury Radio Group™</span>
+      <span class="live-visual-label">ON AIR · BASEL</span>
     </div>
   </section>
 
   <section class="insight-grid" aria-label="Live-Informationen">
-    <div class="info-panel" id="song-history" aria-live="polite">
-      <div class="section-title"><span class="icon">◷</span> Song-History</div>
-      <p class="panel-kicker">Die letzten Titel bei <strong data-history-station>Radio Rhywälle</strong>.</p>
+    <div class="info-panel song-history-panel" id="song-history" aria-live="polite">
+      <div class="history-panel-heading">
+        <div><div class="section-title"><span class="icon">◷</span> Song-History</div><p class="panel-kicker">Die letzten Titel bei <strong data-history-station>Radio Rhywälle</strong>.</p></div>
+        <div class="history-station-filter" aria-label="History-Sender auswählen">
+          <button class="history-station-button active" data-history-station-button="rhywaelle" type="button">Rhywälle</button>
+          <button class="history-station-button" data-history-station-button="winterlord" type="button">Winterlord</button>
+          <button class="history-station-button" data-history-station-button="rhyrock" type="button">RhyRock</button>
+        </div>
+      </div>
       <ol class="history-list" data-history-list><li class="history-empty">Song-History wird geladen …</li></ol>
+      <div class="history-panel-footer"><span><i></i>Automatisch aktualisiert</span><button type="button" data-share-current>Aktuellen Titel teilen ↗</button></div>
     </div>
     <div class="info-panel" id="program-overview">
       <div class="section-title"><span class="icon">▣</span> Programmübersicht</div>

@@ -317,9 +317,9 @@ function initRadioPlayer() {
   };
 
   const stationThemes = {
-    rhywaelle: { accent: "#315bdb", accentStrong: "#1d3fa8", glow: "rgba(49,91,219,.26)", name: "rhywaelle" },
-    winterlord: { accent: "#9bd8ff", accentStrong: "#4c9fd4", glow: "rgba(155,216,255,.22)", name: "winterlord" },
-    rhyrock: { accent: "#ff7043", accentStrong: "#d9431d", glow: "rgba(255,112,67,.24)", name: "rhyrock" }
+    rhywaelle: { accent: "#315bdb", accentStrong: "#1d3fa8", glow: "rgba(49,91,219,.26)", name: "rhywaelle", label: "Radio Rhywälle™", genre: "Pop & Rap", logo: "/img/Radio Rhywaelle.webp" },
+    winterlord: { accent: "#9bd8ff", accentStrong: "#4c9fd4", glow: "rgba(155,216,255,.22)", name: "winterlord", label: "Winterlord FM™", genre: "Power & Epic Metal", logo: "/img/Winterlord FM Logo.webp" },
+    rhyrock: { accent: "#ff7043", accentStrong: "#d9431d", glow: "rgba(255,112,67,.24)", name: "rhyrock", label: "RhyRock Radio™", genre: "Rock & Alternative", logo: "/img/RhyRock.webp" }
   };
 
   function applyStationTheme(s) {
@@ -348,14 +348,19 @@ function initRadioPlayer() {
       audio.play();
     }
 
-    const stationNames = {
-      rhywaelle: "Radio Rhywälle™",
-      winterlord: "Winterlord FM™",
-      rhyrock: "RhyRock Radio™"
-    };
+    const stationMeta = stationThemes[current];
     const heroStation = document.getElementById("heroStationLabel");
-    if (heroStation) heroStation.textContent = stationNames[current];
-    if (edgeStation) edgeStation.textContent = stationNames[current];
+    const heroGenre = document.getElementById("heroStationGenre");
+    const heroStationLogo = document.getElementById("heroStationLogo");
+    const heroNowPlayingCover = document.getElementById("heroNowPlayingCover");
+    if (heroStation) heroStation.textContent = stationMeta.label;
+    if (heroGenre) heroGenre.textContent = stationMeta.genre;
+    if (edgeStation) edgeStation.textContent = stationMeta.label;
+    [heroStationLogo, heroNowPlayingCover].forEach(image => {
+      if (!image) return;
+      image.src = stationMeta.logo;
+      image.alt = `Logo von ${stationMeta.label}`;
+    });
 
     updateNowPlaying();
     initSongHistory();
@@ -398,7 +403,7 @@ function initRadioPlayer() {
       const title = data.title || "Unbekannt";
       const artist = data.artist?.name || "";
 
-      const cover = "/img/Fleury Radio Group Logo.webp";
+      const cover = stationThemes[current].logo;
       const text = artist ? `${artist} - ${title}` : title;
 
       if (nowPlaying) nowPlaying.textContent = text;
@@ -407,6 +412,8 @@ function initRadioPlayer() {
       const legacyHeroNowPlaying = document.getElementById("heroNowPlaying");
       if (heroTitle) heroTitle.textContent = title;
       if (heroArtist) heroArtist.textContent = artist || "Fleury Radio Group™";
+      const heroTime = document.getElementById("heroNowPlayingTime");
+      if (heroTime) heroTime.textContent = data.started_at ? `seit ${formatSwissDate(data.started_at).split(", ")[1]} Uhr` : "Live über laut.fm";
       if (legacyHeroNowPlaying) legacyHeroNowPlaying.textContent = text;
       if (edgeTitle) edgeTitle.textContent = title;
       if (edgeArtist) edgeArtist.textContent = artist || "Fleury Radio Group™";
@@ -434,6 +441,8 @@ function initRadioPlayer() {
       const heroArtist = document.getElementById("heroNowPlayingArtist");
       if (heroTitle) heroTitle.textContent = "Live Stream";
       if (heroArtist) heroArtist.textContent = "Bereit zum Hören";
+      const heroTime = document.getElementById("heroNowPlayingTime");
+      if (heroTime) heroTime.textContent = "Live über laut.fm";
       if (edgeTitle) edgeTitle.textContent = "Live Stream";
       if (edgeArtist) edgeArtist.textContent = "Bereit zum Hören";
       document.querySelectorAll("[data-station-now-playing]").forEach(card => {
@@ -478,22 +487,25 @@ const frgProgram = [
 ];
 
 const frgStationConfig = {
-  rhywaelle: { name: "Radio Rhywälle", api: "https://api.laut.fm/station/rhywaelle/last_songs" },
-  winterlord: { name: "Winterlord FM", api: "https://api.laut.fm/station/winterlord-fm/last_songs" },
-  rhyrock: { name: "RhyRock Radio", api: "https://api.laut.fm/station/rhyrock-radio/last_songs" }
+  rhywaelle: { name: "Radio Rhywälle", api: "https://api.laut.fm/station/rhywaelle/last_songs", logo: "/img/Radio Rhywaelle.webp" },
+  winterlord: { name: "Winterlord FM", api: "https://api.laut.fm/station/winterlord-fm/last_songs", logo: "/img/Winterlord FM Logo.webp" },
+  rhyrock: { name: "RhyRock Radio", api: "https://api.laut.fm/station/rhyrock-radio/last_songs", logo: "/img/RhyRock.webp" }
 };
 
 function formatSwissDate(value) {
   return new Intl.DateTimeFormat("de-CH", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }).format(new Date(value));
 }
 
-function initSongHistory() {
+function initSongHistory(stationId) {
   const root = document.getElementById("song-history");
   if (!root) return;
-  const current = localStorage.getItem("frg_selected_station") || "rhywaelle";
+  const current = stationId || localStorage.getItem("frg_selected_station") || "rhywaelle";
   const station = frgStationConfig[current] || frgStationConfig.rhywaelle;
   const title = root.querySelector("[data-history-station]");
   if (title) title.textContent = station.name;
+  root.querySelectorAll("[data-history-station-button]").forEach(button => {
+    button.classList.toggle("active", button.dataset.historyStationButton === current);
+  });
   root.setAttribute("aria-busy", "true");
 
   fetch(station.api)
@@ -501,10 +513,11 @@ function initSongHistory() {
     .then(songs => {
       const list = root.querySelector("[data-history-list]");
       if (!list) return;
-      const entries = songs.filter(item => item.type === "song").slice(0, 6);
+      const entries = songs.filter(item => item.type === "song").slice(0, 10);
       list.innerHTML = entries.length ? entries.map((item, index) => `
         <li class="history-item">
           <span class="history-index">${String(index + 1).padStart(2, "0")}</span>
+          <img class="history-logo" src="${station.logo}" alt="">
           <span class="history-copy"><strong>${escapeHtml(item.title || "Unbekannter Titel")}</strong><small>${escapeHtml(item.artist?.name || "Unbekannter Interpret")}</small></span>
           <time>${item.started_at ? formatSwissDate(item.started_at).split(", ")[1] : ""}</time>
         </li>`).join("") : "<li class=\"history-empty\">Noch keine Titel verfügbar.</li>";
@@ -812,6 +825,27 @@ document.addEventListener("click", (e) => {
     headerStation?.click();
     if (pageStation.classList.contains("station-now-playing-button")) {
       document.getElementById("playBtn")?.click();
+    }
+  }
+
+  const historyStation = e.target.closest("[data-history-station-button]");
+  if (historyStation) {
+    initSongHistory(historyStation.dataset.historyStationButton);
+  }
+
+  const shareButton = e.target.closest("[data-share-current]");
+  if (shareButton) {
+    const title = document.getElementById("heroNowPlayingTitle")?.textContent || "Live Radio";
+    const artist = document.getElementById("heroNowPlayingArtist")?.textContent || "Fleury Radio Group";
+    const station = document.getElementById("heroStationLabel")?.textContent || "Fleury Radio Group";
+    const shareText = `${title} – ${artist} auf ${station}`;
+    if (navigator.share) {
+      navigator.share({ title: shareText, text: shareText, url: location.href }).catch(() => {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(`${shareText} ${location.href}`).then(() => {
+        shareButton.textContent = "Link kopiert ✓";
+        setTimeout(() => { shareButton.textContent = "Aktuellen Titel teilen ↗"; }, 1800);
+      }).catch(() => {});
     }
   }
 });

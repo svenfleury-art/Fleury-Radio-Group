@@ -2577,3 +2577,31 @@ body:has(.frg-giveaway-page) main#app { max-width:none; margin-top:0; padding:0;
   .footer-lead { grid-column: auto; }
   .footer-bottom { align-items: flex-start; flex-direction: column; }
 }
+
+/* =========================
+   PLAYER-ZENTRALE & ERWEITERTE SONG-HISTORY
+   Die FRG-Senderfarben bleiben funktionale Statussignale.
+========================= */
+.live-command-center { overflow: hidden; }
+.live-command-center::before { content:""; position:absolute; inset:0; pointer-events:none; background: repeating-linear-gradient(90deg, transparent 0 64px, rgba(255,255,255,.025) 65px 66px); opacity:.55; }
+.broadcast-pulse { display:inline-block; width:7px; height:7px; margin-right:7px; border-radius:50%; background:var(--station-accent); box-shadow:0 0 0 5px var(--station-glow), 0 0 16px var(--station-accent); animation:frg-live-pulse 1.8s ease-out infinite; }
+.now-playing-console { grid-template-columns:62px minmax(0,1fr) 46px; padding:14px; border-radius:18px; background:linear-gradient(135deg, rgba(5,7,15,.92), color-mix(in srgb, var(--station-accent) 15%, rgba(16,20,38,.96))); border-color:color-mix(in srgb, var(--station-accent) 54%, rgba(255,255,255,.12)); }
+.now-playing-cover { width:62px; height:62px; overflow:hidden; border-radius:15px; background:#111827; }
+.now-playing-cover img { display:block; width:100%; height:100%; object-fit:cover; }
+.now-playing-copy strong { color:#fff; font-size:1.03rem; }
+.now-playing-copy > span:last-child { color:rgba(242,245,255,.7); }
+.now-playing-copy small { color:var(--station-accent); font-size:.61rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.now-playing-label { display:flex; align-items:center; gap:6px; }.now-playing-label i { width:6px; height:6px; border-radius:50%; background:var(--station-accent); box-shadow:0 0 12px var(--station-accent); }
+.now-playing-button { width:46px; height:46px; }
+.player-signal-rail { display:flex; align-items:center; gap:4px; height:29px; margin:17px 2px 15px; opacity:.76; }
+.player-signal-rail i { display:block; width:3px; height:30%; border-radius:999px; background:var(--station-accent); box-shadow:0 0 10px var(--station-glow); }.player-signal-rail i:nth-child(2n){height:58%}.player-signal-rail i:nth-child(3n){height:100%}.player-signal-rail i:nth-child(5n){height:42%}
+.station-tuner { gap:7px; }.hero-station { display:inline-flex; align-items:center; gap:8px; border-radius:11px; padding:7px 10px; }.hero-station img { width:22px; height:22px; border-radius:6px; object-fit:cover; }
+.hero-station.active { border-color:var(--station-accent); background:color-mix(in srgb, var(--station-accent) 14%, rgba(255,255,255,.06)); }
+.live-actions { align-items:center; }.live-actions .text-link { border:0; padding:0; background:transparent; cursor:pointer; }
+.player-monitor { padding:28px; border:1px solid color-mix(in srgb, var(--station-accent) 34%, rgba(255,255,255,.12)); border-radius:22px; background:linear-gradient(145deg, rgba(6,8,17,.78), color-mix(in srgb, var(--station-accent) 12%, rgba(13,16,30,.8))); box-shadow:inset 0 0 0 1px rgba(255,255,255,.04), 0 18px 48px rgba(0,0,0,.18); }
+.station-logo-monitor { display:grid; place-items:center; width:min(210px,53vw); aspect-ratio:1; padding:20px; border:1px solid var(--station-accent); border-radius:22px; background:radial-gradient(circle at 35% 25%, var(--station-glow), transparent 52%), rgba(2,4,10,.52); box-shadow:0 0 0 12px color-mix(in srgb, var(--station-accent) 7%, transparent), 0 0 44px var(--station-glow); }.station-logo-monitor img { width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 12px 18px rgba(0,0,0,.35)); }
+.history-panel-heading { display:flex; justify-content:space-between; gap:18px; align-items:flex-start; }.history-station-filter { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:6px; }.history-station-button { padding:8px 9px; border:1px solid rgba(255,255,255,.12); border-radius:9px; background:rgba(255,255,255,.04); color:var(--muted2); font-size:.66rem; font-weight:800; cursor:pointer; }.history-station-button:hover, .history-station-button.active { border-color:var(--station-accent); background:var(--station-glow); color:var(--station-accent); }
+.song-history-panel .history-list { max-height:520px; overflow:auto; padding-right:3px; }.history-item { grid-template-columns:28px 34px minmax(0,1fr) auto; }.history-logo { width:34px; height:34px; border-radius:9px; object-fit:cover; border:1px solid color-mix(in srgb, var(--station-accent) 44%, transparent); }.history-panel-footer { display:flex; justify-content:space-between; gap:16px; align-items:center; padding-top:16px; border-top:1px solid rgba(255,255,255,.08); color:var(--muted2); font-size:.7rem; }.history-panel-footer span { display:flex; align-items:center; gap:7px; }.history-panel-footer span i { width:6px; height:6px; border-radius:50%; background:var(--station-accent); box-shadow:0 0 12px var(--station-accent); }.history-panel-footer button { border:0; background:transparent; color:var(--station-accent); font:inherit; font-weight:800; cursor:pointer; }
+@keyframes frg-live-pulse { 70% { box-shadow:0 0 0 11px transparent, 0 0 16px var(--station-accent); } 100% { box-shadow:0 0 0 0 transparent, 0 0 16px var(--station-accent); } }
+@media (max-width:700px) { .now-playing-console { grid-template-columns:51px minmax(0,1fr) 40px; padding:11px; }.now-playing-cover { width:51px; height:51px; }.now-playing-button { width:40px; height:40px; }.history-panel-heading { display:grid; }.history-station-filter { justify-content:flex-start; }.history-item { grid-template-columns:24px 30px minmax(0,1fr) auto; gap:9px; }.history-logo { width:30px; height:30px; }.history-panel-footer { align-items:flex-start; flex-direction:column; }.player-monitor { padding:22px; }.station-logo-monitor { width:170px; }.station-tuner { display:grid; grid-template-columns:1fr; }.hero-station { justify-content:flex-start; } }
+@media (prefers-reduced-motion:reduce) { .broadcast-pulse { animation:none; } }
