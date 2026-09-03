@@ -2605,3 +2605,22 @@ body:has(.frg-giveaway-page) main#app { max-width:none; margin-top:0; padding:0;
 @keyframes frg-live-pulse { 70% { box-shadow:0 0 0 11px transparent, 0 0 16px var(--station-accent); } 100% { box-shadow:0 0 0 0 transparent, 0 0 16px var(--station-accent); } }
 @media (max-width:700px) { .now-playing-console { grid-template-columns:51px minmax(0,1fr) 40px; padding:11px; }.now-playing-cover { width:51px; height:51px; }.now-playing-button { width:40px; height:40px; }.history-panel-heading { display:grid; }.history-station-filter { justify-content:flex-start; }.history-item { grid-template-columns:24px 30px minmax(0,1fr) auto; gap:9px; }.history-logo { width:30px; height:30px; }.history-panel-footer { align-items:flex-start; flex-direction:column; }.player-monitor { padding:22px; }.station-logo-monitor { width:170px; }.station-tuner { display:grid; grid-template-columns:1fr; }.hero-station { justify-content:flex-start; } }
 @media (prefers-reduced-motion:reduce) { .broadcast-pulse { animation:none; } }
+
+/* Mobile Player-Fix: aktueller Titel und History müssen ohne Umweg erreichbar bleiben. */
+@media (max-width:700px) {
+  .relaunch-player { min-width:0; width:100%; touch-action:pan-y; }
+  .relaunch-player .station-switch { touch-action:pan-x; }
+  .player-live-copy #nowPlaying { display:block; max-width:min(42vw, 170px); }
+  .edge-player { left:12px; right:12px; bottom:calc(94px + env(safe-area-inset-bottom)); width:auto; max-width:none; transform:none; }
+  .edge-player.is-collapsed { left:12px; right:12px; width:auto; padding:10px 11px; transform:none; border-radius:15px; }
+  .edge-player.is-collapsed > :not(.edge-toggle) { opacity:1; pointer-events:auto; }
+  .edge-player.is-collapsed .edge-toggle { left:auto; right:8px; transform:translateY(-50%); }
+  .edge-player .edge-toggle { display:none; }
+  .song-history-panel .history-list { max-height:none; overflow:visible; }
+  .live-command-center { touch-action:pan-y; }
+  .gesture-hint { display:flex; align-items:center; gap:8px; min-height:30px; margin:0 0 14px; color:var(--muted2); font-size:.68rem; line-height:1.45; }
+  .gesture-hint span { display:grid; place-items:center; width:24px; height:24px; flex:0 0 24px; border:1px solid var(--station-accent); border-radius:7px; color:var(--station-accent); }
+  .gesture-hint.is-feedback { color:var(--station-accent); }
+}
+@media (min-width:701px) { .gesture-hint { display:none; } }
+@media (prefers-reduced-motion:reduce) { .gesture-hint { transition:none; } }

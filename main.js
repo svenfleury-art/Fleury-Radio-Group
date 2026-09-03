@@ -31,6 +31,7 @@ const routes = {
 const cache = new Map();
 let countdownInterval = null;
 let giveawayCountdownInterval = null;
+let frgHistoryRequestId = 0;
 const FRG_GIVEAWAY_POPUP_ENABLED = true;
 
 /* =========================
@@ -116,6 +117,7 @@ async function loadPage(path) {
   }
 
   initPageScripts();
+  window.FRGPlayer?.refresh();
   updateHeaderSpacing();
 
 }
@@ -284,6 +286,8 @@ function initRadioPlayer() {
   let current = validStations.includes(storedStation) ? storedStation : "rhywaelle";
   let playing = false;
   let songInterval = null;
+  let gestureStart = null;
+  let gestureFeedbackTimer = null;
   const heroPlayBtn = document.getElementById("heroPlayBtn");
   const edgePlayBtn = document.getElementById("edgePlayBtn");
   const edgeTitle = document.getElementById("edgeNowPlayingTitle");
@@ -331,24 +335,12 @@ function initRadioPlayer() {
     document.body.dataset.stationTheme = theme.name;
   }
 
-  function setStation(s) {
-    if (!validStations.includes(s)) return;
-    current = s;
-    localStorage.setItem("frg_selected_station", current);
-    applyStationTheme(s);
-
-    stations.forEach(btn => btn.classList.remove("active"));
-    document.querySelector(`[data-station="${s}"]`)?.classList.add("active");
-    document.querySelectorAll(".hero-station").forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.heroStation === s);
-    });
-
-    if (playing) {
-      audio.src = streams[current];
-      audio.play();
-    }
-
+  function syncStationUi() {
     const stationMeta = stationThemes[current];
+    stations.forEach(btn => btn.classList.toggle("active", btn.dataset.station === current));
+    document.querySelectorAll(".hero-station").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.heroStation === current);
+    });
     const heroStation = document.getElementById("heroStationLabel");
     const heroGenre = document.getElementById("heroStationGenre");
     const heroStationLogo = document.getElementById("heroStationLogo");
@@ -361,10 +353,77 @@ function initRadioPlayer() {
       image.src = stationMeta.logo;
       image.alt = `Logo von ${stationMeta.label}`;
     });
+  }
+
+  function setStation(s) {
+    if (!validStations.includes(s)) return;
+    current = s;
+    localStorage.setItem("frg_selected_station", current);
+    applyStationTheme(s);
+    syncStationUi();
+
+    if (playing) {
+      audio.src = streams[current];
+      audio.play().catch(() => {});
+    }
 
     updateNowPlaying();
-    initSongHistory();
+    initSongHistory(current);
   }
+
+  function showGestureFeedback(message) {
+    const hint = document.getElementById("gestureHint");
+    if (!hint) return;
+    window.clearTimeout(gestureFeedbackTimer);
+    hint.textContent = message;
+    hint.classList.add("is-feedback");
+    gestureFeedbackTimer = window.setTimeout(() => {
+      hint.innerHTML = '<span aria-hidden="true">↔</span> Wische auf dem Player nach links oder rechts für den Senderwechsel.';
+      hint.classList.remove("is-feedback");
+    }, 2200);
+  }
+
+  function changeStationBySwipe(direction) {
+    const currentIndex = validStations.indexOf(current);
+    const nextIndex = (currentIndex + direction + validStations.length) % validStations.length;
+    const nextStation = validStations[nextIndex];
+    setStation(nextStation);
+    showGestureFeedback(`${stationThemes[nextStation].label} ausgewählt`);
+  }
+
+  function handleTouchStart(event) {
+    const target = event.target instanceof Element ? event.target.closest(".live-command-center, .now-playing-console, .player-monitor, .relaunch-player") : null;
+    if (!target || (event.target instanceof Element && event.target.closest("button, a, input, select, textarea"))) return;
+    const touch = event.changedTouches[0];
+    gestureStart = { x: touch.clientX, y: touch.clientY, time: Date.now() };
+  }
+
+  function handleTouchEnd(event) {
+    if (!gestureStart) return;
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - gestureStart.x;
+    const deltaY = touch.clientY - gestureStart.y;
+    const duration = Date.now() - gestureStart.time;
+    gestureStart = null;
+
+    if (duration > 900 || Math.abs(deltaX) < 52 || Math.abs(deltaX) <= Math.abs(deltaY) * 1.2) return;
+    changeStationBySwipe(deltaX < 0 ? 1 : -1);
+  }
+
+  document.addEventListener("touchstart", handleTouchStart, { passive: true });
+  document.addEventListener("touchend", handleTouchEnd, { passive: true });
+  document.addEventListener("touchcancel", () => { gestureStart = null; }, { passive: true });
+
+  window.FRGPlayer = {
+    refresh() {
+      applyStationTheme(current);
+      syncStationUi();
+      updateHeroPlayState();
+      updateEdgePlayState();
+      updateNowPlaying();
+      initSongHistory(current);
+    }
+  };
 
   stations.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -397,8 +456,15 @@ function initRadioPlayer() {
 
   async function updateNowPlaying() {
     try {
-      const res = await fetch(apis[current]);
+      const res = await fetch(apis[current], { cache: "no-store" });
+      if (!res.ok) throw new Error("Now Playing unavailable");
       const data = await res.json();
+      localStorage.setItem(`frg_now_playing_${current}`, JSON.stringify({
+        title: data.title || "Unbekannt",
+        artist: data.artist?.name || "",
+        started_at: data.started_at || null,
+        saved_at: Date.now()
+      }));
 
       const title = data.title || "Unbekannt";
       const artist = data.artist?.name || "";
@@ -436,6 +502,25 @@ function initRadioPlayer() {
       }
 
     } catch (err) {
+      let cached = null;
+      try {
+        cached = JSON.parse(localStorage.getItem(`frg_now_playing_${current}`) || "null");
+      } catch {}
+      if (cached?.title) {
+        const title = cached.title;
+        const artist = cached.artist || "Fleury Radio Group™";
+        const text = artist ? `${artist} - ${title}` : title;
+        if (nowPlaying) nowPlaying.textContent = text;
+        const heroTitle = document.getElementById("heroNowPlayingTitle");
+        const heroArtist = document.getElementById("heroNowPlayingArtist");
+        const heroTime = document.getElementById("heroNowPlayingTime");
+        if (heroTitle) heroTitle.textContent = title;
+        if (heroArtist) heroArtist.textContent = artist;
+        if (heroTime) heroTime.textContent = "Zuletzt geladen · Live-Daten folgen";
+        if (edgeTitle) edgeTitle.textContent = title;
+        if (edgeArtist) edgeArtist.textContent = artist;
+        return;
+      }
       if (nowPlaying) nowPlaying.textContent = "Live Stream";
       const heroTitle = document.getElementById("heroNowPlayingTitle");
       const heroArtist = document.getElementById("heroNowPlayingArtist");
@@ -501,36 +586,64 @@ function initSongHistory(stationId) {
   if (!root) return;
   const current = stationId || localStorage.getItem("frg_selected_station") || "rhywaelle";
   const station = frgStationConfig[current] || frgStationConfig.rhywaelle;
+  const requestId = ++frgHistoryRequestId;
   const title = root.querySelector("[data-history-station]");
+  const list = root.querySelector("[data-history-list]");
+  const status = root.querySelector("#historyStatus");
+  let usedCache = false;
   if (title) title.textContent = station.name;
   root.querySelectorAll("[data-history-station-button]").forEach(button => {
     button.classList.toggle("active", button.dataset.historyStationButton === current);
   });
   root.setAttribute("aria-busy", "true");
+  if (list) list.innerHTML = "<li class=\"history-empty history-loading\">Song-History wird geladen …</li>";
+  if (status) status.querySelector("span:last-child").textContent = "History wird aktualisiert …";
 
-  fetch(station.api)
+  const renderEntries = entries => {
+    if (!list) return;
+    list.innerHTML = entries.length ? entries.map((item, index) => `
+      <li class="history-item">
+        <span class="history-index">${String(index + 1).padStart(2, "0")}</span>
+        <img class="history-logo" src="${station.logo}" alt="">
+        <span class="history-copy"><strong>${escapeHtml(item.title || "Unbekannter Titel")}</strong><small>${escapeHtml(item.artist?.name || "Unbekannter Interpret")}</small></span>
+        <time>${item.started_at ? formatSwissDate(item.started_at).split(", ")[1] : ""}</time>
+      </li>`).join("") : "<li class=\"history-empty\">Noch keine Titel verfügbar.</li>";
+  };
+
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 8000);
+  fetch(station.api, { cache: "no-store", signal: controller.signal })
     .then(res => { if (!res.ok) throw new Error("History unavailable"); return res.json(); })
     .then(songs => {
-      const list = root.querySelector("[data-history-list]");
-      if (!list) return;
-      const entries = songs.filter(item => item.type === "song").slice(0, 10);
-      list.innerHTML = entries.length ? entries.map((item, index) => `
-        <li class="history-item">
-          <span class="history-index">${String(index + 1).padStart(2, "0")}</span>
-          <img class="history-logo" src="${station.logo}" alt="">
-          <span class="history-copy"><strong>${escapeHtml(item.title || "Unbekannter Titel")}</strong><small>${escapeHtml(item.artist?.name || "Unbekannter Interpret")}</small></span>
-          <time>${item.started_at ? formatSwissDate(item.started_at).split(", ")[1] : ""}</time>
-        </li>`).join("") : "<li class=\"history-empty\">Noch keine Titel verfügbar.</li>";
+      if (requestId !== frgHistoryRequestId) return;
+      const entries = Array.isArray(songs) ? songs.filter(item => item.type === "song").slice(0, 10) : [];
+      localStorage.setItem(`frg_history_${current}`, JSON.stringify(entries));
+      renderEntries(entries);
     })
     .catch(() => {
-      const list = root.querySelector("[data-history-list]");
-      if (list) list.innerHTML = "<li class=\"history-empty\">Die Song-History ist momentan nicht erreichbar.</li>";
+      if (requestId !== frgHistoryRequestId || !list) return;
+      let cachedEntries = [];
+      try {
+        const stored = JSON.parse(localStorage.getItem(`frg_history_${current}`) || "[]");
+        cachedEntries = Array.isArray(stored) ? stored : [];
+      } catch {}
+      if (cachedEntries.length) {
+        usedCache = true;
+        renderEntries(cachedEntries);
+      } else {
+        list.innerHTML = "<li class=\"history-empty\">Die Song-History ist momentan nicht erreichbar. Bitte später erneut versuchen.</li>";
+      }
     })
-    .finally(() => root.setAttribute("aria-busy", "false"));
+    .finally(() => {
+      window.clearTimeout(timeout);
+      if (requestId !== frgHistoryRequestId) return;
+      root.setAttribute("aria-busy", "false");
+      if (status) status.querySelector("span:last-child").textContent = usedCache ? "Zuletzt gespeicherte Titel" : "Automatisch aktualisiert";
+    });
 }
 
 function escapeHtml(value) {
-  return String(value).replace(/[&<>\"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\\\"": "&quot;", "'": "&#039;" }[char] || char));
+  return String(value).replace(/[&<>\"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char] || char));
 }
 
 function initProgramOverview() {
@@ -755,7 +868,6 @@ function initPageScripts() {
   initGiveawayPopup();
   initEventFilter();
   initAccordion(); // Neu hinzugefügt
-  initSongHistory();
   initProgramOverview();
 
   const cookie = document.getElementById("cookie-banner");
@@ -789,6 +901,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   if (isStaticPage) {
     initPageScripts();
+    window.FRGPlayer?.refresh();
     // Die geöffnete Senderseite darf den bewusst gewählten Sender nicht überschreiben.
     // Der Player bleibt auf dem zuletzt ausgewählten Sender, bis der Nutzer aktiv wechselt.
     return;

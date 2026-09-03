@@ -34,6 +34,7 @@
         <button class="hero-station" data-hero-station="winterlord" type="button"><img src="/img/Winterlord%20FM%20Logo.webp" alt="">Winterlord</button>
         <button class="hero-station" data-hero-station="rhyrock" type="button"><img src="/img/RhyRock.webp" alt="">RhyRock</button>
       </div>
+      <p class="gesture-hint" id="gestureHint" role="status"><span aria-hidden="true">↔</span> Wische auf dem Player nach links oder rechts für den Senderwechsel.</p>
       <div class="live-actions">
         <a class="btn btn-secondary" href="#song-history">Song-History öffnen</a>
         <button class="text-link share-current-song" type="button" data-share-current>Aktuellen Titel teilen ↗</button>
@@ -57,7 +58,7 @@
         </div>
       </div>
       <ol class="history-list" data-history-list><li class="history-empty">Song-History wird geladen …</li></ol>
-      <div class="history-panel-footer"><span><i></i>Automatisch aktualisiert</span><button type="button" data-share-current>Aktuellen Titel teilen ↗</button></div>
+      <div class="history-panel-footer"><span id="historyStatus"><i></i><span>Automatisch aktualisiert</span></span><button type="button" data-share-current>Aktuellen Titel teilen ↗</button></div>
     </div>
     <div class="info-panel" id="program-overview">
       <div class="section-title"><span class="icon">▣</span> Programmübersicht</div>
