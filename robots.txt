@@ -1,3 +1,6 @@
+# Fleury Radio Group – robots.txt
+# Alle öffentlichen Seiten und benötigten Ressourcen dürfen gecrawlt werden.
+
 User-agent: *
 Allow: /
 
