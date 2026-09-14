@@ -13,7 +13,7 @@ window.FRG_MAINTENANCE = {
   title: "Wir sind bald wieder für Dich da.",
   message: "Unsere Website wird zurzeit überarbeitet. Danke für Deine Geduld.",
   availability: "Voraussichtlich bald wieder erreichbar",
-  contactEmail: "info@fleury-radio.ch",
+  contactEmail: "kontakt@frg-radio.ch",
 
   showProgress: false,
   progress: 60
