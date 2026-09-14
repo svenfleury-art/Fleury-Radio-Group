@@ -12,7 +12,7 @@ window.FRG_MAINTENANCE = {
   eyebrow: "FLEURY RADIO GROUP",
   title: "Wir sind bald wieder für Dich da.",
   message: "Unsere Website wird zurzeit überarbeitet. Danke für Deine Geduld.",
-  availability: "Voraussichtlich bald wieder erreichbar",
+  availability: "Voraussichtlich am Mittwoch um 8:00 Uhr wieder erreichbar",
   contactEmail: "kontakt@frg-radio.ch",
 
   showProgress: false,
