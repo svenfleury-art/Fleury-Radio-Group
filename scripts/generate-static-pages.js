@@ -148,6 +148,12 @@ function createPage(route, navigation, footer) {
   <meta name="twitter:image" content="${baseUrl}/img/FRG.webp">
   <link rel="icon" href="/img/FRG.webp">
   <link rel="apple-touch-icon" href="/img/FRG.webp">
+  <script src="/maintenance-config.js"></script>
+  <script>
+    if (window.FRG_MAINTENANCE?.enabled) {
+      document.documentElement.classList.add("maintenance-mode");
+    }
+  </script>
   <link rel="stylesheet" href="/style.css">
   <script type="application/ld+json">{
     "@context": "https://schema.org",
@@ -175,6 +181,7 @@ function createPage(route, navigation, footer) {
     ${body}
   </main>
   ${toDirectoryLinks(toRootRelative(footer))}
+  <script src="/maintenance.js" defer></script>
   <script src="/main.js?relaunch-features-v1" defer></script>
 </body>
 </html>
