@@ -7,7 +7,7 @@
  * Nach der Änderung speichern, committen und zu GitHub pushen.
  */
 window.FRG_MAINTENANCE = {
-  enabled: false,
+  enabled: true,
 
   eyebrow: "FLEURY RADIO GROUP",
   title: "Wir sind bald wieder für Dich da.",
