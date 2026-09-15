@@ -182,7 +182,7 @@ function createPage(route, navigation, footer) {
   </main>
   ${toDirectoryLinks(toRootRelative(footer))}
   <script src="/maintenance.js" defer></script>
-  <script src="/main.js?relaunch-features-v1" defer></script>
+  <script src="/main.js?media-session-v2" defer></script>
 </body>
 </html>
 `;

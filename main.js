@@ -286,6 +286,8 @@ function initRadioPlayer() {
   let current = validStations.includes(storedStation) ? storedStation : "rhywaelle";
   let playing = false;
   let songInterval = null;
+  let nowPlayingRequestId = 0;
+  let lastNowPlayingCheck = 0;
   let gestureStart = null;
   let gestureFeedbackTimer = null;
   const heroPlayBtn = document.getElementById("heroPlayBtn");
@@ -321,10 +323,107 @@ function initRadioPlayer() {
   };
 
   const stationThemes = {
-    rhywaelle: { accent: "#315bdb", accentStrong: "#1d3fa8", glow: "rgba(49,91,219,.26)", name: "rhywaelle", label: "Radio Rhywälle™", genre: "Pop & Rap", logo: "/img/Radio Rhywaelle.webp" },
-    winterlord: { accent: "#9bd8ff", accentStrong: "#4c9fd4", glow: "rgba(155,216,255,.22)", name: "winterlord", label: "Winterlord FM™", genre: "Power & Epic Metal", logo: "/img/Winterlord FM Logo.webp" },
-    rhyrock: { accent: "#ff7043", accentStrong: "#d9431d", glow: "rgba(255,112,67,.24)", name: "rhyrock", label: "RhyRock Radio™", genre: "Rock & Alternative", logo: "/img/RhyRock.webp" }
+    rhywaelle: { accent: "#315bdb", accentStrong: "#1d3fa8", glow: "rgba(49,91,219,.26)", name: "rhywaelle", label: "Radio Rhywälle™", genre: "Pop & Rap", logo: "/img/Radio Rhywaelle.webp", artwork: "rhywaelle" },
+    winterlord: { accent: "#9bd8ff", accentStrong: "#4c9fd4", glow: "rgba(155,216,255,.22)", name: "winterlord", label: "Winterlord FM™", genre: "Power & Epic Metal", logo: "/img/Winterlord FM Logo.webp", artwork: "winterlord" },
+    rhyrock: { accent: "#ff7043", accentStrong: "#d9431d", glow: "rgba(255,112,67,.24)", name: "rhyrock", label: "RhyRock Radio™", genre: "Rock & Alternative", logo: "/img/RhyRock.webp", artwork: "rhyrock" }
   };
+
+  let currentMediaDetails = {
+    station: current,
+    title: "Live Radio",
+    artist: stationThemes[current].label
+  };
+
+  function mediaArtwork(stationId) {
+    const artworkName = stationThemes[stationId]?.artwork || stationThemes.rhywaelle.artwork;
+    return [96, 128, 192, 256, 384, 512].map(size => ({
+      src: new URL(`/img/media-session/${artworkName}-${size}.png`, document.baseURI).href,
+      sizes: `${size}x${size}`,
+      type: "image/png"
+    }));
+  }
+
+  function publishMediaMetadata(title, artist) {
+    const station = stationThemes[current] || stationThemes.rhywaelle;
+    const safeTitle = title || "Live Radio";
+    const safeArtist = artist || station.label;
+
+    currentMediaDetails = { station: current, title: safeTitle, artist: safeArtist };
+    audio.title = `${safeTitle} – ${safeArtist} · ${station.label}`;
+
+    if (!("mediaSession" in navigator) || typeof window.MediaMetadata !== "function") return;
+
+    try {
+      navigator.mediaSession.metadata = new window.MediaMetadata({
+        title: safeTitle,
+        artist: safeArtist,
+        album: station.label,
+        artwork: mediaArtwork(current)
+      });
+    } catch (error) {
+      console.warn("Media-Session-Metadaten konnten nicht gesetzt werden.", error);
+    }
+  }
+
+  function refreshMediaMetadata() {
+    if (currentMediaDetails.station === current) {
+      publishMediaMetadata(currentMediaDetails.title, currentMediaDetails.artist);
+      return;
+    }
+    publishMediaMetadata("Live Radio", stationThemes[current].label);
+  }
+
+  function setPlaybackUiState(isPlaying) {
+    playing = isPlaying;
+    playBtn.textContent = playing ? "⏸" : "▶";
+    updateHeroPlayState();
+    updateEdgePlayState();
+    document.querySelectorAll(".header-live-visual, .live-visual")
+      .forEach(el => el.classList.toggle("is-playing", playing));
+
+    if ("mediaSession" in navigator) {
+      try {
+        navigator.mediaSession.playbackState = playing ? "playing" : "paused";
+      } catch {}
+    }
+  }
+
+  function setCurrentAudioSource() {
+    if (audio.dataset.station === current && audio.getAttribute("src")) return;
+    audio.src = streams[current];
+    audio.dataset.station = current;
+  }
+
+  async function playCurrentStation() {
+    setCurrentAudioSource();
+    refreshMediaMetadata();
+    try {
+      await audio.play();
+    } catch (error) {
+      setPlaybackUiState(false);
+      console.warn("Der Radio-Stream konnte nicht gestartet werden.", error);
+    }
+  }
+
+  function pauseCurrentStation() {
+    audio.pause();
+  }
+
+  function setupMediaSessionControls() {
+    if (!("mediaSession" in navigator)) return;
+
+    const handlers = {
+      play: () => { playCurrentStation(); },
+      pause: pauseCurrentStation,
+      stop: pauseCurrentStation
+    };
+
+    Object.entries(handlers).forEach(([action, handler]) => {
+      try {
+        navigator.mediaSession.setActionHandler(action, handler);
+      } catch {}
+    });
+  }
 
   function applyStationTheme(s) {
     const theme = stationThemes[s] || stationThemes.rhywaelle;
@@ -357,14 +456,23 @@ function initRadioPlayer() {
 
   function setStation(s) {
     if (!validStations.includes(s)) return;
+    const stationChanged = current !== s;
+    const shouldResume = playing && !audio.paused;
     current = s;
     localStorage.setItem("frg_selected_station", current);
     applyStationTheme(s);
     syncStationUi();
 
-    if (playing) {
+    if (stationChanged) {
+      publishMediaMetadata("Live Radio", stationThemes[current].label);
+    } else {
+      refreshMediaMetadata();
+    }
+
+    if (shouldResume && stationChanged) {
       audio.src = streams[current];
-      audio.play().catch(() => {});
+      audio.dataset.station = current;
+      audio.play().catch(() => setPlaybackUiState(false));
     }
 
     updateNowPlaying();
@@ -434,32 +542,25 @@ function initRadioPlayer() {
   edgePlayBtn?.addEventListener("click", () => playBtn.click());
 
   playBtn.addEventListener("click", () => {
-    if (!playing) {
-      audio.src = streams[current];
-      audio.play();
-      playing = true;
-      playBtn.textContent = "⏸";
-      updateHeroPlayState();
-      updateEdgePlayState();
-      document.querySelectorAll(".header-live-visual, .live-visual").forEach(el => el.classList.add("is-playing"));
-      startSongUpdates();
+    if (playing && !audio.paused) {
+      pauseCurrentStation();
     } else {
-      audio.pause();
-      playing = false;
-      playBtn.textContent = "▶";
-      updateHeroPlayState();
-      updateEdgePlayState();
-      document.querySelectorAll(".header-live-visual, .live-visual").forEach(el => el.classList.remove("is-playing"));
-      stopSongUpdates();
+      playCurrentStation();
     }
   });
 
   async function updateNowPlaying() {
+    lastNowPlayingCheck = Date.now();
+    const requestedStation = current;
+    const requestId = ++nowPlayingRequestId;
+
     try {
-      const res = await fetch(apis[current], { cache: "no-store" });
+      const res = await fetch(apis[requestedStation], { cache: "no-store" });
       if (!res.ok) throw new Error("Now Playing unavailable");
       const data = await res.json();
-      localStorage.setItem(`frg_now_playing_${current}`, JSON.stringify({
+      if (requestId !== nowPlayingRequestId || requestedStation !== current) return;
+
+      localStorage.setItem(`frg_now_playing_${requestedStation}`, JSON.stringify({
         title: data.title || "Unbekannt",
         artist: data.artist?.name || "",
         started_at: data.started_at || null,
@@ -469,7 +570,6 @@ function initRadioPlayer() {
       const title = data.title || "Unbekannt";
       const artist = data.artist?.name || "";
 
-      const cover = stationThemes[current].logo;
       const text = artist ? `${artist} - ${title}` : title;
 
       if (nowPlaying) nowPlaying.textContent = text;
@@ -492,19 +592,13 @@ function initRadioPlayer() {
         }
       });
 
-      if ("mediaSession" in navigator) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title,
-          artist,
-          album: "Fleury Radio Group",
-          artwork: [{ src: cover, sizes: "512x512", type: "image/png" }]
-        });
-      }
+      publishMediaMetadata(title, artist);
 
     } catch (err) {
+      if (requestId !== nowPlayingRequestId || requestedStation !== current) return;
       let cached = null;
       try {
-        cached = JSON.parse(localStorage.getItem(`frg_now_playing_${current}`) || "null");
+        cached = JSON.parse(localStorage.getItem(`frg_now_playing_${requestedStation}`) || "null");
       } catch {}
       if (cached?.title) {
         const title = cached.title;
@@ -519,6 +613,7 @@ function initRadioPlayer() {
         if (heroTime) heroTime.textContent = "Zuletzt geladen · Live-Daten folgen";
         if (edgeTitle) edgeTitle.textContent = title;
         if (edgeArtist) edgeArtist.textContent = artist;
+        publishMediaMetadata(title, cached.artist || stationThemes[current].label);
         return;
       }
       if (nowPlaying) nowPlaying.textContent = "Live Stream";
@@ -537,6 +632,7 @@ function initRadioPlayer() {
           card.querySelector(".station-now-artist")?.replaceChildren(document.createTextNode("Bereit zum Hören"));
         }
       });
+      publishMediaMetadata("Live Stream", stationThemes[current].label);
     }
   }
 
@@ -553,8 +649,28 @@ function initRadioPlayer() {
     }
   }
 
+  setupMediaSessionControls();
+
+  audio.addEventListener("play", () => {
+    setPlaybackUiState(true);
+    refreshMediaMetadata();
+    startSongUpdates();
+  });
+  audio.addEventListener("playing", refreshMediaMetadata);
+  audio.addEventListener("timeupdate", () => {
+    if (playing && Date.now() - lastNowPlayingCheck >= 10000) updateNowPlaying();
+  });
+  audio.addEventListener("pause", () => {
+    setPlaybackUiState(false);
+    stopSongUpdates();
+  });
+  audio.addEventListener("ended", () => {
+    setPlaybackUiState(false);
+    stopSongUpdates();
+  });
+
   setStation(current);
-  updateEdgePlayState();
+  setPlaybackUiState(false);
 }
 
 /* =========================
