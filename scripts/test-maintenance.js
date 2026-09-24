@@ -33,7 +33,6 @@ const publicPages = [
   "geschichte/index.html",
   "about/index.html",
   "mitmachen/index.html",
-  "gewinnspiel/index.html",
   "spezial-programm/index.html",
   "artists/index.html",
   "werbung/index.html",
