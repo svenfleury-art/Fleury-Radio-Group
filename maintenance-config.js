@@ -15,6 +15,6 @@ window.FRG_MAINTENANCE = {
   availability: "Voraussichtlich am Mittwoch um 20:00 Uhr wieder erreichbar",
   contactEmail: "kontakt@frg-radio.ch",
 
-  showProgress: false,
+  showProgress: true,
   progress: 60
 };
