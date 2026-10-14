@@ -16,5 +16,5 @@ window.FRG_MAINTENANCE = {
   contactEmail: "kontakt@frg-radio.ch",
 
   showProgress: true,
-  progress: 0
+  progress: 00
 };
