@@ -675,9 +675,7 @@ SONG HISTORY & PROGRAM OVERVIEW
 ========================= */
 
 const frgProgram = [
-  { title: "FRG Schweiz Special", date: "2026-08-01T12:00:00+02:00", end: "2026-08-02T00:00:00+02:00", description: "Alle Sender widmen sich der Schweiz zum Nationalfeiertag." },
-  { title: "FRG Crossover Night", date: "2026-09-26T19:00:00+02:00", end: "2026-09-26T22:00:00+02:00", description: "Genre-Öffnung zwischen den Sendern." },
-  { title: "1 Jahr FRG Jubiläum", date: "2026-10-28T12:00:00+01:00", end: "2026-10-29T00:00:00+01:00", description: "Ein Jahr Fleury Radio Group – mit einem besonderen Rückblick." },
+  { title: "1 Jahr FRG Jubiläum", date: "2026-10-27T12:00:00+01:00", end: "2026-10-29T00:00:00+01:00", description: "Ein Jahr Fleury Radio Group – mit einem besonderen Rückblick." },
   { title: "FRG Halloween Special", date: "2026-10-31T16:00:00+01:00", end: "2026-10-31T23:59:00+01:00", description: "Spezialprogramm mit dunklen Sounds und besonderen Sets." },
   { title: "FRG Crossover Night", date: "2026-11-28T19:00:00+01:00", end: "2026-11-28T22:00:00+01:00", description: "Die FRG-Sender öffnen ihre Genres füreinander." },
   { title: "FRG Weihnachten", date: "2026-12-19T00:00:00+01:00", end: "2026-12-26T23:59:00+01:00", description: "Weihnachtsspecial auf allen Sendern." },
