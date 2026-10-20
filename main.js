@@ -810,7 +810,7 @@ COUNTDOWN (UPDATED)
 ========================= */
 
 const frgEvents = [
-  { title: "1 Jahr Fleury Radio Group", date: "2026-10-24T12:00:00" },
+  { title: "1 Jahr Fleury Radio Group", date: "2026-10-28T12:00:00" },
   { title: "FRG Halloween Special", date: "2026-10-31T12:00:00" },
   { title: "FRG Crossover Night", date: "2026-11-28T20:00:00" },
   { title: "FRG Weihnachts Special", date: "2026-12-19T00:00:00" },
