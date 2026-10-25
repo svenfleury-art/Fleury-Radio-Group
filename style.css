@@ -2884,3 +2884,42 @@ body.nav-open {
     transform-origin: top right;
   }
 }
+
+/* Echtes Hamburger-Dropdown: eine zusammenhängende Fläche direkt unter dem Header */
+@media (max-width: 900px) {
+  #mainHeader.relaunch-header .header-shell {
+    position: static;
+  }
+
+  #mainHeader.relaunch-header .nav-links,
+  #mainHeader.relaunch-header .nav-links.open {
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 14px max(12px, calc((100vw - var(--relaunch-shell)) / 2)) 18px !important;
+    border: 0 !important;
+    border-top: 1px solid var(--relaunch-line) !important;
+    border-bottom: 1px solid var(--relaunch-line) !important;
+    border-radius: 0 0 18px 18px !important;
+    background: rgba(12, 14, 28, .98) !important;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, .32) !important;
+    backdrop-filter: blur(22px) saturate(140%) !important;
+    transform-origin: top center;
+  }
+
+  #mainHeader.relaunch-header .nav-links > a,
+  #mainHeader.relaunch-header .nav-dropdown,
+  #mainHeader.relaunch-header .nav-button {
+    width: 100%;
+  }
+
+  #mainHeader.relaunch-header .nav-links > a,
+  #mainHeader.relaunch-header .nav-button {
+    min-height: 44px;
+    padding: 11px 14px;
+  }
+}
