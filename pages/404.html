@@ -1,0 +1,273 @@
+<!-- FRG – Custom 404 page. Wird von main.js unter /404 geladen. -->
+<section class="frg-404" aria-labelledby="frg-404-title">
+  <style>
+    .frg-404 {
+      --frg-blue: #2563eb;
+      --frg-blue-deep: #0b1e42;
+      --frg-gold: #facc15;
+      position: relative;
+      isolation: isolate;
+      width: min(100%, 1120px);
+      margin: 0 auto;
+      padding: clamp(54px, 8vw, 100px) clamp(18px, 4vw, 48px) clamp(60px, 8vw, 96px);
+      overflow: hidden;
+      text-align: left;
+    }
+    .frg-404::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: min(68vw, 680px);
+      aspect-ratio: 1;
+      right: -18%;
+      top: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,.22), rgba(37,99,235,0) 68%);
+      pointer-events: none;
+    }
+    .frg-404__layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, .9fr);
+      align-items: center;
+      gap: clamp(28px, 6vw, 76px);
+    }
+    .frg-404__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--frg-gold);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .frg-404__eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: currentColor;
+    }
+    .frg-404__number {
+      margin: 0;
+      color: #f8fafc;
+      font-size: clamp(6rem, 16vw, 11rem);
+      font-weight: 900;
+      line-height: .82;
+      letter-spacing: -.085em;
+      background: linear-gradient(145deg, #fff 18%, #93c5fd 52%, var(--frg-blue) 82%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .frg-404__number span {
+      color: var(--frg-gold);
+      -webkit-text-fill-color: var(--frg-gold);
+    }
+    .frg-404__title {
+      margin: 28px 0 14px;
+      color: #f8fafc;
+      font-size: clamp(1.65rem, 4vw, 2.65rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -.035em;
+    }
+    .frg-404__title em {
+      color: var(--frg-gold);
+      font-style: normal;
+    }
+    .frg-404__copy {
+      max-width: 540px;
+      margin: 0;
+      color: #b8c3d7;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .frg-404__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .frg-404__button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 19px;
+      border: 1px solid rgba(148,163,184,.28);
+      border-radius: 999px;
+      color: #f8fafc;
+      background: rgba(15,23,42,.7);
+      font-weight: 750;
+      text-decoration: none;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .frg-404__button:hover {
+      transform: translateY(-2px);
+      border-color: var(--frg-blue);
+      background: rgba(37,99,235,.16);
+    }
+    .frg-404__button--primary {
+      color: #fff;
+      border-color: var(--frg-blue);
+      background: linear-gradient(110deg, #1d4ed8, #2563eb);
+      box-shadow: 0 10px 30px rgba(37,99,235,.2);
+    }
+    .frg-404__button:focus-visible,
+    .frg-404__station:focus-visible {
+      outline: 3px solid var(--frg-gold);
+      outline-offset: 4px;
+    }
+    .frg-404__visual {
+      position: relative;
+      display: grid;
+      min-height: 320px;
+      place-items: center;
+      border: 1px solid rgba(148,163,184,.18);
+      border-radius: 30px;
+      background: linear-gradient(145deg, rgba(15,31,62,.94), rgba(3,9,22,.92));
+      box-shadow: 0 28px 80px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.05);
+      overflow: hidden;
+    }
+    .frg-404__visual::before,
+    .frg-404__visual::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border: 1px solid rgba(59,130,246,.22);
+      border-radius: 50%;
+      box-shadow: 0 0 0 28px rgba(37,99,235,.045), 0 0 0 58px rgba(37,99,235,.035), 0 0 0 90px rgba(37,99,235,.025);
+    }
+    .frg-404__visual::after {
+      width: 170px;
+      height: 170px;
+      border-color: rgba(250,204,21,.3);
+      box-shadow: none;
+    }
+    .frg-404__radio-icon {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      height: 100px;
+      color: var(--frg-gold);
+    }
+    .frg-404__radio-icon i {
+      display: block;
+      width: 9px;
+      border-radius: 9px;
+      background: currentColor;
+      box-shadow: 0 0 24px rgba(250,204,21,.25);
+    }
+    .frg-404__radio-icon i:nth-child(1),
+    .frg-404__radio-icon i:nth-child(5) { height: 25px; }
+    .frg-404__radio-icon i:nth-child(2),
+    .frg-404__radio-icon i:nth-child(4) { height: 52px; }
+    .frg-404__radio-icon i:nth-child(3) { height: 88px; }
+    .frg-404__onair {
+      position: absolute;
+      z-index: 2;
+      top: 24px;
+      right: 24px;
+      padding: 7px 12px;
+      border: 1px solid rgba(250,204,21,.4);
+      border-radius: 999px;
+      color: var(--frg-gold);
+      background: rgba(250,204,21,.07);
+      font-size: .7rem;
+      font-weight: 850;
+      letter-spacing: .16em;
+    }
+    .frg-404__visual-caption {
+      position: absolute;
+      bottom: 25px;
+      z-index: 2;
+      color: #cbd5e1;
+      font-size: .8rem;
+      letter-spacing: .13em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .frg-404__stations {
+      margin-top: 42px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(148,163,184,.18);
+    }
+    .frg-404__stations-label {
+      margin-bottom: 14px;
+      color: #94a3b8;
+      font-size: .83rem;
+    }
+    .frg-404__station-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 24px;
+    }
+    .frg-404__station {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #e2e8f0;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .frg-404__station:hover { color: var(--frg-gold); }
+    .frg-404__station-mark {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--frg-blue);
+      box-shadow: 0 0 12px rgba(37,99,235,.7);
+    }
+    .frg-404__station:nth-child(2) .frg-404__station-mark { background: #a78bfa; box-shadow: 0 0 12px rgba(167,139,250,.65); }
+    .frg-404__station:nth-child(3) .frg-404__station-mark { background: var(--frg-gold); box-shadow: 0 0 12px rgba(250,204,21,.5); }
+    @media (max-width: 760px) {
+      .frg-404 { padding-top: 48px; }
+      .frg-404__layout { grid-template-columns: 1fr; }
+      .frg-404__visual { min-height: 230px; grid-row: 1; }
+      .frg-404__number { font-size: clamp(6rem, 28vw, 9rem); }
+      .frg-404__stations { margin-top: 30px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .frg-404__button { transition: none; }
+      .frg-404__button:hover { transform: none; }
+    }
+  </style>
+
+  <div class="frg-404__layout">
+    <div class="frg-404__content">
+      <div class="frg-404__eyebrow">Fleury Radio Group · Fehler 404</div>
+      <p class="frg-404__number" aria-label="404">4<span>0</span>4</p>
+      <h1 class="frg-404__title" id="frg-404-title">Diese Seite ist gerade <em>nicht auf Sendung.</em></h1>
+      <p class="frg-404__copy">
+        Die gesuchte Seite konnte nicht gefunden werden. Vielleicht wurde der Link geändert
+        oder die Adresse falsch eingegeben. Unsere Sender laufen natürlich weiter.
+      </p>
+      <div class="frg-404__actions">
+        <a class="frg-404__button frg-404__button--primary" href="/" data-link>
+          <span aria-hidden="true">←</span> Zur Startseite
+        </a>
+        <a class="frg-404__button" href="/kontakt" data-link>Problem melden <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+
+    <div class="frg-404__visual" aria-hidden="true">
+      <span class="frg-404__onair">FRG · ON AIR</span>
+      <div class="frg-404__radio-icon"><i></i><i></i><i></i><i></i><i></i></div>
+      <span class="frg-404__visual-caption">Dini Musik. Dini Wälle.</span>
+    </div>
+  </div>
+
+  <nav class="frg-404__stations" aria-label="Direkt zu unseren Radiosendern">
+    <p class="frg-404__stations-label">Oder direkt zu einem unserer Sender:</p>
+    <div class="frg-404__station-list">
+      <a class="frg-404__station" href="/rhywaelle" data-link><span class="frg-404__station-mark" aria-hidden="true"></span>Radio Rhywälle <span aria-hidden="true">→</span></a>
+      <a class="frg-404__station" href="/winterlord" data-link><span class="frg-404__station-mark" aria-hidden="true"></span>Winterlord FM <span aria-hidden="true">→</span></a>
+      <a class="frg-404__station" href="/rhyrock" data-link><span class="frg-404__station-mark" aria-hidden="true"></span>RhyRock Radio <span aria-hidden="true">→</span></a>
+    </div>
+  </nav>
+</section>
