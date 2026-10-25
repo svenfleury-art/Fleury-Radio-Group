@@ -29,16 +29,16 @@
         <button class="now-playing-button" id="heroPlayBtn" type="button" aria-label="Radio starten">▶</button>
       </div>
       <div class="player-signal-rail" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="hero-station-switch station-tuner" aria-label="Sender auswählen">
-        <button class="hero-station active" data-hero-station="rhywaelle" type="button"><img src="/img/Radio%20Rhywaelle.webp" alt="">Rhywälle</button>
-        <button class="hero-station" data-hero-station="winterlord" type="button"><img src="/img/Winterlord%20FM%20Logo.webp" alt="">Winterlord</button>
-        <button class="hero-station" data-hero-station="rhyrock" type="button"><img src="/img/RhyRock.webp" alt="">RhyRock</button>
+      <div class="hero-station-switch station-tuner" role="group" aria-label="Sender auswählen">
+        <button class="hero-station active" data-hero-station="rhywaelle" type="button" aria-pressed="true"><img src="/img/Radio%20Rhywaelle.webp" alt="">Rhywälle</button>
+        <button class="hero-station" data-hero-station="winterlord" type="button" aria-pressed="false"><img src="/img/Winterlord%20FM%20Logo.webp" alt="">Winterlord</button>
+        <button class="hero-station" data-hero-station="rhyrock" type="button" aria-pressed="false"><img src="/img/RhyRock.webp" alt="">RhyRock</button>
       </div>
       <p class="gesture-hint" id="gestureHint" role="status"><span aria-hidden="true">↔</span> Wische auf dem Player nach links oder rechts für den Senderwechsel.</p>
       <div class="live-actions">
         <a class="btn btn-secondary" href="#song-history">Song-History öffnen</a>
         <button class="text-link share-current-song" type="button" data-share-current>Aktuellen Titel teilen ↗</button>
-        <a>Bei Problemen mit dem Stream kontaktiere<a href="mailto:technik@frg-radio.ch">technik@frg-radio.ch</a></a>
+        <p class="stream-help">Bei Problemen mit dem Stream: <a href="mailto:technik@frg-radio.ch">technik@frg-radio.ch kontaktieren</a></p>
       </div>
     </div>
     <div class="live-visual player-monitor" aria-hidden="true">
@@ -52,10 +52,10 @@
     <div class="info-panel song-history-panel" id="song-history" aria-live="polite">
       <div class="history-panel-heading">
         <div><div class="section-title"><span class="icon">◷</span> Song-History</div><p class="panel-kicker">Die letzten Titel bei <strong data-history-station>Radio Rhywälle</strong>.</p></div>
-        <div class="history-station-filter" aria-label="History-Sender auswählen">
-          <button class="history-station-button active" data-history-station-button="rhywaelle" type="button">Rhywälle</button>
-          <button class="history-station-button" data-history-station-button="winterlord" type="button">Winterlord</button>
-          <button class="history-station-button" data-history-station-button="rhyrock" type="button">RhyRock</button>
+        <div class="history-station-filter" role="group" aria-label="History-Sender auswählen">
+          <button class="history-station-button active" data-history-station-button="rhywaelle" type="button" aria-pressed="true">Rhywälle</button>
+          <button class="history-station-button" data-history-station-button="winterlord" type="button" aria-pressed="false">Winterlord</button>
+          <button class="history-station-button" data-history-station-button="rhyrock" type="button" aria-pressed="false">RhyRock</button>
         </div>
       </div>
       <ol class="history-list" data-history-list><li class="history-empty">Song-History wird geladen …</li></ol>

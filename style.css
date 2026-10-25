@@ -2745,3 +2745,88 @@ body.maintenance-active::before{
     gap:14px;
   }
 }
+
+/* =========================
+   APPLE DESIGN / ACCESSIBILITY PASS
+   FRG bleibt bewusst dunkel als radio- und medienorientierte Oberfläche.
+========================= */
+:root {
+  --muted: #a7abc5;
+  --muted2: #b8bbd0;
+  --relaunch-soft: #b8bbd0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 110000;
+  transform: translateY(-180%);
+  padding: 10px 16px;
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  background: var(--surface-3);
+  color: var(--text);
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform .2s ease;
+}
+
+.skip-link:focus { transform: translateY(0); }
+#app:focus { outline: none; }
+
+.stream-help { margin-top: 12px; color: var(--muted2); font-size: .82rem; }
+.stream-help a,
+.page a:focus-visible,
+.site-footer a:focus-visible,
+.relaunch-header button:focus-visible,
+.relaunch-header a:focus-visible {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
+
+.relaunch-header .station,
+.relaunch-header .player-play,
+.relaunch-header .hamburger,
+.hero-station,
+.history-station-button,
+.now-playing-button,
+.edge-play,
+.edge-toggle,
+.frg-btn {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.relaunch-header .station { padding: 8px 10px; }
+.relaunch-header .player-play,
+.now-playing-button,
+.edge-play { width: 44px; height: 44px; }
+.hero-station { padding: 10px 14px; }
+.history-station-button { padding: 8px 12px; }
+
+@media (max-width: 700px) {
+  .hero-station-switch, .history-station-filter { gap: 10px; }
+  .hero-station, .history-station-button { flex: 1 1 0; justify-content: center; }
+  .live-actions { align-items: stretch; }
+  .live-actions > * { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+  .skip-link { transition: none; }
+}
+
+@media (forced-colors: active) {
+  .skip-link, button:focus-visible, a:focus-visible {
+    outline: 2px solid CanvasText;
+    outline-offset: 3px;
+  }
+}

@@ -10,21 +10,21 @@
       </a>
 
       <div class="relaunch-player" aria-label="Live-Player">
-        <button id="playBtn" class="player-play" aria-label="Radio starten">▶</button>
+        <button id="playBtn" class="player-play" type="button" aria-label="Radio starten">▶</button>
         <div class="player-live-copy">
           <span class="player-kicker"><i></i> LIVE RADIO</span>
           <span id="nowPlaying">Bereit zum Hören</span>
         </div>
         <div class="header-live-visual" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
         <div class="station-switch" aria-label="Sender auswählen">
-          <button class="station active" data-station="rhywaelle">Rhywälle</button>
-          <button class="station" data-station="winterlord">Winterlord</button>
-          <button class="station" data-station="rhyrock">RhyRock</button>
+        <button class="station active" type="button" data-station="rhywaelle" aria-pressed="true">Rhywälle</button>
+        <button class="station" type="button" data-station="winterlord" aria-pressed="false">Winterlord</button>
+        <button class="station" type="button" data-station="rhyrock" aria-pressed="false">RhyRock</button>
         </div>
         <audio id="audioPlayer"></audio>
       </div>
 
-      <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mainNav">
+      <button id="hamburgerBtn" class="hamburger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mainNav">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -34,7 +34,7 @@
       <nav id="mainNav" class="nav-links" aria-label="Hauptnavigation">
         <a href="/" data-link>Home</a>
         <div class="nav-dropdown">
-          <button class="nav-button dropdown-toggle">Radios <span>⌄</span></button>
+          <button class="nav-button dropdown-toggle" type="button" aria-expanded="false">Radios <span aria-hidden="true">⌄</span></button>
           <div class="dropdown-menu">
             <a href="/radios" data-link>Radio-Auswahl</a>
             <a href="/rhywaelle" data-link>Radio Rhywälle</a>
@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="nav-dropdown">
-          <button class="nav-button dropdown-toggle">Über die FRG <span>⌄</span></button>
+          <button class="nav-button dropdown-toggle" type="button" aria-expanded="false">Über die FRG <span aria-hidden="true">⌄</span></button>
           <div class="dropdown-menu">
             <a href="/frg-inside" data-link>FRG Inside</a>
             <a href="/geschichte" data-link>Geschichte</a>

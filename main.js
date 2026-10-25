@@ -209,15 +209,22 @@ document.addEventListener("click", (e) => {
 
     const isOpen = dropdown.classList.contains("open");
 
-    document.querySelectorAll(".nav-dropdown.open")
-      .forEach(d => d.classList.remove("open"));
+    document.querySelectorAll(".nav-dropdown.open").forEach(d => {
+      d.classList.remove("open");
+      d.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
+    });
 
-    if (!isOpen) dropdown.classList.add("open");
+    if (!isOpen) {
+      dropdown.classList.add("open");
+      dropdownBtn.setAttribute("aria-expanded", "true");
+    }
     return;
   }
 
-  document.querySelectorAll(".nav-dropdown.open")
-    .forEach(d => d.classList.remove("open"));
+  document.querySelectorAll(".nav-dropdown.open").forEach(d => {
+    d.classList.remove("open");
+    d.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
+  });
 
   const cookieBtn = e.target.closest("#cookie-accept");
   const cookie = document.getElementById("cookie-banner");
@@ -225,6 +232,28 @@ document.addEventListener("click", (e) => {
   if (cookieBtn && cookie) {
     localStorage.setItem("frg_cookies", "true");
     cookie.style.display = "none";
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+
+  document.querySelectorAll(".nav-dropdown.open").forEach(dropdown => {
+    dropdown.classList.remove("open");
+    dropdown.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
+  });
+
+  const nav = document.getElementById("mainNav");
+  const overlay = document.getElementById("menu-overlay");
+  const burger = document.getElementById("hamburgerBtn");
+  if (nav?.classList.contains("open")) {
+    nav.classList.remove("open");
+    overlay?.classList.remove("active");
+    document.body.classList.remove("nav-open");
+    burger?.classList.remove("is-open");
+    burger?.setAttribute("aria-expanded", "false");
+    burger?.setAttribute("aria-label", "Menü öffnen");
+    burger?.focus();
   }
 });
 
@@ -433,9 +462,15 @@ function initRadioPlayer() {
 
   function syncStationUi() {
     const stationMeta = stationThemes[current];
-    stations.forEach(btn => btn.classList.toggle("active", btn.dataset.station === current));
+    stations.forEach(btn => {
+      const active = btn.dataset.station === current;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-pressed", String(active));
+    });
     document.querySelectorAll(".hero-station").forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.heroStation === current);
+      const active = btn.dataset.heroStation === current;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-pressed", String(active));
     });
     const heroStation = document.getElementById("heroStationLabel");
     const heroGenre = document.getElementById("heroStationGenre");
@@ -704,7 +739,9 @@ function initSongHistory(stationId) {
   let usedCache = false;
   if (title) title.textContent = station.name;
   root.querySelectorAll("[data-history-station-button]").forEach(button => {
-    button.classList.toggle("active", button.dataset.historyStationButton === current);
+    const active = button.dataset.historyStationButton === current;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
   });
   root.setAttribute("aria-busy", "true");
   if (list) list.innerHTML = "<li class=\"history-empty history-loading\">Song-History wird geladen …</li>";

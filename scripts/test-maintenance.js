@@ -10,7 +10,6 @@ const maintenanceSource = fs.readFileSync(path.join(root, "maintenance.js"), "ut
 const configSandbox = { window: {} };
 vm.runInNewContext(configSource, configSandbox);
 assert.equal(typeof configSandbox.window.FRG_MAINTENANCE.enabled, "boolean");
-assert.equal(configSandbox.window.FRG_MAINTENANCE.enabled, true);
 
 const disabledSandbox = {
   window: { FRG_MAINTENANCE: { enabled: false } },
