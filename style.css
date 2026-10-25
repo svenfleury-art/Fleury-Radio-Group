@@ -2923,3 +2923,106 @@ body.nav-open {
     padding: 11px 14px;
   }
 }
+
+
+/* FRG NAV: Dropdowns schweben über dem Inhalt statt das Layout nach unten zu schieben */
+#mainHeader.relaunch-header .header-navrow,
+#mainHeader.relaunch-header .nav-links {
+  overflow: visible;
+}
+
+#mainHeader.relaunch-header .nav-dropdown {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+#mainHeader.relaunch-header .nav-dropdown > .dropdown-menu {
+  display: flex;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 1200;
+  min-width: 230px;
+  width: max-content;
+  max-width: min(300px, calc(100vw - 24px));
+  padding: 8px;
+  margin: 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  border: 1px solid rgba(148, 163, 184, .2);
+  border-radius: 16px;
+  background: rgba(17, 20, 39, .97);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, .42), 0 0 0 1px rgba(59, 130, 246, .04);
+  backdrop-filter: blur(18px) saturate(145%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-6px) scale(.98);
+  transform-origin: top left;
+  transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+}
+
+#mainHeader.relaunch-header .nav-dropdown.open > .dropdown-menu,
+#mainHeader.relaunch-header .nav-dropdown:focus-within > .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+#mainHeader.relaunch-header .nav-dropdown > .dropdown-menu a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 11px 14px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background .16s ease, border-color .16s ease, color .16s ease;
+}
+
+#mainHeader.relaunch-header .nav-dropdown > .dropdown-menu a:hover,
+#mainHeader.relaunch-header .nav-dropdown > .dropdown-menu a:focus-visible {
+  background: rgba(37, 99, 235, .16);
+  border-color: rgba(59, 130, 246, .24);
+  color: #fff;
+  outline: none;
+}
+
+#mainHeader.relaunch-header .nav-dropdown > .dropdown-toggle {
+  position: relative;
+  z-index: 1201;
+}
+
+/* Mobile: Untermenüs bleiben im geöffneten Hamburger-Menü und überlagern nichts seitlich */
+@media (max-width: 900px) {
+  #mainHeader.relaunch-header .nav-dropdown > .dropdown-menu {
+    position: static;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 4px 0 8px;
+    box-shadow: none;
+    transform: none;
+    background: rgba(255, 255, 255, .035);
+    border-color: rgba(148, 163, 184, .14);
+  }
+
+  #mainHeader.relaunch-header .nav-dropdown.open > .dropdown-menu,
+  #mainHeader.relaunch-header .nav-dropdown:focus-within > .dropdown-menu {
+    transform: none;
+  }
+
+  #mainHeader.relaunch-header .nav-dropdown > .dropdown-menu a {
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mainHeader.relaunch-header .nav-dropdown > .dropdown-menu,
+  #mainHeader.relaunch-header .nav-dropdown > .dropdown-menu a {
+    transition: none;
+  }
+}
