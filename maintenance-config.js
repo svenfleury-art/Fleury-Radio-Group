@@ -7,14 +7,14 @@
  * Nach der Änderung speichern, committen und zu GitHub pushen.
  */
 window.FRG_MAINTENANCE = {
-  enabled: false,
+  enabled: true,
 
   eyebrow: "FLEURY RADIO GROUP",
   title: "Wir sind bald wieder für Dich da.",
   message: "Unsere Website wird zurzeit überarbeitet. Danke für Deine Geduld.",
-  availability: "Voraussichtlich am Mittwoch um 20:00 Uhr wieder erreichbar",
+  availability: "Voraussichtlich am Sonntag um 12:00 Uhr wieder erreichbar",
   contactEmail: "kontakt@frg-radio.ch",
 
-  showProgress: true,
+  showProgress: false,
   progress: 00
 };
