@@ -2830,3 +2830,38 @@ button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
     outline-offset: 3px;
   }
 }
+
+/* Hamburger-Menü: nur Dropdown unter dem Header, Inhalt bleibt sichtbar */
+#menu-overlay,
+#menu-overlay.active {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+body.nav-open {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .relaunch-header .nav-links {
+    transform: translateY(-14px) !important;
+    transform-origin: top center;
+    visibility: hidden;
+    transition: opacity .22s ease, transform .22s ease, visibility 0s linear .22s;
+  }
+
+  .relaunch-header .nav-links.open {
+    transform: translateY(0) !important;
+    visibility: visible;
+    transition: opacity .22s ease, transform .22s ease, visibility 0s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .relaunch-header .nav-links,
+  .relaunch-header .nav-links.open {
+    transition: none;
+    transform: none !important;
+  }
+}
