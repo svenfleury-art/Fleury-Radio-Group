@@ -2865,3 +2865,22 @@ body.nav-open {
     transform: none !important;
   }
 }
+
+/* Mobile-/Tablet-Hamburger: Dropdown direkt unter der Header-Zeile */
+@media (max-width: 900px) {
+  #mainHeader.relaunch-header .header-shell {
+    position: relative;
+  }
+
+  #mainHeader.relaunch-header .nav-links,
+  #mainHeader.relaunch-header .nav-links.open {
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: min(420px, calc(100vw - 24px)) !important;
+    margin: 0 !important;
+    transform-origin: top right;
+  }
+}
