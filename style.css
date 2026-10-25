@@ -2963,8 +2963,7 @@ body.nav-open {
   transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
 }
 
-#mainHeader.relaunch-header .nav-dropdown.open > .dropdown-menu,
-#mainHeader.relaunch-header .nav-dropdown:focus-within > .dropdown-menu {
+#mainHeader.relaunch-header .nav-dropdown.open > .dropdown-menu {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -3010,8 +3009,7 @@ body.nav-open {
     border-color: rgba(148, 163, 184, .14);
   }
 
-  #mainHeader.relaunch-header .nav-dropdown.open > .dropdown-menu,
-  #mainHeader.relaunch-header .nav-dropdown:focus-within > .dropdown-menu {
+  #mainHeader.relaunch-header .nav-dropdown.open > .dropdown-menu {
     transform: none;
   }
 
