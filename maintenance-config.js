@@ -13,7 +13,7 @@ window.FRG_MAINTENANCE = {
   title: "Wir sind bald wieder für Dich da.",
   message: "Unsere Website wird zurzeit überarbeitet. Danke für Deine Geduld.",
   availability: "Voraussichtlich am Sonntag um 12:00 Uhr wieder erreichbar",
-  contactEmail: "kontakt@frg-radio.ch",
+  contactEmail: "technik@frg-radio.ch",
 
   showProgress: false,
   progress: 00
