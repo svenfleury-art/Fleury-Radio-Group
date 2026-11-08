@@ -2518,6 +2518,28 @@ body { padding-top: 0 !important; }
 @media (min-width:701px) { .gesture-hint { display:none; } }
 @media (prefers-reduced-motion:reduce) { .gesture-hint { transition:none; } }
 
+/* Mobile: Das Sender-Menü wird am Player verankert und darf dessen Grid-Breite nicht verändern. */
+@media (max-width:700px) {
+  #mainHeader.relaunch-header .header-topline {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    min-width: 0;
+  }
+
+  #mainHeader.relaunch-header .relaunch-player {
+    position: relative;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  #mainHeader.relaunch-header .player-live-copy {
+    min-width: 0;
+  }
+
+  #mainHeader.relaunch-header .relaunch-player .station-switch {
+    max-width: 100%;
+  }
+}
+
 
 /* =========================
    GLOBALER WARTUNGSMODUS
