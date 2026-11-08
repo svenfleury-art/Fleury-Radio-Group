@@ -2591,6 +2591,19 @@ body { padding-top: 0 !important; }
     justify-self: end;
     z-index: 2;
   }
+
+  /* Geöffnetes X bleibt exakt im selben Header-Feld wie der geschlossene Hamburger. */
+  body.nav-open #mainHeader.relaunch-header #hamburgerBtn {
+    position: relative !important;
+    inset: auto !important;
+    align-self: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    background: var(--relaunch-panel);
+    box-shadow: none;
+    transform: none;
+  }
 }
 
 
