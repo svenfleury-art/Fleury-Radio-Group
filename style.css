@@ -2547,6 +2547,52 @@ body { padding-top: 0 !important; }
   }
 }
 
+/* Hamburger-Breakpoint: Der Player darf den Menübutton auch zwischen 701 und 900px nicht überlaufen. */
+@media (max-width:900px) {
+  #mainHeader.relaunch-header .header-topline {
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr) minmax(44px, auto);
+    min-width: 0;
+  }
+
+  #mainHeader.relaunch-header .brand-lockup,
+  #mainHeader.relaunch-header .relaunch-player {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  #mainHeader.relaunch-header .relaunch-player {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  #mainHeader.relaunch-header .player-live-copy {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  #mainHeader.relaunch-header .relaunch-player .station-switch {
+    position: absolute;
+    top: calc(100% + 9px);
+    right: 12px;
+    left: 12px;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-5px);
+  }
+
+  #mainHeader.relaunch-header .relaunch-player .header-live-visual {
+    display: none;
+  }
+
+  #mainHeader.relaunch-header > .header-shell .hamburger {
+    flex: 0 0 44px;
+    justify-self: end;
+    z-index: 2;
+  }
+}
+
 
 /* =========================
    GLOBALER WARTUNGSMODUS
