@@ -2538,6 +2538,13 @@ body { padding-top: 0 !important; }
   #mainHeader.relaunch-header .relaunch-player .station-switch {
     max-width: 100%;
   }
+
+  /* Das Hamburger-Menü darf den Player nicht erweitern oder zusätzliche Controls einblenden. */
+  #mainHeader.relaunch-header:has(.nav-links.open) .relaunch-player .station-switch {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-5px);
+  }
 }
 
 
