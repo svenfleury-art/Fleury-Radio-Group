@@ -58,3 +58,9 @@ Die äussere Begrenzung von `main`, `.page` und den grossen Inhaltsrastern wurde
 Aufzählungen erhalten eine wiederkehrende FRG-Farbfolge aus Signalgrün, Blau, Orange, Violett und Pink. Dadurch unterscheiden sich Punkte visuell, ohne Informationen ausschliesslich über Farbe zu vermitteln: Der Text bleibt vollständig vorhanden und die Reihenfolge bleibt auch ohne Farbwahrnehmung verständlich. Die Werbepakete verwenden dieselben Farben als kleine Punkte und sind ebenfalls nicht mehr als Karten eingefasst.
 
 Diese Umsetzung folgt `layout.md › Adaptability` und `layout.md › Visual hierarchy`: Die Struktur richtet sich nach dem verfügbaren Platz, während Ausrichtung, Abstand und typografische Gruppierung die Hierarchie herstellen. Die sichtbaren Boxen wurden entfernt, weil sie keinen zusätzlichen Bediennutzen hatten.
+
+## Refinement: Full-Bleed-Abschnitte nahe am Header
+
+Die bisherige äussere Seitenhülle wurde vollständig entfernt. Der Inhalt beginnt direkt nach der Navigation, ohne zusätzlichen `main`-Abstand. Ehemalige Container werden als breite, rechteckige Abschnittsbänder dargestellt, die jeweils die gesamte Viewportbreite einnehmen. Die dunklen Flächen wechseln zwischen Blauschwarz, tiefem Violett und Ink-Schwarz. Dadurch erhält jeder Inhaltsabschnitt eine eigene visuelle Ebene, ohne sichtbare Cards, Radien oder Schatten.
+
+Der Hero verwendet `#0D0F18`, der Live-Bereich `#111827`, normale Inhaltsabschnitte `#10131E`, alternative Abschnitte `#171321` und Form-/Kontaktbereiche `#0F1926`. Diese Werte bleiben bewusst nahe beieinander, damit das Dark Design ruhig bleibt. Der Hero-Abstand oben wurde auf maximal 56px begrenzt und auf mobilen Screens auf 22px reduziert, damit die erste Botschaft näher am Header steht.

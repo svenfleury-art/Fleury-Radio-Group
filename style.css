@@ -3667,3 +3667,141 @@ main { margin-top: var(--header-height, 50px); }
   .hero { padding-inline: 0; }
   .packages-grid, .addons-grid { grid-template-columns: 1fr; row-gap: 48px; }
 }
+
+/* =====================================================================
+   FRG REFINEMENT — FULL-BLEED SECTION BANDS
+   No outer page shell: every former container becomes a wide, flat band.
+===================================================================== */
+
+:root {
+  --frg-band-hero: #0d0f18;
+  --frg-band-live: #111827;
+  --frg-band-deep: #10131e;
+  --frg-band-violet: #171321;
+  --frg-band-blue: #0f1926;
+  --frg-band-ink: #0a0c13;
+  --frg-band-padding: clamp(28px, 5vw, 72px);
+}
+
+/* Header ends directly at the first content band. */
+main,
+.page,
+main.page {
+  margin-top: 0 !important;
+  padding-inline: 0 !important;
+  max-width: none !important;
+  background: transparent !important;
+}
+
+.page > .hero,
+.page > .live-focus,
+.page > .insight-grid,
+.page > .countdown,
+.page > .cards,
+.page > .card,
+.page > .page-header,
+.page > .contact-intro,
+.page > .contact-methods,
+.page > .contact-split,
+.page > .contact-faq,
+.page > .event-grid,
+.page > .artist-form {
+  width: 100vw !important;
+  max-width: none !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.page > .hero {
+  padding: clamp(30px, 4vw, 56px) var(--frg-band-padding) clamp(42px, 6vw, 88px) !important;
+  background: var(--frg-band-hero) !important;
+}
+.page > .hero .hero-inner {
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+.page > .live-focus {
+  padding: var(--frg-band-padding) !important;
+  background: var(--frg-band-live) !important;
+}
+.page > .insight-grid,
+.page > .cards:nth-of-type(odd),
+.page > .card:nth-of-type(odd),
+.page > .contact-intro {
+  padding: var(--frg-band-padding) !important;
+  background: var(--frg-band-deep) !important;
+}
+.page > .countdown,
+.page > .cards:nth-of-type(even),
+.page > .card:nth-of-type(even),
+.page > .contact-methods,
+.page > .event-grid {
+  padding: var(--frg-band-padding) !important;
+  background: var(--frg-band-violet) !important;
+}
+.page > .contact-split,
+.page > .contact-faq,
+.page > .artist-form {
+  padding: var(--frg-band-padding) !important;
+  background: var(--frg-band-blue) !important;
+}
+.page > .page-header {
+  padding: var(--frg-band-padding) !important;
+  background: var(--frg-band-ink) !important;
+}
+
+/* Flat section content uses the full band while text keeps a comfortable
+   measure. This is whitespace, not a hidden card/container. */
+.page > .hero > *,
+.page > .live-focus > *,
+.page > .insight-grid > *,
+.page > .countdown > *,
+.page > .cards > *,
+.page > .card > *,
+.page > .contact-intro > *,
+.page > .contact-methods > *,
+.page > .contact-split > *,
+.page > .contact-faq > *,
+.page > .event-grid > *,
+.page > .artist-form > * {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Former cards remain transparent inside their new section bands. */
+.page > .cards > .card,
+.page > .cards > div,
+.page > .card,
+.page > .contact-methods > .contact-method-card,
+.page > .contact-split > .contact-form-card,
+.page > .contact-split > .contact-info-card {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 700px) {
+  .page > .hero,
+  .page > .live-focus,
+  .page > .insight-grid,
+  .page > .countdown,
+  .page > .cards,
+  .page > .card,
+  .page > .page-header,
+  .page > .contact-intro,
+  .page > .contact-methods,
+  .page > .contact-split,
+  .page > .contact-faq,
+  .page > .event-grid,
+  .page > .artist-form {
+    padding-inline: 18px !important;
+  }
+  .page > .hero { padding-top: 22px !important; }
+}
