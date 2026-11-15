@@ -55,26 +55,26 @@
         <span class="brand-mark"><img src="/img/Fleury Radio Group Logo.webp" alt=""></span>
         <span class="brand-copy">
           <strong>Fleury Radio Group</strong>
-          <small>Deine Sender. Deine Welle.</small>
+          <small>Drei Sender. eine Gruppe.</small>
         </span>
       </a>
 
       <div class="relaunch-player" aria-label="Live-Player">
-        <button id="playBtn" class="player-play" aria-label="Radio starten">▶</button>
+        <button id="playBtn" class="player-play" type="button" aria-label="Radio starten">▶</button>
         <div class="player-live-copy">
           <span class="player-kicker"><i></i> LIVE RADIO</span>
           <span id="nowPlaying">Bereit zum Hören</span>
         </div>
         <div class="header-live-visual" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
         <div class="station-switch" aria-label="Sender auswählen">
-          <button class="station active" data-station="rhywaelle">Rhywälle</button>
-          <button class="station" data-station="winterlord">Winterlord</button>
-          <button class="station" data-station="rhyrock">RhyRock</button>
+        <button class="station active" type="button" data-station="rhywaelle" aria-pressed="true">Rhywälle</button>
+        <button class="station" type="button" data-station="winterlord" aria-pressed="false">Winterlord</button>
+        <button class="station" type="button" data-station="rhyrock" aria-pressed="false">RhyRock</button>
         </div>
         <audio id="audioPlayer"></audio>
       </div>
 
-      <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mainNav">
+      <button id="hamburgerBtn" class="hamburger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mainNav">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -84,7 +84,7 @@
       <nav id="mainNav" class="nav-links" aria-label="Hauptnavigation">
         <a href="/" data-link>Home</a>
         <div class="nav-dropdown">
-          <button class="nav-button dropdown-toggle">Radios <span>⌄</span></button>
+          <button class="nav-button dropdown-toggle" type="button" aria-expanded="false">Radios <span aria-hidden="true">⌄</span></button>
           <div class="dropdown-menu">
             <a href="/radios/" data-link>Radio-Auswahl</a>
             <a href="/rhywaelle/" data-link>Radio Rhywälle</a>
@@ -93,7 +93,7 @@
           </div>
         </div>
         <div class="nav-dropdown">
-          <button class="nav-button dropdown-toggle">Über die FRG <span>⌄</span></button>
+          <button class="nav-button dropdown-toggle" type="button" aria-expanded="false">Über die FRG <span aria-hidden="true">⌄</span></button>
           <div class="dropdown-menu">
             <a href="/frg-inside/" data-link>FRG Inside</a>
             <a href="/geschichte/" data-link>Geschichte</a>
@@ -138,56 +138,153 @@
   </div>
 </div>
 
+<section class="frg-timeline-section" aria-labelledby="timeline-title">
+  <div class="frg-section-heading">
+    <span class="frg-section-kicker">Die wichtigsten Meilensteine</span>
+    <h2 id="timeline-title">Die FRG auf einen Blick</h2>
+    <p>Von der ersten Sendung bis zum heutigen Sendernetzwerk – die Entwicklung der Fleury Radio Group™ in chronologischer Reihenfolge.</p>
+  </div>
+
+  <ol class="frg-timeline">
+    <li class="frg-timeline-item">
+      <div class="frg-timeline-marker" aria-hidden="true">01</div>
+      <div class="frg-timeline-content">
+        <time datetime="2025-10-28">28. Oktober 2025</time>
+        <h3>Radio Rhywälle™ geht auf Sendung</h3>
+        <p>Der erste Sender startet mit Pop, Rap und Oldies und legt den Grundstein für die spätere Radiogruppe.</p>
+      </div>
+    </li>
+
+    <li class="frg-timeline-item">
+      <div class="frg-timeline-marker" aria-hidden="true">02</div>
+      <div class="frg-timeline-content">
+        <time datetime="2025">Herbst / Winter 2025</time>
+        <h3>Das Programm erhält ein klares Profil</h3>
+        <p>Mit dem Wachstum des Projekts werden die Inhalte neu strukturiert. Die Oldies werden aus dem Programm genommen, Radio Rhywälle™ konzentriert sich fortan auf Pop und Rap.</p>
+      </div>
+    </li>
+
+    <li class="frg-timeline-item">
+      <div class="frg-timeline-marker" aria-hidden="true">03</div>
+      <div class="frg-timeline-content">
+        <time datetime="2025-12">Vor dem 11. Dezember 2025</time>
+        <h3>Die Fleury Radio Group™ entsteht</h3>
+        <p>Für die Verbindung der eigenständigen Sender wird eine gemeinsame Struktur geschaffen – der Startpunkt für gemeinsames Marketing und weitere Medienprojekte.</p>
+      </div>
+    </li>
+
+    <li class="frg-timeline-item">
+      <div class="frg-timeline-marker" aria-hidden="true">04</div>
+      <div class="frg-timeline-content">
+        <time datetime="2025-12-11">11. Dezember 2025</time>
+        <h3>Winterlord FM™ erweitert die Klangwelt</h3>
+        <p>Der Metal-Sender geht auf Sendung und ergänzt die FRG mit Power Metal, Melodic Metal und Epic Metal.</p>
+      </div>
+    </li>
+
+    <li class="frg-timeline-item">
+      <div class="frg-timeline-marker" aria-hidden="true">05</div>
+      <div class="frg-timeline-content">
+        <time datetime="2026-02-04">4. Februar 2026</time>
+        <h3>RhyRock Radio™ komplettiert das Netzwerk</h3>
+        <p>Mit Rock und Alternative spricht der dritte Sender eine weitere Community an und erweitert die musikalische Vielfalt der FRG.</p>
+      </div>
+    </li>
+
+    <li class="frg-timeline-item frg-timeline-item-current">
+      <div class="frg-timeline-marker" aria-hidden="true">06</div>
+      <div class="frg-timeline-content">
+        <time datetime="2026">Heute</time>
+        <h3>Eine Plattform mit Blick nach vorn</h3>
+        <p>Die FRG entwickelt Sender, Technik und neue Medienideen laufend weiter – mit lokaler Nähe, eigener Identität und Raum für zukünftiges Wachstum.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
 <section class="cards">
 
 <div class="card">
-  <h2>Der Anfang</h2>
+  <h2>Die erste Idee</h2>
   <p>
-    Am 28. Oktober 2025 ging mit dem Pop & Rap sender Radio Rhywälle™, der damals noch Oldies Spielte, on air. 
-    Das Programm von Radio Rhywälle™ wuchs schnell und stark, sodass Sven Fleury zeitweise den Überblick verlor. 
-    Aus diesem Grund musste er die Inhalte neu strukturieren und entschied sich, die Oldies aus dem Programm zu nehmen.
-  </p>
-
-  <p>
-    Doch Pop und Rap sind nicht die einzigen Genres in der Musikwelt, und ursprünglich sollte auch ein Oldies sender on Air. 
-    Deshalb brachte Sven Fleury am 11. Dezember 2025 Winterlord-FM™ on air, einen Sender, der vollständig auf Metal ausgerichtet ist.
-  </p>
-
-  <p>
-    Die Frage war jedoch: Wie erkennt man, dass diese Sender zusammengehören?
-    Und hier entstand die Fleury Radio Group™. 
-    Sie wurde kurz vor der Umsetzung von Winterlord-FM™ gegründet und verbindet seitdem alle Sender unter einer gemeinsamen Struktur. 
-    Dadurch legte sich ein Grundstein für ein Gemeinsames Marketing.
-  </p>
-
-  <p>
-    Doch das wars noch nicht, denn es gibt ja noch mehr Genres, und das Perfekte Fundament stand schon, für einen Netzwerk mit mehreren Radios.
-    So wurde am 4. Februar 2026 mit RhyRock-Radio™ der bisher letzte Sender on air gebracht, der die Rock-Community musikalisch unterstützt und erweitert.
-  </p>
-
-  <p>
-    Schon früh lag der Fokus darauf, lokale Nähe mit moderner Online-Radiotechnik zu verbinden 
-    und ein System zu schaffen, das langfristig mehrere Sender unterstützen kann, und dies ist noch heute der Leitspruch der FRG.
+    Die Geschichte der Fleury Radio Group™ begann mit einer einfachen Idee: ein eigenes Online-Radio aufzubauen, das Musik mit einer persönlichen und lokalen Note verbindet. Im Mittelpunkt standen von Anfang an die Freude an der Musik, die Nähe zur Region Basel und der Wunsch, unabhängig eigene Medienprojekte zu entwickeln.
   </p>
 </div>
 
 <div class="card">
-  <h2>Heute</h2>
+  <h2>Radio Rhywälle geht auf Sendung</h2>
   <p>
-    Heute steht die Fleury Radio Group™ für ein wachsendes Netzwerk aus Radiosendern, kreativen Projekten und digitalen Medienideen. 
-    Im Mittelpunkt stehen Vielfalt, Eigenständigkeit und der Anspruch, etwas Eigenes aufzubauen, 
-    das sich klar von klassischen Radioformaten unterscheidet.
+    Am 28. Oktober 2025 ging Radio Rhywälle™ erstmals auf Sendung. Das Programm vereinte von Anfang an Pop, Rap und Oldies. Mit dem schnellen Wachstum des Projekts wurde jedoch bald klar, dass eine klarere musikalische Ausrichtung notwendig war.
   </p>
 
   <p>
-    Die FRG entwickelt sich laufend weiter – sowohl technisch als auch inhaltlich. 
-    Neue Konzepte, mögliche zusätzliche Sender und der Ausbau bestehender Strukturen 
-    gehören ebenso dazu wie die kontinuierliche Verbesserung der Plattformen.
+    Deshalb wurde das Programm neu strukturiert und die Oldies wurden entfernt. Radio Rhywälle™ entwickelte sich dadurch zu einem klar positionierten Pop-&amp;-Rap-Sender. Diese neue Ausrichtung gab dem Sender ein deutliches Profil und legte den Grundstein für seine weitere Entwicklung.
+  </p>
+</div>
+
+<div class="card">
+  <h2>Ein zweiter Sender für eine andere Klangwelt</h2>
+  <p>
+    Pop und Rap decken nur einen Teil der vielfältigen Musikwelt ab. Gleichzeitig bestand weiterhin der Wunsch, ein zweites, eigenständiges Musikangebot aufzubauen. Am 11. Dezember 2025 ging deshalb Winterlord FM™ auf Sendung.
   </p>
 
   <p>
-    Ziel ist es, langfristig eine stabile, moderne und kreative Radioplattform zu etablieren, 
-    die sich organisch weiterentwickelt und gleichzeitig ihren Ursprung nicht verliert.
+    Der Sender widmet sich vollständig dem Metal und verbindet Power Metal, Melodic Metal und Epic Metal zu einer eigenen, kraftvollen Klangwelt. Damit entstand neben Radio Rhywälle™ ein bewusst kontrastreiches Programm.
+  </p>
+</div>
+
+<div class="card">
+  <h2>Die Gründung der Fleury Radio Group</h2>
+  <p>
+    Mit zwei unterschiedlichen Sendern stellte sich eine wichtige Frage: Wie können eigenständige Radioprojekte erkennbar zusammengehören? Die Antwort war die Fleury Radio Group™.
+  </p>
+
+  <p>
+    Die FRG wurde kurz vor der Umsetzung von Winterlord FM™ gegründet. Seitdem verbindet sie die Sender unter einer gemeinsamen Struktur und schafft die Grundlage für ein einheitliches Auftreten, gemeinsames Marketing und weitere Medienprojekte.
+  </p>
+</div>
+
+<div class="card">
+  <h2>RhyRock Radio erweitert das Netzwerk</h2>
+  <p>
+    Das Fundament für ein Netzwerk mit mehreren Radiosendern war damit gelegt. Am 4. Februar 2026 ging mit RhyRock Radio™ der bisher jüngste Sender der FRG auf Sendung.
+  </p>
+
+  <p>
+    RhyRock Radio™ richtet sich an die Rock-Community und ergänzt das bestehende Angebot mit Gitarren, Drums und einer eigenen Rock-Identität. Gemeinsam decken die drei Sender unterschiedliche musikalische Interessen ab und bilden die vielfältige Klangwelt der FRG.
+  </p>
+</div>
+
+<div class="card">
+  <h2>Der gemeinsame Leitgedanke</h2>
+  <p>
+    Schon früh setzte die Fleury Radio Group™ auf die Verbindung von lokaler Nähe und moderner Online-Radiotechnik. Ziel war es, eine technische und organisatorische Grundlage zu schaffen, die mehrere Sender unterstützt und gleichzeitig Raum für neue Ideen lässt.
+  </p>
+
+  <p>
+    Dieser Gedanke prägt die FRG bis heute: eigenständige Sender, eine gemeinsame Identität und eine Plattform, die mit ihren Projekten wachsen kann.
+  </p>
+</div>
+
+<div class="card">
+  <h2>Die FRG heute</h2>
+  <p>
+    Heute steht die Fleury Radio Group™ für ein wachsendes Netzwerk aus Radiosendern, kreativen Projekten und digitalen Medienideen. Im Mittelpunkt stehen Vielfalt, Eigenständigkeit und der Anspruch, etwas Eigenes aufzubauen, das sich klar von klassischen Radioformaten unterscheidet.
+  </p>
+
+  <p>
+    Die FRG entwickelt sich laufend weiter – technisch, inhaltlich und organisatorisch. Bestehende Plattformen werden verbessert, neue Konzepte geprüft und die Sender kontinuierlich weiterentwickelt.
+  </p>
+</div>
+
+<div class="card">
+  <h2>Der Blick nach vorn</h2>
+  <p>
+    Die Fleury Radio Group™ soll langfristig zu einer stabilen, modernen und kreativen Radioplattform heranwachsen. Mögliche zusätzliche Sender, neue Formate und weitere digitale Medienprojekte gehören zu den Perspektiven der nächsten Jahre.
+  </p>
+
+  <p>
+    Dabei bleibt die FRG ihren Wurzeln treu: Musik, Eigenständigkeit, lokale Verbundenheit und die Leidenschaft, aus einer Idee etwas Eigenes zu schaffen.
   </p>
 </div>
 
@@ -204,18 +301,18 @@
 </section>
   </main>
   <div id="cookie-banner" class="frg-banner">
-  <span>Die FRG verwendet Cookies für ein besseres Radio-Erlebnis. <a href="/datenschutz/" data-link>Mehr erfahren</a>.</span>
-  <button id="cookie-accept" class="frg-btn">Verstanden</button>
+  <span>Diese Webseite speichert deine Auswahl lokal im Browser. <a href="/datenschutz/" data-link>Mehr erfahren</a>.</span>
+  <button id="cookie-accept" class="frg-btn" type="button">Verstanden</button>
 </div>
 
 
 <footer class="site-footer relaunch-footer">
-  <div class="footer-topline"><span><i></i> FLEURY RADIO GROUP</span><span>Independent online radio from Basel</span></div>
+  <div class="footer-topline"><span><i></i> FLEURY RADIO GROUP</span><span>Independent online radio group from Basel</span></div>
   <div class="footer-shell">
     <div class="footer-lead">
       <a class="footer-brand" href="/" data-link aria-label="Fleury Radio Group Startseite">
         <span class="footer-brand-mark"><img src="/img/Fleury Radio Group Logo.webp" alt=""></span>
-        <span><strong>Fleury Radio Group</strong><small>Deine Sender. Deine Welle.</small></span>
+        <span><strong>Fleury Radio Group</strong><small>Drei Sender. eine Gruppe.</small></span>
       </a>
       <p>Eine unabhängige Radiogruppe aus Basel. Drei Sender, unterschiedliche Sounds und eine gemeinsame Welle.</p>
       <div class="footer-lead-actions"><a class="footer-contact-cta" href="/kontakt/" data-link>Kontakt aufnehmen <span>↗</span></a><span class="footer-location">Basel · Schweiz</span></div>
@@ -234,6 +331,7 @@
       <a href="/geschichte/" data-link>Unsere Geschichte <span>↗</span></a>
       <a href="/mitmachen/" data-link>Mitmachen <span>↗</span></a>
       <a href="/spezial-programm/" data-link>Spezial-Programm <span>↗</span></a>
+      <a href="https://frghub.manus.space/" target="_blank" rel="noopener noreferrer">FRGHub (nur Mitarbeiter)<span>↗</span></a>
     </div>
 
     <div class="footer-column footer-scene">
