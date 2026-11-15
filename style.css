@@ -3418,3 +3418,131 @@ body[data-station-theme="rhyrock"] { --station-accent: var(--frg-rock); --statio
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
 }
+
+
+/* =====================================================================
+   FRG REFINEMENT — OPEN EDITORIAL LAYOUT
+   Content is separated by rhythm and hierarchy, not by card chrome.
+===================================================================== */
+
+/* Full-bleed footer: the footer owns the viewport width, while its
+   reading measure remains aligned with the header/content grid. */
+.relaunch-footer {
+  width: 100vw;
+  max-width: none;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  border-top: 1px solid var(--frg-line);
+  border-radius: 0;
+  box-shadow: none;
+}
+.footer-topline, .footer-shell, .footer-bottom {
+  width: min(calc(100% - 40px), var(--frg-shell));
+  margin-inline: auto;
+}
+
+/* Remove card chrome from content surfaces. Whitespace and section labels
+   now provide the grouping; the content itself stays on the canvas. */
+.live-focus,
+.info-panel,
+.audio-sample,
+.process-step,
+.contact-method-card,
+.contact-form-card,
+.contact-info-card,
+.contact-faq,
+.page > section.card,
+.page > section.cards,
+.page > section.event-grid,
+.page > section.artist-form,
+.cards > .card,
+.cards > div,
+.event-grid > div,
+.form-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.live-focus {
+  width: min(100%, var(--frg-content));
+  padding: clamp(26px, 5vw, 72px) 0;
+  border-top: 1px solid var(--frg-line);
+  border-bottom: 1px solid var(--frg-line);
+}
+.now-playing-console,
+.player-monitor,
+.contact-availability {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.player-monitor { padding: 0; }
+.now-playing-console { padding: 12px 0; }
+
+.insight-grid,
+.cards,
+.event-grid {
+  row-gap: clamp(54px, 8vw, 96px);
+  column-gap: clamp(28px, 5vw, 72px);
+}
+.info-panel,
+.audio-sample,
+.process-step { padding: 0; }
+.info-panel + .info-panel,
+.audio-sample + .audio-sample,
+.process-step + .process-step { border-top: 1px solid var(--frg-line); padding-top: 28px; }
+
+.cards > .card:hover,
+.cards > div:hover,
+.contact-method-card:hover {
+  transform: none;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+.cards > .card a,
+.cards > div a { margin-top: 22px; }
+
+/* A small rule creates an editorial anchor without making a container. */
+.cards > .card::before,
+.cards > div::before,
+.event-grid > div::before,
+.process-step::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: var(--station-accent, var(--frg-signal));
+}
+
+.countdown { padding-block: 28px; }
+.time-box {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding-inline: 0;
+}
+.time-box + .time-box { border-left: 1px solid var(--frg-line); padding-left: 22px; }
+
+/* Keep real form affordances legible without turning their surrounding
+   sections into cards. */
+.contact-method-icon { box-shadow: none; }
+.contact-method-card { padding-inline: 0; }
+.page > section.card,
+.page > section.cards,
+.page > section.event-grid,
+.page > section.artist-form { padding-inline: 0; }
+
+@media (max-width: 700px) {
+  .relaunch-footer { margin-top: 56px; }
+  .footer-topline, .footer-shell, .footer-bottom {
+    width: min(calc(100% - 28px), var(--frg-shell));
+  }
+  .live-focus { margin-inline: 0; }
+  .time-box + .time-box { padding-left: 12px; }
+}

@@ -41,3 +41,12 @@ Die neue Abschluss-Ebene in `style.css` führt ein benanntes Token-System ein: I
 - Häufige Hover-Animationen auf Inhaltskarten.
 - Mehrere konkurrierende Primärfarben innerhalb eines Screens.
 - Die permanente Randkarte bleibt funktional, wird aber visuell ruhiger und auf Mobile nicht als zusätzliche Barriere zwischen Inhalt und Navigation eingesetzt.
+
+
+## Refinement: Open Editorial
+
+Auf Wunsch wurde die visuelle Box-Logik nochmals reduziert. Inhaltsbereiche wie Senderkarten, Prozessschritte, Kontaktbereiche und Countdown-Zellen haben keine sichtbaren Rahmen, Flächen oder Schatten mehr. Sie werden über Whitespace, typografische Hierarchie, Gruppierung und kurze Signalstriche getrennt. Eingabefelder behalten ihre Umrandung als Bedienhinweis; der Live-Bereich behält lediglich horizontale Abschnittsgrenzen, damit die wichtigste Funktion auffindbar bleibt, ohne wie eine Karte zu wirken.
+
+Der Footer verwendet nun einen echten Full-Bleed-Wrapper mit `width: 100vw` und `margin-left: calc(50% - 50vw)`. Dadurch reicht seine Hintergrundfläche unabhängig vom begrenzten Main-Container über die gesamte Browserbreite. Die innere Lesebreite bleibt bewusst am Header-Raster ausgerichtet.
+
+Diese Anpassung folgt `layout.md › Visual hierarchy`: Gruppierung soll über Ausrichtung und bewusst eingesetzten Negativraum entstehen. Sie folgt ebenfalls `layout.md › Visual hierarchy` mit dem Grundsatz, progressive Offenlegung und klare Beziehungen gegenüber unnötiger visueller Dichte zu bevorzugen. Die Boxen wurden als ein überflüssiges Gestaltungselement entfernt; dadurch bleibt der Live-Player als FRG-spezifische Signatur übrig.
