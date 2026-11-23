@@ -3996,3 +3996,8 @@ main.page {
 @media (prefers-reduced-motion: reduce) {
   .footer-partner a { transition: none; }
 }
+
+/* Radiodienste wide banner */
+.footer-partner > a { display: block; width: min(100%, 470px); margin-inline: auto; }
+.footer-partner img { display: block; width: 100%; max-width: 470px; height: auto; margin-inline: auto; }
+@media (max-width: 520px) { .footer-partner { padding-inline: 0; } .footer-partner > a { width: 100%; } }
