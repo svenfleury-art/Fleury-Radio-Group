@@ -4001,3 +4001,8 @@ main.page {
 .footer-partner > a { display: block; width: min(100%, 470px); margin-inline: auto; }
 .footer-partner img { display: block; width: 100%; max-width: 470px; height: auto; margin-inline: auto; }
 @media (max-width: 520px) { .footer-partner { padding-inline: 0; } .footer-partner > a { width: 100%; } }
+
+/* Radiodienste 728x90 banner */
+.footer-partner > a { width: min(100%, 728px); }
+.footer-partner img { max-width: 728px; }
+@media (max-width: 760px) { .footer-partner > a { width: 100%; } }
