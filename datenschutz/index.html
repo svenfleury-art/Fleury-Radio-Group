@@ -55,26 +55,26 @@
         <span class="brand-mark"><img src="/img/Fleury Radio Group Logo.webp" alt=""></span>
         <span class="brand-copy">
           <strong>Fleury Radio Group</strong>
-          <small>Deine Sender. Deine Welle.</small>
+          <small>Drei Sender. eine Gruppe.</small>
         </span>
       </a>
 
       <div class="relaunch-player" aria-label="Live-Player">
-        <button id="playBtn" class="player-play" aria-label="Radio starten">▶</button>
+        <button id="playBtn" class="player-play" type="button" aria-label="Radio starten">▶</button>
         <div class="player-live-copy">
           <span class="player-kicker"><i></i> LIVE RADIO</span>
           <span id="nowPlaying">Bereit zum Hören</span>
         </div>
         <div class="header-live-visual" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
         <div class="station-switch" aria-label="Sender auswählen">
-          <button class="station active" data-station="rhywaelle">Rhywälle</button>
-          <button class="station" data-station="winterlord">Winterlord</button>
-          <button class="station" data-station="rhyrock">RhyRock</button>
+        <button class="station active" type="button" data-station="rhywaelle" aria-pressed="true">Rhywälle</button>
+        <button class="station" type="button" data-station="winterlord" aria-pressed="false">Winterlord</button>
+        <button class="station" type="button" data-station="rhyrock" aria-pressed="false">RhyRock</button>
         </div>
         <audio id="audioPlayer"></audio>
       </div>
 
-      <button id="hamburgerBtn" class="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mainNav">
+      <button id="hamburgerBtn" class="hamburger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mainNav">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -84,7 +84,7 @@
       <nav id="mainNav" class="nav-links" aria-label="Hauptnavigation">
         <a href="/" data-link>Home</a>
         <div class="nav-dropdown">
-          <button class="nav-button dropdown-toggle">Radios <span>⌄</span></button>
+          <button class="nav-button dropdown-toggle" type="button" aria-expanded="false">Radios <span aria-hidden="true">⌄</span></button>
           <div class="dropdown-menu">
             <a href="/radios/" data-link>Radio-Auswahl</a>
             <a href="/rhywaelle/" data-link>Radio Rhywälle</a>
@@ -93,7 +93,7 @@
           </div>
         </div>
         <div class="nav-dropdown">
-          <button class="nav-button dropdown-toggle">Über die FRG <span>⌄</span></button>
+          <button class="nav-button dropdown-toggle" type="button" aria-expanded="false">Über die FRG <span aria-hidden="true">⌄</span></button>
           <div class="dropdown-menu">
             <a href="/frg-inside/" data-link>FRG Inside</a>
             <a href="/geschichte/" data-link>Geschichte</a>
@@ -104,6 +104,7 @@
         <a href="/spezial-programm/" data-link>Spezial-Programm</a>
         <a href="/artists/" data-link>Für Artists</a>
         <a href="/werbung/" data-link>Werbung</a>
+        <a href="/daily/" data-no-spa class="nav-daily">FRG Daily</a>
         <a class="nav-cta" href="/kontakt/" data-link>Kontakt <span>↗</span></a>
       </nav>
     </div>
@@ -136,108 +137,145 @@
   <section class="card"><h2>1. Verantwortliche Person</h2>
     <p><strong>Fleury Radio Group™ (FRG)</strong><br>Sven Fleury, Betreiber der Radio-Dachmarke<br>
     E-Mail: <a href="mailto:sven.fleury@frg-radio.ch">sven.fleury@frg-radio.ch</a></p>
-    <p>FRG ist nach den uns vorliegenden Angaben eine Radio-Dachmarke und nicht als eigene Firma im Handelsregister eingetragen. Die verantwortliche Person ist über die obige E-Mail-Adresse erreichbar.</p>
+    <p>FRG ist nach den uns vorliegenden Angaben eine Radio-Dachmarke und nicht als eigene Firma im Handelsregister eingetragen. 
+      Die verantwortliche Person ist über die obige E-Mail-Adresse erreichbar.</p>
   </section>
 
   <section class="card"><h2>2. Welche Daten können bearbeitet werden?</h2>
-    <p>Je nach Nutzung können Name oder Künstlername, E-Mail-Adresse, Nachrichteninhalte, Musik- und sonstige Links, Angaben zu Werbeanfragen, Buchungs- und Zahlungsinformationen sowie technische Zugriffsdaten bearbeitet werden. Technische Daten können insbesondere IP-Adresse, Zeitstempel, Browser-/Geräteinformationen und aufgerufene Seiten umfassen, soweit sie durch Hosting- oder Drittanbieter verarbeitet werden.</p>
+    <p>Je nach Nutzung können Name oder Künstlername, E-Mail-Adresse, Nachrichteninhalte, Musik- und sonstige Links, Angaben zu Werbeanfragen, Buchungs- und Zahlungsinformationen 
+      sowie technische Zugriffsdaten bearbeitet werden. Technische Daten können insbesondere IP-Adresse, Zeitstempel, Browser-/Geräteinformationen und aufgerufene Seiten umfassen, 
+      soweit sie durch Hosting- oder Drittanbieter verarbeitet werden.</p>
     <p>Bitte sende über die Formulare keine besonders schützenswerten Personendaten, sofern sie für dein Anliegen nicht zwingend erforderlich sind.</p>
   </section>
 
   <section class="card"><h2>3. Zwecke und Grundlagen</h2>
-    <p>Die Daten werden genutzt, um Anfragen zu beantworten, Musik- oder Werbeeinreichungen zu prüfen, Buchungen und Zahlungen abzuwickeln, die Website und Streams bereitzustellen, Fehler zu beheben, Missbrauch zu verhindern und gesetzliche Pflichten zu erfüllen. Die Bearbeitung erfolgt im Rahmen des anwendbaren Schweizer Datenschutzrechts und, soweit einschlägig, weiterer zwingender Vorschriften.</p>
+    <p>Die Daten werden genutzt, um Anfragen zu beantworten, Musik- oder Werbeeinreichungen zu prüfen, Buchungen und Zahlungen abzuwickeln, die Website und Streams bereitzustellen,
+      Fehler zu beheben, Missbrauch zu verhindern und gesetzliche Pflichten zu erfüllen. Die Bearbeitung erfolgt im Rahmen des anwendbaren Schweizer Datenschutzrechts und, 
+      soweit einschlägig, weiterer zwingender Vorschriften.</p>
   </section>
 
   <section class="card"><h2>4. Formulare und E-Mail – Formspree</h2>
-    <p>Die Kontakt- und Artist-Formulare übermitteln Eingaben an Formspree. Das Kontaktformular und das Artist-Formular verwenden derzeit den Formspree-Endpunkt <code>xvzwdvaq</code>; das Werbeanfrageformular verwendet den Endpunkt <code>maqlopya</code>. Dabei können die im Formular eingetragenen Angaben sowie technische Metadaten verarbeitet werden.</p>
-    <p>Formspree ist ein externer Dienst. Die konkreten Speicherorte, Aufbewahrungsfristen und allfälligen Unterauftragsbearbeiter müssen anhand der aktuellen Einstellungen und Vertragsbedingungen von Formspree geprüft werden; sie werden hier deshalb nicht als bestätigt dargestellt. Lies auch die <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener noreferrer">Datenschutzhinweise von Formspree</a>.</p>
+    <p>Die Kontakt- und Artist-Formulare übermitteln Eingaben an Formspree. Das Kontaktformular und das Artist-Formular verwenden derzeit den Formspree-Endpunkt 
+      <code>xvzwdvaq</code>; das Werbeanfrageformular verwendet den Endpunkt <code>maqlopya</code>. Dabei können die im Formular eingetragenen Angaben sowie technische Metadaten 
+      verarbeitet werden.</p>
+    <p>Formspree ist ein externer Dienst. Die konkreten Speicherorte, Aufbewahrungsfristen und allfälligen Unterauftragsbearbeiter müssen anhand der aktuellen Einstellungen und 
+      Vertragsbedingungen von Formspree geprüft werden; sie werden hier deshalb nicht als bestätigt dargestellt. 
+      Lies auch die <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener noreferrer">Datenschutzhinweise von Formspree</a>.</p>
   </section>
 
   <section class="card"><h2>5. Zahlungen – Stripe</h2>
-    <p>Auf der Werbeseite führen Links zu Stripe-Zahlungsseiten für einzelne Werbepakete und Abonnements. Wenn du diese Links öffnest oder eine Zahlung vornimmst, bearbeitet Stripe Daten gemäss den eigenen Bedingungen. FRG erhält möglicherweise Zahlungsstatus und für die Abwicklung erforderliche Transaktionsangaben; vollständige Kartendaten werden nicht über die FRG-Website eingegeben.</p>
-    <p>Die genaue Zuordnung von Zahlungsdaten, Laufzeiten und allfälligen Abonnements hängt vom jeweiligen Stripe-Angebot ab. Beachte die <a href="https://stripe.com/ch/privacy-center/legal" target="_blank" rel="noopener noreferrer">Datenschutzhinweise von Stripe</a>.</p>
+    <p>Auf der Werbeseite führen Links zu Stripe-Zahlungsseiten für einzelne Werbepakete und Abonnements. Wenn du diese Links öffnest oder eine Zahlung vornimmst, 
+      bearbeitet Stripe Daten gemäss den eigenen Bedingungen. FRG erhält möglicherweise Zahlungsstatus und für die Abwicklung erforderliche Transaktionsangaben; 
+      vollständige Kartendaten werden nicht über die FRG-Website eingegeben.</p>
+    <p>Die genaue Zuordnung von Zahlungsdaten, Laufzeiten und allfälligen Abonnements hängt vom jeweiligen Stripe-Angebot ab. 
+      Beachte die <a href="https://stripe.com/ch/privacy-center/legal" target="_blank" rel="noopener noreferrer">Datenschutzhinweise von Stripe</a>.</p>
   </section>
 
   <section class="card"><h2>6. Streams und laut.fm</h2>
-    <p>Die Website verlinkt auf laut.fm-Streams und stellt Audioquellen von laut.fm bereit. Beim Laden oder Abspielen eines Streams können technische Daten an laut.fm beziehungsweise beteiligte technische Anbieter übermittelt werden. Die konkreten Datenkategorien und Verarbeitungsorte wurden nicht unabhängig verifiziert.</p>
+    <p>Die Website verlinkt auf laut.fm-Streams und stellt Audioquellen von laut.fm bereit. Beim Laden oder Abspielen eines Streams können technische Daten an laut.fm 
+      beziehungsweise beteiligte technische Anbieter übermittelt werden. Die konkreten Datenkategorien und Verarbeitungsorte wurden nicht unabhängig verifiziert.</p>
     <p>Weitere Informationen findest du in den <a href="https://laut.fm/pages/privacy" target="_blank" rel="noopener noreferrer">Datenschutzhinweisen von laut.fm</a>.</p>
   </section>
 
   <section class="card"><h2>7. Hosting, Serverprotokolle und Drittinhalte</h2>
-    <p>Die Website wird als statische Website über GitHub Pages veröffentlicht. Der Hosting-Anbieter kann beim Abruf technische Verbindungsdaten in Server- und Sicherheitsprotokollen verarbeiten. Die Website enthält ausserdem externe Links und Audioquellen. Beim Wechsel zu einem externen Anbieter gelten zusätzlich dessen Datenschutzinformationen.</p>
-    <p>Ob und welche weiteren Daten durch GitHub Pages, CDN- oder Sicherheitsdienste gespeichert werden und in welchen Ländern dies erfolgt, muss anhand der aktuellen Hosting-Konfiguration und Anbieterbedingungen geprüft werden.</p>
+    <p>Die Website wird als statische Website über GitHub Pages veröffentlicht. 
+      Der Hosting-Anbieter kann beim Abruf technische Verbindungsdaten in Server- und Sicherheitsprotokollen verarbeiten. 
+      Die Website enthält ausserdem externe Links und Audioquellen. Beim Wechsel zu einem externen Anbieter gelten zusätzlich dessen Datenschutzinformationen.</p>
   </section>
 
   <section class="card"><h2>8. Lokaler Speicher und Cookie-Hinweis</h2>
-    <p>Der sichtbare Hinweis am Seitenende wird durch eine Bestätigung ausgeblendet. Die Website speichert dazu im Browser unter dem Schlüssel <code>frg_cookies</code> den Wert <code>true</code> in <code>localStorage</code>. Das ist lokaler Browserspeicher und nicht selbst ein HTTP-Cookie. Der Hinweis steuert nach dem aktuell geprüften Code keine Einwilligung für Drittanbieter-Cookies oder externe Dienste.</p>
-    <p>Externe Anbieter können eigene Technologien einsetzen, wenn du deren Inhalte oder Zahlungsseiten nutzt. Die Website sollte nicht als frei von sämtlichen Cookies oder Drittanbieter-Technologien verstanden werden.</p>
+    <p>Der sichtbare Hinweis am Seitenende wird durch eine Bestätigung ausgeblendet. 
+      Die Website speichert dazu im Browser unter dem Schlüssel <code>frg_cookies</code> den Wert <code>true</code> in <code>localStorage</code>. 
+      Das ist lokaler Browserspeicher und nicht selbst ein HTTP-Cookie. Der Hinweis steuert nach dem aktuell geprüften Code keine Einwilligung für Drittanbieter-Cookies oder 
+      externe Dienste.</p>
+    <p>Externe Anbieter können eigene Technologien einsetzen, wenn du deren Inhalte oder Zahlungsseiten nutzt. 
+      Die Website sollte nicht als frei von sämtlichen Cookies oder Drittanbieter-Technologien verstanden werden.</p>
   </section>
 
   <section class="card"><h2>9. Empfänger und Bekanntgabe ins Ausland</h2>
-    <p>Je nach Funktion können Daten an Formspree, Stripe, laut.fm, GitHub Pages sowie technische Dienstleister weitergegeben werden. Anbieter können Daten auch ausserhalb der Schweiz bearbeiten. Die konkreten Empfängerstaaten und die jeweils verwendeten Schutzmechanismen sind anhand der aktuellen Anbieter- und Kontoeinstellungen noch zu verifizieren; es werden deshalb keine bestimmten Länder oder Garantien behauptet.</p>
-    <p>Vor einer abschliessenden Freigabe dieser Erklärung müssen diese Angaben überprüft und, soweit erforderlich, konkret ergänzt werden. Allgemeine Hinweise auf Anbieter ersetzen nicht die Prüfung der tatsächlichen Datenflüsse.</p>
+    <p>Je nach Funktion können Daten an Formspree, Stripe, laut.fm, GitHub Pages sowie technische Dienstleister weitergegeben werden. 
+      Anbieter können Daten auch ausserhalb der Schweiz bearbeiten. 
+      Die konkreten Empfängerstaaten und die jeweils verwendeten Schutzmechanismen sind anhand der aktuellen Anbieter- und Kontoeinstellungen noch zu verifizieren; 
+      es werden deshalb keine bestimmten Länder oder Garantien behauptet.</p>
+    <p>Vor einer abschliessenden Freigabe dieser Erklärung müssen diese Angaben überprüft und, soweit erforderlich, konkret ergänzt werden. 
+      Allgemeine Hinweise auf Anbieter ersetzen nicht die Prüfung der tatsächlichen Datenflüsse.</p>
   </section>
 
   <section class="card"><h2>10. Aufbewahrung und Sicherheit</h2>
-    <p>FRG beabsichtigt, Personendaten nur so lange aufzubewahren, wie sie für den genannten Zweck benötigt werden oder gesetzliche Aufbewahrungspflichten bestehen. Für Anfragen, Formspree-Einträge, Buchungs- und Zahlungsdaten gelten unterschiedliche Fristen. Die konkreten Löschfristen der externen Anbieter müssen in deren Einstellungen beziehungsweise Bedingungen geprüft werden.</p>
-    <p>Es werden angemessene organisatorische und technische Massnahmen angestrebt. Eine absolute Sicherheit bei der Übertragung über das Internet kann nicht zugesichert werden.</p>
+    <p>FRG beabsichtigt, Personendaten nur so lange aufzubewahren, wie sie für den genannten Zweck benötigt werden oder gesetzliche Aufbewahrungspflichten bestehen. 
+      Für Anfragen, Formspree-Einträge, Buchungs- und Zahlungsdaten gelten unterschiedliche Fristen. 
+      Die konkreten Löschfristen der externen Anbieter müssen in deren Einstellungen beziehungsweise Bedingungen geprüft werden.</p>
+    <p>Es werden angemessene organisatorische und technische Massnahmen angestrebt. 
+      Eine absolute Sicherheit bei der Übertragung über das Internet kann nicht zugesichert werden.</p>
   </section>
 
   <section class="card"><h2>11. Deine Rechte</h2>
-    <p>Nach Massgabe des anwendbaren Rechts kannst du insbesondere Auskunft über bearbeitete Personendaten verlangen und gegebenenfalls deren Berichtigung oder Löschung beziehungsweise die Einschränkung einer Bearbeitung beantragen. Gesetzliche Aufbewahrungspflichten, Rechte Dritter und sonstige gesetzliche Einschränkungen bleiben vorbehalten.</p>
-    <p>Für Datenschutzanliegen: <a href="mailto:sven.fleury@frg-radio.ch">sven.fleury@frg-radio.ch</a>. Zur Identitätsprüfung können angemessene Angaben verlangt werden.</p>
+    <p>Nach Massgabe des anwendbaren Rechts kannst du insbesondere Auskunft über bearbeitete Personendaten verlangen und gegebenenfalls deren Berichtigung oder 
+      Löschung beziehungsweise die Einschränkung einer Bearbeitung beantragen. 
+      Gesetzliche Aufbewahrungspflichten, Rechte Dritter und sonstige gesetzliche Einschränkungen bleiben vorbehalten.</p>
+    <p>Für Datenschutzanliegen: <a href="mailto:technik@frg-radio.ch">technik@frg-radio.ch</a>. Zur Identitätsprüfung können angemessene Angaben verlangt werden.</p>
   </section>
 
   <section class="card"><h2>12. Änderungen</h2>
-    <p>Diese Erklärung wird angepasst, wenn sich Website-Funktionen, Dienstleister oder rechtliche Anforderungen ändern. Das Stand-Datum oben bezeichnet die aktuelle Überarbeitung, nicht eine unabhängige rechtliche Zertifizierung.</p>
+    <p>Diese Erklärung wird angepasst, wenn sich Website-Funktionen, Dienstleister oder rechtliche Anforderungen ändern. 
+      Das Stand-Datum oben bezeichnet die aktuelle Überarbeitung, nicht eine unabhängige rechtliche Zertifizierung.</p>
   </section>
 </section>
-
   </main>
   <div id="cookie-banner" class="frg-banner">
-  <span>Der Hinweis speichert deine Auswahl lokal im Browser. <a href="/datenschutz/" data-link>Mehr erfahren</a></span>
-  <button id="cookie-accept" class="frg-btn">Verstanden</button>
-</div>
-
-
-<footer class="site-footer relaunch-footer">
-  <div class="footer-topline"><span><i></i> FLEURY RADIO GROUP</span><span>Independent online radio from Basel</span></div>
-  <div class="footer-shell">
-    <div class="footer-lead">
-      <a class="footer-brand" href="/" data-link aria-label="Fleury Radio Group Startseite">
-        <span class="footer-brand-mark"><img src="/img/Fleury Radio Group Logo.webp" alt=""></span>
-        <span><strong>Fleury Radio Group</strong><small>Deine Sender. Deine Welle.</small></span>
-      </a>
-      <p>Eine unabhängige Radiogruppe aus Basel. Drei Sender, unterschiedliche Sounds und eine gemeinsame Welle.</p>
-      <div class="footer-lead-actions"><a class="footer-contact-cta" href="/kontakt/" data-link>Kontakt aufnehmen <span>↗</span></a><span class="footer-location">Basel · Schweiz</span></div>
+      <span>Diese Webseite speichert deine Auswahl lokal im Browser. <a href="/datenschutz/" data-link>Mehr erfahren</a>.</span>
+      <button id="cookie-accept" class="frg-btn" type="button">Verstanden</button>
     </div>
+    
+    
+    <footer class="site-footer relaunch-footer">
+      <div class="footer-topline"><span><i></i> FLEURY RADIO GROUP</span><span>Independent online radio group from Basel</span></div>
+      <div class="footer-shell">
+        <div class="footer-lead">
+          <a class="footer-brand" href="/" data-link aria-label="Fleury Radio Group Startseite">
+            <span class="footer-brand-mark"><img src="/img/Fleury Radio Group Logo.webp" alt=""></span>
+            <span><strong>Fleury Radio Group</strong><small>Drei Sender. eine Gruppe.</small></span>
+          </a>
+          <p>Eine unabhängige Radiogruppe aus Basel. Drei Sender, unterschiedliche Sounds und eine gemeinsame Welle.</p>
+          <div class="footer-lead-actions"><a class="footer-contact-cta" href="/kontakt/" data-link>Kontakt aufnehmen <span>↗</span></a><span class="footer-location">Basel · Schweiz</span></div>
+        </div>
+    
+        <div class="footer-column footer-on-air">
+          <span class="footer-label">Jetzt hören</span>
+          <a href="/rhywaelle/" data-link><i class="footer-dot dot-rhywaelle"></i><span>Radio Rhywälle<small>Pop & Rap</small></span></a>
+          <a href="/winterlord/" data-link><i class="footer-dot dot-winterlord"></i><span>Winterlord FM<small>Power & Epic Metal</small></span></a>
+          <a href="/rhyrock/" data-link><i class="footer-dot dot-rhyrock"></i><span>RhyRock Radio<small>Rock & Alternative</small></span></a>
+        </div>
+    
+        <div class="footer-column">
+          <span class="footer-label">FRG entdecken</span>
+          <a href="/frg-inside/" data-link>FRG Inside <span>↗</span></a>
+          <a href="/geschichte/" data-link>Unsere Geschichte <span>↗</span></a>
+          <a href="/mitmachen/" data-link>Mitmachen <span>↗</span></a>
+          <a href="/spezial-programm/" data-link>Spezial-Programm <span>↗</span></a>
+          <a href="/daily/" data-no-spa>FRG Daily – Musik-Worträtsel <span>↗</span></a>
+          <a href="https://frghub.manus.space/" target="_blank" rel="noopener noreferrer">FRGHub (nur Mitarbeiter)<span>↗</span></a>
+        </div>
+    
+        <div class="footer-column footer-scene">
+          <span class="footer-label">Für die Szene</span>
+          <a href="/artists/" data-link>Artists & Labels <span>↗</span></a>
+          <a href="/werbung/" data-link>Werbung & Partnerschaften <span>↗</span></a>
+          <a href="/kontakt/" data-link>Allgemeiner Kontakt <span>↗</span></a>
+          <a href="https://www.instagram.com/fleury_radio_group/" target="_blank" rel="noopener noreferrer">Instagram <span>↗</span></a>
+          <div class="footer-status"><i></i><span>Seit 2025 On-Air<small>Unabhängig. Lokal. FRG.</small></span></div>
+        </div>
+      </div>
 
-    <div class="footer-column footer-on-air">
-      <span class="footer-label">Jetzt hören</span>
-      <a href="/rhywaelle/" data-link><i class="footer-dot dot-rhywaelle"></i><span>Radio Rhywälle<small>Pop & Rap</small></span></a>
-      <a href="/winterlord/" data-link><i class="footer-dot dot-winterlord"></i><span>Winterlord FM<small>Power & Epic Metal</small></span></a>
-      <a href="/rhyrock/" data-link><i class="footer-dot dot-rhyrock"></i><span>RhyRock Radio<small>Rock & Alternative</small></span></a>
-    </div>
+      <div class="footer-partner" aria-label="Empfohlener Radiodienst">
+        <span class="footer-label">Empfohlen für Radiofans</span>
+        <a href="https://radiodienste.de/?refid=6513&play" target="_blank" rel="noopener" title="Jetzt Radio hören mit Radiodienste.de">
+    <img src="https://radiodienste.de/banner/banner_728x90.jpg" alt="Jetzt Radio hören mit Radiodienste.de">
+</a>
+      </div>
 
-    <div class="footer-column">
-      <span class="footer-label">FRG entdecken</span>
-      <a href="/frg-inside/" data-link>FRG Inside <span>↗</span></a>
-      <a href="/geschichte/" data-link>Unsere Geschichte <span>↗</span></a>
-      <a href="/mitmachen/" data-link>Mitmachen <span>↗</span></a>
-      <a href="/spezial-programm/" data-link>Spezial-Programm <span>↗</span></a>
-    </div>
-
-    <div class="footer-column footer-scene">
-      <span class="footer-label">Für die Szene</span>
-      <a href="/artists/" data-link>Artists & Labels <span>↗</span></a>
-      <a href="/werbung/" data-link>Werbung & Partnerschaften <span>↗</span></a>
-      <a href="/kontakt/" data-link>Allgemeiner Kontakt <span>↗</span></a>
-      <a href="https://www.instagram.com/fleury_radio_group/" target="_blank" rel="noopener noreferrer">Instagram <span>↗</span></a>
-      <div class="footer-status"><i></i><span>Seit 2025 On-Air<small>Unabhängig. Lokal. FRG.</small></span></div>
-    </div>
-  </div>
-  <div class="footer-bottom"><span>© 2026 Fleury Radio Group™</span><span class="footer-legal"><a href="/impressum/" data-link>Impressum</a><a href="/agb/" data-link>AGB</a><a href="/datenschutz/" data-link>Datenschutz</a></span><span>Basel, Schweiz</span></div>
-</footer>
+      <div class="footer-bottom"><span>© 2026 Fleury Radio Group™</span><span class="footer-legal"><a href="/impressum/" data-link>Impressum</a><a href="/agb/" data-link>AGB</a><a href="/datenschutz/" data-link>Datenschutz</a></span><span>Basel, Schweiz</span></div>
+    </footer>
   <script src="/maintenance.js" defer></script>
   <script src="/main.js?media-session-v2" defer></script>
 </body>
