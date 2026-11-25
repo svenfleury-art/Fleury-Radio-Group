@@ -4017,3 +4017,44 @@ main.page {
   background: linear-gradient(135deg, #ff2e93, #5fd8ff);
 }
 .nav-links .nav-daily:focus-visible { outline: 2px solid #5fd8ff; outline-offset: 2px; }
+
+/* NEU: FRG Daily – Hinweis auf der Startseite */
+.daily-promo {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  margin: 20px auto; padding: 18px 20px; max-width: 1100px;
+  border-radius: 20px; text-decoration: none; color: #fff;
+  background: linear-gradient(110deg, rgba(255,46,147,.28), rgba(95,216,255,.18) 55%, rgba(255,90,44,.24)), #0d1130;
+  border: 1px solid rgba(255,46,147,.6);
+  box-shadow: 0 0 0 0 rgba(255,46,147,.5), 0 10px 30px rgba(0,0,0,.3);
+  animation: dailyPulse 2.6s ease-in-out infinite;
+  transition: transform .2s ease;
+}
+.daily-promo:hover { transform: translateY(-2px); }
+.daily-promo:focus-visible { outline: 3px solid #5fd8ff; outline-offset: 3px; }
+.daily-promo-badge {
+  background: #ff2e93; color: #fff; font-weight: 800; font-size: .78rem;
+  letter-spacing: .12em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px;
+}
+.daily-promo-tiles { display: flex; gap: 4px; }
+.daily-promo-tiles i {
+  width: 34px; height: 34px; display: grid; place-items: center; border-radius: 7px;
+  font-style: normal; font-weight: 800; color: #fff;
+}
+.daily-promo-tiles .g { background: #22a55b; }
+.daily-promo-tiles .y { background: #d9ad1f; }
+.daily-promo-copy { flex: 1 1 220px; display: flex; flex-direction: column; gap: 2px; }
+.daily-promo-copy strong { font-size: 1.35rem; }
+.daily-promo-copy small { font-size: .95rem; color: #d6daf5; line-height: 1.4; }
+.daily-promo-cta {
+  background: #fff; color: #0d1130; font-weight: 800; padding: 12px 18px;
+  border-radius: 999px; white-space: nowrap; min-height: 44px; display: inline-flex; align-items: center; gap: 6px;
+}
+@media (max-width: 560px) {
+  .daily-promo { margin: 16px 12px; }
+  .daily-promo-cta { width: 100%; justify-content: center; }
+}
+@keyframes dailyPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(255,46,147,.45), 0 10px 30px rgba(0,0,0,.3); }
+  50% { box-shadow: 0 0 0 8px rgba(255,46,147,0), 0 10px 30px rgba(0,0,0,.3); }
+}
+@media (prefers-reduced-motion: reduce) { .daily-promo { animation: none; } }
