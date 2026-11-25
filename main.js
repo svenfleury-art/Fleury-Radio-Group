@@ -95,6 +95,8 @@ async function loadPage(path) {
 
   const clean = normalizePath(path);
   document.body.dataset.currentRoute = clean.slice(1) || "home";
+  // FRG Daily ist ein eigenständiges Spiel unter /daily/
+  if (clean === "/daily") { window.location.href = "/daily/"; return; }
   const file = routes[clean] || routes["/404"];
 
   let html = cache.get(file);
@@ -143,6 +145,8 @@ document.addEventListener("click", (e) => {
     href.startsWith("tel:");
 
   if (external) return;
+  // Eigenständige Unterseiten (z. B. FRG Daily) normal laden, nicht per SPA
+  if (link.hasAttribute("data-no-spa")) return;
 
   // Interne Seiten werden auch aus statischen Einstiegsseiten innerhalb der
   // bestehenden Shell geladen, damit der Audio-Stream nicht neu startet.
